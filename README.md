@@ -1,5 +1,38 @@
 # Sistema de Reserva de Viagens
 
+```
+/computacao_escalavel
+│── biblioteca/
+│   ├── include/       # Arquivos de cabeçalho (.h)
+│   │   ├── Extrator.h
+│   │   ├── TratadorLatLong.h
+│   │   ├── TratadorBoleano.h
+│   │   ├── TratadorHoteis.h
+│   │   ├── TratadorVoos.h
+│   │   ├── GeradorEscolha.h
+│   │   ├── Reservador.h
+│   │   ├── Loader.h
+│   ├── src/           # Implementação dos módulos (.cpp)
+│   │   ├── Extrator.cpp
+│   │   ├── TratadorLatLong.cpp
+│   │   ├── TratadorBoleano.cpp
+│   │   ├── TratadorHoteis.cpp
+│   │   ├── TratadorVoos.cpp
+│   │   ├── GeradorEscolha.cpp
+│   │   ├── Reservador.cpp
+│   │   ├── Loader.cpp
+│   ├── README.md      # Explicação sobre a biblioteca
+│
+│── simulador/
+│   ├── hoteis.py
+│   ├── voos.py
+│   ├── cidades_aero.py
+│   ├── pesquisas.py
+│   ├── README.md
+│
+│── README.md          # Visão geral do projeto
+```
+
 ## Visão Geral
 Este projeto modela um sistema de reserva de viagens, permitindo que os usuários reservem voos, hotéis ou ambos simultaneamente. O desenvolvimento está sendo realizado como parte da disciplina de Computação Escalável.
 
