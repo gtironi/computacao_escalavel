@@ -65,6 +65,23 @@ public:
         return true;
     }
 
+    /**
+     * @brief Remove uma linha específica do DataFrame, removendo o elemento correspondente de cada coluna.
+     * @param iIndex O índice da linha a ser removida.
+     * @return true se a remoção for bem-sucedida, false caso contrário.
+     */
+    bool removeLinha(int iIndex) {
+        if (iIndex < 0 || iIndex >= this->getShape().first) {
+            cerr << "Índice inválido para remoção de linha." << endl;
+            return false;
+        }
+
+        for (size_t i = 0; i < columns.size(); i++) {
+            columns[i].bRemovePeloIndex(iIndex);
+        }
+
+        return true;
+    }
 };
 
 #endif

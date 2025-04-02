@@ -31,6 +31,9 @@ int main() {
     vector<VDTYPES> novaLinha = {20, "Matheus", true};
     df.adicionaLinha(novaLinha);
 
+    // Removendo uma linha
+    df.removeLinha(3);
+
     // Exibindo informações
     cout << "Shape do DataFrame (Linhas, Colunas): ";
     auto shape = df.getShape();
