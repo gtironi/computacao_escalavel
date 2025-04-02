@@ -5,6 +5,7 @@
 #include <sqlite3.h>
 #include <string>
 #include <vector>
+#include <fstream>
 #include <map>
 #include <regex>
 #include "Series.h"
@@ -62,6 +63,40 @@ class Extrator {
     public:
         Extrator() = default;
         virtual ~Extrator() = default;
+};
+
+/**
+ * @brief Classe para extrair dados de arquivo CSV.
+ */
+class ExtratorCSV : public Extrator {
+    private:
+        vector<string> strColumnsName; 
+        vector<string> strColumnsType; 
+        ifstream file; 
+        Dataframe df; 
+    
+    public:
+        /**
+         * @brief Construtor que abre o arquivo CSV e verifica sua abertura.
+         * @param strPathToCSV Caminho para o arquivo CSV a ser lido.
+         */
+        ExtratorCSV(const string& strPathToCSV) {
+            file.open(strPathToCSV);
+            
+            if (!file.is_open()) {
+                cerr << "Falha ao abrir o arquivo: " << strPathToCSV << endl;
+            }
+        }
+    
+        /**
+         * @brief Destrutor que fecha o arquivo CSV se estiver aberto.
+         */
+        ~ExtratorCSV() {
+            if (file.is_open()) { 
+                file.close();
+                cout << "Arquivo fechado com sucesso." << endl;
+            }
+        }
 };
 
 /**
