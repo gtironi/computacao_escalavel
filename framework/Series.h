@@ -5,6 +5,7 @@
 #include <vector>
 #include <map>
 #include <variant>
+#include <numeric> 
 
 using namespace std;
 
@@ -93,6 +94,32 @@ public:
             visit([](const auto& val) { cout << val << " "; }, value);
         }
         cout << "\n";
+    }
+
+    /**
+     * @brief Calcula a média dos elementos da Series, se forem numéricos.
+     * @return O valor da média como float.
+     * @note Essa função só funciona para Series de tipos numéricos.
+     */
+    float mean() {
+        if (strColumnType == "int" || strColumnType == "double" || strColumnType == "float") {
+            double sum = 0.0;
+            int count = 0;
+
+            for (const auto& val : vecColumnData) {
+                std::visit([&](auto&& arg) {
+                    if constexpr (std::is_arithmetic_v<std::decay_t<decltype(arg)>>) {
+                        sum += arg;
+                        count++;
+                    }
+                }, val);
+            }
+
+            return count > 0 ? sum / count : 0.0;
+        } else {
+            cout << "Método desenvolvido apenas para Series do tipo numérica." << endl;
+            return 0.0f;
+        }
     }
 };
 

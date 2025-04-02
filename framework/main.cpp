@@ -37,5 +37,11 @@ int main() {
         col.printColuna();
     }
 
+    // Imprimindo as Médias
+    cout << "Média das colunas:" << endl;
+    for (auto &col : df.columns) {
+        cout << col.mean() << endl;
+    }
+
     return 0;
 }
