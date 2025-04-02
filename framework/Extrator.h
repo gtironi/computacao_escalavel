@@ -8,6 +8,7 @@
 #include <fstream>
 #include <map>
 #include <regex>
+#include <sstream>
 #include "Series.h"
 #include "Dataframe.h"
 
@@ -95,6 +96,33 @@ class ExtratorCSV : public Extrator {
             if (file.is_open()) { 
                 file.close();
                 cout << "Arquivo fechado com sucesso." << endl;
+            }
+        }
+    
+        /**
+         * @brief Retorna o vetor com os nomes das colunas.
+         */
+        vector<string> getColumnsName(){
+            return strColumnsName;
+        }
+
+        /**
+         * @brief Extrai os nomes das colunas do arquivo CSV.
+         *
+         * Lê a primeira linha do arquivo CSV e armazena os nomes das colunas
+         * no vetor `strColumnsName`.
+         */
+        void ExtratorColunas() {
+            string line;
+            if (getline(file, line)) { 
+                stringstream ss(line);
+                string cell;
+
+                while (getline(ss, cell, ',')) {
+                    strColumnsName.push_back(cell); 
+                }
+            } else {
+                cerr << "Erro ao ler o cabeçalho do CSV." << endl;
             }
         }
 };

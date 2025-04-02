@@ -59,7 +59,6 @@ int main() {
     for (auto &col : df.columns) {
         cout << col.mean() << endl;
     }
-    */
 
     ExtratorSQL extrator("../database.db");
     extrator.ExtratorColunas("Funcionarios");
@@ -72,6 +71,14 @@ int main() {
     cout << "\nDados das colunas:" << endl;
     for (auto &col : df.columns) {
         col.printColuna();
+    }
+
+    */
+
+    ExtratorCSV extrator("../dadosfake.csv");
+    extrator.ExtratorColunas();
+    for (auto &col : extrator.getColumnsName()){
+        cout << col << endl;
     }
 
     return 0;
