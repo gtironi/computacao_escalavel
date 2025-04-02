@@ -30,7 +30,7 @@ public:
      * @return true se a adição for bem-sucedida.
      */
     bool addSeries(Series novaSerie) {
-        vstrColumnsName.push_back(novaSerie.strColumnName);
+        vstrColumnsName.push_back(novaSerie.strGetName());
         columns.push_back(novaSerie);
         return true;
     }
@@ -41,7 +41,7 @@ public:
      */
     pair<int, int> getShape() {
         int iNumColunas = vstrColumnsName.size();
-        int iNumLinhas = columns.empty() ? 0 : columns[0].vecColumnData.size();
+        int iNumLinhas = columns.empty() ? 0 : columns[0].iGetSize();
         pair<int, int> shape = {iNumLinhas, iNumColunas};
         return shape;
     }

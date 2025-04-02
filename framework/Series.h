@@ -28,11 +28,12 @@ const map<string, string> TYPEMAP = {
  * @brief Representa uma coluna de um DataFrame, contendo um nome, um tipo e um vetor de dados.
  */
 class Series {
-public:
+private:
     string strColumnName;  ///< Nome da coluna
     string strColumnType;  ///< Tipo da coluna
     vector<VDTYPES> vecColumnData; ///< Dados armazenados na coluna
 
+public:
     /**
      * @brief Construtor da classe Series
      * @param columnName Nome da coluna
@@ -53,6 +54,41 @@ public:
             cerr << "Falha ao adicionar elemento." << endl;
             return false;
         }
+    }
+
+    /**
+     * @brief Altera o nome da coluna
+     */
+    void setName(string& strNovoNome){
+        strColumnName = strNovoNome;
+    }
+
+    /**
+     * @brief Retorna o nome da coluna
+     */
+    string strGetName() {
+        return strColumnName;
+    }
+
+    /**
+     * @brief Retorna o tipo da coluna
+     */
+    string strGetType() {
+        return strColumnType;
+    }
+
+    /**
+     * @brief Retorna o número de elementos da coluna
+     */
+    size_t iGetSize(){
+        return vecColumnData.size();
+    }
+
+    /**
+     * @brief Retorna o vetor de elementos da coluna
+     */
+    vector<VDTYPES> getData() {
+        return vecColumnData;
     }
 
     /**
@@ -103,8 +139,8 @@ public:
      * @brief Exibe os dados da coluna no console
      */
     void printColuna() {
-        cout << "Column Name: " << strColumnName << "\n";
-        cout << "Column Type: " << strColumnType << "\n";
+        cout << "Column Name: " << this->strGetName() << "\n";
+        cout << "Column Type: " << this->strGetType() << "\n";
         cout << "Data: ";
         for (const auto& value : vecColumnData) {
             visit([](const auto& val) { cout << val << " "; }, value);
@@ -118,7 +154,7 @@ public:
      * @note Essa função só funciona para Series de tipos numéricos.
      */
     float mean() {
-        if (strColumnType == "int" || strColumnType == "double" || strColumnType == "float") {
+        if (this->strGetType() == "int" || this->strGetType() == "double" || this->strGetType() == "float") {
             double sum = 0.0;
             int count = 0;
 
