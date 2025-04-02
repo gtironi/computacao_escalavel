@@ -29,7 +29,7 @@ public:
      * @param novaSerie Objeto Series a ser adicionado.
      * @return true se a adição for bem-sucedida, false caso contrário.
      */
-    bool adicionaLinha(Series novaSerie) {
+    bool adicionaColuna(Series novaSerie) {
         
         if (columns.empty()) {
             vstrColumnsName.push_back(novaSerie.strGetName());

@@ -29,9 +29,9 @@ int main() {
 
     // Criando um DataFrame
     Dataframe df;
-    df.adicionaLinha(intColumn);
-    df.adicionaLinha(strColumn);
-    df.adicionaLinha(boolColumn);
+    df.adicionaColuna(intColumn);
+    df.adicionaColuna(strColumn);
+    df.adicionaColuna(boolColumn);
     // df.addColumn(testColumn);
 
     // Adicionando uma linha
