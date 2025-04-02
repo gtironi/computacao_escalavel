@@ -6,11 +6,411 @@
 #include <vector>
 #include <map>
 #include <variant>
-#include <numeric> 
+#include <numeric>
+#include <stdexcept>
+#include <typeinfo>
 
 using namespace std;
 
-#define DTYPES int, double, string, bool, char
+/**
+ * @brief Representa uma data simples (dia, mês e ano).
+ *
+ * A estrutura DateDay encapsula uma data composta por dia, mês e ano.
+ * Possui construtores para inicialização a partir de valores individuais, de uma string ou de um objeto DateTime,
+ * métodos para validação e operadores de comparação e fluxo.
+ */
+struct DateDay {
+    int dia;  ///< Dia do mês.
+    int mes;  ///< Mês do ano.
+    int ano;  ///< Ano.
+
+    /**
+     * @brief Construtor que inicializa a data com valores fornecidos.
+     * @param d Dia.
+     * @param m Mês.
+     * @param a Ano.
+     * @throws runtime_error se a data for inválida.
+     */
+    DateDay(int d, int m, int a) : dia(d), mes(m), ano(a) {
+        if (!isValid()) throw runtime_error("Data inválida");
+    }
+    
+    /**
+     * @brief Construtor padrão.
+     *
+     * Inicializa a data com o valor 1-1-1.
+     */
+    DateDay() : dia(1), mes(1), ano(1) {}
+    
+    /**
+     * @brief Construtor de cópia.
+     * @param dt Instância de DateDay a ser copiada.
+     */
+    DateDay(const DateDay& dt) : dia(dt.dia), mes(dt.mes), ano(dt.ano) {}
+
+    /**
+     * @brief Construtor de conversão a partir de um DateTime.
+     *
+     * Converte um objeto DateTime para DateDay, descartando os componentes de tempo.
+     * @param dt Objeto DateTime.
+     * @throws runtime_error se a data resultante for inválida.
+     */
+    DateDay(const struct DateTime& dt);
+    
+    /**
+     * @brief Construtor que inicializa a data a partir de uma string.
+     *
+     * A string deve estar no formato "DD-MM-YYYY".
+     * @param data String representando a data.
+     * @throws runtime_error se o formato ou a data forem inválidos.
+     */
+    DateDay(const string& data) {
+        size_t pos1 = data.find('-');
+        size_t pos2 = data.find('-', pos1 + 1);
+        if (pos1 == string::npos || pos2 == string::npos)
+            throw runtime_error("Formato de data inválido");
+        dia = stoi(data.substr(0, pos1));
+        mes = stoi(data.substr(pos1 + 1, pos2 - pos1 - 1));
+        ano = stoi(data.substr(pos2 + 1));
+        if (!isValid()) throw runtime_error("Data inválida");
+    }
+
+    /// Destrutor padrão.
+    ~DateDay() = default;
+    
+    /**
+     * @brief Verifica se a data é válida.
+     * @return true se a data for válida, false caso contrário.
+     */
+    bool isValid() const {
+        if (ano < 1 || mes < 1 || mes > 12 || dia < 1) return false;
+        int diasPorMes[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        bool bissexto = (ano % 400 == 0) || (ano % 4 == 0 && ano % 100 != 0);
+        if (bissexto) diasPorMes[1] = 29;
+        return dia <= diasPorMes[mes - 1];
+    }
+
+    /**
+     * @brief Operador de inserção em fluxo.
+     * @param os Fluxo de saída.
+     * @param dt Instância de DateDay.
+     * @return Fluxo de saída atualizado.
+     */
+    friend ostream& operator<<(ostream& os, const DateDay& dt) {
+        os << dt.dia << "-" << dt.mes << "-" << dt.ano;
+        return os;
+    }
+
+    /**
+     * @brief Operador de extração de fluxo.
+     * @param is Fluxo de entrada.
+     * @param dt Instância de DateDay.
+     * @return Fluxo de entrada atualizado.
+     * @throws runtime_error se o formato da string for inválido.
+     */
+    friend istream& operator>>(istream& is, DateDay& dt) {
+        string data;
+        is >> data;
+        size_t pos1 = data.find('-');
+        size_t pos2 = data.find('-', pos1 + 1);
+        if (pos1 == string::npos || pos2 == string::npos)
+            throw runtime_error("Formato de data inválido");
+        dt.dia = stoi(data.substr(0, pos1));
+        dt.mes = stoi(data.substr(pos1 + 1, pos2 - pos1 - 1));
+        dt.ano = stoi(data.substr(pos2 + 1));
+        if (!dt.isValid()) throw runtime_error("Data inválida");
+        return is;
+    }
+
+    /**
+     * @brief Operador de atribuição.
+     * @param other Objeto DateDay a ser atribuído.
+     * @return Referência para o objeto atribuído.
+     */
+    DateDay& operator=(const DateDay& other) {
+        if (this != &other) {
+            dia = other.dia;
+            mes = other.mes;
+            ano = other.ano;
+        }
+        return *this;
+    }
+
+    /**
+     * @brief Operador de igualdade.
+     * @param other Objeto DateDay a ser comparado.
+     * @return true se as datas forem iguais; false caso contrário.
+     */
+    bool operator==(const DateDay& other) const {
+        return (ano == other.ano) && (mes == other.mes) && (dia == other.dia);
+    }
+
+    /**
+     * @brief Operador "menor que".
+     * @param other Objeto DateDay a ser comparado.
+     * @return true se esta data for anterior a other; false caso contrário.
+     */
+    bool operator<(const DateDay& other) const {
+        if (ano != other.ano) return ano < other.ano;
+        else if (mes != other.mes) return mes < other.mes;
+        else return dia < other.dia;
+    }
+
+    /**
+     * @brief Operador "maior que".
+     * @param other Objeto DateDay a ser comparado.
+     * @return true se esta data for posterior a other; false caso contrário.
+     */
+    bool operator>(const DateDay& other) const {
+        return other < *this;
+    }
+
+    /**
+     * @brief Operador de desigualdade.
+     * @param other Objeto DateDay a ser comparado.
+     * @return true se as datas forem diferentes; false caso contrário.
+     */
+    bool operator!=(const DateDay& other) const {
+        return !(*this == other);
+    }
+
+    /**
+     * @brief Operador "menor ou igual".
+     * @param other Objeto DateDay a ser comparado.
+     * @return true se esta data for anterior ou igual a other; false caso contrário.
+     */
+    bool operator<=(const DateDay& other) const {
+        return !(*this > other);
+    }
+    
+    /**
+     * @brief Operador "maior ou igual".
+     * @param other Objeto DateDay a ser comparado.
+     * @return true se esta data for posterior ou igual a other; false caso contrário.
+     */
+    bool operator>=(const DateDay& other) const {
+        return !(*this < other);
+    }
+};
+
+/**
+ * @brief Representa uma data e hora.
+ *
+ * A estrutura DateTime encapsula uma data (dia, mês e ano) e o horário (hora, minuto e segundo).
+ * Fornece construtores para inicialização a partir de valores individuais, de uma string ou de um objeto DateDay,
+ * além de métodos de validação, operadores de fluxo e comparação.
+ */
+struct DateTime {
+    int dia;     ///< Dia do mês.
+    int mes;     ///< Mês do ano.
+    int ano;     ///< Ano.
+    int hora;    ///< Hora do dia (0-23).
+    int minuto;  ///< Minuto (0-59).
+    int segundo; ///< Segundo (0-59).
+
+    /**
+     * @brief Construtor que inicializa a data e hora com valores fornecidos.
+     * @param d Dia.
+     * @param m Mês.
+     * @param a Ano.
+     * @param h Hora.
+     * @param min Minuto.
+     * @param s Segundo.
+     * @throws runtime_error se a data/hora for inválida.
+     */
+    DateTime(int d, int m, int a, int h, int min, int s) : dia(d), mes(m), ano(a), hora(h), minuto(min), segundo(s) {
+        if (!isValid()) throw runtime_error("Data inválida");
+    }
+
+    /**
+     * @brief Construtor padrão.
+     *
+     * Inicializa a data com 1-1-1 e o horário com 00:00:00.
+     */
+    DateTime() : dia(1), mes(1), ano(1), hora(0), minuto(0), segundo(0) {}
+
+    /**
+     * @brief Construtor de cópia.
+     * @param dt Objeto DateTime a ser copiado.
+     */
+    DateTime(const DateTime& dt) : dia(dt.dia), mes(dt.mes), ano(dt.ano), hora(dt.hora), minuto(dt.minuto), segundo(dt.segundo) {}
+
+    /**
+     * @brief Construtor que inicializa a data/hora a partir de um DateDay.
+     *
+     * O horário é definido como 00:00:00.
+     * @param dt Objeto DateDay.
+     */
+    DateTime(const DateDay& dt) : dia(dt.dia), mes(dt.mes), ano(dt.ano), hora(0), minuto(0), segundo(0) {}
+
+    /**
+     * @brief Construtor que inicializa a data/hora a partir de uma string.
+     *
+     * A string deve estar no formato "DD-MM-YYYY HH:MM:SS".
+     * @param data String representando a data e hora.
+     * @throws runtime_error se o formato ou a data/hora forem inválidos.
+     */
+    DateTime(const string& data) {
+        size_t pos1 = data.find('-');
+        size_t pos2 = data.find('-', pos1 + 1);
+        size_t pos3 = data.find(' ', pos2 + 1);
+        size_t pos4 = data.find(':', pos3 + 1);
+        size_t pos5 = data.find(':', pos4 + 1);
+        if (pos1 == string::npos || pos2 == string::npos || pos3 == string::npos || pos4 == string::npos || pos5 == string::npos)
+            throw runtime_error("Formato de data inválido");
+        dia = stoi(data.substr(0, pos1));
+        mes = stoi(data.substr(pos1 + 1, pos2 - pos1 - 1));
+        ano = stoi(data.substr(pos2 + 1, pos3 - pos2 - 1));
+        hora = stoi(data.substr(pos3 + 1, pos4 - pos3 - 1));
+        minuto = stoi(data.substr(pos4 + 1, pos5 - pos4 - 1));
+        segundo = stoi(data.substr(pos5 + 1));
+        if (!isValid()) throw runtime_error("Data inválida");
+    }
+
+    /// Destrutor padrão.
+    ~DateTime() = default;
+
+    /**
+     * @brief Verifica se a data e hora são válidas.
+     * @return true se válidas; false caso contrário.
+     */
+    bool isValid() const {
+        if (ano < 1 || mes < 1 || mes > 12 || dia < 1 || hora < 0 || hora > 23 || minuto < 0 || minuto > 59 || segundo < 0 || segundo > 59)
+            return false;
+        int diasPorMes[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        bool bissexto = (ano % 400 == 0) || (ano % 4 == 0 && ano % 100 != 0);
+        if (bissexto) diasPorMes[1] = 29;
+        return dia <= diasPorMes[mes - 1];
+    }
+
+    /**
+     * @brief Operador de inserção em fluxo.
+     * @param os Fluxo de saída.
+     * @param dt Objeto DateTime.
+     * @return Fluxo de saída atualizado.
+     */
+    friend ostream& operator<<(ostream& os, const DateTime& dt) {
+        os << dt.dia << "-" << dt.mes << "-" << dt.ano << " " << dt.hora << ":" << dt.minuto << ":" << dt.segundo;
+        return os;
+    }
+
+    /**
+     * @brief Operador de extração de fluxo.
+     * @param is Fluxo de entrada.
+     * @param dt Objeto DateTime.
+     * @return Fluxo de entrada atualizado.
+     * @throws runtime_error se o formato da string for inválido.
+     */
+    friend istream& operator>>(istream& is, DateTime& dt) {
+        string data;
+        is >> data;
+        size_t pos1 = data.find('-');
+        size_t pos2 = data.find('-', pos1 + 1);
+        size_t pos3 = data.find(' ', pos2 + 1);
+        size_t pos4 = data.find(':', pos3 + 1);
+        size_t pos5 = data.find(':', pos4 + 1);
+        if (pos1 == string::npos || pos2 == string::npos || pos3 == string::npos || pos4 == string::npos || pos5 == string::npos)
+            throw runtime_error("Formato de data inválido");
+        dt.dia = stoi(data.substr(0, pos1));
+        dt.mes = stoi(data.substr(pos1 + 1, pos2 - pos1 - 1));
+        dt.ano = stoi(data.substr(pos2 + 1, pos3 - pos2 - 1));
+        dt.hora = stoi(data.substr(pos3 + 1, pos4 - pos3 - 1));
+        dt.minuto = stoi(data.substr(pos4 + 1, pos5 - pos4 - 1));
+        dt.segundo = stoi(data.substr(pos5 + 1));
+        if (!dt.isValid()) throw runtime_error("Data inválida");
+        return is;
+    }
+
+    /**
+     * @brief Operador de atribuição.
+     * @param other Objeto DateTime a ser atribuído.
+     * @return Referência para o objeto atribuído.
+     */
+    DateTime& operator=(const DateTime& other) {
+        if (this != &other) {
+            dia = other.dia;
+            mes = other.mes;
+            ano = other.ano;
+            hora = other.hora;
+            minuto = other.minuto;
+            segundo = other.segundo;
+        }
+        return *this;
+    }
+
+    /**
+     * @brief Operador de igualdade.
+     * @param other Objeto DateTime a ser comparado.
+     * @return true se os objetos forem iguais; false caso contrário.
+     */
+    bool operator==(const DateTime& other) const {
+        return (ano == other.ano) && (mes == other.mes) && (dia == other.dia) && (hora == other.hora) && (minuto == other.minuto) && (segundo == other.segundo);
+    }
+
+    /**
+     * @brief Operador "menor que".
+     * @param other Objeto DateTime a ser comparado.
+     * @return true se este objeto for anterior a other; false caso contrário.
+     */
+    bool operator<(const DateTime& other) const {
+        if (ano != other.ano) return ano < other.ano;
+        else if (mes != other.mes) return mes < other.mes;
+        else if (dia != other.dia) return dia < other.dia;
+        else if (hora != other.hora) return hora < other.hora;
+        else if (minuto != other.minuto) return minuto < other.minuto;
+        else return segundo < other.segundo;
+    }
+
+    /**
+     * @brief Operador "maior que".
+     * @param other Objeto DateTime a ser comparado.
+     * @return true se este objeto for posterior a other; false caso contrário.
+     */
+    bool operator>(const DateTime& other) const {
+        return other < *this;
+    }
+
+    /**
+     * @brief Operador de desigualdade.
+     * @param other Objeto DateTime a ser comparado.
+     * @return true se os objetos forem diferentes; false caso contrário.
+     */
+    bool operator!=(const DateTime& other) const {
+        return !(*this == other);
+    }
+
+    /**
+     * @brief Operador "menor ou igual".
+     * @param other Objeto DateTime a ser comparado.
+     * @return true se este objeto for anterior ou igual a other; false caso contrário.
+     */
+    bool operator<=(const DateTime& other) const {
+        return !(*this > other);
+    }
+
+    /**
+     * @brief Operador "maior ou igual".
+     * @param other Objeto DateTime a ser comparado.
+     * @return true se este objeto for posterior ou igual a other; false caso contrário.
+     */
+    bool operator>=(const DateTime& other) const {
+        return !(*this < other);
+    }
+};
+
+/**
+ * @brief Implementação do construtor de conversão de DateTime para DateDay.
+ *
+ * Converte um objeto DateTime em um DateDay, descartando as informações de tempo.
+ * @param dt Objeto DateTime a ser convertido.
+ * @throws runtime_error se a data resultante for inválida.
+ */
+DateDay::DateDay(const DateTime& dt) : dia(dt.dia), mes(dt.mes), ano(dt.ano) {
+    if (!isValid())
+        throw runtime_error("Data inválida");
+}
+
+#define DTYPES int, double, string, bool, char, DateDay, DateTime
 #define VDTYPES variant<DTYPES>
 
 /**
@@ -21,7 +421,9 @@ const map<string, string> TYPEMAP = {
     {typeid(double).name(), "double"},
     {typeid(string).name(), "string"},
     {typeid(bool).name(), "bool"},
-    {typeid(char).name(), "char"}
+    {typeid(char).name(), "char"},
+    {typeid(DateDay).name(), "dateday"},
+    {typeid(DateTime).name(), "datetime"}
 };
 
 /**
@@ -43,35 +445,40 @@ public:
     Series(const string& columnName, const string& columnType) : strColumnName(columnName), strColumnType(columnType) {}
 
     /**
-     * @brief Altera o nome da coluna
+     * @brief Altera o nome da coluna.
+     * @param strNovoNome Novo nome da coluna.
      */
     void setName(string& strNovoNome){
         strColumnName = strNovoNome;
     }
 
     /**
-     * @brief Retorna o nome da coluna
+     * @brief Retorna o nome da coluna.
+     * @return Nome da coluna.
      */
     string strGetName() {
         return strColumnName;
     }
 
     /**
-     * @brief Retorna o tipo da coluna
+     * @brief Retorna o tipo da coluna.
+     * @return Tipo da coluna.
      */
     string strGetType() {
         return strColumnType;
     }
 
     /**
-     * @brief Retorna o número de elementos da coluna
+     * @brief Retorna o número de elementos da coluna.
+     * @return Tamanho do vetor de dados.
      */
     size_t iGetSize(){
         return vecColumnData.size();
     }
 
     /**
-     * @brief Retorna o vetor de elementos da coluna
+     * @brief Retorna o vetor de dados da coluna.
+     * @return Vetor contendo os dados.
      */
     vector<VDTYPES> getData() {
         return vecColumnData;
@@ -120,7 +527,6 @@ public:
         vecColumnData.erase(vecColumnData.begin() + iIndex);
         return true;
     }
-
 
     /**
      * @brief Retorna um elemento da coluna com base no índice fornecido
