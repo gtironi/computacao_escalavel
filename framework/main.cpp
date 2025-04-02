@@ -11,6 +11,7 @@ int main() {
     intColumn.bAdicionaElemento(25);
     intColumn.bAdicionaElemento(30);
     intColumn.bAdicionaElemento(22);
+    intColumn.bRemovePeloIndex(0);
 
     strColumn.bAdicionaElemento("Alice");
     strColumn.bAdicionaElemento("Bob");

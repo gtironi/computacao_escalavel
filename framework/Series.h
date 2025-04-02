@@ -68,6 +68,22 @@ public:
             return false;
         }
     }
+    
+    /**
+     * @brief Remove um elemento da coluna com base no índice.
+     * @param iIndex O índice do elemento que deve ser removido.
+     * @return true se a remoção for bem-sucedida, false caso contrário.
+     */
+    bool bRemovePeloIndex(int iIndex) {
+        if (iIndex < 0 || iIndex >= vecColumnData.size()) {
+            cerr << "Índice fora dos limites." << endl;
+            return false;
+        }
+
+        vecColumnData.erase(vecColumnData.begin() + iIndex);
+        return true;
+    }
+
 
     /**
      * @brief Retorna um elemento da coluna com base no índice fornecido

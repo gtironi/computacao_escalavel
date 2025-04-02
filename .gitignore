@@ -33,6 +33,9 @@
 *.out
 *.app
 
+## --------------------- C++ ------------------------
+/framework/programa
+
 ## --------------------- Python ---------------------
 
 # Byte-compiled / optimized / DLL files
