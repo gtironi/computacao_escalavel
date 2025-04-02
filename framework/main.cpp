@@ -62,8 +62,8 @@ int main() {
     */
 
     ExtratorSQL extrator("../database.db");
-    extrator.ExtratorColunas("Clientes");
-    Dataframe df = extrator.ConstrutorDataframe("Clientes");
+    extrator.ExtratorColunas("Funcionarios");
+    Dataframe df = extrator.ConstrutorDataframe("Funcionarios");
 
     cout << "Shape do DataFrame (Linhas, Colunas): ";
     auto shape = df.getShape();
