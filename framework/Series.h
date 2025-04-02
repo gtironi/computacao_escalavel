@@ -6,11 +6,43 @@
 #include <vector>
 #include <map>
 #include <variant>
-#include <numeric> 
+#include <numeric>
 
 using namespace std;
 
-#define DTYPES int, double, string, bool, char
+struct Datetime {
+    int dia;
+    int mes;
+    int ano;
+
+    Datetime(int d, int m, int a) : dia(d), mes(m), ano(a) {
+        if (!isValid()) throw runtime_error("Data inválida");
+    }
+
+    Datetime() : dia(0), mes(0), ano(0) {}
+
+    Datetime(const Datetime& dt) : dia(dt.dia), mes(dt.mes), ano(dt.ano) {}
+
+    Datetime(const string& data) {
+        size_t pos1 = data.find('-');
+        size_t pos2 = data.find('-', pos1 + 1);
+        dia = stoi(data.substr(0, pos1));
+        mes = stoi(data.substr(pos1 + 1, pos2 - pos1 - 1));
+        ano = stoi(data.substr(pos2 + 1));
+        if (!isValid()) throw runtime_error("Data inválida");
+    }
+
+    bool isValid() const {
+        if (ano < 1 || mes < 1 || mes > 12 || dia < 1) return false;
+        int diasPorMes[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        bool bissexto = (ano % 400 == 0) || (ano % 4 == 0 && ano % 100 != 0);
+        if (bissexto) diasPorMes[1] = 29;
+        return dia <= diasPorMes[mes - 1];
+    }
+
+};
+
+#define DTYPES int, double, string, bool, char, Datetime
 #define VDTYPES variant<DTYPES>
 
 /**
@@ -21,7 +53,8 @@ const map<string, string> TYPEMAP = {
     {typeid(double).name(), "double"},
     {typeid(string).name(), "string"},
     {typeid(bool).name(), "bool"},
-    {typeid(char).name(), "char"}
+    {typeid(char).name(), "char"},
+    {typeid(Datetime).name(), "datetime"}
 };
 
 /**
