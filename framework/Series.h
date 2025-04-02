@@ -10,30 +10,35 @@
 
 using namespace std;
 
-struct Datetime {
+struct DateDay {
     int dia;
     int mes;
     int ano;
     
-    Datetime(int d, int m, int a) : dia(d), mes(m), ano(a) {
+    DateDay(int d, int m, int a) : dia(d), mes(m), ano(a) {
         if (!isValid()) throw runtime_error("Data inválida");
     }
     
-    Datetime() : dia(0), mes(0), ano(0) {}
+    DateDay() : dia(1), mes(1), ano(1) {}
     
-    Datetime(const Datetime& dt) : dia(dt.dia), mes(dt.mes), ano(dt.ano) {}
+    DateDay(const DateDay& dt) : dia(dt.dia), mes(dt.mes), ano(dt.ano) {}
+
+    DateDay(const DateTime& dt) : dia(dt.dia), mes(dt.mes), ano(dt.ano) {}
     
-    Datetime(const string& data) {
+    DateDay(const string& data) {
         size_t pos1 = data.find('-');
         size_t pos2 = data.find('-', pos1 + 1);
+        if(pos1 == string::npos || pos2 == string::npos)
+            throw runtime_error("Formato de data inválido");
         dia = stoi(data.substr(0, pos1));
         mes = stoi(data.substr(pos1 + 1, pos2 - pos1 - 1));
         ano = stoi(data.substr(pos2 + 1));
         if (!isValid()) throw runtime_error("Data inválida");
     }
 
-    ~Datetime() = default;
+    ~DateDay() = default;
     
+    // Verifica se a data é válida
     bool isValid() const {
         if (ano < 1 || mes < 1 || mes > 12 || dia < 1) return false;
         int diasPorMes[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
@@ -42,16 +47,18 @@ struct Datetime {
         return dia <= diasPorMes[mes - 1];
     }
 
-    friend ostream& operator<<(ostream& os, const Datetime& dt) {
+    friend ostream& operator<<(ostream& os, const DateDay& dt) {
         os << dt.dia << "-" << dt.mes << "-" << dt.ano;
         return os;
     }
 
-    friend istream& operator>>(istream& is, Datetime& dt) {
+    friend istream& operator>>(istream& is, DateDay& dt) {
         string data;
         is >> data;
         size_t pos1 = data.find('-');
         size_t pos2 = data.find('-', pos1 + 1);
+        if(pos1 == string::npos || pos2 == string::npos)
+            throw runtime_error("Formato de data inválido");
         dt.dia = stoi(data.substr(0, pos1));
         dt.mes = stoi(data.substr(pos1 + 1, pos2 - pos1 - 1));
         dt.ano = stoi(data.substr(pos2 + 1));
@@ -59,7 +66,7 @@ struct Datetime {
         return is;
     }
 
-    Datetime& operator=(const Datetime& other) {
+    DateDay& operator=(const DateDay& other) {
         if (this != &other) {
             dia = other.dia;
             mes = other.mes;
@@ -68,36 +75,89 @@ struct Datetime {
         return *this;
     }
 
-    bool operator==(const Datetime& other) const {
+    bool operator==(const DateDay& other) const {
         return (ano == other.ano) && (mes == other.mes) && (dia == other.dia);
     }
 
-    bool operator<(const Datetime& other) const {
+    bool operator<(const DateDay& other) const {
         if (ano != other.ano) return ano < other.ano;
         else if (mes != other.mes) return mes < other.mes;
         else return dia < other.dia;
     }
 
-    bool operator>(const Datetime& other) const {
-        if (ano != other.ano) return ano > other.ano;
-        else if (mes != other.mes) return mes > other.mes;
-        else return dia > other.dia;
+    bool operator>(const DateDay& other) const {
+        return other < *this;
     }
 
-    bool operator!=(const Datetime& other) const {
+    bool operator!=(const DateDay& other) const {
         return !(*this == other);
     }
 
-    bool operator<=(const Datetime& other) const {
-        return (*this < other) || (*this == other);
+    bool operator<=(const DateDay& other) const {
+        return !(*this > other);
     }
     
-    bool operator>=(const Datetime& other) const {
-        return (*this > other) || (*this == other);
+    bool operator>=(const DateDay& other) const {
+        return !(*this < other);
     }
 };
 
-#define DTYPES int, double, string, bool, char, Datetime
+struct DateTime {
+    int dia;
+    int mes;
+    int ano;
+    int hora;
+    int minuto;
+    int segundo;
+
+    DateTime(int d, int m, int a, int h, int min, int s) : dia(d), mes(m), ano(a), hora(h), minuto(min), segundo(s) {
+        if (!isValid()) throw runtime_error("Data inválida");
+    }
+
+    DateTime() : dia(1), mes(1), ano(1), hora(0), minuto(0), segundo(0) {}
+
+    DateTime(const DateTime& dt) : dia(dt.dia), mes(dt.mes), ano(dt.ano), hora(dt.hora), minuto(dt.minuto), segundo(dt.segundo) {}
+
+    DateTime(const DateDay& dt) : dia(dt.dia), mes(dt.mes), ano(dt.ano), hora(0), minuto(0), segundo(0) {}
+
+    DateTime(const string& data) {
+        size_t pos1 = data.find('-');
+        size_t pos2 = data.find('-', pos1 + 1);
+        size_t pos3 = data.find(' ', pos2 + 1);
+        size_t pos4 = data.find(':', pos3 + 1);
+        size_t pos5 = data.find(':', pos4 + 1);
+        if(pos1 == string::npos || pos2 == string::npos || pos3 == string::npos || pos4 == string::npos || pos5 == string::npos)
+            throw runtime_error("Formato de data inválido");
+        dia = stoi(data.substr(0, pos1));
+        mes = stoi(data.substr(pos1 + 1, pos2 - pos1 - 1));
+        ano = stoi(data.substr(pos2 + 1, pos3 - pos2 - 1));
+        hora = stoi(data.substr(pos3 + 1, pos4 - pos3 - 1));
+        minuto = stoi(data.substr(pos4 + 1, pos5 - pos4 - 1));
+        segundo = stoi(data.substr(pos5 + 1));
+        if (!isValid()) throw runtime_error("Data inválida");
+    }
+
+    ~DateTime() = default;
+
+    // Verifica se a data é válida
+    bool isValid() const {
+        if (ano < 1 || mes < 1 || mes > 12 || dia < 1 || hora < 0 || hora > 23 || minuto < 0 || minuto > 59 || segundo < 0 || segundo > 59) return false;
+        int diasPorMes[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        bool bissexto = (ano % 400 == 0) || (ano % 4 == 0 && ano % 100 != 0);
+        if (bissexto) diasPorMes[1] = 29;
+        return dia <= diasPorMes[mes - 1];
+    }
+
+    friend ostream& operator<<(ostream& os, const DateTime& dt) {
+        os << dt.dia << "-" << dt.mes << "-" << dt.ano << " " << dt.hora << ":" << dt.minuto << ":" << dt.segundo;
+        return os;
+    }
+
+}
+
+
+
+#define DTYPES int, double, string, bool, char, DateDay
 #define VDTYPES variant<DTYPES>
 
 /**
@@ -109,7 +169,7 @@ const map<string, string> TYPEMAP = {
     {typeid(string).name(), "string"},
     {typeid(bool).name(), "bool"},
     {typeid(char).name(), "char"},
-    {typeid(Datetime).name(), "datetime"}
+    {typeid(DateDay).name(), "DateDay"}
 };
 
 /**
