@@ -79,9 +79,15 @@ int main() {
     extrator.ExtratorColunas();
     extrator.ConstrutorDataframe();
     Dataframe df = extrator.getDataframe();
+    for (auto &serie : df.columns){
+        serie.AjustandoType();
+    }
     cout << "Shape do DataFrame (Linhas, Colunas): ";
     auto shape = df.getShape();
     cout << "(" << shape.first << ", " << shape.second << ")" << endl;
-
+    cout << "\nDados das colunas:" << endl;
+    for (auto &col : df.columns) {
+        cout << col.strGetName() << " - " << col.strGetType() << " - " << col.mean() << endl;
+    }
     return 0;
 }

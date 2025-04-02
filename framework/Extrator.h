@@ -64,6 +64,10 @@ class Extrator {
     public:
         Extrator() = default;
         virtual ~Extrator() = default;
+    private:
+        vector<string> strColumnsName; 
+        vector<string> strColumnsType; 
+        Dataframe df; 
 };
 
 /**
@@ -99,6 +103,9 @@ class ExtratorCSV : public Extrator {
             }
         }
 
+        /**
+         * @brief Retorna o dataframe.
+         */
         Dataframe getDataframe(){
             return df;
         }
@@ -160,18 +167,8 @@ class ExtratorCSV : public Extrator {
                 while (getline(ss, cell, ',')) {
                     if (colIndex < strColumnsType.size()) {
                         string tipo = strColumnsType[colIndex];
-
-                        if (tipo == "int") {
-                            convertedRow.push_back(stoi(cell));
-                        } else if (tipo == "double") {
-                            convertedRow.push_back(stod(cell));
-                        } else if (tipo == "bool") {
-                            convertedRow.push_back(cell == "1" || cell == "true");
-                        } else if (tipo == "char" && cell.length() == 1) {
-                            convertedRow.push_back(cell[0]);
-                        } else {
-                            convertedRow.push_back(cell); 
-                        }
+                        convertedRow.push_back(cell); 
+                        
                     } else {
                         convertedRow.push_back(cell); 
                     }
@@ -192,6 +189,7 @@ class ExtratorSQL : public Extrator {
         sqlite3* bancoDeDados;
         vector<string> strColumnsName;
         vector<string> strColumnsType;
+        Dataframe df;
     public:
         /**
          * @brief Construtor que abre a conexão com o banco de dados SQLite.
@@ -214,6 +212,13 @@ class ExtratorSQL : public Extrator {
                 sqlite3_close(bancoDeDados);
                 cout << "Banco de dados fechado com sucesso." << endl;
             }
+        }
+
+        /**
+         * @brief Retorna o dataframe.
+         */
+        Dataframe getDataframe(){
+            return df;
         }
 
         /**
@@ -259,9 +264,7 @@ class ExtratorSQL : public Extrator {
          * @param nomeTabela Nome da tabela que será extraída.
          * @return Dataframe contendo as colunas da tabela.
          */
-        Dataframe ConstrutorDataframe(const string& nomeTabela) {
-            Dataframe df; 
-
+        void ConstrutorDataframe(const string& nomeTabela) {
             for (size_t i = 0; i < strColumnsName.size(); ++i) {
                 const string& coluna = strColumnsName[i];  
                 const string& tipo = strColumnsType[i];   
@@ -284,8 +287,6 @@ class ExtratorSQL : public Extrator {
                     cerr << "Erro ao preparar consulta SQL para coluna: " << coluna << endl;
                 }
             }
-
-            return df; 
         }
 };
 
