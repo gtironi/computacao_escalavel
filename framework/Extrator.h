@@ -168,7 +168,7 @@ class ExtratorCSV : public Extrator {
                     if (colIndex < strColumnsType.size()) {
                         string tipo = strColumnsType[colIndex];
                         convertedRow.push_back(cell); 
-                        
+
                     } else {
                         convertedRow.push_back(cell); 
                     }
@@ -176,6 +176,10 @@ class ExtratorCSV : public Extrator {
                 }
 
                 df.adicionaLinha(convertedRow); 
+            }
+
+            for (auto &col : df.columns){
+                col.AjustandoType();
             }
         }
 

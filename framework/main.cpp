@@ -79,9 +79,6 @@ int main() {
     extrator.ExtratorColunas();
     extrator.ConstrutorDataframe();
     Dataframe df = extrator.getDataframe();
-    for (auto &serie : df.columns){
-        serie.AjustandoType();
-    }
     cout << "Shape do DataFrame (Linhas, Colunas): ";
     auto shape = df.getShape();
     cout << "(" << shape.first << ", " << shape.second << ")" << endl;
