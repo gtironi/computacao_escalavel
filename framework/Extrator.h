@@ -64,6 +64,10 @@ class Extrator {
     public:
         Extrator() = default;
         virtual ~Extrator() = default;
+    private:
+        vector<string> strColumnsName; 
+        vector<string> strColumnsType; 
+        Dataframe df; 
 };
 
 /**
@@ -98,6 +102,13 @@ class ExtratorCSV : public Extrator {
                 cout << "Arquivo fechado com sucesso." << endl;
             }
         }
+
+        /**
+         * @brief Retorna o dataframe.
+         */
+        Dataframe getDataframe(){
+            return df;
+        }
     
         /**
          * @brief Retorna o vetor com os nomes das colunas.
@@ -125,6 +136,53 @@ class ExtratorCSV : public Extrator {
                 cerr << "Erro ao ler o cabeçalho do CSV." << endl;
             }
         }
+
+        /**
+         * @brief Constrói um DataFrame a partir dos dados do arquivo CSV, ignorando o cabeçalho.
+         *
+         * Lê linha por linha do arquivo CSV (exceto a primeira) e adiciona os valores
+         * ao DataFrame, convertendo-os para os tipos apropriados.
+         */
+        void ConstrutorDataframe() {
+
+            for (const string& col : strColumnsName){
+                Series auxSerie(col, "string");
+                df.adicionaColuna(auxSerie);
+            }
+
+            string line;
+            bool isFirstRow = true; 
+
+            while (getline(file, line)) {
+                if (isFirstRow) { 
+                    isFirstRow = false; 
+                    continue;
+                }
+
+                stringstream ss(line);
+                string cell;
+                vector<VDTYPES> convertedRow;
+
+                size_t colIndex = 0;
+                while (getline(ss, cell, ',')) {
+                    if (colIndex < strColumnsType.size()) {
+                        string tipo = strColumnsType[colIndex];
+                        convertedRow.push_back(cell); 
+
+                    } else {
+                        convertedRow.push_back(cell); 
+                    }
+                    colIndex++;
+                }
+
+                df.adicionaLinha(convertedRow); 
+            }
+
+            for (auto &col : df.columns){
+                col.AjustandoType();
+            }
+        }
+
 };
 
 /**
@@ -135,6 +193,7 @@ class ExtratorSQL : public Extrator {
         sqlite3* bancoDeDados;
         vector<string> strColumnsName;
         vector<string> strColumnsType;
+        Dataframe df;
     public:
         /**
          * @brief Construtor que abre a conexão com o banco de dados SQLite.
@@ -157,6 +216,13 @@ class ExtratorSQL : public Extrator {
                 sqlite3_close(bancoDeDados);
                 cout << "Banco de dados fechado com sucesso." << endl;
             }
+        }
+
+        /**
+         * @brief Retorna o dataframe.
+         */
+        Dataframe getDataframe(){
+            return df;
         }
 
         /**
@@ -202,9 +268,7 @@ class ExtratorSQL : public Extrator {
          * @param nomeTabela Nome da tabela que será extraída.
          * @return Dataframe contendo as colunas da tabela.
          */
-        Dataframe ConstrutorDataframe(const string& nomeTabela) {
-            Dataframe df; 
-
+        void ConstrutorDataframe(const string& nomeTabela) {
             for (size_t i = 0; i < strColumnsName.size(); ++i) {
                 const string& coluna = strColumnsName[i];  
                 const string& tipo = strColumnsType[i];   
@@ -227,8 +291,10 @@ class ExtratorSQL : public Extrator {
                     cerr << "Erro ao preparar consulta SQL para coluna: " << coluna << endl;
                 }
             }
-
-            return df; 
+            
+            for (auto &col : df.columns){
+                col.AjustandoType();
+            }
         }
 };
 
