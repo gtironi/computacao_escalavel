@@ -40,6 +40,11 @@ struct Datetime {
         return dia <= diasPorMes[mes - 1];
     }
 
+    friend ostream& operator<<(ostream& os, const Datetime& dt) {
+        os << dt.dia << "-" << dt.mes << "-" << dt.ano;
+        return os;
+    }
+
 };
 
 #define DTYPES int, double, string, bool, char, Datetime
