@@ -1,7 +1,9 @@
 #include "Dataframe.h"
 #include "Series.h"
+#include "Extrator.h"
 
 int main() {
+    /*
     // Criando colunas de diferentes tipos
     Series intColumn("Idade", "int");
     Series strColumn("Nome", "string");
@@ -57,6 +59,12 @@ int main() {
     for (auto &col : df.columns) {
         cout << col.mean() << endl;
     }
-
+    */
+   
+    ExtratorSQL extrator("../database.db");
+    extrator.ExtratorColunas("Clientes");
+    for (size_t i = 0; i < extrator.strColumnsName.size(); i++) {
+        cout << extrator.strColumnsName[i] << endl;
+    }
     return 0;
 }
