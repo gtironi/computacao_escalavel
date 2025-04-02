@@ -41,7 +41,7 @@ int main() {
     df.adicionaLinha(novaLinha);
 
     // Removendo uma linha
-    df.removeLinha(3);
+    df.removeLinha(1);
 
     // Exibindo informações
     cout << "Shape do DataFrame (Linhas, Colunas): ";

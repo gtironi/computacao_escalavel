@@ -1,3 +1,6 @@
+#ifndef EXTRATOR_H
+#define EXTRATOR_H
+
 #include <iostream>
 #include <sqlite3.h>
 #include <string>
@@ -165,3 +168,5 @@ class ExtratorSQL : public Extrator {
             return df; 
         }
 };
+
+#endif
