@@ -67,6 +67,34 @@ struct Datetime {
         }
         return *this;
     }
+
+    bool operator==(const Datetime& other) const {
+        return (ano == other.ano) && (mes == other.mes) && (dia == other.dia);
+    }
+
+    bool operator<(const Datetime& other) const {
+        if (ano != other.ano) return ano < other.ano;
+        else if (mes != other.mes) return mes < other.mes;
+        else return dia < other.dia;
+    }
+
+    bool operator>(const Datetime& other) const {
+        if (ano != other.ano) return ano > other.ano;
+        else if (mes != other.mes) return mes > other.mes;
+        else return dia > other.dia;
+    }
+
+    bool operator!=(const Datetime& other) const {
+        return !(*this == other);
+    }
+
+    bool operator<=(const Datetime& other) const {
+        return (*this < other) || (*this == other);
+    }
+    
+    bool operator>=(const Datetime& other) const {
+        return (*this > other) || (*this == other);
+    }
 };
 
 #define DTYPES int, double, string, bool, char, Datetime
