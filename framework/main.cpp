@@ -74,6 +74,13 @@ int main() {
         cout << col.strGetName() << " - " << col.strGetType() << " - " << col.mean() << endl;
     }
 
+    Dataframe df = extrator.getDataframe();
+    Dataframe df_2 = df.filtroByValue("salario", 1500);
+
+    cout << "Shape do DataFrame (Linhas, Colunas): ";
+    auto shape2 = df_2.getShape();
+    cout << "(" << shape2.first << ", " << shape2.second << ")" << endl;
+
     /*
     ExtratorCSV extrator("../dadosfake.csv");
     extrator.ExtratorColunas();
