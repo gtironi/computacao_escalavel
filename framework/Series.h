@@ -14,15 +14,15 @@ struct Datetime {
     int dia;
     int mes;
     int ano;
-
+    
     Datetime(int d, int m, int a) : dia(d), mes(m), ano(a) {
         if (!isValid()) throw runtime_error("Data inválida");
     }
-
+    
     Datetime() : dia(0), mes(0), ano(0) {}
-
+    
     Datetime(const Datetime& dt) : dia(dt.dia), mes(dt.mes), ano(dt.ano) {}
-
+    
     Datetime(const string& data) {
         size_t pos1 = data.find('-');
         size_t pos2 = data.find('-', pos1 + 1);
@@ -32,6 +32,8 @@ struct Datetime {
         if (!isValid()) throw runtime_error("Data inválida");
     }
 
+    ~Datetime() = default;
+    
     bool isValid() const {
         if (ano < 1 || mes < 1 || mes > 12 || dia < 1) return false;
         int diasPorMes[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
@@ -45,6 +47,26 @@ struct Datetime {
         return os;
     }
 
+    friend istream& operator>>(istream& is, Datetime& dt) {
+        string data;
+        is >> data;
+        size_t pos1 = data.find('-');
+        size_t pos2 = data.find('-', pos1 + 1);
+        dt.dia = stoi(data.substr(0, pos1));
+        dt.mes = stoi(data.substr(pos1 + 1, pos2 - pos1 - 1));
+        dt.ano = stoi(data.substr(pos2 + 1));
+        if (!dt.isValid()) throw runtime_error("Data inválida");
+        return is;
+    }
+
+    Datetime& operator=(const Datetime& other) {
+        if (this != &other) {
+            dia = other.dia;
+            mes = other.mes;
+            ano = other.ano;
+        }
+        return *this;
+    }
 };
 
 #define DTYPES int, double, string, bool, char, Datetime
