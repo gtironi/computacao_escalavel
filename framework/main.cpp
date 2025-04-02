@@ -63,8 +63,16 @@ int main() {
 
     ExtratorSQL extrator("../database.db");
     extrator.ExtratorColunas("Clientes");
-    for (size_t i = 0; i < extrator.getColumnsName().size(); i++) {
-        cout << extrator.getColumnsName()[i] << " - " << extrator.getColumnsType()[i] << endl;
+    Dataframe df = extrator.ConstrutorDataframe("Clientes");
+
+    cout << "Shape do DataFrame (Linhas, Colunas): ";
+    auto shape = df.getShape();
+    cout << "(" << shape.first << ", " << shape.second << ")" << endl;
+
+    cout << "\nDados das colunas:" << endl;
+    for (auto &col : df.columns) {
+        col.printColuna();
     }
+
     return 0;
 }

@@ -4,6 +4,8 @@
 #include <vector>
 #include <map>
 #include <regex>
+#include "Series.h"
+#include "Dataframe.h"
 
 using namespace std;
 
@@ -27,12 +29,12 @@ string mapSQLToCpp(const string& sqlType) {
         {"DECIMAL", "float"},   
         {"NUMERIC", "float"},   
         {"BOOLEAN", "bool"},
-        {"TEXT", "std::string"},
-        {"CHAR", "std::string"},
-        {"VARCHAR", "std::string"},
-        {"DATE", "std::string"},
-        {"DATETIME", "std::string"},
-        {"TIMESTAMP", "std::string"}
+        {"TEXT", "string"},
+        {"CHAR", "string"},
+        {"VARCHAR", "string"},
+        {"DATE", "string"},
+        {"DATETIME", "string"},
+        {"TIMESTAMP", "string"}
     };
 
     regex varcharRegex(R"(VARCHAR\(\d+\))");
@@ -40,15 +42,15 @@ string mapSQLToCpp(const string& sqlType) {
     regex decimalRegex(R"(DECIMAL\(\d+,\d+\))");
     regex numericRegex(R"(NUMERIC\(\d+,\d+\))");
 
-    if (std::regex_match(sqlType, varcharRegex) || std::regex_match(sqlType, charRegex)) {
-        return "std::string"; 
+    if (regex_match(sqlType, varcharRegex) || regex_match(sqlType, charRegex)) {
+        return "string"; 
     } 
-    if (std::regex_match(sqlType, decimalRegex) || std::regex_match(sqlType, numericRegex)) {
+    if (regex_match(sqlType, decimalRegex) || regex_match(sqlType, numericRegex)) {
         return "float"; 
-    }
+    };
 
     return typeMap.count(sqlType) ? typeMap[sqlType] : "Desconhecido";
-}
+};
 
 /**
  * @brief Classe base para extratores de dados.
@@ -72,14 +74,14 @@ class ExtratorSQL : public Extrator {
          * @brief Construtor que abre a conexão com o banco de dados SQLite.
          * @param strPathToBd Caminho para o arquivo do banco de dados.
          */
-        ExtratorSQL(const std::string& strPathToBd) : bancoDeDados(nullptr) {
+        ExtratorSQL(const string& strPathToBd) : bancoDeDados(nullptr) {
             int exit = sqlite3_open(strPathToBd.c_str(), &bancoDeDados);
             if (exit) {
-                std::cerr << "Erro ao abrir o banco de dados: " << sqlite3_errmsg(bancoDeDados) << std::endl;
+                cerr << "Erro ao abrir o banco de dados: " << sqlite3_errmsg(bancoDeDados) << endl;
             } else {
-                std::cout << "Banco de dados aberto com sucesso." << std::endl;
+                cout << "Banco de dados aberto com sucesso." << endl;
             }
-        }
+        };
 
         /**
          * @brief Destrutor que fecha a conexão com o banco de dados.
@@ -87,7 +89,7 @@ class ExtratorSQL : public Extrator {
         ~ExtratorSQL() {
             if (bancoDeDados) {
                 sqlite3_close(bancoDeDados);
-                std::cout << "Banco de dados fechado com sucesso." << std::endl;
+                cout << "Banco de dados fechado com sucesso." << endl;
             }
         }
 
@@ -109,9 +111,11 @@ class ExtratorSQL : public Extrator {
          * @brief Extrai os nomes das colunas e seus tipos do banco de dados SQLite.
          * @param nomeTabela Nome da tabela a ser analisada.
          */
-        void ExtratorColunas(const std::string& nomeTabela) {
-            std::string sql = "PRAGMA table_info(" + nomeTabela + ");";
+        void ExtratorColunas(const string& nomeTabela) {
+            string sql = "PRAGMA table_info(" + nomeTabela + ");";
             sqlite3_stmt* stmt;
+            strColumnsName.clear();
+            strColumnsType.clear();
 
             if (sqlite3_prepare_v2(bancoDeDados, sql.c_str(), -1, &stmt, nullptr) == SQLITE_OK) {
                 while (sqlite3_step(stmt) == SQLITE_ROW) {
@@ -123,7 +127,41 @@ class ExtratorSQL : public Extrator {
                 }
                 sqlite3_finalize(stmt);
             } else {
-                std::cerr << "Erro ao preparar consulta SQL." << std::endl;
+                cerr << "Erro ao preparar consulta SQL." << endl;
             }
+        }
+
+        /**
+         * @brief Constrói um DataFrame a partir de uma tabela do banco de dados SQLite.
+         * @param nomeTabela Nome da tabela que será extraída.
+         * @return Dataframe contendo as colunas da tabela.
+         */
+        Dataframe ConstrutorDataframe(const string& nomeTabela) {
+            Dataframe df; 
+
+            for (size_t i = 0; i < strColumnsName.size(); ++i) {
+                const string& coluna = strColumnsName[i];  
+                const string& tipo = strColumnsType[i];   
+                
+                string sql = "SELECT " + coluna + " FROM " + nomeTabela + ";";
+                sqlite3_stmt* stmt;
+
+                if (sqlite3_prepare_v2(bancoDeDados, sql.c_str(), -1, &stmt, nullptr) == SQLITE_OK) {
+                    Series auxSerie(coluna, mapSQLToCpp(tipo));
+
+                    while (sqlite3_step(stmt) == SQLITE_ROW) {
+                        const char* valor = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0));
+                        auxSerie.bAdicionaElemento(valor ? valor : "NULL");
+                    }
+
+                    df.adicionaColuna(auxSerie);
+
+                    sqlite3_finalize(stmt);
+                } else {
+                    cerr << "Erro ao preparar consulta SQL para coluna: " << coluna << endl;
+                }
+            }
+
+            return df; 
         }
 };
