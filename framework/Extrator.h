@@ -98,6 +98,10 @@ class ExtratorCSV : public Extrator {
                 cout << "Arquivo fechado com sucesso." << endl;
             }
         }
+
+        Dataframe getDataframe(){
+            return df;
+        }
     
         /**
          * @brief Retorna o vetor com os nomes das colunas.
@@ -125,6 +129,59 @@ class ExtratorCSV : public Extrator {
                 cerr << "Erro ao ler o cabeçalho do CSV." << endl;
             }
         }
+
+        /**
+         * @brief Constrói um DataFrame a partir dos dados do arquivo CSV, ignorando o cabeçalho.
+         *
+         * Lê linha por linha do arquivo CSV (exceto a primeira) e adiciona os valores
+         * ao DataFrame, convertendo-os para os tipos apropriados.
+         */
+        void ConstrutorDataframe() {
+
+            for (const string& col : strColumnsName){
+                Series auxSerie(col, "string");
+                df.adicionaColuna(auxSerie);
+            }
+
+            string line;
+            bool isFirstRow = true; 
+
+            while (getline(file, line)) {
+                if (isFirstRow) { 
+                    isFirstRow = false; 
+                    continue;
+                }
+
+                stringstream ss(line);
+                string cell;
+                vector<VDTYPES> convertedRow;
+
+                size_t colIndex = 0;
+                while (getline(ss, cell, ',')) {
+                    if (colIndex < strColumnsType.size()) {
+                        string tipo = strColumnsType[colIndex];
+
+                        if (tipo == "int") {
+                            convertedRow.push_back(stoi(cell));
+                        } else if (tipo == "double") {
+                            convertedRow.push_back(stod(cell));
+                        } else if (tipo == "bool") {
+                            convertedRow.push_back(cell == "1" || cell == "true");
+                        } else if (tipo == "char" && cell.length() == 1) {
+                            convertedRow.push_back(cell[0]);
+                        } else {
+                            convertedRow.push_back(cell); 
+                        }
+                    } else {
+                        convertedRow.push_back(cell); 
+                    }
+                    colIndex++;
+                }
+
+                df.adicionaLinha(convertedRow); 
+            }
+        }
+
 };
 
 /**

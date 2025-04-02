@@ -77,9 +77,11 @@ int main() {
 
     ExtratorCSV extrator("../dadosfake.csv");
     extrator.ExtratorColunas();
-    for (auto &col : extrator.getColumnsName()){
-        cout << col << endl;
-    }
+    extrator.ConstrutorDataframe();
+    Dataframe df = extrator.getDataframe();
+    cout << "Shape do DataFrame (Linhas, Colunas): ";
+    auto shape = df.getShape();
+    cout << "(" << shape.first << ", " << shape.second << ")" << endl;
 
     return 0;
 }
