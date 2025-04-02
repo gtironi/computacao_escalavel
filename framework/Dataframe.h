@@ -45,6 +45,26 @@ public:
         pair<int, int> shape = {iNumLinhas, iNumColunas};
         return shape;
     }
+
+    /**
+     * @brief Adiciona uma nova linha ao DataFrame, inserindo os valores em cada coluna correspondente.
+     * @tparam Args Tipos dos valores a serem adicionados.
+     * @param args Valores a serem adicionados como uma nova linha.
+     * @return true se a linha for adicionada com sucesso, false caso contrário.
+     */
+    bool adicionaLinha(vector<VDTYPES> novaLinha) {
+        if (novaLinha.size() != columns.size()) {
+            cout << "Datapoint com tamanho inválido. É: " << novaLinha.size() << " - Deveria ser: " << columns.size() << endl;
+            return false;
+        }
+
+        for (size_t i = 0; i < columns.size(); i++) {
+            columns[i].bAdicionaElemento(novaLinha[i]);
+        }
+
+        return true;
+    }
+
 };
 
 #endif

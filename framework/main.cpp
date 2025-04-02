@@ -11,7 +11,7 @@ int main() {
     intColumn.bAdicionaElemento(25);
     intColumn.bAdicionaElemento(30);
     intColumn.bAdicionaElemento(22);
-    intColumn.bRemovePeloIndex(0);
+    // intColumn.bRemovePeloIndex(0);
 
     strColumn.bAdicionaElemento("Alice");
     strColumn.bAdicionaElemento("Bob");
@@ -26,6 +26,10 @@ int main() {
     df.addSeries(intColumn);
     df.addSeries(strColumn);
     df.addSeries(boolColumn);
+
+    // Adicionando uma linha
+    vector<VDTYPES> novaLinha = {20, "Matheus", true};
+    df.adicionaLinha(novaLinha);
 
     // Exibindo informações
     cout << "Shape do DataFrame (Linhas, Colunas): ";

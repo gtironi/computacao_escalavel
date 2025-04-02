@@ -42,21 +42,6 @@ public:
     Series(const string& columnName, const string& columnType) : strColumnName(columnName), strColumnType(columnType) {}
 
     /**
-     * @brief Adiciona um elemento à coluna
-     * @param elemento Elemento a ser adicionado
-     * @return true se a operação for bem-sucedida, false caso contrário
-     */
-    bool bAdicionaElemento(const VDTYPES& elemento) {
-        try {
-            vecColumnData.push_back(elemento);
-            return true;
-        } catch (...) {
-            cerr << "Falha ao adicionar elemento." << endl;
-            return false;
-        }
-    }
-
-    /**
      * @brief Altera o nome da coluna
      */
     void setName(string& strNovoNome){
@@ -89,6 +74,21 @@ public:
      */
     vector<VDTYPES> getData() {
         return vecColumnData;
+    }
+
+    /**
+     * @brief Adiciona um elemento à coluna
+     * @param elemento Elemento a ser adicionado
+     * @return true se a operação for bem-sucedida, false caso contrário
+     */
+    bool bAdicionaElemento(const VDTYPES& elemento) {
+        try {
+            vecColumnData.push_back(elemento);
+            return true;
+        } catch (...) {
+            cerr << "Falha ao adicionar elemento." << endl;
+            return false;
+        }
     }
 
     /**
