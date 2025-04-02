@@ -291,6 +291,10 @@ class ExtratorSQL : public Extrator {
                     cerr << "Erro ao preparar consulta SQL para coluna: " << coluna << endl;
                 }
             }
+            
+            for (auto &col : df.columns){
+                col.AjustandoType();
+            }
         }
 };
 

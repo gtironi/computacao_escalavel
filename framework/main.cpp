@@ -59,22 +59,22 @@ int main() {
     for (auto &col : df.columns) {
         cout << col.mean() << endl;
     }
+    */
 
     ExtratorSQL extrator("../database.db");
     extrator.ExtratorColunas("Funcionarios");
-    Dataframe df = extrator.ConstrutorDataframe("Funcionarios");
+    extrator.ConstrutorDataframe("Funcionarios");
 
     cout << "Shape do DataFrame (Linhas, Colunas): ";
-    auto shape = df.getShape();
+    auto shape = extrator.getDataframe().getShape();
     cout << "(" << shape.first << ", " << shape.second << ")" << endl;
 
     cout << "\nDados das colunas:" << endl;
-    for (auto &col : df.columns) {
-        col.printColuna();
+    for (auto &col : extrator.getDataframe().columns) {
+        cout << col.strGetName() << " - " << col.strGetType() << " - " << col.mean() << endl;
     }
 
-    */
-
+    /*
     ExtratorCSV extrator("../dadosfake.csv");
     extrator.ExtratorColunas();
     extrator.ConstrutorDataframe();
@@ -86,5 +86,6 @@ int main() {
     for (auto &col : df.columns) {
         cout << col.strGetName() << " - " << col.strGetType() << " - " << col.mean() << endl;
     }
+    */
     return 0;
 }
