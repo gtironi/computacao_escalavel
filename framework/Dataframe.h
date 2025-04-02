@@ -27,13 +27,37 @@ public:
     /**
      * @brief Adiciona uma nova coluna (Series) ao DataFrame.
      * @param novaSerie Objeto Series a ser adicionado.
-     * @return true se a adição for bem-sucedida.
+     * @return true se a adição for bem-sucedida, false caso contrário.
      */
-    bool addSeries(Series novaSerie) {
-        vstrColumnsName.push_back(novaSerie.strGetName());
-        columns.push_back(novaSerie);
-        return true;
+    bool adicionaLinha(Series novaSerie) {
+        
+        if (columns.empty()) {
+            vstrColumnsName.push_back(novaSerie.strGetName());
+            columns.push_back(novaSerie);
+            return true;
+
+        } else {
+            bool viavel = true;
+
+            
+            for (size_t i = 0; i < columns.size(); i++) {
+                if (novaSerie.iGetSize() != columns[i].iGetSize()) {  
+                    viavel = false;
+                    break; 
+                }
+            }
+
+            if (viavel) {
+                vstrColumnsName.push_back(novaSerie.strGetName());
+                columns.push_back(novaSerie);
+                return true;
+            } else {
+                cerr << "Erro: A nova coluna possui tamanho diferente das colunas existentes." << endl;
+                return false;
+            }
+        }
     }
+
 
     /**
      * @brief Retorna o número de linhas e colunas do DataFrame.

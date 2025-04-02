@@ -6,6 +6,7 @@ int main() {
     Series intColumn("Idade", "int");
     Series strColumn("Nome", "string");
     Series boolColumn("Ativo", "bool");
+    //Series testColumn("Teste", "int");
 
     // Adicionando elementos às colunas
     intColumn.bAdicionaElemento(25);
@@ -21,11 +22,17 @@ int main() {
     boolColumn.bAdicionaElemento(false);
     boolColumn.bAdicionaElemento(true);
 
+    //testColumn.bAdicionaElemento(1);
+    //testColumn.bAdicionaElemento(2);
+    //testColumn.bAdicionaElemento(3);
+    //testColumn.bAdicionaElemento(4);
+
     // Criando um DataFrame
     Dataframe df;
-    df.addSeries(intColumn);
-    df.addSeries(strColumn);
-    df.addSeries(boolColumn);
+    df.adicionaLinha(intColumn);
+    df.adicionaLinha(strColumn);
+    df.adicionaLinha(boolColumn);
+    // df.addColumn(testColumn);
 
     // Adicionando uma linha
     vector<VDTYPES> novaLinha = {20, "Matheus", true};
