@@ -83,6 +83,21 @@ public:
         }
 
         for (size_t i = 0; i < columns.size(); i++) {
+            string expectedType = columns[i].strGetType();
+            bool valid = visit([&expectedType](const auto& val) -> bool {
+                auto it = TYPEMAP.find(typeid(val).name());
+                if (it == TYPEMAP.end()) {
+                    return false;
+                }
+                return it->second == expectedType;
+            }, novaLinha[i]);
+            if (!valid) {
+                cerr << "Tipo de dado inválido para a coluna " << columns[i].strGetName() << ". Esperado: " << expectedType << endl;
+                return false;
+            }
+        }
+
+        for (size_t i = 0; i < columns.size(); i++) {
             columns[i].bAdicionaElemento(novaLinha[i]);
         }
 
