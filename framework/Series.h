@@ -10,6 +10,9 @@
 
 using namespace std;
 
+struct DateTime;
+struct DateDay;
+
 struct DateDay {
     int dia;
     int mes;
@@ -22,6 +25,8 @@ struct DateDay {
     DateDay() : dia(1), mes(1), ano(1) {}
     
     DateDay(const DateDay& dt) : dia(dt.dia), mes(dt.mes), ano(dt.ano) {}
+
+    DateDay(const DateTime& dt);
     
     DateDay(const string& data) {
         size_t pos1 = data.find('-');
@@ -213,9 +218,12 @@ struct DateTime {
     }
 };
 
+DateDay::DateDay(const DateTime& dt) : dia(dt.dia), mes(dt.mes), ano(dt.ano) {
+    if (!isValid())
+        throw runtime_error("Data inválida");
+}
 
-
-#define DTYPES int, double, string, bool, char, DateDay
+#define DTYPES int, double, string, bool, char, DateDay, DateTime
 #define VDTYPES variant<DTYPES>
 
 /**
