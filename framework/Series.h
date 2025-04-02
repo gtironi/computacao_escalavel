@@ -22,8 +22,6 @@ struct DateDay {
     DateDay() : dia(1), mes(1), ano(1) {}
     
     DateDay(const DateDay& dt) : dia(dt.dia), mes(dt.mes), ano(dt.ano) {}
-
-    DateDay(const DateTime& dt) : dia(dt.dia), mes(dt.mes), ano(dt.ano) {}
     
     DateDay(const string& data) {
         size_t pos1 = data.find('-');
@@ -153,7 +151,67 @@ struct DateTime {
         return os;
     }
 
-}
+    friend istream& operator>>(istream& is, DateTime& dt) {
+        string data;
+        is >> data;
+        size_t pos1 = data.find('-');
+        size_t pos2 = data.find('-', pos1 + 1);
+        size_t pos3 = data.find(' ', pos2 + 1);
+        size_t pos4 = data.find(':', pos3 + 1);
+        size_t pos5 = data.find(':', pos4 + 1);
+        if(pos1 == string::npos || pos2 == string::npos || pos3 == string::npos || pos4 == string::npos || pos5 == string::npos)
+            throw runtime_error("Formato de data inválido");
+        dt.dia = stoi(data.substr(0, pos1));
+        dt.mes = stoi(data.substr(pos1 + 1, pos2 - pos1 - 1));
+        dt.ano = stoi(data.substr(pos2 + 1, pos3 - pos2 - 1));
+        dt.hora = stoi(data.substr(pos3 + 1, pos4 - pos3 - 1));
+        dt.minuto = stoi(data.substr(pos4 + 1, pos5 - pos4 - 1));
+        dt.segundo = stoi(data.substr(pos5 + 1));
+        if (!dt.isValid()) throw runtime_error("Data inválida");
+        return is;
+    }
+
+    DateTime& operator=(const DateTime& other) {
+        if (this != &other) {
+            dia = other.dia;
+            mes = other.mes;
+            ano = other.ano;
+            hora = other.hora;
+            minuto = other.minuto;
+            segundo = other.segundo;
+        }
+        return *this;
+    }
+
+    bool operator==(const DateTime& other) const {
+        return (ano == other.ano) && (mes == other.mes) && (dia == other.dia) && (hora == other.hora) && (minuto == other.minuto) && (segundo == other.segundo);
+    }
+
+    bool operator<(const DateTime& other) const {
+        if (ano != other.ano) return ano < other.ano;
+        else if (mes != other.mes) return mes < other.mes;
+        else if (dia != other.dia) return dia < other.dia;
+        else if (hora != other.hora) return hora < other.hora;
+        else if (minuto != other.minuto) return minuto < other.minuto;
+        else return segundo < other.segundo;
+    }
+
+    bool operator>(const DateTime& other) const {
+        return other < *this;
+    }
+
+    bool operator!=(const DateTime& other) const {
+        return !(*this == other);
+    }
+
+    bool operator<=(const DateTime& other) const {
+        return !(*this > other);
+    }
+
+    bool operator>=(const DateTime& other) const {
+        return !(*this < other);
+    }
+};
 
 
 
@@ -169,7 +227,8 @@ const map<string, string> TYPEMAP = {
     {typeid(string).name(), "string"},
     {typeid(bool).name(), "bool"},
     {typeid(char).name(), "char"},
-    {typeid(DateDay).name(), "DateDay"}
+    {typeid(DateDay).name(), "dateday"},
+    {typeid(DateTime).name(), "datetime"}
 };
 
 /**
