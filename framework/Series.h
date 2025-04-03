@@ -493,6 +493,49 @@ public:
     }
 
     /**
+     * @brief Sobrecarga do operador de inserção para exibir a Series.
+     * @param os Fluxo de saída.
+     * @param series Objeto Series a ser exibido.
+     * @return Fluxo de saída atualizado.
+     */
+    friend ostream& operator<<(ostream& os, const Series& series) {
+        os << series.strColumnName << " - <" << series.strColumnType << ">: [";
+        
+        size_t limit = min(series.vecColumnData.size(), static_cast<size_t>(5));
+        
+        for (size_t i = 0; i < limit; ++i) {
+            if (series.strColumnType == "string") { os << '"'; }
+            visit([&os](auto&& value) { os << value; }, series.vecColumnData[i]);
+            if (series.strColumnType == "string") { os << '"'; }
+            
+            if (i < limit - 1) os << ", ";
+        }
+        
+        if (series.vecColumnData.size() > 5) {
+            os << "...";
+        }
+
+        os << "]\n";
+    
+        return os;
+    }
+    
+
+    /**
+     * @brief Sobrecarga do operador de atribuição.
+     * @param other Objeto Series a ser atribuído.
+     * @return Referência para o objeto atribuído.
+     */
+    Series& operator=(const Series& other) {
+        if (this != &other) {
+            strColumnName = other.strColumnName;
+            strColumnType = other.strColumnType;
+            vecColumnData = other.vecColumnData;
+        }
+        return *this;
+    }
+
+    /**
      * @brief Adiciona um elemento à coluna
      * @param elemento Elemento a ser adicionado
      * @return true se a operação for bem-sucedida, false caso contrário
