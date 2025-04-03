@@ -25,6 +25,15 @@ public:
     Dataframe() = default;
 
     /**
+     * @brief Construtor de cópia do DataFrame.
+     * @param other Objeto Dataframe a ser copiado.
+     */
+    Dataframe(const Dataframe& other) {
+        vstrColumnsName = other.vstrColumnsName;
+        columns = other.columns;
+    }
+
+    /**
      * @brief Adiciona uma nova coluna (Series) ao DataFrame.
      * @param novaSerie Objeto Series a ser adicionado.
      * @return true se a adição for bem-sucedida, false caso contrário.

@@ -445,6 +445,12 @@ public:
      * @param columnType Tipo da coluna
      */
     Series(const string& columnName, const string& columnType) : strColumnName(columnName), strColumnType(columnType) {}
+    
+    /**
+     * @brief Construtor de cópia da classe Series
+     * @param other Objeto Series a ser copiado
+     */
+    Series(const Series& other) : strColumnName(other.strColumnName), strColumnType(other.strColumnType), vecColumnData(other.vecColumnData) {}
 
     /**
      * @brief Altera o nome da coluna.
