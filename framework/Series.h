@@ -501,34 +501,34 @@ public:
         }
     }
 
-        /**
-         * @brief Remove o último elemento da coluna
-         * @return true se a remoção for bem-sucedida, false caso contrário
-         */
-        bool bRemoveUltimoElemento() {
-            if (!vecColumnData.empty()) {
-                vecColumnData.pop_back();
-                return true;
-            } else {
-                cerr << "Não há elementos para remover." << endl;
-                return false;
-            }
-        }
-        
-        /**
-         * @brief Remove um elemento da coluna com base no índice.
-         * @param iIndex O índice do elemento que deve ser removido.
-         * @return true se a remoção for bem-sucedida, false caso contrário.
-         */
-        bool bRemovePeloIndex(int iIndex) {
-            if (iIndex < 0 || iIndex >= vecColumnData.size()) {
-                cerr << "Índice fora dos limites." << endl;
-                return false;
-            }
-
-            vecColumnData.erase(vecColumnData.begin() + iIndex);
+    /**
+     * @brief Remove o último elemento da coluna
+     * @return true se a remoção for bem-sucedida, false caso contrário
+     */
+    bool bRemoveUltimoElemento() {
+        if (!vecColumnData.empty()) {
+            vecColumnData.pop_back();
             return true;
+        } else {
+            cerr << "Não há elementos para remover." << endl;
+            return false;
         }
+    }
+    
+    /**
+     * @brief Remove um elemento da coluna com base no índice.
+     * @param iIndex O índice do elemento que deve ser removido.
+     * @return true se a remoção for bem-sucedida, false caso contrário.
+     */
+    bool bRemovePeloIndex(int iIndex) {
+        if (iIndex < 0 || iIndex >= vecColumnData.size()) {
+            cerr << "Índice fora dos limites." << endl;
+            return false;
+        }
+
+        vecColumnData.erase(vecColumnData.begin() + iIndex);
+        return true;
+    }
 
     /**
      * @brief Retorna um elemento da coluna com base no índice fornecido
@@ -544,67 +544,67 @@ public:
         }
     }
 
-        /**
-         * @brief Exibe os dados da coluna no console
-         */
-        void printColuna() {
-            cout << "Column Name: " << this->strGetName() << "\n";
-            cout << "Column Type: " << this->strGetType() << "\n";
-            cout << "Data: ";
-            for (const auto& value : vecColumnData) {
-                visit([](const auto& val) { cout << val << " "; }, value);
-            }
-            cout << "\n";
+    /**
+     * @brief Exibe os dados da coluna no console
+     */
+    void printColuna() {
+        cout << "Column Name: " << this->strGetName() << "\n";
+        cout << "Column Type: " << this->strGetType() << "\n";
+        cout << "Data: ";
+        for (const auto& value : vecColumnData) {
+            visit([](const auto& val) { cout << val << " "; }, value);
         }
+        cout << "\n";
+    }
 
-        /**
-         * @brief Calcula a média dos elementos da Series, se forem numéricos.
-         * @return O valor da média como float.
-         * @note Essa função só funciona para Series de tipos numéricos.
-         */
-        float mean() {
-            if (this->strGetType() == "int" || this->strGetType() == "double" || this->strGetType() == "float") {
-                double sum = 0.0;
-                int count = 0;
+    /**
+     * @brief Calcula a média dos elementos da Series, se forem numéricos.
+     * @return O valor da média como float.
+     * @note Essa função só funciona para Series de tipos numéricos.
+     */
+    float mean() {
+        if (this->strGetType() == "int" || this->strGetType() == "double" || this->strGetType() == "float") {
+            double sum = 0.0;
+            int count = 0;
 
-                for (const auto& val : vecColumnData) {
-                    std::visit([&](auto&& arg) {
-                        if constexpr (std::is_arithmetic_v<std::decay_t<decltype(arg)>>) {
-                            sum += arg;
-                            count++;
-                        }
-                    }, val);
-                }
+            for (const auto& val : vecColumnData) {
+                std::visit([&](auto&& arg) {
+                    if constexpr (std::is_arithmetic_v<std::decay_t<decltype(arg)>>) {
+                        sum += arg;
+                        count++;
+                    }
+                }, val);
+            }
 
-                return count > 0 ? sum / count : 0.0;
+            return count > 0 ? sum / count : 0.0;
+        } else {
+            cout << "Método desenvolvido apenas para Series do tipo numérica." << endl;
+            return 0.0f;
+        }
+    }
+
+    /**
+     * @brief Ajusta automaticamente o tipo da coluna com base nos seus elementos.
+     */
+    void AjustandoType() {
+        bool isInt = true, isDouble = true;
+        for (const auto& value : vecColumnData) {
+            if (holds_alternative<string>(value)) {
+                string strVal = get<string>(value);
+                isInt = isInt && all_of(strVal.begin(), strVal.end(), ::isdigit);
+                isDouble = isDouble && (isInt || strVal.find('.') != string::npos);
             } else {
-                cout << "Método desenvolvido apenas para Series do tipo numérica." << endl;
-                return 0.0f;
+                isInt = isDouble = false;
             }
         }
-
-        /**
-         * @brief Ajusta automaticamente o tipo da coluna com base nos seus elementos.
-         */
-        void AjustandoType() {
-            bool isInt = true, isDouble = true;
-            for (const auto& value : vecColumnData) {
-                if (holds_alternative<string>(value)) {
-                    string strVal = get<string>(value);
-                    isInt = isInt && all_of(strVal.begin(), strVal.end(), ::isdigit);
-                    isDouble = isDouble && (isInt || strVal.find('.') != string::npos);
-                } else {
-                    isInt = isDouble = false;
-                }
-            }
-            if (isInt) {
-                strColumnType = "int";
-                transform(vecColumnData.begin(), vecColumnData.end(), vecColumnData.begin(), [](VDTYPES& v) { return stoi(get<string>(v)); });
-            } else if (isDouble) {
-                strColumnType = "double";
-                transform(vecColumnData.begin(), vecColumnData.end(), vecColumnData.begin(), [](VDTYPES& v) { return stod(get<string>(v)); });
-            }
+        if (isInt) {
+            strColumnType = "int";
+            transform(vecColumnData.begin(), vecColumnData.end(), vecColumnData.begin(), [](VDTYPES& v) { return stoi(get<string>(v)); });
+        } else if (isDouble) {
+            strColumnType = "double";
+            transform(vecColumnData.begin(), vecColumnData.end(), vecColumnData.begin(), [](VDTYPES& v) { return stod(get<string>(v)); });
         }
+    }
 };
 
 #endif
