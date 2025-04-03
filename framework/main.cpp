@@ -3,7 +3,7 @@
 #include "Extrator.h"
 
 int main() {
-    /*
+
     // Criando colunas de diferentes tipos
     Series intColumn("Idade", "int");
     Series strColumn("Nome", "string");
@@ -59,27 +59,26 @@ int main() {
     for (auto &col : df.columns) {
         cout << col.mean() << endl;
     }
-    */
 
-    ExtratorSQL extrator("../database.db");
-    extrator.ExtratorColunas("Funcionarios");
-    extrator.ConstrutorDataframe("Funcionarios");
+    // ExtratorSQL extrator("../database.db");
+    // extrator.ExtratorColunas("Funcionarios");
+    // extrator.ConstrutorDataframe("Funcionarios");
 
-    cout << "Shape do DataFrame (Linhas, Colunas): ";
-    auto shape = extrator.getDataframe().getShape();
-    cout << "(" << shape.first << ", " << shape.second << ")" << endl;
+    // cout << "Shape do DataFrame (Linhas, Colunas): ";
+    // auto shape = extrator.getDataframe().getShape();
+    // cout << "(" << shape.first << ", " << shape.second << ")" << endl;
 
-    cout << "\nDados das colunas:" << endl;
-    for (auto &col : extrator.getDataframe().columns) {
-        cout << col.strGetName() << " - " << col.strGetType() << " - " << col.mean() << endl;
-    }
+    // cout << "\nDados das colunas:" << endl;
+    // for (auto &col : extrator.getDataframe().columns) {
+    //     cout << col.strGetName() << " - " << col.strGetType() << " - " << col.mean() << endl;
+    // }
 
-    Dataframe df = extrator.getDataframe();
-    Dataframe df_2 = df.filtroByValue("salario", 1500);
+    // Dataframe df = extrator.getDataframe();
+    // Dataframe df_2 = df.filtroByValue("salario", 1500);
 
-    cout << "Shape do DataFrame (Linhas, Colunas): ";
-    auto shape2 = df_2.getShape();
-    cout << "(" << shape2.first << ", " << shape2.second << ")" << endl;
+    // cout << "Shape do DataFrame (Linhas, Colunas): ";
+    // auto shape2 = df_2.getShape();
+    // cout << "(" << shape2.first << ", " << shape2.second << ")" << endl;
 
     /*
     ExtratorCSV extrator("../dadosfake.csv");

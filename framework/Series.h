@@ -499,49 +499,7 @@ public:
             cerr << "Falha ao adicionar elemento." << endl;
             return false;
         }
-
-        /**
-         * @brief Retorna o nome da coluna
-         */
-        string strGetName() {
-            return strColumnName;
-        }
-
-        /**
-         * @brief Retorna o tipo da coluna
-         */
-        string strGetType() {
-            return strColumnType;
-        }
-
-        /**
-         * @brief Retorna o número de elementos da coluna
-         */
-        size_t iGetSize(){
-            return vecColumnData.size();
-        }
-
-        /**
-         * @brief Retorna o vetor de elementos da coluna
-         */
-        vector<VDTYPES> getData() {
-            return vecColumnData;
-        }
-
-        /**
-         * @brief Adiciona um elemento à coluna
-         * @param elemento Elemento a ser adicionado
-         * @return true se a operação for bem-sucedida, false caso contrário
-         */
-        bool bAdicionaElemento(const VDTYPES& elemento) {
-            try {
-                vecColumnData.push_back(elemento);
-                return true;
-            } catch (...) {
-                cerr << "Falha ao adicionar elemento." << endl;
-                return false;
-            }
-        }
+    }
 
         /**
          * @brief Remove o último elemento da coluna
@@ -584,6 +542,7 @@ public:
             cerr << "Índice fora dos limites." << endl;
             return VDTYPES{};
         }
+    }
 
         /**
          * @brief Exibe os dados da coluna no console
