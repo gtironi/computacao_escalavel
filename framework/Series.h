@@ -11,6 +11,7 @@
 #include <algorithm>
 #include <stdexcept>
 #include <typeinfo>
+#include <regex>
 
 using namespace std;
 
@@ -636,24 +637,61 @@ public:
      * @brief Ajusta automaticamente o tipo da coluna com base nos seus elementos.
      */
     void AjustandoType() {
-        bool isInt = true, isDouble = true;
+        bool isInt = true, isDouble = true, isDateDay = true, isDateTime = true;
+    
+        static const regex regexDate(R"(^\d{2}-\d{2}-\d{4}$)");
+        static const regex regexDateTime(R"(^\d{2}-\d{2}-\d{4} \d{2}:\d{2}:\d{2}$)");
+    
         for (const auto& value : vecColumnData) {
             if (holds_alternative<string>(value)) {
                 string strVal = get<string>(value);
-                isInt = isInt && all_of(strVal.begin(), strVal.end(), ::isdigit);
-                isDouble = isDouble && (isInt || strVal.find('.') != string::npos);
+    
+                strVal.erase(remove_if(strVal.begin(), strVal.end(), ::isspace), strVal.end());
+    
+                if (strVal.empty()) {
+                    isInt = isDouble = isDateDay = isDateTime = false;
+                    continue;
+                }
+    
+                isInt = isInt && regex_match(strVal, regex(R"(^-?\d+$)")); 
+                isDouble = isDouble && (isInt || regex_match(strVal, regex(R"(^-?\d+\.\d+$)")));
+                isDateDay = isDateDay && regex_match(strVal, regexDate);
+                isDateTime = isDateTime && regex_match(strVal, regexDateTime);
+    
             } else {
-                isInt = isDouble = false;
+                isInt = isDouble = isDateDay = isDateTime = false;
             }
         }
-        if (isInt) {
-            strColumnType = "int";
-            transform(vecColumnData.begin(), vecColumnData.end(), vecColumnData.begin(), [](VDTYPES& v) { return stoi(get<string>(v)); });
-        } else if (isDouble) {
-            strColumnType = "double";
-            transform(vecColumnData.begin(), vecColumnData.end(), vecColumnData.begin(), [](VDTYPES& v) { return stod(get<string>(v)); });
+    
+        try {
+            if (isInt) {
+                strColumnType = "int";
+                transform(vecColumnData.begin(), vecColumnData.end(), vecColumnData.begin(), [](VDTYPES& v) { 
+                    return stoi(get<string>(v)); 
+                });
+            } else if (isDouble) {
+                strColumnType = "double";
+                transform(vecColumnData.begin(), vecColumnData.end(), vecColumnData.begin(), [](VDTYPES& v) { 
+                    return stod(get<string>(v)); 
+                });
+            } else if (isDateDay) {
+                strColumnType = "dateday";
+                transform(vecColumnData.begin(), vecColumnData.end(), vecColumnData.begin(), [](VDTYPES& v) { 
+                    return DateDay(get<string>(v)); 
+                });
+            } else if (isDateTime) {
+                strColumnType = "datetime";
+                transform(vecColumnData.begin(), vecColumnData.end(), vecColumnData.begin(), [](VDTYPES& v) { 
+                    return DateTime(get<string>(v)); 
+                });
+            } else {
+                strColumnType = "string"; 
+            }
+        } catch (const std::exception& e) {
+            cerr << "Erro ao converter valores: " << e.what() << endl;
         }
     }
+    
 };
 
 #endif

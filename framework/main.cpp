@@ -95,35 +95,35 @@ int main() {
     */
 
 
-    // // Teste dos Métodos Threads-friend CSV
-    // ExtratorCSV extrator("../hotel_bookings.csv");
-    // extrator.ExtratorThreads(1000);
+    // Teste dos Métodos Threads-friend CSV
+    ExtratorCSV extrator("../hotel_bookings.csv");
+    extrator.vExtratorCSVPai(10000);
 
-    // Dataframe df = extrator.vctDataframes[0];
-    // cout << "Shape do DataFrame (Linhas, Colunas): ";
-    // auto shape = df.getShape();
-    // cout << "(" << shape.first << ", " << shape.second << ")" << endl;
-
-    // cout << "\nDados das colunas:" << endl;
-    // for (auto &col : df.columns) {
-    //     cout << "Nome coluna: " << col.strGetName() << " - Tipo coluna: " << col.strGetType() << endl;
-    // }
-
-    // cout << "\nDados do DataFrame:" << endl;
-    // cout << df << endl;
-
-
-    // Teste dos Métodos Threads-friend SQL
-    ExtratorSQL extratorSQL("../database.db");
-    extratorSQL.vExtratorCSVPai(3, "Clientes");
-
-    Dataframe dfSQL = extratorSQL.vctDataframes[0];
+    Dataframe df = extrator.vctDataframes[0];
     cout << "Shape do DataFrame (Linhas, Colunas): ";
-    auto shapeSQL = dfSQL.getShape();
-    cout << "(" << shapeSQL.first << ", " << shapeSQL.second << ")" << endl;
+    auto shape = df.getShape();
+    cout << "(" << shape.first << ", " << shape.second << ")" << endl;
+
+    cout << "\nDados das colunas:" << endl;
+    for (auto &col : df.columns) {
+        cout << "Nome coluna: " << col.strGetName() << " - Tipo coluna: " << col.strGetType() << endl;
+    }
 
     cout << "\nDados do DataFrame:" << endl;
-    cout << dfSQL << endl;
+    cout << df << endl;
+
+
+    // // Teste dos Métodos Threads-friend SQL
+    // ExtratorSQL extratorSQL("../database.db");
+    // extratorSQL.vExtratorCSVPai(3, "Clientes");
+
+    // Dataframe dfSQL = extratorSQL.vctDataframes[0];
+    // cout << "Shape do DataFrame (Linhas, Colunas): ";
+    // auto shapeSQL = dfSQL.getShape();
+    // cout << "(" << shapeSQL.first << ", " << shapeSQL.second << ")" << endl;
+
+    // cout << "\nDados do DataFrame:" << endl;
+    // cout << dfSQL << endl;
 
     return 0;
 }
