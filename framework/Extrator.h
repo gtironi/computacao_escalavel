@@ -14,14 +14,12 @@
 
 using namespace std;
 
-
 /**
  * @brief Converte um tipo SQL para seu equivalente em C++.
  * @param sqlType Tipo SQL (ex: "VARCHAR(20)", "DECIMAL(10,2)", "INT").
  * @return Tipo equivalente em C++ (ex: "string", "float", "int").
  */
 string mapSQLToCpp(const string& sqlType) {
-    
     static map<string, string> typeMap = {
         {"INT", "int"},
         {"INTEGER", "int"},
@@ -52,250 +50,175 @@ string mapSQLToCpp(const string& sqlType) {
     } 
     if (regex_match(sqlType, decimalRegex) || regex_match(sqlType, numericRegex)) {
         return "float"; 
-    };
+    }
 
     return typeMap.count(sqlType) ? typeMap[sqlType] : "Desconhecido";
-};
+}
 
 /**
  * @brief Classe base para extratores de dados.
  */
 class Extrator {
-    public:
-        Extrator() = default;
-        virtual ~Extrator() = default;
-    private:
-        vector<string> strColumnsName; 
-        vector<string> strColumnsType; 
-        Dataframe df; 
+protected:
+    vector<string> strColumnsName; 
+    vector<string> strColumnsType; 
+    Dataframe df; 
+
+public:
+    Extrator() = default;
+    virtual ~Extrator() = default;
+
+    Dataframe getDataframe() const {
+        return df;
+    }
+
+    vector<string> getColumnsName() const {
+        return strColumnsName;
+    }
+
+    vector<string> getColumnsType() const {
+        return strColumnsType;
+    }
 };
 
 /**
  * @brief Classe para extrair dados de arquivo CSV.
  */
 class ExtratorCSV : public Extrator {
-    private:
-        vector<string> strColumnsName; 
-        vector<string> strColumnsType; 
-        ifstream file; 
-        Dataframe df; 
-    
-    public:
-        /**
-         * @brief Construtor que abre o arquivo CSV e verifica sua abertura.
-         * @param strPathToCSV Caminho para o arquivo CSV a ser lido.
-         */
-        ExtratorCSV(const string& strPathToCSV) {
-            file.open(strPathToCSV);
-            
-            if (!file.is_open()) {
-                cerr << "Falha ao abrir o arquivo: " << strPathToCSV << endl;
-            }
-        }
-    
-        /**
-         * @brief Destrutor que fecha o arquivo CSV se estiver aberto.
-         */
-        ~ExtratorCSV() {
-            if (file.is_open()) { 
-                file.close();
-                cout << "Arquivo fechado com sucesso." << endl;
-            }
-        }
+private:
+    ifstream file; 
 
-        /**
-         * @brief Retorna o dataframe.
-         */
-        Dataframe getDataframe(){
-            return df;
+public:
+    explicit ExtratorCSV(const string& strPathToCSV) {
+        file.open(strPathToCSV);
+        if (!file.is_open()) {
+            cerr << "Falha ao abrir o arquivo: " << strPathToCSV << endl;
         }
-    
-        /**
-         * @brief Retorna o vetor com os nomes das colunas.
-         */
-        vector<string> getColumnsName(){
-            return strColumnsName;
+    }
+
+    ~ExtratorCSV() override {
+        if (file.is_open()) { 
+            file.close();
+            cout << "Arquivo fechado com sucesso." << endl;
+        }
+    }
+
+    void ExtratorColunas() {
+        string line;
+        if (getline(file, line)) { 
+            stringstream ss(line);
+            string cell;
+
+            while (getline(ss, cell, ',')) {
+                strColumnsName.push_back(cell); 
+            }
+        } else {
+            cerr << "Erro ao ler o cabeçalho do CSV." << endl;
+        }
+    }
+
+    void ConstrutorDataframe() {
+        for (const string& col : strColumnsName) {
+            Series auxSerie(col, "string");
+            df.adicionaColuna(auxSerie);
         }
 
-        /**
-         * @brief Extrai os nomes das colunas do arquivo CSV.
-         *
-         * Lê a primeira linha do arquivo CSV e armazena os nomes das colunas
-         * no vetor `strColumnsName`.
-         */
-        void ExtratorColunas() {
-            string line;
-            if (getline(file, line)) { 
-                stringstream ss(line);
-                string cell;
+        string line;
+        bool isFirstRow = true; 
 
-                while (getline(ss, cell, ',')) {
-                    strColumnsName.push_back(cell); 
-                }
-            } else {
-                cerr << "Erro ao ler o cabeçalho do CSV." << endl;
+        while (getline(file, line)) {
+            if (isFirstRow) { 
+                isFirstRow = false; 
+                continue;
             }
+
+            stringstream ss(line);
+            string cell;
+            vector<VDTYPES> convertedRow;
+
+            size_t colIndex = 0;
+            while (getline(ss, cell, ',')) {
+                convertedRow.push_back(cell); 
+                colIndex++;
+            }
+
+            df.adicionaLinha(convertedRow); 
         }
 
-        /**
-         * @brief Constrói um DataFrame a partir dos dados do arquivo CSV, ignorando o cabeçalho.
-         *
-         * Lê linha por linha do arquivo CSV (exceto a primeira) e adiciona os valores
-         * ao DataFrame, convertendo-os para os tipos apropriados.
-         */
-        void ConstrutorDataframe() {
-
-            for (const string& col : strColumnsName){
-                Series auxSerie(col, "string");
-                df.adicionaColuna(auxSerie);
-            }
-
-            string line;
-            bool isFirstRow = true; 
-
-            while (getline(file, line)) {
-                if (isFirstRow) { 
-                    isFirstRow = false; 
-                    continue;
-                }
-
-                stringstream ss(line);
-                string cell;
-                vector<VDTYPES> convertedRow;
-
-                size_t colIndex = 0;
-                while (getline(ss, cell, ',')) {
-                    if (colIndex < strColumnsType.size()) {
-                        string tipo = strColumnsType[colIndex];
-                        convertedRow.push_back(cell); 
-
-                    } else {
-                        convertedRow.push_back(cell); 
-                    }
-                    colIndex++;
-                }
-
-                df.adicionaLinha(convertedRow); 
-            }
-
-            for (auto &col : df.columns){
-                col.AjustandoType();
-            }
+        for (auto &col : df.columns) {
+            col.AjustandoType();
         }
-
+    }
 };
 
 /**
  * @brief Classe para extrair dados de um banco de dados SQLite.
  */
 class ExtratorSQL : public Extrator {
-    private:
-        sqlite3* bancoDeDados;
-        vector<string> strColumnsName;
-        vector<string> strColumnsType;
-        Dataframe df;
-    public:
-        /**
-         * @brief Construtor que abre a conexão com o banco de dados SQLite.
-         * @param strPathToBd Caminho para o arquivo do banco de dados.
-         */
-        ExtratorSQL(const string& strPathToBd) : bancoDeDados(nullptr) {
-            int exit = sqlite3_open(strPathToBd.c_str(), &bancoDeDados);
-            if (exit) {
-                cerr << "Erro ao abrir o banco de dados: " << sqlite3_errmsg(bancoDeDados) << endl;
-            } else {
-                cout << "Banco de dados aberto com sucesso." << endl;
+private:
+    sqlite3* bancoDeDados;
+
+public:
+    explicit ExtratorSQL(const string& strPathToBd) : bancoDeDados(nullptr) {
+        int exit = sqlite3_open(strPathToBd.c_str(), &bancoDeDados);
+        if (exit) {
+            cerr << "Erro ao abrir o banco de dados: " << sqlite3_errmsg(bancoDeDados) << endl;
+        } else {
+            cout << "Banco de dados aberto com sucesso." << endl;
+        }
+    }
+
+    ~ExtratorSQL() override {
+        if (bancoDeDados) {
+            sqlite3_close(bancoDeDados);
+            cout << "Banco de dados fechado com sucesso." << endl;
+        }
+    }
+
+    void ExtratorColunas(const string& nomeTabela) {
+        string sql = "PRAGMA table_info(" + nomeTabela + ");";
+        sqlite3_stmt* stmt;
+        strColumnsName.clear();
+        strColumnsType.clear();
+
+        if (sqlite3_prepare_v2(bancoDeDados, sql.c_str(), -1, &stmt, nullptr) == SQLITE_OK) {
+            while (sqlite3_step(stmt) == SQLITE_ROW) {
+                strColumnsName.push_back(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1)));
+                strColumnsType.push_back(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2)));
             }
-        };
-
-        /**
-         * @brief Destrutor que fecha a conexão com o banco de dados.
-         */
-        ~ExtratorSQL() {
-            if (bancoDeDados) {
-                sqlite3_close(bancoDeDados);
-                cout << "Banco de dados fechado com sucesso." << endl;
-            }
+            sqlite3_finalize(stmt);
+        } else {
+            cerr << "Erro ao preparar consulta SQL." << endl;
         }
+    }
 
-        /**
-         * @brief Retorna o dataframe.
-         */
-        Dataframe getDataframe(){
-            return df;
-        }
+    void ConstrutorDataframe(const string& nomeTabela) {
+        for (size_t i = 0; i < strColumnsName.size(); ++i) {
+            const string& coluna = strColumnsName[i];  
+            const string& tipo = strColumnsType[i];   
 
-        /**
-         * @brief Retorna o vetor com os nomes das colunas.
-         */
-        vector<string> getColumnsName(){
-            return strColumnsName;
-        }
-
-        /**
-         * @brief Retorna o vetor com os tipos das colunas.
-         */
-        vector<string> getColumnsType(){
-            return strColumnsType;
-        }
-
-        /**
-         * @brief Extrai os nomes das colunas e seus tipos do banco de dados SQLite.
-         * @param nomeTabela Nome da tabela a ser analisada.
-         */
-        void ExtratorColunas(const string& nomeTabela) {
-            string sql = "PRAGMA table_info(" + nomeTabela + ");";
+            string sql = "SELECT " + coluna + " FROM " + nomeTabela + ";";
             sqlite3_stmt* stmt;
-            strColumnsName.clear();
-            strColumnsType.clear();
 
             if (sqlite3_prepare_v2(bancoDeDados, sql.c_str(), -1, &stmt, nullptr) == SQLITE_OK) {
-                while (sqlite3_step(stmt) == SQLITE_ROW) {
-                    // nome
-                    strColumnsName.push_back(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1)));
+                Series auxSerie(coluna, mapSQLToCpp(tipo));
 
-                    // tipo
-                    strColumnsType.push_back(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2)));
+                while (sqlite3_step(stmt) == SQLITE_ROW) {
+                    const char* valor = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0));
+                    auxSerie.bAdicionaElemento(valor ? valor : "NULL");
                 }
+
+                df.adicionaColuna(auxSerie);
                 sqlite3_finalize(stmt);
             } else {
-                cerr << "Erro ao preparar consulta SQL." << endl;
+                cerr << "Erro ao preparar consulta SQL para coluna: " << coluna << endl;
             }
         }
 
-        /**
-         * @brief Constrói um DataFrame a partir de uma tabela do banco de dados SQLite.
-         * @param nomeTabela Nome da tabela que será extraída.
-         * @return Dataframe contendo as colunas da tabela.
-         */
-        void ConstrutorDataframe(const string& nomeTabela) {
-            for (size_t i = 0; i < strColumnsName.size(); ++i) {
-                const string& coluna = strColumnsName[i];  
-                const string& tipo = strColumnsType[i];   
-                
-                string sql = "SELECT " + coluna + " FROM " + nomeTabela + ";";
-                sqlite3_stmt* stmt;
-
-                if (sqlite3_prepare_v2(bancoDeDados, sql.c_str(), -1, &stmt, nullptr) == SQLITE_OK) {
-                    Series auxSerie(coluna, mapSQLToCpp(tipo));
-
-                    while (sqlite3_step(stmt) == SQLITE_ROW) {
-                        const char* valor = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0));
-                        auxSerie.bAdicionaElemento(valor ? valor : "NULL");
-                    }
-
-                    df.adicionaColuna(auxSerie);
-
-                    sqlite3_finalize(stmt);
-                } else {
-                    cerr << "Erro ao preparar consulta SQL para coluna: " << coluna << endl;
-                }
-            }
-            
-            for (auto &col : df.columns){
-                col.AjustandoType();
-            }
+        for (auto &col : df.columns) {
+            col.AjustandoType();
         }
+    }
 };
 
 #endif
