@@ -11,7 +11,7 @@
 
 using namespace std;
 
-string variant_to_string(const VDTYPES& value) {
+string variantToString(const VDTYPES& value) {
     std::stringstream ss;
     std::visit([&ss](auto&& arg) {
         // Special handling for strings to potentially add quotes if desired,
@@ -254,7 +254,7 @@ public:
     
             os << left << setw(index_width) << i << "  ";
             for (size_t j = 0; j < num_cols; ++j) {
-                string val_str = variant_to_string(df.columns[j].retornaElemento(i));
+                string val_str = variantToString(df.columns[j].retornaElemento(i));
                 if (val_str.length() > col_width) val_str[col_width - 3] = val_str[col_width - 2] = val_str[col_width - 1] = '.';
                 os << left << setw(col_width) << val_str.substr(0, col_width) << "  ";
             }
