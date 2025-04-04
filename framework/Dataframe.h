@@ -205,6 +205,28 @@ public:
 
         return auxDf;
     }
+
+    /**
+     * @brief Empilha dois DataFrames horizontalmente, desde que tenham o mesmo número de colunas e tipos de colunas.
+     * @param other O DataFrame a ser empilhado.
+     */
+    void hStack(Dataframe& other) {
+        if (vstrColumnsName.size() != vstrColumnsName.size()) {
+            cout << "DataFrames com tamanhos diferentes. Não é possível empilhar." << endl;
+            return;
+        }
+
+        for (size_t i = 0; i < columns.size(); i++) {
+            if (columns[i].strGetType() != other.columns[i].strGetType()) {
+                cout << "Tipos de colunas diferentes. Não é possível empilhar." << endl;
+                return;
+            }
+        }
+
+        for (size_t i = 0; i < columns.size(); i++) {
+            columns[i].hStack(other.columns[i]);
+        }
+    }
     
     /**
      * @brief Sobrecarga do operador de saída para imprimir o DataFrame.

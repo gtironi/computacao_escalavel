@@ -634,6 +634,19 @@ public:
     }
 
     /**
+     * @brief Empilha duas Series horizontalmente, desde que tenham o mesmo tipo.
+     * @param other A outra Series a ser empilhada.
+     */
+    void hStack(Series& other) {
+        if (this->strGetType() != other.strGetType()) {
+            cout << "Tipos de colunas diferentes. Não é possível empilhar." << endl;
+            return;
+        }
+
+        this->vecColumnData.insert(this->vecColumnData.end(), other.vecColumnData.begin(), other.vecColumnData.end());
+    }
+
+    /**
      * @brief Ajusta automaticamente o tipo da coluna com base nos seus elementos.
      */
     void AjustandoType() {
