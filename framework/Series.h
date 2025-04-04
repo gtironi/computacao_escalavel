@@ -499,7 +499,7 @@ public:
      * @return Fluxo de saída atualizado.
      */
     friend ostream& operator<<(ostream& os, const Series& series) {
-        os << series.strColumnName << " - <" << series.strColumnType << ">: [";
+        os << series.strColumnName << " <" << series.strColumnType << ">: [";
         
         size_t limit = min(series.vecColumnData.size(), static_cast<size_t>(5));
         
@@ -507,12 +507,12 @@ public:
             if (series.strColumnType == "string") { os << '"'; }
             visit([&os](auto&& value) { os << value; }, series.vecColumnData[i]);
             if (series.strColumnType == "string") { os << '"'; }
-            
+
             if (i < limit - 1) os << ", ";
         }
         
         if (series.vecColumnData.size() > 5) {
-            os << "...";
+            os << ", ...";
         }
 
         os << "]\n";
