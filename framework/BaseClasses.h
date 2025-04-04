@@ -38,6 +38,10 @@ protected:
     TaskQueue* taskqueue = nullptr;
 
 public:
+    virtual ~Extractor() = default;
+    void set_taskqueue(TaskQueue* tq) { taskqueue = tq; }
+    TaskQueue* get_taskqueue() const { return taskqueue; }
+
     Buffer<T>& get_output_buffer() { return output_buffer; }
 
     // Delega a implementação para a classe derivada
@@ -64,9 +68,7 @@ public:
             output_buffer.get_semaphore().wait();
         }
     }
-    virtual ~Extractor() = default;
-    void set_taskqueue(TaskQueue* tq) { taskqueue = tq; }
-    TaskQueue* get_taskqueue() const { return taskqueue; }
+    
 };
 
 template <typename T>
@@ -75,6 +77,7 @@ class Transformer {
         Buffer<T>& input_buffer;
         Buffer<T> output_buffer;
         TaskQueue* taskqueue = nullptr;
+        
     
     public:
         explicit Transformer(Buffer<T>& in) : input_buffer(in) {}
@@ -105,20 +108,27 @@ class Transformer {
         TaskQueue* get_taskqueue() const { return taskqueue; }
 };
 
+
 template <typename T>
 class Loader {
     protected:
         Buffer<T>& input_buffer;
+        TaskQueue* taskqueue = nullptr;
 
     public:
     explicit Loader(Buffer<T>& buffer) : input_buffer(buffer) {}
+    virtual ~Loader() = default;
+    void set_taskqueue(TaskQueue* tq) { taskqueue = tq; }
+    TaskQueue* get_taskqueue() const { return taskqueue; }
 
     void add_task_thread(){
         // Queremos apenas adicionar a task, caso o semáforo do output seja diferente de 0, e o do anterior não estiver full
         while (input_buffer.get_semaphore().get_count() != input_buffer.max_size)
         {
             T value = input_buffer.pop();
-            taskqueue->push_task([this]() { this->create_task(value);});
+            taskqueue->push_task([this, val = std::move(value)]() mutable {
+                this->create_task(std::move(val));
+            });
        } 
     }  
        
