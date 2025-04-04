@@ -19,31 +19,31 @@ cidades_com_aeroportos = [
 
 # Gera uma data aleatória em 2025
 def data_aleatoria_2025():
-    inicio_ano = datetime.date(2025, 1, 1)
+    inicio_ano = datetime.date(2025, 4, 7)
     fim_ano = datetime.date(2025, 12, 31)
     delta_dias = (fim_ano - inicio_ano).days
     dias_aleatorios = random.randint(0, delta_dias)
     data_aleatoria = inicio_ano + datetime.timedelta(days=dias_aleatorios)
-    return data_aleatoria.strftime('%d/%m/%Y')
+    return data_aleatoria
 
 # Gera uma entrada de dados de viagem
 def gerar_registro_viagem():
-    # Selecionar cidades diferentes para origem e destino
+    # Cidades para origem e destino
     origem = random.choice(cidades_com_aeroportos)
-    destino = random.choice([cidade for cidade in cidades_com_aeroportos if cidade != origem])
+    destino = random.choice([cidade for cidade in cidades_com_aeroportos if cidade != origem]) #Todas menos a de origem
 
-    # Gerar datas de ida e volta
+    # Datas de ida
     data_ida = data_aleatoria_2025()
 
-    # Converter string para objeto de data para calcular a data de volta
-    data_ida_obj = datetime.datetime.strptime(data_ida, '%d/%m/%Y')
+    # Data de volta 91 a 15 dias depois)
+    dias_estadia = random.randint(1, 15)
+    data_volta_obj = data_ida + datetime.timedelta(days=dias_estadia)
 
-    # Adicionar entre 1 e 30 dias para a volta
-    dias_estadia = random.randint(1, 30)
-    data_volta_obj = data_ida_obj + datetime.timedelta(days=dias_estadia)
-    data_volta = data_volta_obj.strftime('%d/%m/%Y')
+    # Transforma em string
+    data_volta_str = data_volta_obj.strftime('%d/%m/%Y')
+    data_ida_str = data_ida.strftime('%d/%m/%Y')
 
-    return [origem, destino, data_ida, data_volta]
+    return [origem, destino, data_ida_str, data_volta_str]
 
 # Função que cada thread executará
 def gerar_dados_em_thread(numero_registros, arquivo_saida, thread_id):
@@ -63,7 +63,7 @@ def gerar_dados_em_thread(numero_registros, arquivo_saida, thread_id):
 # Função principal
 def main():
     arquivo_saida = 'dados_viagens_2025.csv'
-    total_registros = 10000  # Total de registros a serem gerados
+    total_registros = 1000  # Total de registros a serem gerados
     num_threads = 4  # Número de threads
     registros_por_thread = total_registros // num_threads
 
@@ -80,9 +80,6 @@ def main():
             executor.submit(gerar_dados_em_thread, registros_por_thread, arquivo_saida, i+1)
 
     print(f"Geração concluída! Os dados foram salvos em '{arquivo_saida}'")
-
-if __name__ == "__main__":
-    main()
 
 if __name__ == "__main__":
     main()
