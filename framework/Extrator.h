@@ -109,8 +109,10 @@ public:
 class ExtratorCSV : public Extrator {
 private:
     ifstream file; 
-
 public:
+    // Implementação temporária para simular a queue de threads
+    vector<Dataframe> vctDataframes;
+
     /**
      * @brief Construtor da classe ExtratorCSV.
      * 
@@ -130,6 +132,86 @@ public:
         if (file.is_open()) { 
             file.close();
             cout << "Arquivo fechado com sucesso." << endl;
+        }
+    }
+
+    /**
+     * @brief Constrói um DataFrame a partir de um bloco de texto CSV.
+     * 
+     * @param strBlocoDeTextoCSV Bloco de texto CSV.
+     * @return DataFrame construído a partir do bloco de texto.
+     */
+    Dataframe dfConstroiDataframe(const string& strBlocoDeTextoCSV){
+        Dataframe dfAuxiliar;
+
+        // As colunas do DataFrame auxiliar são as mesmas do DataFrame original
+        dfAuxiliar.vstrColumnsName = strColumnsName;
+
+        // Vou criar o esboço do DataFrame auxiliar
+        for (auto col : strColumnsName){
+            Series auxSerie(col, "string");
+            dfAuxiliar.columns.push_back(auxSerie);
+        }
+
+        // Agora vou preencher o DataFrame auxiliar com os dados do bloco de texto
+        stringstream ss(strBlocoDeTextoCSV);
+        string line;
+        while (getline(ss, line)) {
+
+            stringstream ssLine(line);
+            string cell;
+            vector<VDTYPES> convertedRow;
+
+            size_t colIndex = 0;
+            while (getline(ssLine, cell, ',')) {
+                convertedRow.push_back(cell); 
+                colIndex++;
+            }
+
+            dfAuxiliar.adicionaLinha(convertedRow); 
+        }
+
+        for (auto &col : dfAuxiliar.columns) {
+            col.AjustandoType();
+        }
+
+        return dfAuxiliar;
+    }
+
+    /**
+     * @brief Extrai dados do arquivo CSV em blocos de tamanho especificado.
+     * 
+     * @param iTamanhoBatch Tamanho do bloco a ser lido.
+     */
+    void ExtratorThreads(int iTamanhoBatch){
+        // Vou chamar o método que cria as colunas e salva em strColumnsName
+        ExtratorColunas();
+
+        // Vou iterar sobre o arquivo, separando em blocos de iTamanhoBatch linhas, criando um DataFrame para cada bloco
+        string line;
+        string strBlocoDeTextoCSV;
+        int iContador = 0;
+        while (getline(file, line)) {
+            // Ignora a primeira linha (cabeçalho)
+            if (iContador == 0) { 
+                iContador++;
+                continue; 
+            }
+
+            strBlocoDeTextoCSV += line + "\n"; 
+
+            if (iContador % iTamanhoBatch == 0) {
+                Dataframe dfAuxiliar = dfConstroiDataframe(strBlocoDeTextoCSV);
+                vctDataframes.push_back(dfAuxiliar);
+                strBlocoDeTextoCSV.clear(); 
+            }
+            iContador++;
+        }
+
+        // Adiciona o último bloco, se houver
+        if (!strBlocoDeTextoCSV.empty()) { 
+            Dataframe dfAuxiliar = dfConstroiDataframe(strBlocoDeTextoCSV);
+            vctDataframes.push_back(dfAuxiliar);
         }
     }
 
