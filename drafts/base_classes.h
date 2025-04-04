@@ -16,8 +16,10 @@ private:
     std::queue<T> queue;
     std::mutex mtx;
     std::condition_variable cond;
+    int max_size;
 
 public:
+    Buffer(int max_size) : max_size(max_size) {}
     void push(T value) {
         std::unique_lock<std::mutex> lock(mtx);
         queue.push(std::move(value));
@@ -26,6 +28,7 @@ public:
     
     T pop() {
         std::unique_lock<std::mutex> lock(mtx);
+        // Bloqueia até que tenha algo na fila mas não impede de colocar elementos
         cond.wait(lock, [this] { return !queue.empty(); });
         T value = std::move(queue.front());
         queue.pop();
@@ -44,40 +47,40 @@ public:
     }
 };
 
-// Base class for pipeline stages
-class Stage {
-public:
-    virtual void run() = 0;
-    virtual ~Stage() = default;
-};
+// // Base class for pipeline stages
+// class Stage {
+// public:
+//     virtual void run() = 0;
+//     virtual ~Stage() = default;
+// };
 
-class Extractor : public Stage {
-protected:
-    Buffer<std::string> output_buffer;
+// class Extractor : public Stage {
+// protected:
+//     Buffer<std::string> output_buffer;
 
-public:
-    Buffer<std::string>& get_output_buffer() { return output_buffer; }
-    virtual void run() override = 0;
-};
+// public:
+//     Buffer<std::string>& get_output_buffer() { return output_buffer; }
+//     virtual void run() override = 0;
+// };
 
-class Transformer : public Stage {
-protected:
-    Buffer<std::string>& input_buffer;
-    Buffer<std::string> output_buffer;
+// class Transformer : public Stage {
+// protected:
+//     Buffer<std::string>& input_buffer;
+//     Buffer<std::string> output_buffer;
 
-public:
-    explicit Transformer(Buffer<std::string>& in) : input_buffer(in) {}
-    Buffer<std::string>& get_output_buffer() { return output_buffer; }
-    virtual void run() override = 0;
-};
+// public:
+//     explicit Transformer(Buffer<std::string>& in) : input_buffer(in) {}
+//     Buffer<std::string>& get_output_buffer() { return output_buffer; }
+//     virtual void run() override = 0;
+// };
 
-class Loader : public Stage {
-protected:
-    Buffer<std::string>& input_buffer;
+// class Loader : public Stage {
+// protected:
+//     Buffer<std::string>& input_buffer;
 
-public:
-    explicit Loader(Buffer<std::string>& buffer) : input_buffer(buffer) {}
-    virtual void run() override = 0;
-};
+// public:
+//     explicit Loader(Buffer<std::string>& buffer) : input_buffer(buffer) {}
+//     virtual void run() override = 0;
+// };
 
 #endif // BASE_CLASSES_H
