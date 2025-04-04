@@ -1,96 +1,62 @@
+#include <iostream>
+#include <memory>
+#include <thread>
+#include <chrono>
 #include "BaseClasses.h"
 #include "Manager.h"
 
-// ------------------------
-// Implementações reais
-// ------------------------
-
-#include <string>
-#include <iostream>
-
-class CsvExtractor : public Extractor<CsvExtractor, std::string> {
+// Example derived class that squares numbers
+class SquareExtractor : public Extractor<SquareExtractor, int> {
 public:
-    // Implementação personalizada de run() com 2 argumentos
-    std::string run(int linha, int coluna) {
-        return "Dado da linha " + std::to_string(linha) + 
-               ", coluna " + std::to_string(coluna);
-    }
-
-    // Pode também ter outras sobrecargas
-    std::string run(const std::string& nome_arquivo) {
-        return "Lendo dados do arquivo: " + nome_arquivo;
+    int run(int x) {
+        // Simple implementation - squares the input
+        return x * x;
     }
 };
+
+int main() {
+    // 1. Create an instance of the derived class
+    SquareExtractor extractor;
     
-// class MyTransformer : public Transformer<int> {
-//     public:
-//         using Transformer<int>::Transformer;
+    // 2. Create and set up a TaskQueue (assuming you have this class implemented)
+    TaskQueue taskqueue = TaskQueue(); // 4 worker threads
+    extractor.set_taskqueue(&taskqueue);
     
-//         void run() override {
-//             int val = input_buffer.pop();
-//             int result = val * 10;
-//             std::cout << "[Transformer] " << val << " -> " << result << std::endl;
-//             output_buffer.push(result);
-//         }
-//     };
+    // 3. Test synchronous operation (direct run calls)
+    std::cout << "Testing direct run() calls:\n";
+    std::cout << "5 squared: " << extractor.run(5) << std::endl;
+    std::cout << "7 squared: " << extractor.run(7) << std::endl;
     
-// class MyLoader : public Loader<int> {
-//     public:
-//         using Loader<int>::Loader;
+    // 4. Test create_task (single task)
+    std::cout << "\nTesting create_task():\n";
+    extractor.create_task(3);
+    auto result = extractor.get_output_buffer().pop();
+    std::cout << "3 squared: " << result << std::endl;
     
-//         void run() override {
-//                 int val = input_buffer.pop();
-//                 std::cout << "[Loader] Resultado final: " << val << std::endl;
-        
-//         }
-//     };
+    // 5. Test add_task_thread (multiple tasks)
+    std::cout << "\nTesting add_task_thread():\n";
     
-// ------------------------
-// Main
-// ------------------------
-// A concrete implementation of Extractor
-class SquareExtractor : public Extractor<SquareExtractor, int> {
-    public:
-        SquareExtractor(TaskQueue* tq) { taskqueue = tq; }
-    
-        int run(int x) {
-            std::this_thread::sleep_for(std::chrono::milliseconds(100)); // Simulate work
-            return x * x;
+    // Start adding tasks in a separate thread
+    std::thread producer([&extractor]() {
+        for (int i = 1; i <= 5; ++i) {
+            extractor.add_task_thread(i);
         }
-    };
+    });
     
-    int main() {
-        TaskQueue taskQueue;
+    // Consumer thread to read results
+    std::thread consumer([&extractor]() {
+        for (int i = 1; i <= 5; ++i) {
+            int result = extractor.get_output_buffer().pop();
+            std::cout << "Received result: " << result << std::endl;
+            extractor.get_output_buffer().get_semaphore();
+        }
+    });
     
-        std::thread worker([&taskQueue]() {
-            while (true) {
-                auto task = taskQueue.pop_task();
-                if (!task) break;
-                (*task)();
-            }
-        });
+    producer.join();
+    consumer.join();
     
-        SquareExtractor extractor(&taskQueue);
+    // 6. Cleanup
+    taskqueue.shutdown();
     
-        std::thread producer([&extractor]() {
-            for (int i = 1; i <= 5; ++i) {
-                extractor.add_task_thread(i);
-                std::cout << "Added task for number: " << i << std::endl;
-            }
-        });
-    
-        std::thread consumer([&extractor]() {
-            for (int i = 1; i <= 5; ++i) {
-                int result = extractor.get_output_buffer().pop();
-                std::cout << "Got result: " << result << std::endl;
-            }
-        });
-    
-        producer.join();
-        consumer.join();
-        
-        taskQueue.shutdown();
-        worker.join();
-    
-        return 0;
-    }
+    return 0;
+}

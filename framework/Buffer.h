@@ -53,6 +53,7 @@ public:
         std::lock_guard<std::mutex> lock(mtx);
         return queue.size();
     }
+    int get_max_size() const {return queue.max_size};
 };
 
 #endif // BUFFER_H

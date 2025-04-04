@@ -69,49 +69,65 @@ public:
     TaskQueue* get_taskqueue() const { return taskqueue; }
 };
 
-// template <typename T>
-// class Transformer : public Stage {
-//     protected:
-//         Buffer<T>& input_buffer;
-//         Buffer<T> output_buffer;
-//         TaskQueue* taskqueue = nullptr;
+template <typename T>
+class Transformer {
+    protected:
+        Buffer<T>& input_buffer;
+        Buffer<T> output_buffer;
+        TaskQueue* taskqueue = nullptr;
     
-//     public:
-//         explicit Transformer(Buffer<T>& in) : input_buffer(in) {}
+    public:
+        explicit Transformer(Buffer<T>& in) : input_buffer(in) {}
 
-//         void add_task_thread(){
-//             // Queremos apenas adicionar a task, caso o semáforo do output seja diferente de 0, e o do anterior não estiver full
-//             while (!output_buffer.get_semaphore().get_count() && input_buffer.get_semaphore().get_count() != input_buffer.max_size)
-//             {
-//                 T value = input_buffer.pop();
-//                 taskqueue->push_task([this]() { this->run(value); });
-//                 output_buffer.get_semaphore().wait();
-//             } 
-//         }        
+        void add_task_thread(){
+            // Queremos apenas adicionar a task, caso o semáforo do output seja diferente de 0, e o do anterior não estiver full
+            while (!output_buffer.get_semaphore().get_count() && input_buffer.get_semaphore().get_count() != input_buffer.get_max_size())
+            {
+                T value = input_buffer.pop();
+                taskqueue->push_task([this, val = std::move(value)]() mutable {
+                    this->create_task(std::move(val));
+                });
+                output_buffer.get_semaphore().wait();
+            } 
+        }        
 
-//         Buffer<T>& get_output_buffer() { return output_buffer; }
-//         virtual void run() override = 0;
+        Buffer<T>& get_output_buffer() { return output_buffer; }
+        T run(T dataframe) override = 0;
+        
+        
+        void create_task(T value) {
+            T data = run(value);
+            output_buffer.push(data);
+        }
 
-//         virtual ~Transformer() = default;
-//         void set_taskqueue(TaskQueue* tq) { taskqueue = tq; }
-//         TaskQueue* get_taskqueue() const { return taskqueue; }
-// };
+        virtual ~Transformer() = default;
+        void set_taskqueue(TaskQueue* tq) { taskqueue = tq; }
+        TaskQueue* get_taskqueue() const { return taskqueue; }
+};
 
-// template <typename T>
-// class Loader : public Stage {
-//     protected:
-//         Buffer<T>& input_buffer;
+template <typename T>
+class Loader {
+    protected:
+        Buffer<T>& input_buffer;
 
-//     public:
-//     void add_task_thread(){
-//         // Queremos apenas adicionar a task, caso o semáforo do output seja diferente de 0, e o do anterior não estiver full
-//         while (input_buffer.get_semaphore().get_count() != input_buffer.max_size)
-//         {
-//             T value = input_buffer.pop();
-//             taskqueue->push_task([this]() { this->run(); });
-//         } 
-//     }  
-//         explicit Loader(Buffer<T>& buffer) : input_buffer(buffer) {}
-//         virtual void run() override = 0;
-// };
+    public:
+    explicit Loader(Buffer<T>& buffer) : input_buffer(buffer) {}
+
+    void add_task_thread(){
+        // Queremos apenas adicionar a task, caso o semáforo do output seja diferente de 0, e o do anterior não estiver full
+        while (input_buffer.get_semaphore().get_count() != input_buffer.max_size)
+        {
+            T value = input_buffer.pop();
+            taskqueue->push_task([this]() { this->create_task(value);});
+       } 
+    }  
+       
+    virtual void run() override = 0;
+
+    // Redundante, mas para manter a consistência
+    void create_task(T value) {
+        run(value);
+    }
+
+};
     
