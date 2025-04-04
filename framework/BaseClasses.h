@@ -1,6 +1,8 @@
+#ifndef BASE_CLASSES_H
+#define BASE_CLASSES_H
 #include "Buffer.h"
 #include "Dataframe.h"
-#include "Manager.h"
+#include "TaskQueue.h"
 #include <utility>  // Para std::forward
 #include <tuple>
 // using namespace std;
@@ -31,7 +33,7 @@
 
 
 // Classe base template usando CRTP
-template <typename Derived, typename T>
+template <typename T>
 class Extractor {
 protected:
     Buffer<T> output_buffer;
@@ -44,24 +46,35 @@ public:
 
     Buffer<T>& get_output_buffer() { return output_buffer; }
 
-    // Delega a implementação para a classe derivada
-    template <typename... Args>
-    T run(Args&&... args) {
-        return static_cast<Derived*>(this)->run(std::forward<Args>(args)...);
+    // Pure virtual function to be implemented by derived classes
+    virtual T run() = 0;
+
+    // create_task calls the virtual run()
+    void create_task() {
+        T data = run();
+        output_buffer.push(data);
     }
 
-    // create_task repassa os argumentos para run
+    // Variadic version if needed (though virtual functions can't be templates)
     template <typename... Args>
     void create_task(Args&&... args) {
         T data = run(std::forward<Args>(args)...);
         output_buffer.push(data);
     }
 
-    // add_task_thread cria tarefas assíncronas repassando os argumentos
+    void add_task_thread() {
+        while (output_buffer.get_semaphore().get_count() > 0) {
+            taskqueue->push_task([this]() {
+                this->create_task();
+            });
+            output_buffer.get_semaphore().wait();
+        }
+    }
+
+    // Variadic version if needed
     template <typename... Args>
     void add_task_thread(Args&&... args) {
         while (output_buffer.get_semaphore().get_count() > 0) {
-            // Captura os argumentos e os repassa para create_task
             taskqueue->push_task([this, ...args = std::forward<Args>(args)]() mutable {
                 this->create_task(std::forward<Args>(args)...);
             });
@@ -132,12 +145,13 @@ class Loader {
        } 
     }  
        
-    virtual void run() = 0;
+    virtual void run(T value) = 0;
 
     // Redundante, mas para manter a consistência
     void create_task(T value) {
-        run(value);
+        run(std::move(value));
     }
 
 };
-    
+
+#endif

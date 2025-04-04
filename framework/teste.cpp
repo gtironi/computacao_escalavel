@@ -1,8 +1,11 @@
 // ConcreteExtractor.h
 #include "BaseClasses.h"
 #include "Dataframe.h"
+#include "Manager.h"
+#include <thread>
+#include <chrono>
 
-class DataExtractor : public Extractor<DataExtractor, Dataframe> {
+class DataExtractor : public Extractor<Dataframe> {
 public:
     Dataframe run() {
         // Create a simple dataframe with sample data
@@ -78,24 +81,18 @@ class ValueMultiplier : public Transformer<Dataframe> {
             }
         };
 
-// PipelineTest.cpp
-#include "Manager.h"
-#include <thread>
-#include <chrono>
+
 
 int main() {
     // Create manager with 4 threads
-    Manager manager(4);
+    Manager<Dataframe> manager(4);
 
     // Create pipeline components
     DataExtractor extractor;
-    extractor.set_taskqueue(manager.get_taskqueue());
     
     ValueMultiplier transformer(extractor.get_output_buffer());
-    transformer.set_taskqueue(manager.get_taskqueue());
     
     DataPrinter loader(transformer.get_output_buffer());
-    loader.set_taskqueue(manager.get_taskqueue());
 
     // Start the pipeline by adding tasks to the extractor
     // We'll process 3 dataframes
