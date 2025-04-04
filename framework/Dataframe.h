@@ -4,11 +4,28 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <iomanip>
 #include <map>
 #include <variant>
 #include "Series.h"
 
 using namespace std;
+
+string variant_to_string(const VDTYPES& value) {
+    std::stringstream ss;
+    std::visit([&ss](auto&& arg) {
+        // Special handling for strings to potentially add quotes if desired,
+        // but for width calculation, raw string is better.
+        // For bool, print "true"/"false" instead of 1/0
+        using T = std::decay_t<decltype(arg)>;
+        if constexpr (std::is_same_v<T, bool>) {
+            ss << (arg ? "true" : "false");
+        } else {
+            ss << arg; // Use existing operator<< for DateDay, DateTime, etc.
+        }
+    }, value);
+    return ss.str();
+}
 
 /**
  * @class Dataframe
@@ -31,6 +48,19 @@ public:
     Dataframe(const Dataframe& other) {
         vstrColumnsName = other.vstrColumnsName;
         columns = other.columns;
+    }
+
+    /**
+     * @brief Sobrecarga do operador de atribuição.
+     * @param other Objeto Dataframe a ser atribuído.
+     * @return Referência para o objeto atribuído.
+     */
+    Dataframe& operator=(const Dataframe& other) {
+        if (this != &other) {
+            vstrColumnsName = other.vstrColumnsName;
+            columns = other.columns;
+        }
+        return *this;
     }
 
     /**
@@ -66,7 +96,6 @@ public:
             }
         }
     }
-
 
     /**
      * @brief Retorna o número de linhas e colunas do DataFrame.
@@ -177,6 +206,64 @@ public:
         return auxDf;
     }
     
+    /**
+     * @brief Sobrecarga do operador de saída para imprimir o DataFrame.
+     * @param os O fluxo de saída.
+     * @param dfInput O DataFrame a ser impresso.
+     * @return O fluxo de saída atualizado.
+     */
+    friend ostream& operator<<(ostream& os, const Dataframe& dfInput) {
+        Dataframe df = dfInput;
+        if (df.columns.empty()) {
+            os << "[Empty DataFrame]\n";
+            return os;
+        }
+        
+        pair<int, int> shape = df.getShape();
+
+        size_t num_rows = shape.first;
+        size_t num_cols = shape.second;
+        int col_width = 15; // Largura fixa das colunas
+        int index_width = 5;
+    
+        os << left << setw(index_width) << "" << "  ";
+        for (const auto& name : df.vstrColumnsName) {
+            string header_name = name.substr(0, col_width);
+            if (name.length() > col_width) header_name[col_width - 3] = header_name[col_width - 2] = header_name[col_width - 1] = '.';
+            os << left << setw(col_width) << header_name << "  ";
+        }
+        os << "\n";
+        os << left << setw(index_width) << "" << "  ";
+        for (size_t i = 0; i < num_cols; ++i) {
+            os << left << setw(col_width) << "------------" << "  ";
+        }
+        os << "\n";
+    
+        size_t max_display_rows = 10;
+        bool truncate = num_rows > max_display_rows;
+    
+        for (size_t i = 0; i < num_rows; ++i) {
+            if (truncate && i == 5) {
+                os << left << setw(index_width) << "..." << "  ";
+                for (size_t j = 0; j < num_cols; ++j) {
+                    os << left << setw(col_width) << "..." << "  ";
+                }
+                os << "\n";
+                i = num_rows - 1; // Pula para a última linha
+            }
+    
+            os << left << setw(index_width) << i << "  ";
+            for (size_t j = 0; j < num_cols; ++j) {
+                string val_str = variant_to_string(df.columns[j].retornaElemento(i));
+                if (val_str.length() > col_width) val_str[col_width - 3] = val_str[col_width - 2] = val_str[col_width - 1] = '.';
+                os << left << setw(col_width) << val_str.substr(0, col_width) << "  ";
+            }
+            os << "\n";
+        }
+    
+        os << "\n[" << num_rows << " rows x " << num_cols << " columns]\n";
+        return os;
+    }
 };
 
 #endif
