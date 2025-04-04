@@ -100,7 +100,7 @@ public:
      * @param strBlocoDeTextoCSV Bloco de texto CSV.
      * @return DataFrame construído a partir do bloco de texto.
      */
-    Dataframe dfConstroiDataframe(const string& strBlocoDeTextoCSV){
+    Dataframe dfExtratorCSVFilho(const string& strBlocoDeTextoCSV){
         Dataframe dfAuxiliar;
 
         // As colunas do DataFrame auxiliar são as mesmas do DataFrame original
@@ -142,9 +142,9 @@ public:
      * 
      * @param iTamanhoBatch Tamanho do bloco a ser lido.
      */
-    void ExtratorThreads(int iTamanhoBatch){
+    void vExtratorCSVPai(int iTamanhoBatch){
         // Vou chamar o método que cria as colunas e salva em strColumnsName
-        ExtratorColunas();
+        vContrutorVetorColunas();
 
         // Vou iterar sobre o arquivo, separando em blocos de iTamanhoBatch linhas, criando um DataFrame para cada bloco
         string line;
@@ -160,7 +160,7 @@ public:
             strBlocoDeTextoCSV += line + "\n"; 
 
             if (iContador % iTamanhoBatch == 0) {
-                Dataframe dfAuxiliar = dfConstroiDataframe(strBlocoDeTextoCSV);
+                Dataframe dfAuxiliar = dfExtratorCSVFilho(strBlocoDeTextoCSV);
                 vctDataframes.push_back(dfAuxiliar);
                 strBlocoDeTextoCSV.clear(); 
             }
@@ -169,7 +169,7 @@ public:
 
         // Adiciona o último bloco, se houver
         if (!strBlocoDeTextoCSV.empty()) { 
-            Dataframe dfAuxiliar = dfConstroiDataframe(strBlocoDeTextoCSV);
+            Dataframe dfAuxiliar = dfExtratorCSVFilho(strBlocoDeTextoCSV);
             vctDataframes.push_back(dfAuxiliar);
         }
     }
@@ -177,7 +177,7 @@ public:
     /**
      * @brief Extrai os nomes das colunas do arquivo CSV.
      */
-    void ExtratorColunas() {
+    void vContrutorVetorColunas() {
         string line;
         if (getline(file, line)) { 
             stringstream ss(line);
@@ -194,7 +194,7 @@ public:
     /**
      * @brief Constrói o DataFrame a partir do arquivo CSV.
      */
-    void ConstrutorDataframe() {
+    void vConstrutorDataframeBruto() {
         for (const string& col : strColumnsName) {
             Series auxSerie(col, "string");
             df.adicionaColuna(auxSerie);
@@ -265,7 +265,7 @@ public:
     /**
      * @brief Constrói um DataFrame a partir de um bloco de texto SQL.
      */
-    Dataframe dfConstroiDataframe(const string& strBlocoDeTextoSQL) {
+    Dataframe dfExtratorSQLFilho(const string& strBlocoDeTextoSQL) {
         Dataframe dfAuxiliar;
 
         // As colunas do DataFrame auxiliar são as mesmas do DataFrame original
@@ -305,9 +305,9 @@ public:
     /**
      * @brief Extrai dados do banco de dados em blocos de tamanho especificado.
      */
-    void ExtratorThreads(int iTamanhoBatch, const string& nomeTabela) {
+    void vExtratorCSVPai(int iTamanhoBatch, const string& nomeTabela) {
         // Chama o método que extrai as colunas da tabela
-        ExtratorColunas(nomeTabela);
+        vContrutorVetorColunas(nomeTabela);
     
         // Consulta SQL para selecionar todos os dados da tabela
         string sql = "SELECT * FROM " + nomeTabela + ";"; 
@@ -332,7 +332,7 @@ public:
     
                 // Quando atinge o tamanho do batch, processa o bloco
                 if (++iContador % iTamanhoBatch == 0) {
-                    Dataframe dfAuxiliar = dfConstroiDataframe(strBlocoDeTextoSQL);
+                    Dataframe dfAuxiliar = dfExtratorSQLFilho(strBlocoDeTextoSQL);
                     vctDataframes.push_back(dfAuxiliar);
                     strBlocoDeTextoSQL.clear();  // Reseta o bloco de texto
                 }
@@ -340,7 +340,7 @@ public:
     
             // Se ainda houver dados pendentes no bloco, processa o restante
             if (!strBlocoDeTextoSQL.empty()) {
-                Dataframe dfAuxiliar = dfConstroiDataframe(strBlocoDeTextoSQL);
+                Dataframe dfAuxiliar = dfExtratorSQLFilho(strBlocoDeTextoSQL);
                 vctDataframes.push_back(dfAuxiliar);
             }
     
@@ -350,13 +350,12 @@ public:
         }
     }
     
-    
     /**
      * @brief Extrai os nomes e tipos das colunas de uma tabela específica.
      * 
      * @param nomeTabela Nome da tabela a ser extraída.
      */
-    void ExtratorColunas(const string& nomeTabela) {
+    void vContrutorVetorColunas(const string& nomeTabela) {
         string sql = "PRAGMA table_info(" + nomeTabela + ");";
         sqlite3_stmt* stmt;
         strColumnsName.clear();
@@ -378,7 +377,7 @@ public:
      * 
      * @param nomeTabela Nome da tabela a ser extraída.
      */
-    void ConstrutorDataframe(const string& nomeTabela) {
+    void vConstrutorDataframeBruto(const string& nomeTabela) {
         for (size_t i = 0; i < strColumnsName.size(); ++i) {
             const string& coluna = strColumnsName[i];  
             const string& tipo = strColumnsType[i];   
