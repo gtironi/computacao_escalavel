@@ -89,16 +89,17 @@ int main() {
 
     // Create pipeline components
     DataExtractor extractor;
+    manager.addExtractor(&extractor);
     
     ValueMultiplier transformer(extractor.get_output_buffer());
+    manager.addTransformer(&transformer);
     
     DataPrinter loader(transformer.get_output_buffer());
+    manager.addLoader(&loader);
 
     // Start the pipeline by adding tasks to the extractor
     // We'll process 3 dataframes
-    for (int i = 0; i < 3; ++i) {
-        extractor.add_task_thread();
-    }
+    manager.run();
 
     // In a real application, you'd have proper termination conditions
     // Here we just wait a bit to let the pipeline process everything

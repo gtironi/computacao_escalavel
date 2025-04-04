@@ -136,7 +136,7 @@ class Loader {
 
     void add_task_thread(){
         // Queremos apenas adicionar a task, caso o semáforo do output seja diferente de 0, e o do anterior não estiver full
-        while (input_buffer.get_semaphore().get_count() != input_buffer.max_size)
+        while (input_buffer.get_semaphore().get_count() != input_buffer.get_max_size())
         {
             T value = input_buffer.pop();
             taskqueue->push_task([this, val = std::move(value)]() mutable {

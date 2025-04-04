@@ -72,17 +72,17 @@ class Manager
         // Antes disso, informa pra eles a fila de tarefas na qual eles adicionarão tarefas
         void addExtractor(Extractor<T>* extractor)
         {
-            extractor -> set_taskqueue(task_queue);
+            extractor -> set_taskqueue(&task_queue);
             extractors.push_back(extractor);
         }
         void addTransformer(Transformer<T>* transformer)
         {
-            transformer -> set_taskqueue(task_queue);
+            transformer -> set_taskqueue(&task_queue);
             transformers.push_back(transformer);
         }
         void addLoader(Loader<T>* loader)
         {
-            loader -> set_taskqueue(task_queue);
+            loader -> set_taskqueue(&task_queue);
             loaders.push_back(loader);
         }
 
@@ -107,15 +107,15 @@ class Manager
                 // Manda todos os blocos de processo mandarem o que puderem pra fila de tarefas
                 for (int i = 0; i < extractors.size(); i++)
                 {
-                    extractors[i] -> create_tasks();
+                    extractors[i] -> add_task_thread();
                 }
                 for (int i = 0; i < transformers.size(); i++)
                 {
-                    transformers[i] -> create_tasks();
+                    transformers[i] -> add_task_thread();
                 }
                 for (int i = 0; i < loaders.size(); i++)
                 {
-                    loaders[i] -> create_tasks();
+                    loaders[i] -> add_task_thread();
                 }
                 // Rebloqueia o mutex pra reacessar 
                 lock.lock();
