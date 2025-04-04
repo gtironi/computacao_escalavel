@@ -10,6 +10,8 @@
 #include <functional>
 #include <atomic>
 
+#include "BaseClasses.h"
+
 // Classe da fila de tarefas
 class TaskQueue
 {
@@ -49,7 +51,7 @@ class TaskQueue
             // Se o processo for parar e a fila tiver acabado, não retorna nada
             if (finishedWork && tasks.empty())
             {
-                return nullptr;
+                return []{};
             }
             // Pega uma tarefa e a remove da fila
             std::function<void()> task = tasks.front();
@@ -66,6 +68,11 @@ class TaskQueue
                 std::lock_guard<std::mutex> lock(mtx);
                 // Indica que o trabalho foi encerrado
                 finishedWork = true;
+                // Esvazia a fila
+                while (!is_empty())
+                {
+                    tasks.pop();
+                }
             }
             // Notifica todas as threads adormecidas
             cond.notify_all();
@@ -82,6 +89,7 @@ class TaskQueue
 };
 
 // Classe do gerenciador das threads
+template <typename T>
 class Manager
 {
     private:
@@ -93,6 +101,12 @@ class Manager
         std::condition_variable cond;
         // Indicador se o trabalho foi interrompido
         bool finishedWork = false;
+        // Indicador se o trabalho já foi iniciado
+        bool running = false;
+        // Listas de extratores, de transformadores e de carregadores do pipeline
+        std::vector<Extractor<T>*> extractors;
+        std::vector<Transformer<T>*> transformers;
+        std::vector<Loader<T>*> loaders;
 
     public:
         // Método construtor
@@ -104,21 +118,81 @@ class Manager
                 // Cria ela
                 threads.emplace_back([this]
                 {
+                    // Espera até o processo ser iniciado ou finalizado
+                    std::unique_lock<std::mutex> lock(mtx);
+
+                    cond.wait(lock, [this]
+                    {
+                        return running || finishedWork;
+                    });
+
                     // Enquanto o trabalho não for finalizado...
                     while (!finishedWork)
                     {
+                        // Libera o lock para as múltiplas threads começarem a trabalhar
+                        lock.unlock();
                         // Tenta pegar a próxima tarefa da fila e a executa
                         std::function<void()> task = task_queue.pop_task();
                         if (task)
                         {
                             task();
                         }
+                        // Bloqueia antes de verificar a condição de parada novamente
+                        lock.lock();
                     }
                 });
             }
         }
 
-        
+        // Métodos para adicionar extratores, transformadores e carregadores ao pipeline
+        void addExtractor(Extractor<T>* extractor)
+        {
+            extractors.push_back(extractor);
+        }
+        void addTransformer(Transformer<T>* transformer)
+        {
+            transformers.push_back(trasformer);
+        }
+        void addLoader(Loader<T>* loader)
+        {
+            loaders.push_back(loader);
+        }
+
+        // Método para começar a executar o processo
+        void run()
+        {
+            // Chama as threads para começarem a pegar coisas da fila de tarefas
+            {
+                std::lock_guard<std::mutex> lock(mtx);
+                running = true;   
+            }
+            cond.notify_all();
+
+            // Bloqueia o mutex para acessar a variável finishedWork
+            std::unique_lock<std::mutex> lock(mtx);
+
+            // Enquanto o trabalho não for finalizado...
+            while (!finishedWork)
+            {
+                // Desbloqueia o mutex
+                lock.unlock();
+                // Manda todos os blocos de processo mandarem o que puderem pra fila de tarefas
+                for (int i = 0; i < extractors.size(); i++)
+                {
+                    extractors[i] -> create_tasks();
+                }
+                for (int i = 0; i < transformers.size(); i++)
+                {
+                    transformers[i] -> create_tasks();
+                }
+                for (int i = 0; i < loaders.size(); i++)
+                {
+                    loaders[i] -> create_tasks();
+                }
+                // Rebloqueia o mutex pra reacessar 
+                lock.lock();
+            }
+        }
 
         // Método para encerrar o processo
         void stop()
