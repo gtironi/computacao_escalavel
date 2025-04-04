@@ -95,7 +95,7 @@ class Transformer {
         }        
 
         Buffer<T>& get_output_buffer() { return output_buffer; }
-        T run(T dataframe) override = 0;
+        virtual T run(T dataframe) = 0;
         
         
         void create_task(T value) {
@@ -132,7 +132,7 @@ class Loader {
        } 
     }  
        
-    virtual void run() override = 0;
+    virtual void run() = 0;
 
     // Redundante, mas para manter a consistência
     void create_task(T value) {

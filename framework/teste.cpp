@@ -1,62 +1,112 @@
-#include <iostream>
-#include <memory>
-#include <thread>
-#include <chrono>
+// ConcreteExtractor.h
 #include "BaseClasses.h"
-#include "Manager.h"
+#include "Dataframe.h"
 
-// Example derived class that squares numbers
-class SquareExtractor : public Extractor<SquareExtractor, int> {
+class DataExtractor : public Extractor<DataExtractor, Dataframe> {
 public:
-    int run(int x) {
-        // Simple implementation - squares the input
-        return x * x;
+    Dataframe run() {
+        // Create a simple dataframe with sample data
+        Dataframe df;
+        
+        // Create and add columns
+        Series idSeries("ID", "int");
+        Series valueSeries("Value", "double");
+        
+        // Add some sample data
+        for (int i = 0; i < 5; i++) {
+            idSeries.bAdicionaElemento(i);
+            valueSeries.bAdicionaElemento(i * 1.1);
+        }
+        
+        df.adicionaColuna(idSeries);
+        df.adicionaColuna(valueSeries);
+        
+        return df;
     }
 };
 
+class ValueMultiplier : public Transformer<Dataframe> {
+    public:
+        using Transformer::Transformer; // Inherit constructor
+        
+        Dataframe run(Dataframe input) override {
+            Dataframe output = input; // Copy the input
+            
+            // Find the "Value" column
+            auto it = std::find(output.vstrColumnsName.begin(), 
+                               output.vstrColumnsName.end(), 
+                               "Value");
+            
+            if (it != output.vstrColumnsName.end()) {
+                int colIndex = std::distance(output.vstrColumnsName.begin(), it);
+                
+                // Multiply each value by 2
+                for (auto& val : output.columns[colIndex].getData()) {
+                    val = std::get<double>(val) * 2.0;
+                }
+            }
+            
+            return output;
+        }
+    };
+
+    class DataPrinter : public Loader<Dataframe> {
+        public:
+            using Loader::Loader; // Inherit constructor
+            
+            void run(Dataframe df) override {
+                // Print the dataframe contents
+                std::cout << "Processed DataFrame:" << std::endl;
+                
+                // Print column names
+                for (const auto& name : df.vstrColumnsName) {
+                    std::cout << name << "\t";
+                }
+                std::cout << std::endl;
+                
+                // Print data
+                auto shape = df.getShape();
+                for (int row = 0; row < shape.first; row++) {
+                    for (int col = 0; col < shape.second; col++) {
+                        // Visit each value and print it
+                        std::visit([](const auto& val) { std::cout << val << "\t"; }, 
+                                  df.columns[col].getData()[row]);
+                    }
+                    std::cout << std::endl;
+                }
+                std::cout << std::endl;
+            }
+        };
+
+// PipelineTest.cpp
+#include "Manager.h"
+#include <thread>
+#include <chrono>
+
 int main() {
-    // 1. Create an instance of the derived class
-    SquareExtractor extractor;
+    // Create manager with 4 threads
+    Manager manager(4);
+
+    // Create pipeline components
+    DataExtractor extractor;
+    extractor.set_taskqueue(manager.get_taskqueue());
     
-    // 2. Create and set up a TaskQueue (assuming you have this class implemented)
-    TaskQueue taskqueue = TaskQueue(); // 4 worker threads
-    extractor.set_taskqueue(&taskqueue);
+    ValueMultiplier transformer(extractor.get_output_buffer());
+    transformer.set_taskqueue(manager.get_taskqueue());
     
-    // 3. Test synchronous operation (direct run calls)
-    std::cout << "Testing direct run() calls:\n";
-    std::cout << "5 squared: " << extractor.run(5) << std::endl;
-    std::cout << "7 squared: " << extractor.run(7) << std::endl;
-    
-    // 4. Test create_task (single task)
-    std::cout << "\nTesting create_task():\n";
-    extractor.create_task(3);
-    auto result = extractor.get_output_buffer().pop();
-    std::cout << "3 squared: " << result << std::endl;
-    
-    // 5. Test add_task_thread (multiple tasks)
-    std::cout << "\nTesting add_task_thread():\n";
-    
-    // Start adding tasks in a separate thread
-    std::thread producer([&extractor]() {
-        for (int i = 1; i <= 5; ++i) {
-            extractor.add_task_thread(i);
-        }
-    });
-    
-    // Consumer thread to read results
-    std::thread consumer([&extractor]() {
-        for (int i = 1; i <= 5; ++i) {
-            int result = extractor.get_output_buffer().pop();
-            std::cout << "Received result: " << result << std::endl;
-            extractor.get_output_buffer().get_semaphore();
-        }
-    });
-    
-    producer.join();
-    consumer.join();
-    
-    // 6. Cleanup
-    taskqueue.shutdown();
-    
+    DataPrinter loader(transformer.get_output_buffer());
+    loader.set_taskqueue(manager.get_taskqueue());
+
+    // Start the pipeline by adding tasks to the extractor
+    // We'll process 3 dataframes
+    for (int i = 0; i < 3; ++i) {
+        extractor.add_task_thread();
+    }
+
+    // In a real application, you'd have proper termination conditions
+    // Here we just wait a bit to let the pipeline process everything
+    std::this_thread::sleep_for(std::chrono::seconds(2));
+
+    // The manager's destructor will clean up everything
     return 0;
 }
