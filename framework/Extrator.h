@@ -65,17 +65,39 @@ protected:
     Dataframe df; 
 
 public:
+    /**
+     * @brief Construtor padrão.
+     */
     Extrator() = default;
+    
+    /**
+     * @brief Destrutor padrão. 
+     */
     virtual ~Extrator() = default;
 
+    /**
+     * @brief Método getter para o DataFrame.
+     * 
+     * @return DataFrame com os dados extraídos.
+     */
     Dataframe getDataframe() const {
         return df;
     }
 
+    /**
+     * @brief Método getter para os nomes das colunas.
+     * 
+     * @return Vetor de strings com os nomes das colunas.
+     */
     vector<string> getColumnsName() const {
         return strColumnsName;
     }
 
+    /**
+     * @brief Método getter para os tipos das colunas.
+     * 
+     * @return Vetor de strings com os tipos das colunas.
+     */
     vector<string> getColumnsType() const {
         return strColumnsType;
     }
@@ -89,6 +111,11 @@ private:
     ifstream file; 
 
 public:
+    /**
+     * @brief Construtor da classe ExtratorCSV.
+     * 
+     * @param strPathToCSV Caminho para o arquivo CSV.
+     */
     explicit ExtratorCSV(const string& strPathToCSV) {
         file.open(strPathToCSV);
         if (!file.is_open()) {
@@ -96,6 +123,9 @@ public:
         }
     }
 
+    /**
+     * @brief Destrutor da classe ExtratorCSV.
+     */
     ~ExtratorCSV() override {
         if (file.is_open()) { 
             file.close();
@@ -103,6 +133,9 @@ public:
         }
     }
 
+    /**
+     * @brief Extrai os nomes das colunas do arquivo CSV.
+     */
     void ExtratorColunas() {
         string line;
         if (getline(file, line)) { 
@@ -117,6 +150,9 @@ public:
         }
     }
 
+    /**
+     * @brief Constrói o DataFrame a partir do arquivo CSV.
+     */
     void ConstrutorDataframe() {
         for (const string& col : strColumnsName) {
             Series auxSerie(col, "string");
@@ -159,6 +195,11 @@ private:
     sqlite3* bancoDeDados;
 
 public:
+    /**
+     * @brief Construtor da classe ExtratorSQL.
+     * 
+     * @param strPathToBd Caminho para o banco de dados SQLite.
+     */
     explicit ExtratorSQL(const string& strPathToBd) : bancoDeDados(nullptr) {
         int exit = sqlite3_open(strPathToBd.c_str(), &bancoDeDados);
         if (exit) {
@@ -168,13 +209,21 @@ public:
         }
     }
 
+    /**
+     * @brief Destrutor da classe ExtratorSQL.
+     */
     ~ExtratorSQL() override {
         if (bancoDeDados) {
             sqlite3_close(bancoDeDados);
             cout << "Banco de dados fechado com sucesso." << endl;
         }
     }
-
+    
+    /**
+     * @brief Extrai os nomes e tipos das colunas de uma tabela específica.
+     * 
+     * @param nomeTabela Nome da tabela a ser extraída.
+     */
     void ExtratorColunas(const string& nomeTabela) {
         string sql = "PRAGMA table_info(" + nomeTabela + ");";
         sqlite3_stmt* stmt;
@@ -192,6 +241,11 @@ public:
         }
     }
 
+    /**
+     * @brief Constrói o DataFrame a partir de uma tabela específica.
+     * 
+     * @param nomeTabela Nome da tabela a ser extraída.
+     */
     void ConstrutorDataframe(const string& nomeTabela) {
         for (size_t i = 0; i < strColumnsName.size(); ++i) {
             const string& coluna = strColumnsName[i];  
