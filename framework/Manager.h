@@ -145,16 +145,20 @@ class Manager
         }
 
         // Métodos para adicionar extratores, transformadores e carregadores ao pipeline
+        // Antes disso, informa pra eles a fila de tarefas na qual eles adicionarão tarefas
         void addExtractor(Extractor<T>* extractor)
         {
+            extractor -> set_taskqueue(task_queue);
             extractors.push_back(extractor);
         }
         void addTransformer(Transformer<T>* transformer)
         {
+            transformer -> set_taskqueue(task_queue);
             transformers.push_back(trasformer);
         }
         void addLoader(Loader<T>* loader)
         {
+            loader -> set_taskqueue(task_queue);
             loaders.push_back(loader);
         }
 
