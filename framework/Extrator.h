@@ -275,8 +275,10 @@ public:
 class ExtratorSQL : public Extrator {
 private:
     sqlite3* bancoDeDados;
-
 public:
+    // Implementação temporária para simular a queue de threads
+    vector<Dataframe> vctDataframes;
+
     /**
      * @brief Construtor da classe ExtratorSQL.
      * 
@@ -300,6 +302,95 @@ public:
             cout << "Banco de dados fechado com sucesso." << endl;
         }
     }
+
+    /**
+     * @brief Constrói um DataFrame a partir de um bloco de texto SQL.
+     */
+    Dataframe dfConstroiDataframe(const string& strBlocoDeTextoSQL) {
+        Dataframe dfAuxiliar;
+
+        // As colunas do DataFrame auxiliar são as mesmas do DataFrame original
+        dfAuxiliar.vstrColumnsName = strColumnsName;
+
+        // Vou criar o esboço do DataFrame auxiliar
+        for (auto col : strColumnsName){
+            Series auxSerie(col, "string");
+            dfAuxiliar.columns.push_back(auxSerie);
+        }
+
+        // Agora vou preencher o DataFrame auxiliar com os dados do bloco de texto
+        stringstream ss(strBlocoDeTextoSQL);
+        string line;
+        while (getline(ss, line)) {
+
+            stringstream ssLine(line);
+            string cell;
+            vector<VDTYPES> convertedRow;
+
+            size_t colIndex = 0;
+            while (getline(ssLine, cell, ',')) {
+                convertedRow.push_back(cell); 
+                colIndex++;
+            }
+
+            dfAuxiliar.adicionaLinha(convertedRow); 
+        }
+
+        for (auto &col : dfAuxiliar.columns) {
+            col.AjustandoType();
+        }
+
+        return dfAuxiliar;
+    }
+
+    /**
+     * @brief Extrai dados do banco de dados em blocos de tamanho especificado.
+     */
+    void ExtratorThreads(int iTamanhoBatch, const string& nomeTabela) {
+        // Chama o método que extrai as colunas da tabela
+        ExtratorColunas(nomeTabela);
+    
+        // Consulta SQL para selecionar todos os dados da tabela
+        string sql = "SELECT * FROM " + nomeTabela + ";"; 
+        sqlite3_stmt* stmt;
+        int iContador = 0;
+        string strBlocoDeTextoSQL;
+        
+        if (sqlite3_prepare_v2(bancoDeDados, sql.c_str(), -1, &stmt, nullptr) == SQLITE_OK) {
+            while (sqlite3_step(stmt) == SQLITE_ROW) {
+                string line;
+    
+                // Constrói uma linha de dados separada por vírgula
+                for (size_t i = 0; i < strColumnsName.size(); ++i) {
+                    const char* valor = reinterpret_cast<const char*>(sqlite3_column_text(stmt, i));
+                    line += valor ? valor : "NULL";
+                    if (i < strColumnsName.size() - 1) {
+                        line += ",";  // Adiciona vírgula apenas entre os valores
+                    }
+                }
+    
+                strBlocoDeTextoSQL += line + "\n"; // Adiciona a linha ao bloco
+    
+                // Quando atinge o tamanho do batch, processa o bloco
+                if (++iContador % iTamanhoBatch == 0) {
+                    Dataframe dfAuxiliar = dfConstroiDataframe(strBlocoDeTextoSQL);
+                    vctDataframes.push_back(dfAuxiliar);
+                    strBlocoDeTextoSQL.clear();  // Reseta o bloco de texto
+                }
+            }
+    
+            // Se ainda houver dados pendentes no bloco, processa o restante
+            if (!strBlocoDeTextoSQL.empty()) {
+                Dataframe dfAuxiliar = dfConstroiDataframe(strBlocoDeTextoSQL);
+                vctDataframes.push_back(dfAuxiliar);
+            }
+    
+            sqlite3_finalize(stmt);
+        } else {
+            cerr << "Erro ao preparar consulta SQL." << endl;
+        }
+    }
+    
     
     /**
      * @brief Extrai os nomes e tipos das colunas de uma tabela específica.
