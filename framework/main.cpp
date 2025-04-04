@@ -115,7 +115,7 @@ int main() {
 
     // Teste dos Métodos Threads-friend SQL
     ExtratorSQL extratorSQL("../database.db");
-    extratorSQL.ExtratorThreads(3, "Clientes");
+    extratorSQL.vExtratorCSVPai(3, "Clientes");
 
     Dataframe dfSQL = extratorSQL.vctDataframes[0];
     cout << "Shape do DataFrame (Linhas, Colunas): ";
