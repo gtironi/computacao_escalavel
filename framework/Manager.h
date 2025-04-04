@@ -108,14 +108,17 @@ class Manager
                 for (int i = 0; i < extractors.size(); i++)
                 {
                     extractors[i] -> add_task_thread();
+                    // std::cout << "Extractor" << i << std::endl;
                 }
                 for (int i = 0; i < transformers.size(); i++)
                 {
                     transformers[i] -> add_task_thread();
+                    // std::cout << "Transform" << i << std::endl;
                 }
                 for (int i = 0; i < loaders.size(); i++)
                 {
                     loaders[i] -> add_task_thread();
+                    // std::cout << "Loader" << i << std::endl;
                 }
                 // Rebloqueia o mutex pra reacessar 
                 lock.lock();

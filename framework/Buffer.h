@@ -19,7 +19,7 @@ private:
 public:
     Buffer(int max_size = 10) : max_size(max_size), semaphore(max_size) {}
     void push(T value) {
-        std::unique_lock<std::mutex> lock(mtx);
+        std::lock_guard<std::mutex> lock(mtx);
         queue.push(std::move(value));
         cond.notify_one();
     }

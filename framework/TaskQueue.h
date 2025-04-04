@@ -30,6 +30,7 @@ class TaskQueue
                 std::lock_guard<std::mutex> lock(mtx);
                 // Adiciona a tarefa
                 tasks.push(task);
+                // std::cout << "here" << std::endl;
             }
             // Acorda as threads esperando por algo aparecer na fila
             cond.notify_one();

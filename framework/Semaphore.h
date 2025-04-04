@@ -35,7 +35,7 @@ public:
 
 
     int get_count() {
-        std::unique_lock<std::mutex> lock(mutex);
+        std::lock_guard<std::mutex> lock(mutex);
         return count;
     }
 };

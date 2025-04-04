@@ -97,8 +97,14 @@ class Transformer {
 
         void add_task_thread(){
             // Queremos apenas adicionar a task, caso o semáforo do output seja diferente de 0, e o do anterior não estiver full
-            while (!output_buffer.get_semaphore().get_count() && input_buffer.get_semaphore().get_count() != input_buffer.get_max_size())
+
+            
+            while (output_buffer.get_semaphore().get_count() && input_buffer.get_semaphore().get_count() != input_buffer.get_max_size())
             {
+                // std::cout << "============================" << std::endl;
+                // std::cout << output_buffer.get_semaphore().get_count() << std::endl;
+                // std::cout << input_buffer.get_semaphore().get_count() << std::endl;
+                // std::cout << "============================" << std::endl;
                 T value = input_buffer.pop();
                 taskqueue->push_task([this, val = std::move(value)]() mutable {
                     this->create_task(std::move(val));
@@ -138,6 +144,9 @@ class Loader {
         // Queremos apenas adicionar a task, caso o semáforo do output seja diferente de 0, e o do anterior não estiver full
         while (input_buffer.get_semaphore().get_count() != input_buffer.get_max_size())
         {
+            std::cout << "============================" << std::endl;
+            std::cout << (input_buffer.get_semaphore().get_count()) << std::endl;
+            std::cout << "============================" << std::endl;
             T value = input_buffer.pop();
             taskqueue->push_task([this, val = std::move(value)]() mutable {
                 this->create_task(std::move(val));
