@@ -15,47 +15,6 @@
 using namespace std;
 
 /**
- * @brief Converte um tipo SQL para seu equivalente em C++.
- * @param sqlType Tipo SQL (ex: "VARCHAR(20)", "DECIMAL(10,2)", "INT").
- * @return Tipo equivalente em C++ (ex: "string", "float", "int").
- */
-string mapSQLToCpp(const string& sqlType) {
-    static map<string, string> typeMap = {
-        {"INT", "int"},
-        {"INTEGER", "int"},
-        {"BIGINT", "long long"},
-        {"SMALLINT", "short"},
-        {"TINYINT", "char"},
-        {"FLOAT", "float"},
-        {"REAL", "double"},
-        {"DOUBLE", "double"},
-        {"DECIMAL", "float"},   
-        {"NUMERIC", "float"},   
-        {"BOOLEAN", "bool"},
-        {"TEXT", "string"},
-        {"CHAR", "string"},
-        {"VARCHAR", "string"},
-        {"DATE", "string"},
-        {"DATETIME", "string"},
-        {"TIMESTAMP", "string"}
-    };
-
-    regex varcharRegex(R"(VARCHAR\(\d+\))");
-    regex charRegex(R"(CHAR\(\d+\))");
-    regex decimalRegex(R"(DECIMAL\(\d+,\d+\))");
-    regex numericRegex(R"(NUMERIC\(\d+,\d+\))");
-
-    if (regex_match(sqlType, varcharRegex) || regex_match(sqlType, charRegex)) {
-        return "string"; 
-    } 
-    if (regex_match(sqlType, decimalRegex) || regex_match(sqlType, numericRegex)) {
-        return "float"; 
-    }
-
-    return typeMap.count(sqlType) ? typeMap[sqlType] : "Desconhecido";
-}
-
-/**
  * @brief Classe base para extratores de dados.
  */
 class Extrator {
@@ -428,7 +387,7 @@ public:
             sqlite3_stmt* stmt;
 
             if (sqlite3_prepare_v2(bancoDeDados, sql.c_str(), -1, &stmt, nullptr) == SQLITE_OK) {
-                Series auxSerie(coluna, mapSQLToCpp(tipo));
+                Series auxSerie(coluna, "string");
 
                 while (sqlite3_step(stmt) == SQLITE_ROW) {
                     const char* valor = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0));
