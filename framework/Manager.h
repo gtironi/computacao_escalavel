@@ -117,6 +117,36 @@ class Manager
                 });
             }
         }
+
+        
+
+        // Método para encerrar o processo
+        void stop()
+        {
+            // Seta a variável de trabalho finalizado como true
+            {
+                std::lock_guard<std::mutex> lock(mtx);
+                finishedWork = true;
+            }
+            // Notifica todas as threads adormecidas
+            cond.notify_all();
+            // Finaliza a fila de tarefas
+            task_queue.shutdown();
+            // Espera todas as threads terminarem
+            for (auto& thread : threads)
+            {
+                if (thread.joinable())
+                {
+                    thread.join();
+                }
+            }
+        }
+
+        // Destrutor
+        ~Manager()
+        {
+            stop();
+        }
 };
 
 #endif // MANAGER_H
