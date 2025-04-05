@@ -96,32 +96,30 @@ class Manager
             }
             cond.notify_all();
 
-            // Bloqueia o mutex para acessar a variável finishedWork
-            std::unique_lock<std::mutex> lock(mtx);
-
-            // Enquanto o trabalho não for finalizado...
-            while (!finishedWork)
+            // Manda todos os blocos de processo começarem a mandar pra fila de tarefas
+            for (int i = 0; i < extractors.size(); i++)
             {
-                // Desbloqueia o mutex
-                lock.unlock();
-                // Manda todos os blocos de processo mandarem o que puderem pra fila de tarefas
-                for (int i = 0; i < extractors.size(); i++)
+                threads.emplace_back([this]
                 {
-                    extractors[i] -> add_task_thread();
-                    // std::cout << "Extractor" << i << std::endl;
-                }
-                for (int i = 0; i < transformers.size(); i++)
+                    extractors[i] -> enqueue_tasks();
+                });
+                // std::cout << "Extractor" << i << std::endl;
+            }
+            for (int i = 0; i < transformers.size(); i++)
+            {
+                threads.emplace_back([this]
                 {
-                    transformers[i] -> add_task_thread();
-                    // std::cout << "Transform" << i << std::endl;
-                }
-                for (int i = 0; i < loaders.size(); i++)
+                    transformers[i] -> enqueue_tasks();
+                });
+                // std::cout << "Transform" << i << std::endl;
+            }
+            for (int i = 0; i < loaders.size(); i++)
+            {
+                threads.emplace_back([this]
                 {
-                    loaders[i] -> add_task_thread();
-                    // std::cout << "Loader" << i << std::endl;
-                }
-                // Rebloqueia o mutex pra reacessar 
-                lock.lock();
+                    loaders[i] -> enqueue_tasks();
+                });
+                // std::cout << "Loader" << i << std::endl;
             }
         }
 

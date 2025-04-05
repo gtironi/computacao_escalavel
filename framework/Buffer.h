@@ -27,7 +27,7 @@ public:
     T pop() {
         std::unique_lock<std::mutex> lock(mtx);
         // Bloqueia até que tenha algo na fila mas não impede de colocar elementos
-        // cond.wait(lock, [this] { return !queue.empty(); });
+        cond.wait(lock, [this] { return !queue.empty(); });
         T value = std::move(queue.front());
         queue.pop();
         semaphore.notify();
