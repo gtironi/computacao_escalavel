@@ -85,6 +85,12 @@ class TaskQueue
             // Retorna o resultado
             return tasks.empty();
         }
+
+        // Método para verificar se o trabalho foi encerrado
+        bool isShutdown() { 
+            std::lock_guard<std::mutex> lock(mtx);
+            return finishedWork;
+        }
 };
 
 #endif
