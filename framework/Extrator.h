@@ -81,7 +81,7 @@ public:
     int getBatchSize() const { return this->iTamanhoBatch; }
     
     void setTaskQueue(TaskQueue* tq) { this->taskqueue = tq; }
-    void setOutputBuffer(Buffer<T>& outputBuffer) { this->outputBuffer = outputBuffer; }
+    // void setOutputBuffer(Buffer<T>& outputBuffer) { this->outputBuffer = outputBuffer; }
     void setFilesFlag(const string& strFilesFlag) { this->strFilesFlag = strFilesFlag; }
     void setBatchSize(int iTamanhoBatch) { this->iTamanhoBatch = iTamanhoBatch; }
 
