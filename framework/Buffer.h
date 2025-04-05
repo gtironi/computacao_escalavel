@@ -28,15 +28,16 @@ public:
     std::optional<T> pop() {
         std::unique_lock<std::mutex> lock(mtx);
         // Bloqueia até que tenha algo na fila mas não impede de colocar elementos
-        bool got_item = cond.wait_for(lock, std::chrono::milliseconds(3000), [this]
-        {
-            return !queue.empty();
-        });
+        // bool got_item = cond.wait_for(lock, std::chrono::milliseconds(3000), [this]
+        // {
+        //     return !queue.empty();
+        // });
 
-        if (!got_item)
-        {
-            return std::nullopt;
-        }
+        // if (!got_item)
+        // {
+        //     return std::nullopt;
+        // }
+        cond.wait(lock, [this] { return !queue.empty(); });
 
         // cond.wait(lock, [this] { return !queue.empty(); });
         T value = std::move(queue.front());
