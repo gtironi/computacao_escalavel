@@ -117,7 +117,7 @@ public:
         }
     }
 
-     void vExtratorPai(){
+     void enqueue_tasks(){
         string strBlocoDeTexto;
         int iContador = 0;
 
