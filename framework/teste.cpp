@@ -104,9 +104,11 @@ int main() {
     
     // In a real application, you'd have proper termination conditions
     // Here we just wait a bit to let the pipeline process everything
-    std::this_thread::sleep_for(std::chrono::seconds(2));
+    std::this_thread::sleep_for(std::chrono::seconds(1));
     
+    std::cout << "Trabalho será finalizado" << std::endl;
     manager.stop();
+    std::cout << "Trabalho finalizado" << std::endl;
 
     // The manager's destructor will clean up everything
     return 0;

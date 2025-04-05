@@ -16,6 +16,7 @@ private:
     std::condition_variable cond;
     int max_size;
     Semaphore semaphore;
+    bool finishedWork = false;
 
 public:
     Buffer(int max_size = 10) : max_size(max_size), semaphore(max_size) {}
@@ -37,7 +38,12 @@ public:
         // {
         //     return std::nullopt;
         // }
-        cond.wait(lock, [this] { return !queue.empty(); });
+        cond.wait(lock, [this] { return !queue.empty() || finishedWork; });
+
+        if (finishedWork)
+        {
+            return std::nullopt;
+        }
 
         // cond.wait(lock, [this] { return !queue.empty(); });
         T value = std::move(queue.front());
@@ -66,6 +72,12 @@ public:
         return queue.size();
     }
     int get_max_size() const {return max_size;}
+
+    void setFinishedWork() {
+        std::lock_guard<std::mutex> lock(mtx);
+        finishedWork = true;
+        cond.notify_all();
+    }
 };
 
 #endif // BUFFER_H

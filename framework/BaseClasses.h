@@ -86,6 +86,10 @@ public:
         }
     }
     
+    void finishBuffer()
+    {
+        output_buffer.setFinishedWork();
+    }
 };
 
 template <typename T>
@@ -112,7 +116,7 @@ class Transformer {
                     std::optional<T> maybe_value = input_buffer.pop();
                     if (!maybe_value.has_value()) {
                         // Timeout — decidir o que fazer: pular, logar, continuar...
-                        break;
+                        return;
                     }
                     T value = std::move(*maybe_value);
                     taskqueue->push_task([this, val = std::move(value)]() mutable {
@@ -134,6 +138,11 @@ class Transformer {
         virtual ~Transformer() = default;
         void set_taskqueue(TaskQueue* tq) { taskqueue = tq; }
         TaskQueue* get_taskqueue() const { return taskqueue; }
+
+        void finishBuffer()
+        {
+            output_buffer.setFinishedWork();
+        }
 };
 
 
@@ -157,8 +166,7 @@ class Loader {
             std::cout << "============================" << std::endl;
             std::optional<T> maybe_value = input_buffer.pop();
             if (!maybe_value.has_value()) {
-                // Timeout — decidir o que fazer: pular, logar, continuar...
-                break;
+                return;
             }
             T value = std::move(*maybe_value);
             taskqueue->push_task([this, val = std::move(value)]() mutable {
@@ -173,7 +181,6 @@ class Loader {
     void create_task(T value) {
         run(std::move(value));
     }
-
 };
 
 #endif
