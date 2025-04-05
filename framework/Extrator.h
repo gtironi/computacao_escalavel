@@ -20,7 +20,7 @@ template <typename T>
 class Extrator {
 protected:
     vector<string> strColumnsName;
-    Buffer<T> outputBuffer;
+    Buffer<Dataframe> outputBuffer;
     TaskQueue* taskqueue = nullptr;
     string strFilesFlag;
     int iTamanhoBatch;
@@ -104,12 +104,10 @@ public:
         string sql = "PRAGMA table_info(" + strNomeTabela + ");";
         sqlite3_stmt* stmt;
         this->strColumnsName.clear();
-        this->strColumnsType.clear();
 
         if (sqlite3_prepare_v2(this->bancoDeDados, sql.c_str(), -1, &stmt, nullptr) == SQLITE_OK) {
             while (sqlite3_step(stmt) == SQLITE_ROW) {
                 this->strColumnsName.push_back(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1)));
-                this->strColumnsType.push_back(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2)));
             }
             sqlite3_finalize(stmt);
         } else {
@@ -121,7 +119,7 @@ public:
         string strBlocoDeTexto;
         int iContador = 0;
 
-        if (this->strFilesFlag = "csv") 
+        if (this->strFilesFlag == "csv") 
         {
             string line;
             while (getline(file, line)) {
@@ -134,7 +132,7 @@ public:
                 strBlocoDeTexto += line + "\n"; 
 
                 if (iContador % this->iTamanhoBatch == 0) {
-                    T value = strBlocoDeTexto;
+                    string value = strBlocoDeTexto;
                     taskqueue->push_task([this, val = value]() mutable {
                         this->create_task(val);
                     });
@@ -146,7 +144,7 @@ public:
 
             // Adiciona o último bloco, se houver
             if (!strBlocoDeTexto.empty()) { 
-                T value = strBlocoDeTexto;
+                string value = strBlocoDeTexto;
                 taskqueue->push_task([this, val = value]() mutable {
                     this->create_task(val);
                 });
@@ -174,7 +172,7 @@ public:
         
                     // Quando atinge o tamanho do batch, processa o bloco
                     if (++iContador % this->iTamanhoBatch == 0) {
-                        T value = strBlocoDeTexto;
+                        string value = strBlocoDeTexto;
                         taskqueue->push_task([this, val = value]() mutable {
                             this->create_task(val);
                         });
@@ -184,7 +182,7 @@ public:
         
                 // Se ainda houver dados pendentes no bloco, processa o restante
                 if (!strBlocoDeTexto.empty()) {
-                    T value = strBlocoDeTexto;
+                    string value = strBlocoDeTexto;
                     taskqueue->push_task([this, val = value]() mutable {
                         this->create_task(val);
                     });
@@ -240,7 +238,7 @@ public:
         return dfAuxiliar;
     }
 
-    void create_task(T value) {
+    void create_task(const string& value) {
         T data = run(value);
         this->outputBuffer.push(data);
      }

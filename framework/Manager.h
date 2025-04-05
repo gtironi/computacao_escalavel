@@ -11,6 +11,7 @@
 #include <atomic>
 #include "BaseClasses.h"
 #include "TaskQueue.h"
+#include "Extrator.h"
 
 // Classe do gerenciador das threads
 template <typename T>
@@ -70,7 +71,7 @@ class Manager
 
         // Métodos para adicionar extratores, transformadores e carregadores ao pipeline
         // Antes disso, informa pra eles a fila de tarefas na qual eles adicionarão tarefas
-        void addExtractor(Extractor<T>* extractor)
+        void addExtractor(Extrator<T>* extractor)
         {
             extractor -> set_taskqueue(&task_queue);
             extractors.push_back(extractor);
