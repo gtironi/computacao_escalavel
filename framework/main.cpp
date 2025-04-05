@@ -152,8 +152,6 @@ int main() {
     }
 
     TaskQueue taskQueue;
-    Buffer<Dataframe> buffer;
     extrator.setTaskQueue(&taskQueue);
-    extrator.setOutputBuffer(buffer);
     return 0;
 }
