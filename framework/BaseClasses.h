@@ -43,68 +43,6 @@ using namespace std;
  * @brief Classe base para extratores de dados.
  */
 
-
-// Classe base template usando CRTP
-template <typename T>
-class Extractor {
-protected:
-    Buffer<T> output_buffer;
-    TaskQueue* taskqueue = nullptr;
-
-public:
-    virtual ~Extractor() = default;
-    void set_taskqueue(TaskQueue* tq) { taskqueue = tq; }
-    TaskQueue* get_taskqueue() const { return taskqueue; }
-
-    Buffer<T>& get_output_buffer() { return output_buffer; }
-
-    // Pure virtual function to be implemented by derived classes
-    virtual T run() = 0;
-
-    // create_task calls the virtual run()
-    void create_task() {
-        T data = run();
-        output_buffer.push(data);
-    }
-
-    // Variadic version if needed (though virtual functions can't be templates)
-    template <typename... Args>
-    void create_task(Args&&... args) {
-        T data = run(std::forward<Args>(args)...);
-        output_buffer.push(data);
-    }
-
-    void enqueue_tasks() {
-        while (!taskqueue->isShutdown()) {  // Modificado: checa se a fila foi encerrada
-            if (output_buffer.get_semaphore().get_count() > 0)
-            {
-                taskqueue->push_task([this]() {
-                    this->create_task();
-                });
-                output_buffer.get_semaphore().wait();
-            }
-        }
-    }
-
-    // Variadic version if needed
-    template <typename... Args>
-    void enqueue_tasks(Args&&... args) {
-        while (true) {
-            taskqueue->push_task([this, ...args = std::forward<Args>(args)]() mutable {
-                this->create_task(std::forward<Args>(args)...);
-            });
-            output_buffer.get_semaphore().wait();
-        }
-    }
-
-    void finishBuffer()
-    {
-        output_buffer.setFinishedWork();
-    }
-};
-
-// -------------------------------------------------------------
-
 template <typename T>
 class Extrator {
 protected:
@@ -348,8 +286,6 @@ public:
         outputBuffer.setFinishedWork();
     }
 };
-
-//-----------------------------------------------------------------
 
 template <typename T>
 class Transformer {

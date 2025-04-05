@@ -69,7 +69,7 @@ public:
      * @return true se a adição for bem-sucedida, false caso contrário.
      */
     bool adicionaColuna(Series novaSerie) {
-
+        
         if (columns.empty()) {
             vstrColumnsName.push_back(novaSerie.strGetName());
             columns.push_back(novaSerie);
@@ -78,11 +78,11 @@ public:
         } else {
             bool viavel = true;
 
-
+            
             for (size_t i = 0; i < columns.size(); i++) {
-                if (novaSerie.iGetSize() != columns[i].iGetSize()) {
+                if (novaSerie.iGetSize() != columns[i].iGetSize()) {  
                     viavel = false;
-                    break;
+                    break; 
                 }
             }
 
@@ -162,32 +162,32 @@ public:
 
     /**
      * @brief Filtra o DataFrame com base em um valor específico de uma coluna.
-     *
+     * 
      * @param strNomeColuna O nome da coluna na qual a filtragem será aplicada.
      * @param valor O valor a ser buscado na coluna.
      * @return Um novo DataFrame contendo apenas as linhas onde a correspondência ocorreu.
      */
     Dataframe filtroByValue(const string& strNomeColuna, const VDTYPES& valor) {
-        Dataframe auxDf;
+        Dataframe auxDf; 
         auxDf.vstrColumnsName = vstrColumnsName;
-
+        
         for (auto col : columns){
             Series auxSerie(col.strGetName(), col.strGetType());
             auxDf.columns.push_back(auxSerie);
         }
-
-        vector<int> index;
-
+        
+        vector<int> index; 
+        
         auto it = find(vstrColumnsName.begin(), vstrColumnsName.end(), strNomeColuna);
         if (it == vstrColumnsName.end()) {
             cerr << "Erro: Coluna '" << strNomeColuna << "' não encontrada." << endl;
             return auxDf;
         }
-
+        
         int colIndex = distance(vstrColumnsName.begin(), it);
-
+        
         for (size_t i = 0; i < columns[colIndex].getData().size(); i++) {
-
+            
             if (columns[colIndex].getData()[i] == valor) {
                 index.push_back(i);
             }
@@ -227,25 +227,7 @@ public:
             columns[i].hStack(other.columns[i]);
         }
     }
-
-    void printHeader(ostream& os, const Dataframe& df, int col_width = 15, int index_width = 5) {
-        os << left << setw(index_width) << "" << "  ";
-        for (const auto& name : df.vstrColumnsName) {
-            string header_name = name.substr(0, col_width);
-            if (name.length() > col_width) {
-                header_name[col_width - 3] = header_name[col_width - 2] = header_name[col_width - 1] = '.';
-            }
-            os << left << setw(col_width) << header_name << "  ";
-        }
-        os << "\n";
-
-        os << left << setw(index_width) << "" << "  ";
-        for (size_t i = 0; i < df.vstrColumnsName.size(); ++i) {
-            os << left << setw(col_width) << "------------" << "  ";
-        }
-        os << "\n";
-    }
-
+    
     /**
      * @brief Sobrecarga do operador de saída para imprimir o DataFrame.
      * @param os O fluxo de saída.
@@ -258,25 +240,50 @@ public:
             os << "[Empty DataFrame]\n";
             return os;
         }
-
+        
         pair<int, int> shape = df.getShape();
 
         size_t num_rows = shape.first;
         size_t num_cols = shape.second;
         int col_width = 15; // Largura fixa das colunas
         int index_width = 5;
-
+    
+        os << left << setw(index_width) << "" << "  ";
+        for (const auto& name : df.vstrColumnsName) {
+            string header_name = name.substr(0, col_width);
+            if (name.length() > col_width) header_name[col_width - 3] = header_name[col_width - 2] = header_name[col_width - 1] = '.';
+            os << left << setw(col_width) << header_name << "  ";
+        }
+        os << "\n";
+        os << left << setw(index_width) << "" << "  ";
+        for (size_t i = 0; i < num_cols; ++i) {
+            os << left << setw(col_width) << "------------" << "  ";
+        }
+        os << "\n";
+    
+        size_t max_display_rows = 10;
+        bool truncate = num_rows > max_display_rows;
+    
         for (size_t i = 0; i < num_rows; ++i) {
+            if (truncate && i == 5) {
+                os << left << setw(index_width) << "..." << "  ";
+                for (size_t j = 0; j < num_cols; ++j) {
+                    os << left << setw(col_width) << "..." << "  ";
+                }
+                os << "\n";
+                i = num_rows - 1; // Pula para a última linha
+            }
+    
             os << left << setw(index_width) << i << "  ";
             for (size_t j = 0; j < num_cols; ++j) {
                 string val_str = variantToString(df.columns[j].retornaElemento(i));
-                if (val_str.length() > col_width)
-                    val_str[col_width - 3] = val_str[col_width - 2] = val_str[col_width - 1] = '.';
+                if (val_str.length() > col_width) val_str[col_width - 3] = val_str[col_width - 2] = val_str[col_width - 1] = '.';
                 os << left << setw(col_width) << val_str.substr(0, col_width) << "  ";
             }
             os << "\n";
         }
-
+    
+        os << "\n[" << num_rows << " rows x " << num_cols << " columns]\n";
         return os;
     }
 };

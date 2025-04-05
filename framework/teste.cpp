@@ -19,7 +19,15 @@ class DataPrinter : public Loader<Dataframe> {
     public:
         using Loader::Loader; // Inherit constructor
 
+        private:
+            bool headerPrinted = false;
+
         void run(Dataframe df) override {
+            if (!headerPrinted) {
+                df.printHeader(std::cout, df);
+                headerPrinted = true;
+            }
+
             // Print the dataframe contents
             std::cout << df << std::endl;
         }
