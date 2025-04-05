@@ -132,6 +132,7 @@ class Manager
             }
             // Notifica todas as threads adormecidas
             cond.notify_all();
+            
             // Finaliza a fila de tarefas
             task_queue.shutdown();
             // Espera todas as threads terminarem
