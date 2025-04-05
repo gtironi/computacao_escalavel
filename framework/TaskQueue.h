@@ -50,7 +50,8 @@ class TaskQueue
             // Se o processo for parar e a fila tiver acabado, não retorna nada
             if (finishedWork && tasks.empty())
             {
-                return []{};
+                // Retorna função vazia para indicar shutdown.
+                return std::function<void()>();
             }
             // Pega uma tarefa e a remove da fila
             std::function<void()> task = tasks.front();

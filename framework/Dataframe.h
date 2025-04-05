@@ -211,7 +211,7 @@ public:
      * @param other O DataFrame a ser empilhado.
      */
     void hStack(Dataframe& other) {
-        if (vstrColumnsName.size() != vstrColumnsName.size()) {
+        if (this->columns.size() != other.columns.size()) {
             cout << "DataFrames com tamanhos diferentes. Não é possível empilhar." << endl;
             return;
         }
