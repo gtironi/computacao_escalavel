@@ -14,7 +14,6 @@
 
 // Classe do gerenciador das threads
 template <typename T>
-template <typename T>
 class Manager
 {
     private:
@@ -26,12 +25,6 @@ class Manager
         std::condition_variable cond;
         // Indicador se o trabalho foi interrompido
         bool finishedWork = false;
-        // Indicador se o trabalho já foi iniciado
-        bool running = false;
-        // Listas de extratores, de transformadores e de carregadores do pipeline
-        std::vector<Extractor<T>*> extractors;
-        std::vector<Transformer<T>*> transformers;
-        std::vector<Loader<T>*> loaders;
         // Indicador se o trabalho já foi iniciado
         bool running = false;
         // Listas de extratores, de transformadores e de carregadores do pipeline
@@ -57,19 +50,9 @@ class Manager
                         return running || finishedWork;
                     });
 
-                    // Espera até o processo ser iniciado ou finalizado
-                    std::unique_lock<std::mutex> lock(mtx);
-
-                    cond.wait(lock, [this]
-                    {
-                        return running || finishedWork;
-                    });
-
                     // Enquanto o trabalho não for finalizado...
                     while (!finishedWork)
                     {
-                        // Libera o lock para as múltiplas threads começarem a trabalhar
-                        lock.unlock();
                         // Libera o lock para as múltiplas threads começarem a trabalhar
                         lock.unlock();
                         // Tenta pegar a próxima tarefa da fila e a executa
@@ -78,8 +61,6 @@ class Manager
                         {
                             task();
                         }
-                        // Bloqueia antes de verificar a condição de parada novamente
-                        lock.lock();
                         // Bloqueia antes de verificar a condição de parada novamente
                         lock.lock();
                     }
@@ -114,7 +95,7 @@ class Manager
                 running = true;   
             }
             cond.notify_all();
-
+            
             // Manda todos os blocos de processo começarem a mandar pra fila de tarefas
             for (int i = 0; i < extractors.size(); i++)
             {
@@ -126,8 +107,8 @@ class Manager
             for (int i = 0; i < transformers.size(); i++)
             {
                 threads.emplace_back([this,i]
-                {
-                    transformers[i] -> enqueue_tasks();
+                    {
+                        transformers[i] -> enqueue_tasks();
                 });
                 // std::cout << "Transform" << i << std::endl;
             }
@@ -151,7 +132,6 @@ class Manager
             }
             // Notifica todas as threads adormecidas
             cond.notify_all();
-            
             // Finaliza a fila de tarefas
             task_queue.shutdown();
             // Espera todas as threads terminarem
