@@ -16,6 +16,7 @@ private:
     std::condition_variable cond;
     int max_size;
     Semaphore semaphore;
+    bool finishedWork = false;
 
 public:
     Buffer(int max_size = 10) : max_size(max_size), semaphore(max_size) {}
@@ -28,12 +29,18 @@ public:
     std::optional<T> pop() {
         std::unique_lock<std::mutex> lock(mtx);
         // Bloqueia até que tenha algo na fila mas não impede de colocar elementos
-        bool got_item = cond.wait_for(lock, std::chrono::milliseconds(3000), [this]
-        {
-            return !queue.empty();
-        });
+        // bool got_item = cond.wait_for(lock, std::chrono::milliseconds(3000), [this]
+        // {
+        //     return !queue.empty();
+        // });
 
-        if (!got_item)
+        // if (!got_item)
+        // {
+        //     return std::nullopt;
+        // }
+        cond.wait(lock, [this] { return !queue.empty() || finishedWork; });
+
+        if (finishedWork)
         {
             return std::nullopt;
         }
@@ -65,6 +72,12 @@ public:
         return queue.size();
     }
     int get_max_size() const {return max_size;}
+
+    void setFinishedWork() {
+        std::lock_guard<std::mutex> lock(mtx);
+        finishedWork = true;
+        cond.notify_all();
+    }
 };
 
 #endif // BUFFER_H

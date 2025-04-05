@@ -134,6 +134,15 @@ class Manager
             cond.notify_all();
             // Finaliza a fila de tarefas
             task_queue.shutdown();
+            // Manda todos os blocos de processo começarem a mandar pra fila de tarefas
+            for (int i = 0; i < extractors.size(); i++)
+            {
+                extractors[i] -> finishBuffer();
+            }
+            for (int i = 0; i < transformers.size(); i++)
+            {
+                transformers[i] -> finishBuffer();
+            }
             // Espera todas as threads terminarem
             for (auto& thread : threads)
             {
