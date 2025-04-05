@@ -99,15 +99,14 @@ class Manager
             // Manda todos os blocos de processo começarem a mandar pra fila de tarefas
             for (int i = 0; i < extractors.size(); i++)
             {
-                threads.emplace_back([this]
-                {
-                    extractors[i] -> enqueue_tasks();
+                threads.emplace_back([this, i]() {
+                    extractors[i]->enqueue_tasks();
                 });
                 // std::cout << "Extractor" << i << std::endl;
             }
             for (int i = 0; i < transformers.size(); i++)
             {
-                threads.emplace_back([this]
+                threads.emplace_back([this,i]
                 {
                     transformers[i] -> enqueue_tasks();
                 });
@@ -115,7 +114,7 @@ class Manager
             }
             for (int i = 0; i < loaders.size(); i++)
             {
-                threads.emplace_back([this]
+                threads.emplace_back([this,i]
                 {
                     loaders[i] -> enqueue_tasks();
                 });
