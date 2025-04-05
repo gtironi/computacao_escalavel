@@ -11,7 +11,6 @@
 #include <atomic>
 #include "BaseClasses.h"
 #include "TaskQueue.h"
-#include "Extrator.h"
 
 // Classe do gerenciador das threads
 template <typename T>
@@ -29,7 +28,7 @@ class Manager
         // Indicador se o trabalho já foi iniciado
         bool running = false;
         // Listas de extratores, de transformadores e de carregadores do pipeline
-        std::vector<Extractor<T>*> extractors;
+        std::vector<Extrator<T>*> extractors;
         std::vector<Transformer<T>*> transformers;
         std::vector<Loader<T>*> loaders;
 
@@ -93,10 +92,10 @@ class Manager
             // Chama as threads para começarem a pegar coisas da fila de tarefas
             {
                 std::lock_guard<std::mutex> lock(mtx);
-                running = true;   
+                running = true;
             }
             cond.notify_all();
-            
+
             // Manda todos os blocos de processo começarem a mandar pra fila de tarefas
             for (int i = 0; i < extractors.size(); i++)
             {
