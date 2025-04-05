@@ -5,6 +5,7 @@
 #include "TaskQueue.h"
 #include <utility>  // Para std::forward
 #include <tuple>
+#include <optional>
 // using namespace std;
 
 // // Classe base para todos. Todos os stages precisam de uma task queue que será gerenciada pelo manager global
@@ -63,11 +64,14 @@ public:
     }
 
     void enqueue_tasks() {
-        while (output_buffer.get_semaphore().get_count() > 0) {
-            taskqueue->push_task([this]() {
-                this->create_task();
-            });
-            output_buffer.get_semaphore().wait();
+        while (true) {
+            if (output_buffer.get_semaphore().get_count() > 0)
+            {
+                taskqueue->push_task([this]() {
+                    this->create_task();
+                });
+                output_buffer.get_semaphore().wait();
+            }
         }
     }
 
@@ -106,7 +110,12 @@ class Transformer {
                 // std::cout << "============================" << std::endl;
                 if (output_buffer.get_semaphore().get_count() > 0)
                 {
-                    T value = input_buffer.pop();
+                    std::optional<T> maybe_value = input_buffer.pop();
+                    if (!maybe_value.has_value()) {
+                        // Timeout — decidir o que fazer: pular, logar, continuar...
+                        break;
+                    }
+                    T value = std::move(*maybe_value);
                     taskqueue->push_task([this, val = std::move(value)]() mutable {
                         this->create_task(std::move(val));
                     });
@@ -143,12 +152,17 @@ class Loader {
 
     void enqueue_tasks(){
         // Queremos apenas adicionar a task, caso o semáforo do output seja diferente de 0, e o do anterior não estiver full
-        while (input_buffer.get_semaphore().get_count() != input_buffer.get_max_size())
+        while (true)
         {
             std::cout << "============================" << std::endl;
             std::cout << (input_buffer.get_semaphore().get_count()) << std::endl;
             std::cout << "============================" << std::endl;
-            T value = input_buffer.pop();
+            std::optional<T> maybe_value = input_buffer.pop();
+            if (!maybe_value.has_value()) {
+                // Timeout — decidir o que fazer: pular, logar, continuar...
+                break;
+            }
+            T value = std::move(*maybe_value);
             taskqueue->push_task([this, val = std::move(value)]() mutable {
                 this->create_task(std::move(val));
             });

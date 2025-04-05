@@ -81,7 +81,7 @@ class TaskQueue
         bool is_empty()
         {
             // Trava o mutex
-            std::lock_guard<std::mutex> lock(mtx);
+            // std::lock_guard<std::mutex> lock(mtx);
             // Retorna o resultado
             return tasks.empty();
         }
