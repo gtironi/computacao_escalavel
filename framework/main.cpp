@@ -1,6 +1,9 @@
 #include "Dataframe.h"
 #include "Series.h"
 #include "Extrator.h"
+#include "BaseClasses.h"
+#include "TaskQueue.h"
+#include "Buffer.h"
 
 int main() {
 
@@ -113,25 +116,25 @@ int main() {
     // cout << df << endl;
 
 
-    // Teste dos Métodos Threads-friend SQL
-    ExtratorSQL extratorSQL("../database.db");
-    extratorSQL.vExtratorCSVPai(3, "Clientes");
+    // // Teste dos Métodos Threads-friend SQL
+    // ExtratorSQL extratorSQL("../database.db");
+    // extratorSQL.vExtratorCSVPai(3, "Clientes");
 
-    Dataframe dfSQL = extratorSQL.vctDataframes[0];
-    Dataframe dfSQL_2 = extratorSQL.vctDataframes[1];
+    // Dataframe dfSQL = extratorSQL.vctDataframes[0];
+    // Dataframe dfSQL_2 = extratorSQL.vctDataframes[1];
 
-    dfSQL.hStack(dfSQL_2);
-    cout << "Shape do DataFrame (Linhas, Colunas): ";
-    auto shapeSQL = dfSQL.getShape();
-    cout << "(" << shapeSQL.first << ", " << shapeSQL.second << ")" << endl;
+    // dfSQL.hStack(dfSQL_2);
+    // cout << "Shape do DataFrame (Linhas, Colunas): ";
+    // auto shapeSQL = dfSQL.getShape();
+    // cout << "(" << shapeSQL.first << ", " << shapeSQL.second << ")" << endl;
 
-    cout << "\nDados das colunas:" << endl;
-    for (auto &col : dfSQL.columns) {
-        cout << "Nome coluna: " << col.strGetName() << " - Tipo coluna: " << col.strGetType() << endl;
-    }
+    // cout << "\nDados das colunas:" << endl;
+    // for (auto &col : dfSQL.columns) {
+    //     cout << "Nome coluna: " << col.strGetName() << " - Tipo coluna: " << col.strGetType() << endl;
+    // }
 
-    cout << "\nDados do DataFrame:" << endl;
-    cout << dfSQL << endl;
+    // cout << "\nDados do DataFrame:" << endl;
+    // cout << dfSQL << endl;
     
     // cout << "Shape do DataFrame (Linhas, Colunas): ";
     // auto shapeSQL = dfSQL.getShape();
@@ -140,5 +143,17 @@ int main() {
     // cout << "\nDados do DataFrame:" << endl;
     // cout << dfSQL << endl;
 
+    // Testando Classe Extrator 
+    Extrator<Dataframe> extrator("../mock/data/dados_viagens_2025.csv", "csv", 10);
+    vector<string> colunas = extrator.getColumnsName();
+    cout << "Colunas do CSV: " << endl;
+    for (const auto& coluna : colunas) {
+        cout << coluna << endl;
+    }
+
+    TaskQueue taskQueue;
+    Buffer<Dataframe> buffer;
+    extrator.setTaskQueue(&taskQueue);
+    extrator.setOutputBuffer(buffer);
     return 0;
 }
