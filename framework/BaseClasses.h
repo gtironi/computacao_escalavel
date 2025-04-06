@@ -166,7 +166,7 @@ public:
                     });
                     this->outputBuffer.get_semaphore().wait();
                 }
-
+                // cout << iContador << endl;
                 iContador++;
             }
 
@@ -204,7 +204,7 @@ public:
                         taskqueue->push_task([this, val = value]() mutable {
                             this->create_task(val);
                         });
-                        this->outputBuffer.get_semaphore().wait();
+                        // this->outputBuffer.get_semaphore().wait();
                     }
                 }
 
@@ -222,6 +222,8 @@ public:
                 throw runtime_error("Erro ao preparar consulta SQL.");
             }
         }
+
+        outputBuffer.setFinishedWork();
     }
 
     T run(const string& strTextBlock){
@@ -300,8 +302,7 @@ class Transformer {
 
         void enqueue_tasks(){
             // Queremos apenas adicionar a task, caso o semáforo do output seja diferente de 0, e o do anterior não estiver full
-
-            while (!taskqueue->isShutdown()) {  // Modificado: interrompe se taskqueue encerrada
+            while (!input_buffer.atomicGetLastOne()) {  // Modificado: interrompe se taskqueue encerrada
                 // std::cout << "============================" << std::endl;
                 // std::cout << output_buffer.get_semaphore().get_count() << std::endl;
                 // std::cout << input_buffer.get_semaphore().get_count() << std::endl;
@@ -320,6 +321,7 @@ class Transformer {
                     output_buffer.get_semaphore().wait();
                 }
             }
+            finishBuffer();
         }
 
         Buffer<T>& get_output_buffer() { return output_buffer; }
@@ -355,7 +357,7 @@ class Loader {
 
     void enqueue_tasks(){
         // Queremos apenas adicionar a task, caso o semáforo do output seja diferente de 0, e o do anterior não estiver full
-        while (!taskqueue->isShutdown()) {  // Modificado: interrompe se taskqueue encerrada
+        while (!(input_buffer.atomicGetLastOne())) {  // Modificado: interrompe se taskqueue encerrada
             // std::cout << "============================" << std::endl;
             // std::cout << (input_buffer.get_semaphore().get_count()) << std::endl;
             // std::cout << "============================" << std::endl;
@@ -367,6 +369,7 @@ class Loader {
             taskqueue->push_task([this, val = std::move(value)]() mutable {
                 this->create_task(std::move(val));
             });
+            // cout << "TESTE" << endl;
        }
     }
 

@@ -25,18 +25,18 @@ class DataPrinter : public Loader<Dataframe> {
 
         void run(Dataframe df) override {
             if (!headerPrinted) {
-                df.printHeader(std::cout, df);
+                // df.printHeader(std::cout, df);
                 headerPrinted = true;
             }
 
             // Print the dataframe contents
-            std::cout << df;
+            // std::cout << df;
         }
     };
 
 int main() {
     // Create manager with 4 threads
-    Manager<Dataframe> manager(1);
+    Manager<Dataframe> manager(4);
 
     // Create pipeline components
     Extrator<Dataframe> extrator("./mock/data/dados_viagens_2025.csv", "csv", 10);

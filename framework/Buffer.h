@@ -5,6 +5,7 @@
 #include <condition_variable>
 #include <queue>
 #include <optional>
+#include <iostream>
 #include "Semaphore.h"
 
 // Implementando um buffer Thread-Safe
@@ -17,6 +18,7 @@ private:
     int max_size;
     Semaphore semaphore;
     bool finishedWork = false;
+    bool lastOne = false;
 
 public:
     Buffer(int max_size = 10) : max_size(max_size), semaphore(max_size) {}
@@ -27,28 +29,24 @@ public:
     }
     
     std::optional<T> pop() {
-        std::unique_lock<std::mutex> lock(mtx);
-        // Bloqueia até que tenha algo na fila mas não impede de colocar elementos
-        // bool got_item = cond.wait_for(lock, std::chrono::milliseconds(3000), [this]
-        // {
-        //     return !queue.empty();
-        // });
-
-        // if (!got_item)
-        // {
-        //     return std::nullopt;
-        // }
-        cond.wait(lock, [this] { return !queue.empty() || finishedWork; });
-
-        if (finishedWork)
+        if (getLastOne())
         {
             return std::nullopt;
         }
 
+        std::unique_lock<std::mutex> lock(mtx);
+        cond.wait(lock, [this] { return !queue.empty(); });
+
         // cond.wait(lock, [this] { return !queue.empty(); });
         T value = std::move(queue.front());
         queue.pop();
+
         semaphore.notify();
+
+        if (getFinishedWork() && get_semaphore().get_count() == get_max_size())
+        {
+            setLastOne();
+        }
 
         return value;
     }    
@@ -74,9 +72,28 @@ public:
     int get_max_size() const {return max_size;}
 
     void setFinishedWork() {
-        std::lock_guard<std::mutex> lock(mtx);
         finishedWork = true;
         cond.notify_all();
+    }
+
+    bool getFinishedWork()
+    {
+        return finishedWork;
+    }
+
+    bool getLastOne()
+    {
+        return lastOne;
+    }
+
+    bool atomicGetLastOne()
+    {
+        std::lock_guard<std::mutex> lock(mtx);
+        return lastOne;
+    }
+
+    void setLastOne() {
+        lastOne = true;
     }
 };
 

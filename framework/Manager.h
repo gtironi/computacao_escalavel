@@ -120,35 +120,49 @@ class Manager
                 });
                 // std::cout << "Loader" << i << std::endl;
             }
+
+            stop();
         }
 
         // Método para encerrar o processo
         void stop()
         {
             // Seta a variável de trabalho finalizado como true
+            // {
+            //     std::lock_guard<std::mutex> lock(mtx);
+            //     finishedWork = true;
+            // }
+            // // Notifica todas as threads adormecidas
+            // cond.notify_all();
+
+            while (true)
             {
-                std::lock_guard<std::mutex> lock(mtx);
-                finishedWork = true;
-            }
-            // Notifica todas as threads adormecidas
-            cond.notify_all();
-            // Finaliza a fila de tarefas
-            task_queue.shutdown();
-            // Manda todos os blocos de processo começarem a mandar pra fila de tarefas
-            for (int i = 0; i < extractors.size(); i++)
-            {
-                extractors[i] -> finishBuffer();
-            }
-            for (int i = 0; i < transformers.size(); i++)
-            {
-                transformers[i] -> finishBuffer();
-            }
-            // Espera todas as threads terminarem
-            for (auto& thread : threads)
-            {
-                if (thread.joinable())
+                bool finished = true;
+
+                for (int i = 0; i < transformers.size(); i++)
                 {
-                    thread.join();
+                    if (!(transformers[i] -> get_output_buffer().atomicGetLastOne()))
+                    {
+                        finished = false;
+                        break;
+                    }
+                }
+
+                if (finished)
+                {
+                    for (auto& thread : threads)
+                    {
+                        {
+                            std::lock_guard<std::mutex> lock(mtx);
+                            finishedWork = true;
+                        }
+                        task_queue.shutdown();
+                        if (thread.joinable())
+                        {
+                            thread.join();
+                        }
+                    }
+                    break;
                 }
             }
         }
