@@ -356,9 +356,9 @@ class Loader {
     void enqueue_tasks(){
         // Queremos apenas adicionar a task, caso o semáforo do output seja diferente de 0, e o do anterior não estiver full
         while (!taskqueue->isShutdown()) {  // Modificado: interrompe se taskqueue encerrada
-            std::cout << "============================" << std::endl;
-            std::cout << (input_buffer.get_semaphore().get_count()) << std::endl;
-            std::cout << "============================" << std::endl;
+            // std::cout << "============================" << std::endl;
+            // std::cout << (input_buffer.get_semaphore().get_count()) << std::endl;
+            // std::cout << "============================" << std::endl;
             std::optional<T> maybe_value = input_buffer.pop();
             if (!maybe_value.has_value()) {
                 return;

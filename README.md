@@ -26,16 +26,20 @@ O sistema utiliza um modelo baseado em filas e threads para maximizar a eficiên
 ## Como Executar
 1. Clone este repositório:
    ```sh
-   git clone https://github.com/seu_usuario/seu_projeto.git
-   cd seu_projeto
+   git clone https://github.com/gtironi/computacao_escalavel.git
+   cd computacao_escalavel
    ```
-2. Compile os arquivos do framework e a `main.cpp`:
+2. Instale as dependencias:
    ```sh
-   g++ -o main main.cpp framework/*.cpp
+   ./requirements.sh
    ```
-3. Execute o programa:
+3. Compile os arquivos do framework e a `main.cpp`:
    ```sh
-   ./main
+   g++ -o programa main.cpp framework/*.h -std=c++20 -lsqlite3 -pthread
+   ```
+4. Execute o programa:
+   ```sh
+   ./programa
    ```
 
 ## Autores

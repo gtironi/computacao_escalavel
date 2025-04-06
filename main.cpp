@@ -1,9 +1,10 @@
 // ConcreteExtractor.h
-#include "BaseClasses.h"
-#include "Dataframe.h"
-#include "Manager.h"
+#include "framework/BaseClasses.h"
+#include "framework/Dataframe.h"
+#include "framework/Manager.h"
 #include <thread>
 #include <chrono>
+#include <iostream>
 
 class ValueMultiplier : public Transformer<Dataframe> {
     public:
@@ -29,18 +30,16 @@ class DataPrinter : public Loader<Dataframe> {
             }
 
             // Print the dataframe contents
-            std::cout << df << std::endl;
+            std::cout << df;
         }
     };
 
-
-
 int main() {
     // Create manager with 4 threads
-    Manager<Dataframe> manager(4);
+    Manager<Dataframe> manager(1);
 
     // Create pipeline components
-    Extrator<Dataframe> extrator("../mock/data/dados_viagens_2025.csv", "csv", 10);
+    Extrator<Dataframe> extrator("./mock/data/dados_viagens_2025.csv", "csv", 10);
     manager.addExtractor(&extrator);
 
     ValueMultiplier transformer(extrator.get_output_buffer());
@@ -49,17 +48,21 @@ int main() {
     DataPrinter loader(transformer.get_output_buffer());
     manager.addLoader(&loader);
 
+    auto start_time = std::chrono::high_resolution_clock::now();
+
     // Start the pipeline by adding tasks to the extractor
-    // We'll process 3 dataframes
     manager.run();
 
-    // In a real application, you'd have proper termination conditions
-    // Here we just wait a bit to let the pipeline process everything
-    std::this_thread::sleep_for(std::chrono::seconds(1));
+    std::this_thread::sleep_for(std::chrono::seconds(3));
 
     std::cout << "Trabalho será finalizado" << std::endl;
     manager.stop();
     std::cout << "Trabalho finalizado" << std::endl;
+
+    auto end_time = std::chrono::high_resolution_clock::now();
+
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
+    std::cout << "Tempo de execução: " << duration << " ms" << std::endl;
 
     // The manager's destructor will clean up everything
     return 0;
