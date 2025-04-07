@@ -6,12 +6,12 @@
 #include <chrono>
 #include <iostream>
 
-class ValueMultiplier : public Transformer<Dataframe> {
+class Filter : public Transformer<Dataframe> {
     public:
         using Transformer::Transformer; // Inherit constructor
 
         Dataframe run(Dataframe input) override {
-            Dataframe output = input.filtroByValue("cidade_destino", "Rio de Janeiro"); // Copy the input
+            Dataframe output = input.filtroByValue("cidade_destino", "Rio de Janeiro");
             return output;
         }
     };
@@ -25,24 +25,24 @@ class DataPrinter : public Loader<Dataframe> {
 
         void run(Dataframe df) override {
             if (!headerPrinted) {
-                // df.printHeader(std::cout, df);
+                df.printHeader(std::cout, df); // Print the dataframe head
                 headerPrinted = true;
             }
 
             // Print the dataframe contents
-            // std::cout << df;
+            std::cout << df;
         }
     };
 
 int main() {
-    // Create manager with 4 threads
-    Manager<Dataframe> manager(4);
+    // Create manager with 7 threads
+    Manager<Dataframe> manager(7);
 
     // Create pipeline components
     Extrator<Dataframe> extrator("./mock/data/dados_viagens_2025.csv", "csv", 10);
     manager.addExtractor(&extrator);
 
-    ValueMultiplier transformer(extrator.get_output_buffer());
+    Filter transformer(extrator.get_output_buffer());
     manager.addTransformer(&transformer);
 
     DataPrinter loader(transformer.get_output_buffer());
@@ -50,10 +50,8 @@ int main() {
 
     auto start_time = std::chrono::high_resolution_clock::now();
 
-    // Start the pipeline by adding tasks to the extractor
+    // Start the pipeline
     manager.run();
-
-    std::this_thread::sleep_for(std::chrono::seconds(3));
 
     std::cout << "Trabalho será finalizado" << std::endl;
     manager.stop();
