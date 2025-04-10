@@ -223,7 +223,8 @@ public:
             }
         }
 
-        outputBuffer.setFinishedWork();
+        // Avisa ao buffer de saída que os dados acabaram
+        outputBuffer.setInputTasksCreated();
     }
 
     T run(const string& strTextBlock){
@@ -285,48 +286,57 @@ public:
 
     void finishBuffer()
     {
-        outputBuffer.setFinishedWork();
+        outputBuffer.setInputTasksCreated();
     }
 };
 
+// Classe do transformador
 template <typename T>
 class Transformer {
     protected:
+        // Buffer das entradas
         Buffer<T>& input_buffer;
+        // Buffer das saídas
         Buffer<T> output_buffer;
+        // Fila de tarefas onde salva das tasks
         TaskQueue* taskqueue = nullptr;
-
 
     public:
         explicit Transformer(Buffer<T>& in) : input_buffer(in) {}
 
+        // Método que enfileira as tarefas na fila de tarefas
         void enqueue_tasks(){
-            // Queremos apenas adicionar a task, caso o semáforo do output seja diferente de 0, e o do anterior não estiver full
-            while (!input_buffer.atomicGetLastOne()) {  // Modificado: interrompe se taskqueue encerrada
-                // std::cout << "============================" << std::endl;
-                // std::cout << output_buffer.get_semaphore().get_count() << std::endl;
-                // std::cout << input_buffer.get_semaphore().get_count() << std::endl;
-                // std::cout << "============================" << std::endl;
+            // Enquanto o buffer de entrada não tiver terminado...
+            while (!input_buffer.atomicGetInputDataFinished()) {
+                // Se tiver espaço no buffer de saída...
                 if (output_buffer.get_semaphore().get_count() > 0)
                 {
+                    // Tenta pegar um dataframe do buffer de entrada
+                    // (Redundante com a verificação do while, mas pode evitar problemas
+                    // como tentar tirar algo do buffer com ele vazio)
                     std::optional<T> maybe_value = input_buffer.pop();
+                    // Se não tiver retornado um dataframe, encerra o método
                     if (!maybe_value.has_value()) {
-                        // Timeout — decidir o que fazer: pular, logar, continuar...
                         return;
                     }
                     T value = std::move(*maybe_value);
+                    // Adiciona a tarefa do transformador com esse dataframe na fila
                     taskqueue->push_task([this, val = std::move(value)]() mutable {
                         this->create_task(std::move(val));
                     });
+                    // Diminui o semáforo do buffer de saída (reserva um espaço para a saída da tarefa)
                     output_buffer.get_semaphore().wait();
                 }
             }
+            // Depois de acabado, avisa o buffer de saída que acabou
             finishBuffer();
         }
 
+        // Função para pegar o buffer de saída
         Buffer<T>& get_output_buffer() { return output_buffer; }
         virtual T run(T dataframe) = 0;
 
+        // Função que encapsula a tarefa e o salvamento no buffer
         void create_task(T value) {
             T data = run(value);
             output_buffer.push(data);
@@ -336,13 +346,14 @@ class Transformer {
         void set_taskqueue(TaskQueue* tq) { taskqueue = tq; }
         TaskQueue* get_taskqueue() const { return taskqueue; }
 
+        // Método para avisar ao buffer de saída que os dados acabaram
         void finishBuffer()
         {
-            output_buffer.setFinishedWork();
+            output_buffer.setInputTasksCreated();
         }
 };
 
-
+// Classe dos carregadores
 template <typename T>
 class Loader {
     protected:
@@ -355,27 +366,30 @@ class Loader {
     void set_taskqueue(TaskQueue* tq) { taskqueue = tq; }
     TaskQueue* get_taskqueue() const { return taskqueue; }
 
+    // Método que enfileira as tarefas na fila de tarefas
     void enqueue_tasks(){
-        // Queremos apenas adicionar a task, caso o semáforo do output seja diferente de 0, e o do anterior não estiver full
-        while (!(input_buffer.atomicGetLastOne())) {  // Modificado: interrompe se taskqueue encerrada
-            // std::cout << "============================" << std::endl;
-            // std::cout << (input_buffer.get_semaphore().get_count()) << std::endl;
-            // std::cout << "============================" << std::endl;
+        // Enquanto o buffer de entrada não tiver terminado...
+        while (!(input_buffer.atomicGetInputDataFinished())) {
+            // Tenta pegar um dataframe do buffer de entrada
+            // (Redundante com a verificação do while, mas pode evitar problemas
+            // como tentar tirar algo do buffer com ele vazio)
             std::optional<T> maybe_value = input_buffer.pop();
+            // Se não tiver retornado um dataframe, encerra o método
             if (!maybe_value.has_value()) {
                 return;
             }
             T value = std::move(*maybe_value);
+            // Adiciona a tarefa do carregador com esse dataframe na fila
             taskqueue->push_task([this, val = std::move(value)]() mutable {
                 this->create_task(std::move(val));
             });
-            // cout << "TESTE" << endl;
        }
     }
 
     virtual void run(T value) = 0;
 
-    // Redundante, mas para manter a consistência
+    // Função que encapsula a tarefa e o salvamento no buffer
+    // (redundante, mas para manter a consistência)
     void create_task(T value) {
         run(std::move(value));
     }

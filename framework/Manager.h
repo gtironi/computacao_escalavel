@@ -96,13 +96,12 @@ class Manager
             }
             cond.notify_all();
 
-            // Manda todos os blocos de processo começarem a mandar pra fila de tarefas
+            // Cria uma thread para cada bloco de processo e começa a mandar tarefas pra fila
             for (int i = 0; i < extractors.size(); i++)
             {
                 threads.emplace_back([this, i]() {
                     extractors[i]->enqueue_tasks();
                 });
-                // std::cout << "Extractor" << i << std::endl;
             }
             for (int i = 0; i < transformers.size(); i++)
             {
@@ -110,7 +109,6 @@ class Manager
                     {
                         transformers[i] -> enqueue_tasks();
                 });
-                // std::cout << "Transform" << i << std::endl;
             }
             for (int i = 0; i < loaders.size(); i++)
             {
@@ -118,30 +116,22 @@ class Manager
                 {
                     loaders[i] -> enqueue_tasks();
                 });
-                // std::cout << "Loader" << i << std::endl;
             }
 
+            // Começa a verificar quando o trabalho vai acabar
             stop();
         }
 
-        // Método para encerrar o processo
+        // Método para verificar quando o trabalho será encerrado e o encerrar
         void stop()
         {
-            // Seta a variável de trabalho finalizado como true
-            // {
-            //     std::lock_guard<std::mutex> lock(mtx);
-            //     finishedWork = true;
-            // }
-            // // Notifica todas as threads adormecidas
-            // cond.notify_all();
-
             while (true)
             {
                 bool finished = true;
 
                 for (int i = 0; i < transformers.size(); i++)
                 {
-                    if (!(transformers[i] -> get_output_buffer().atomicGetLastOne()))
+                    if (!(transformers[i] -> get_output_buffer().atomicGetInputDataFinished()))
                     {
                         finished = false;
                         break;
