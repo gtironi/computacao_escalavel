@@ -9,6 +9,7 @@
 #include <condition_variable>
 #include <functional>
 #include <atomic>
+#include "Semaphore.h"
 
 // Classe da fila de tarefas
 class TaskQueue
@@ -20,6 +21,7 @@ class TaskQueue
         std::condition_variable cond;
         // Booleano para controlar quando o processo deve terminar
         bool finishedWork = false;
+        Semaphore numberOfLoaders;
 
     public:
         // Método para adicionar uma nova tarefa à fila
@@ -44,9 +46,9 @@ class TaskQueue
             // Se a fila estiver vazia, espera até ser acordado e
             // ter aparecido algo ou o processo ter finalizado
             cond.wait(lock, [this] 
-                {
-                    return !tasks.empty() || finishedWork;
-                });
+            {
+                return !tasks.empty() || finishedWork;
+            });
             // Se o processo for parar e a fila tiver acabado, não retorna nada
             if (finishedWork && tasks.empty())
             {
@@ -91,6 +93,30 @@ class TaskQueue
         bool isShutdown() { 
             std::lock_guard<std::mutex> lock(mtx);
             return finishedWork;
+        }
+
+        // Método para pegar o semáforo do buffer
+        Semaphore& getNumberOfLoaders() {
+            return numberOfLoaders;
+        }
+
+        // Método para esperar todos os loaders terem acabado de colocar tasks na fila
+        void waitLoadersFinish()
+        {
+            // Trava o mutex
+            std::unique_lock<std::mutex> lock(mtx);
+            // Espera até todos os loaders terminarem
+            cond.wait(lock, [this] 
+            {
+                return numberOfLoaders.get_count() == 0;
+            });
+            return;
+        }
+
+        // Método para notificar o condition variable da fila
+        void notifyAll()
+        {
+            cond.notify_all();
         }
 };
 

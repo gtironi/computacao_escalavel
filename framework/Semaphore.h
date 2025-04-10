@@ -27,10 +27,8 @@ public:
     // Equivalent to release / notify
     void notify() {
         std::unique_lock<std::mutex> lock(mutex);
-        // if (count < max_count) {
-            count++;
-            condition.notify_one();
-        // }
+        count++;
+        condition.notify_one();
     }
 
 

@@ -84,6 +84,8 @@ class Manager
         {
             loader -> set_taskqueue(&task_queue);
             loaders.push_back(loader);
+            // Aumenta em 1 a contagem de loaders da taskqueue
+            task_queue.getNumberOfLoaders().notify();
         }
 
         // Método para começar a executar o processo
@@ -106,8 +108,8 @@ class Manager
             for (int i = 0; i < transformers.size(); i++)
             {
                 threads.emplace_back([this,i]
-                    {
-                        transformers[i] -> enqueue_tasks();
+                {
+                    transformers[i] -> enqueue_tasks();
                 });
             }
             for (int i = 0; i < loaders.size(); i++)
@@ -125,21 +127,15 @@ class Manager
         // Método para verificar quando o trabalho será encerrado e o encerrar
         void stop()
         {
+            // Espera até todos os loaders terminarem de colocar tarefa na fila
+            task_queue.waitLoadersFinish();
+
+            // Depois disso, fica checando quando a fila acabar
             while (true)
             {
-                bool finished = true;
-
-                for (int i = 0; i < transformers.size(); i++)
+                if (task_queue.is_empty())
                 {
-                    if (!(transformers[i] -> get_output_buffer().atomicGetInputDataFinished()))
-                    {
-                        finished = false;
-                        break;
-                    }
-                }
-
-                if (finished)
-                {
+                    // E encerra as threads
                     for (auto& thread : threads)
                     {
                         {

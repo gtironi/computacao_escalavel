@@ -383,7 +383,12 @@ class Loader {
             taskqueue->push_task([this, val = std::move(value)]() mutable {
                 this->create_task(std::move(val));
             });
-       }
+        }
+
+        // Diminui o número de loaders trabalhando
+        taskqueue -> getNumberOfLoaders().wait();
+        // Avisa a fila que mais um loader terminou
+        taskqueue -> notifyAll();
     }
 
     virtual void run(T value) = 0;
