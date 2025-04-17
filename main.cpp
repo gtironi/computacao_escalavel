@@ -25,12 +25,12 @@ class DataPrinter : public Loader<Dataframe> {
 
         void run(Dataframe df) override {
             if (!headerPrinted) {
-                df.printHeader(std::cout, df); // Print the dataframe head
+                // df.printHeader(std::cout, df); // Print the dataframe head
                 headerPrinted = true;
             }
 
             // Print the dataframe contents
-            std::cout << df;
+            // std::cout << df;
         }
     };
 
@@ -39,7 +39,7 @@ int main() {
     Manager<Dataframe> manager(7);
 
     // Create pipeline components
-    Extrator<Dataframe> extrator("./mock/data/dados_viagens_2025.csv", "csv", 10);
+    Extrator<Dataframe> extrator("./mock/data/dados_viagens_2025.csv", "csv", 1000);
     manager.addExtractor(&extrator);
 
     Filter transformer(extrator.get_output_buffer());

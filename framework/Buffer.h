@@ -23,7 +23,7 @@ private:
     bool inputDataFinished = false;
 
 public:
-    Buffer(int max_size = 10) : max_size(max_size), semaphore(max_size) {}
+    Buffer(int max_size = 5000) : max_size(max_size), semaphore(max_size) {}
 
     // Método para adicionar coisas no buffer
     void push(T value) {
