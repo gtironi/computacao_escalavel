@@ -485,6 +485,10 @@ public:
         return vecColumnData.size();
     }
 
+    void reserve(size_t n) {
+        vecColumnData.reserve(n);
+    }
+
     /**
      * @brief Retorna o vetor de dados da coluna.
      * @return Vetor contendo os dados.

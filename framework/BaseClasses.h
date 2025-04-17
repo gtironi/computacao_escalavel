@@ -237,36 +237,36 @@ public:
      * @param strBlocoDeTextoCSV Bloco de texto CSV.
      * @return DataFrame construído a partir do bloco de texto.
      */
-     Dataframe dfSubExtractor(const string& strBlocoDeTexto) {
-    Dataframe dfAuxiliar;
-    dfAuxiliar.vstrColumnsName = this->strColumnsName;
-
-    // Preparar as colunas
-    for (const auto& col : this->strColumnsName) {
-        dfAuxiliar.columns.emplace_back(col, "string"); // talvez usar tipo real
-    }
-
-    stringstream ss(strBlocoDeTexto);
-    string line;
-
-    while (getline(ss, line)) {
-        stringstream ssLine(line);
-        string cell;
-        vector<VDTYPES> convertedRow;
-        convertedRow.reserve(dfAuxiliar.vstrColumnsName.size());
-
-        size_t colIndex = 0;
-        while (getline(ssLine, cell, ',')) {
-            // Exemplo de parse mais eficiente (precisa de mapeamento real dos tipos)
-            convertedRow.emplace_back(std::move(cell));
-            colIndex++;
+    Dataframe dfSubExtractor(const string& strBlocoDeTexto) {
+        Dataframe dfAuxiliar;
+        dfAuxiliar.vstrColumnsName = this->strColumnsName;
+    
+        // Preparar as colunas
+        for (const auto& col : this->strColumnsName) {
+            dfAuxiliar.columns.emplace_back(col, "string"); // talvez usar tipo real
         }
-
-        dfAuxiliar.adicionaLinha(std::move(convertedRow));
+    
+        stringstream ss(strBlocoDeTexto);
+        string line;
+    
+        while (getline(ss, line)) {
+            stringstream ssLine(line);
+            string cell;
+            vector<VDTYPES> convertedRow;
+            convertedRow.reserve(dfAuxiliar.vstrColumnsName.size());
+    
+            size_t colIndex = 0;
+            while (getline(ssLine, cell, ',')) {
+                // Exemplo de parse mais eficiente (precisa de mapeamento real dos tipos)
+                convertedRow.emplace_back(std::move(cell));
+                colIndex++;
+            }
+    
+            dfAuxiliar.adicionaLinha(std::move(convertedRow));
+        }
+    
+        return dfAuxiliar;
     }
-
-    return dfAuxiliar;
-}
 
     void create_task(const string& value) {
         T data = run(value);

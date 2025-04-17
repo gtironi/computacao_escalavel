@@ -168,35 +168,41 @@ public:
      * @return Um novo DataFrame contendo apenas as linhas onde a correspondência ocorreu.
      */
     Dataframe filtroByValue(const string& strNomeColuna, const VDTYPES& valor) {
-    Dataframe auxDf;
-    auxDf.vstrColumnsName = vstrColumnsName;
-
-    for (const auto& col : columns) {
-        auxDf.columns.emplace_back(col.strGetName(), col.strGetType());
-    }
-
-    auto it = find(vstrColumnsName.begin(), vstrColumnsName.end(), strNomeColuna);
-    if (it == vstrColumnsName.end()) {
-        throw std::invalid_argument("Coluna '" + strNomeColuna + "' não encontrada.");
-    }
-
-    int colIndex = distance(vstrColumnsName.begin(), it);
-    const auto& data = columns[colIndex].getData();
-
-    for (size_t i = 0; i < data.size(); ++i) {
-        if (data[i] == valor) {
-            vector<VDTYPES> auxRow;
-            for (const auto& col : columns) {
-                if (i < col.getData().size()) {
-                    auxRow.push_back(col.getData()[i]);
+        Dataframe auxDf;
+        auxDf.vstrColumnsName = vstrColumnsName;
+    
+        // Inicializa as colunas vazias no DataFrame auxiliar
+        for (const auto& col : columns) {
+            auxDf.columns.emplace_back(col.strGetName(), col.strGetType());
+        }
+    
+        auto it = find(vstrColumnsName.begin(), vstrColumnsName.end(), strNomeColuna);
+        if (it == vstrColumnsName.end()) {
+            throw std::invalid_argument("Coluna '" + strNomeColuna + "' não encontrada.");
+        }
+    
+        int colIndex = distance(vstrColumnsName.begin(), it);
+        const auto& data = columns[colIndex].getData();
+        size_t expectedSize = count_if(data.begin(), data.end(), [&](const auto& el) {
+            return el == valor;
+        });
+    
+        // Reservar espaço nas colunas do DataFrame auxiliar
+        for (auto& col : auxDf.columns) {
+            col.reserve(expectedSize); // Assumindo que você adicionou `reserve(size_t)` na classe Series
+        }
+    
+        for (size_t i = 0; i < data.size(); ++i) {
+            if (data[i] == valor) {
+                for (size_t j = 0; j < columns.size(); ++j) {
+                    auxDf.columns[j].bAdicionaElemento(columns[j].getData()[i]);
                 }
             }
-            auxDf.adicionaLinha(auxRow);
         }
+    
+        return auxDf;
     }
-
-    return auxDf;
-}
+    
 
     /**
      * @brief Empilha dois DataFrames horizontalmente, desde que tenham o mesmo número de colunas e tipos de colunas.
