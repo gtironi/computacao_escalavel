@@ -171,11 +171,12 @@ public:
         Dataframe auxDf;
         auxDf.vstrColumnsName = vstrColumnsName;
     
-        // Inicializa as colunas vazias no DataFrame auxiliar
+        // Criar estrutura das colunas no novo dataframe
         for (const auto& col : columns) {
             auxDf.columns.emplace_back(col.strGetName(), col.strGetType());
         }
     
+        // Localiza a coluna de filtro
         auto it = find(vstrColumnsName.begin(), vstrColumnsName.end(), strNomeColuna);
         if (it == vstrColumnsName.end()) {
             throw std::invalid_argument("Coluna '" + strNomeColuna + "' não encontrada.");
@@ -183,25 +184,29 @@ public:
     
         int colIndex = distance(vstrColumnsName.begin(), it);
         const auto& data = columns[colIndex].getData();
-        size_t expectedSize = count_if(data.begin(), data.end(), [&](const auto& el) {
+    
+        // Pré-conta quantas linhas irão para o novo DataFrame
+        size_t matchCount = count_if(data.begin(), data.end(), [&](const auto& el) {
             return el == valor;
         });
     
-        // Reservar espaço nas colunas do DataFrame auxiliar
+        // Pré-aloca espaço nas colunas do novo dataframe
         for (auto& col : auxDf.columns) {
-            col.reserve(expectedSize); // Assumindo que você adicionou `reserve(size_t)` na classe Series
+            col.reserve(matchCount);
         }
     
+        // Copia os dados filtrados diretamente
         for (size_t i = 0; i < data.size(); ++i) {
             if (data[i] == valor) {
                 for (size_t j = 0; j < columns.size(); ++j) {
-                    auxDf.columns[j].bAdicionaElemento(columns[j].getData()[i]);
+                    auxDf.columns[j].bAdicionaElemento(columns[j].retornaElemento(i));
                 }
             }
         }
     
         return auxDf;
     }
+    
     
 
     /**
