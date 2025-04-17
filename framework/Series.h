@@ -465,7 +465,7 @@ public:
      * @brief Retorna o nome da coluna.
      * @return Nome da coluna.
      */
-    string strGetName() {
+    string strGetName() const {
         return strColumnName;
     }
 
@@ -473,7 +473,7 @@ public:
      * @brief Retorna o tipo da coluna.
      * @return Tipo da coluna.
      */
-    string strGetType() {
+    string strGetType() const {
         return strColumnType;
     }
 
@@ -489,7 +489,7 @@ public:
      * @brief Retorna o vetor de dados da coluna.
      * @return Vetor contendo os dados.
      */
-    vector<VDTYPES> getData() {
+    const vector<VDTYPES> getData() const {
         return vecColumnData;
     }
 

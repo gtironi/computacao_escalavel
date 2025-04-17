@@ -1,1001 +1,3001 @@
 cidade_origem,cidade_destino,data_ida,data_volta
-Cidade do México,Fortaleza,06/10/2025,21/10/2025
-Amsterdã,São Luís,01/08/2025,12/08/2025
-Pequim,Amsterdã,01/05/2025,07/05/2025
-Lisboa,Porto Velho,25/06/2025,04/07/2025
-Macapá,Roma,26/11/2025,29/11/2025
-Frankfurt,Lima,21/06/2025,23/06/2025
-Los Angeles,Teresina,27/12/2025,07/01/2026
-Bogotá,Roma,03/09/2025,11/09/2025
-Brasília,Pequim,01/07/2025,16/07/2025
-Buenos Aires,Salvador,29/07/2025,31/07/2025
-Rio de Janeiro,Nova York,18/11/2025,22/11/2025
-Lisboa,Vitória,18/12/2025,29/12/2025
-Aracaju,Cuiabá,16/10/2025,27/10/2025
-Natal,Cuiabá,26/04/2025,06/05/2025
-Paris,Brasília,25/07/2025,26/07/2025
-Amsterdã,Tóquio,13/08/2025,16/08/2025
-Palmas,Los Angeles,16/06/2025,19/06/2025
-Cuiabá,Toronto,11/12/2025,15/12/2025
-Boa Vista,Amsterdã,27/11/2025,05/12/2025
-São Paulo,Buenos Aires,09/06/2025,24/06/2025
-Goiânia,Recife,17/04/2025,18/04/2025
-Madri,Roma,18/10/2025,29/10/2025
-Rio Branco,Teresina,12/10/2025,24/10/2025
-Belém,Toronto,07/07/2025,14/07/2025
-Recife,Rio de Janeiro,22/04/2025,07/05/2025
-Roma,Rio de Janeiro,18/06/2025,20/06/2025
-Natal,Frankfurt,02/06/2025,15/06/2025
-Tóquio,Nova York,17/05/2025,28/05/2025
-Miami,Los Angeles,22/04/2025,26/04/2025
-Los Angeles,Bogotá,31/08/2025,13/09/2025
-Campo Grande,Bogotá,25/06/2025,02/07/2025
-Brasília,Recife,07/04/2025,10/04/2025
-Cuiabá,Porto Alegre,27/12/2025,07/01/2026
-Nova York,Dubai,21/10/2025,30/10/2025
-Natal,São Paulo,27/12/2025,29/12/2025
-São Paulo,Salvador,01/08/2025,08/08/2025
-Fortaleza,Brasília,29/07/2025,30/07/2025
-Londres,Natal,17/05/2025,27/05/2025
-Bogotá,Rio Branco,08/04/2025,13/04/2025
-Recife,Cidade do México,17/12/2025,18/12/2025
-Porto Velho,São Paulo,08/05/2025,09/05/2025
-Goiânia,Toronto,08/07/2025,15/07/2025
-Lima,Miami,29/05/2025,10/06/2025
-Frankfurt,Boa Vista,13/07/2025,14/07/2025
-Porto Velho,Toronto,14/06/2025,19/06/2025
-Frankfurt,Boa Vista,24/12/2025,30/12/2025
-Amsterdã,Londres,02/09/2025,14/09/2025
-Dubai,Rio Branco,12/11/2025,15/11/2025
-Rio Branco,Teresina,23/09/2025,26/09/2025
-Palmas,Cidade do México,06/12/2025,12/12/2025
-Cidade do México,Londres,28/12/2025,09/01/2026
-Palmas,Lima,29/06/2025,01/07/2025
-Lima,Amsterdã,25/11/2025,30/11/2025
-Macapá,Cuiabá,19/10/2025,27/10/2025
-Campo Grande,Fortaleza,30/09/2025,01/10/2025
-Manaus,Pequim,10/10/2025,15/10/2025
-Teresina,Palmas,28/12/2025,29/12/2025
-Frankfurt,Belo Horizonte,22/07/2025,04/08/2025
-Roma,Bogotá,21/10/2025,01/11/2025
-Roma,Buenos Aires,17/10/2025,24/10/2025
-João Pessoa,Natal,14/06/2025,24/06/2025
-Brasília,Rio de Janeiro,25/10/2025,08/11/2025
-Belo Horizonte,Los Angeles,23/10/2025,29/10/2025
-Florianópolis,Cuiabá,28/12/2025,31/12/2025
-Brasília,Nova York,16/08/2025,25/08/2025
-Miami,Porto Alegre,28/10/2025,03/11/2025
-São Paulo,Manaus,15/12/2025,28/12/2025
-Santiago,Salvador,04/06/2025,12/06/2025
-Lisboa,São Luís,02/09/2025,08/09/2025
-Amsterdã,Maceió,28/08/2025,07/09/2025
-Vitória,Rio Branco,08/06/2025,23/06/2025
-Salvador,Macapá,06/08/2025,14/08/2025
-São Paulo,Pequim,24/08/2025,29/08/2025
-Manaus,Londres,28/11/2025,07/12/2025
-João Pessoa,Belém,23/08/2025,27/08/2025
-Cuiabá,Paris,29/09/2025,04/10/2025
-Lisboa,Palmas,26/11/2025,10/12/2025
-Nova York,Manaus,12/04/2025,24/04/2025
-Salvador,Madri,06/12/2025,10/12/2025
-Miami,Natal,15/09/2025,27/09/2025
-Lima,Toronto,23/12/2025,04/01/2026
-Buenos Aires,Cidade do México,16/06/2025,01/07/2025
-Pequim,Londres,20/09/2025,27/09/2025
-Vitória,Bogotá,01/06/2025,16/06/2025
-Florianópolis,Belém,01/09/2025,07/09/2025
-Tóquio,Santiago,07/09/2025,09/09/2025
-João Pessoa,Macapá,11/10/2025,17/10/2025
-Rio Branco,Campo Grande,20/05/2025,01/06/2025
-Toronto,Frankfurt,06/07/2025,09/07/2025
-Toronto,Belo Horizonte,04/07/2025,18/07/2025
-Frankfurt,Cidade do México,25/09/2025,04/10/2025
-Madri,Palmas,25/10/2025,30/10/2025
-São Paulo,São Luís,17/12/2025,19/12/2025
-Maceió,Bogotá,23/05/2025,04/06/2025
-Natal,Amsterdã,05/05/2025,13/05/2025
-Teresina,Vitória,29/05/2025,05/06/2025
-Londres,São Paulo,13/10/2025,19/10/2025
-Maceió,Frankfurt,31/07/2025,14/08/2025
-Porto Velho,Recife,07/04/2025,09/04/2025
-Macapá,Pequim,26/08/2025,30/08/2025
-Fortaleza,Goiânia,12/12/2025,16/12/2025
-Miami,Rio Branco,31/05/2025,12/06/2025
-Madri,Porto Velho,25/04/2025,06/05/2025
-Campo Grande,Curitiba,06/08/2025,13/08/2025
-Los Angeles,Salvador,30/06/2025,09/07/2025
-Paris,Cuiabá,26/08/2025,05/09/2025
-Lisboa,Belo Horizonte,12/09/2025,15/09/2025
-Porto Velho,Manaus,01/12/2025,16/12/2025
-Amsterdã,Palmas,14/11/2025,19/11/2025
-São Luís,Rio Branco,20/11/2025,05/12/2025
-Pequim,Maceió,06/05/2025,17/05/2025
-Belo Horizonte,Florianópolis,08/09/2025,17/09/2025
-Paris,Porto Velho,08/04/2025,11/04/2025
-Brasília,São Paulo,08/09/2025,11/09/2025
-Rio Branco,Madri,04/06/2025,12/06/2025
-São Luís,Nova York,24/11/2025,25/11/2025
-Porto Alegre,Teresina,13/08/2025,17/08/2025
-Pequim,Aracaju,13/07/2025,14/07/2025
-Brasília,Amsterdã,12/11/2025,21/11/2025
-Tóquio,Belém,16/09/2025,28/09/2025
-Brasília,Manaus,22/07/2025,29/07/2025
-Roma,Porto Velho,21/04/2025,29/04/2025
-Los Angeles,Brasília,23/12/2025,02/01/2026
-Roma,Toronto,25/05/2025,01/06/2025
-Santiago,Goiânia,02/08/2025,08/08/2025
-Cuiabá,Paris,17/10/2025,31/10/2025
-Goiânia,Lima,10/12/2025,24/12/2025
-Fortaleza,Cidade do México,14/07/2025,27/07/2025
-Lisboa,João Pessoa,24/08/2025,30/08/2025
-São Paulo,Buenos Aires,14/12/2025,21/12/2025
-Paris,São Luís,04/05/2025,06/05/2025
-Florianópolis,Boa Vista,24/04/2025,29/04/2025
-Pequim,Miami,05/06/2025,11/06/2025
-Porto Velho,Belo Horizonte,28/04/2025,13/05/2025
-Aracaju,Dubai,30/08/2025,08/09/2025
-Miami,Santiago,03/06/2025,07/06/2025
-Natal,Rio Branco,07/11/2025,10/11/2025
-Palmas,Porto Velho,10/06/2025,19/06/2025
-Dubai,Pequim,09/12/2025,11/12/2025
-Los Angeles,Salvador,03/08/2025,17/08/2025
-Manaus,São Luís,31/08/2025,11/09/2025
-Vitória,São Luís,17/12/2025,31/12/2025
-Nova York,Brasília,10/05/2025,21/05/2025
-Frankfurt,Rio de Janeiro,17/04/2025,29/04/2025
-Porto Velho,Curitiba,12/06/2025,27/06/2025
-Rio Branco,Santiago,07/05/2025,21/05/2025
-Rio de Janeiro,Los Angeles,11/08/2025,20/08/2025
-Lima,Pequim,21/06/2025,26/06/2025
-Rio Branco,Miami,28/05/2025,31/05/2025
-Recife,Roma,23/08/2025,29/08/2025
-Pequim,Teresina,17/04/2025,19/04/2025
-Belém,Rio de Janeiro,24/06/2025,28/06/2025
-Fortaleza,Cidade do México,07/11/2025,14/11/2025
-Vitória,Madri,13/11/2025,16/11/2025
-Amsterdã,Bogotá,03/09/2025,14/09/2025
-Madri,Toronto,01/06/2025,03/06/2025
-João Pessoa,Rio Branco,25/05/2025,03/06/2025
-Nova York,Paris,17/08/2025,29/08/2025
-Manaus,Los Angeles,09/12/2025,10/12/2025
-Toronto,Rio de Janeiro,14/10/2025,18/10/2025
-Roma,Rio de Janeiro,09/08/2025,17/08/2025
-Nova York,Cuiabá,20/10/2025,24/10/2025
-Bogotá,Amsterdã,19/10/2025,28/10/2025
-Tóquio,Pequim,12/11/2025,20/11/2025
-Santiago,Manaus,09/05/2025,23/05/2025
-Dubai,Brasília,29/10/2025,06/11/2025
-Cidade do México,Natal,13/04/2025,19/04/2025
-Fortaleza,Lima,11/09/2025,26/09/2025
-Campo Grande,Curitiba,03/08/2025,15/08/2025
-Frankfurt,Florianópolis,03/12/2025,10/12/2025
-Toronto,Belo Horizonte,15/07/2025,16/07/2025
-Belém,Palmas,28/04/2025,07/05/2025
-Buenos Aires,Fortaleza,22/12/2025,04/01/2026
-João Pessoa,Boa Vista,29/07/2025,05/08/2025
-Maceió,Porto Alegre,09/04/2025,20/04/2025
-Roma,Cidade do México,15/05/2025,30/05/2025
-Toronto,Cidade do México,25/05/2025,27/05/2025
-Maceió,Pequim,27/09/2025,03/10/2025
-Vitória,Recife,19/12/2025,02/01/2026
-João Pessoa,Rio de Janeiro,18/05/2025,26/05/2025
-Natal,Vitória,01/08/2025,10/08/2025
-Frankfurt,Miami,08/11/2025,15/11/2025
-Belo Horizonte,Belém,09/09/2025,11/09/2025
-Salvador,Aracaju,03/07/2025,09/07/2025
-Goiânia,Palmas,18/09/2025,03/10/2025
-Goiânia,Dubai,09/12/2025,20/12/2025
-Buenos Aires,Frankfurt,02/08/2025,07/08/2025
-Nova York,Cuiabá,11/07/2025,24/07/2025
-Brasília,Boa Vista,19/12/2025,02/01/2026
-Nova York,Lisboa,28/12/2025,06/01/2026
-Palmas,São Paulo,04/11/2025,19/11/2025
-Goiânia,Los Angeles,20/06/2025,27/06/2025
-Goiânia,Nova York,29/10/2025,11/11/2025
-Buenos Aires,Bogotá,16/12/2025,18/12/2025
-Cuiabá,Miami,09/06/2025,18/06/2025
-Belo Horizonte,Santiago,31/10/2025,10/11/2025
-Teresina,Los Angeles,14/12/2025,16/12/2025
-Macapá,Frankfurt,18/10/2025,22/10/2025
-Aracaju,Amsterdã,24/06/2025,01/07/2025
-Tóquio,Natal,13/06/2025,22/06/2025
-Belém,Macapá,01/12/2025,03/12/2025
-Belo Horizonte,Roma,31/05/2025,14/06/2025
-Santiago,Salvador,12/12/2025,19/12/2025
-João Pessoa,Buenos Aires,22/08/2025,06/09/2025
-Lima,Macapá,29/09/2025,09/10/2025
-Frankfurt,Lima,15/07/2025,24/07/2025
-Amsterdã,Lima,09/11/2025,11/11/2025
-Lisboa,São Luís,24/05/2025,08/06/2025
-Brasília,Nova York,26/12/2025,28/12/2025
-Manaus,Campo Grande,26/11/2025,09/12/2025
-Amsterdã,Frankfurt,17/08/2025,26/08/2025
-Rio de Janeiro,Dubai,16/11/2025,20/11/2025
-São Luís,Los Angeles,28/09/2025,04/10/2025
-Porto Alegre,Curitiba,20/07/2025,31/07/2025
-Salvador,Tóquio,11/05/2025,23/05/2025
-Buenos Aires,Campo Grande,08/09/2025,15/09/2025
-Buenos Aires,Boa Vista,18/12/2025,29/12/2025
-Palmas,Dubai,18/07/2025,29/07/2025
-Los Angeles,Salvador,04/07/2025,16/07/2025
-Bogotá,Miami,30/08/2025,14/09/2025
-Londres,Vitória,24/11/2025,26/11/2025
-São Luís,Rio de Janeiro,26/11/2025,11/12/2025
-Belém,São Paulo,18/10/2025,31/10/2025
-Paris,Macapá,13/08/2025,25/08/2025
-Porto Alegre,São Luís,26/08/2025,07/09/2025
-Vitória,Paris,26/05/2025,07/06/2025
-Bogotá,Cidade do México,06/05/2025,19/05/2025
-Santiago,Recife,18/06/2025,20/06/2025
-Tóquio,Brasília,16/07/2025,30/07/2025
-Lima,Recife,12/09/2025,24/09/2025
-Bogotá,Recife,14/06/2025,28/06/2025
-Pequim,Porto Velho,25/09/2025,08/10/2025
-Maceió,Salvador,26/04/2025,27/04/2025
-Vitória,Tóquio,18/06/2025,22/06/2025
-Teresina,São Luís,26/10/2025,02/11/2025
-Lima,Manaus,08/08/2025,16/08/2025
-Aracaju,Rio Branco,01/11/2025,09/11/2025
-Porto Alegre,Los Angeles,26/06/2025,01/07/2025
-Buenos Aires,Miami,04/06/2025,09/06/2025
-Los Angeles,Boa Vista,13/11/2025,24/11/2025
-Buenos Aires,Dubai,20/11/2025,03/12/2025
-Tóquio,São Paulo,29/05/2025,13/06/2025
-Porto Velho,Vitória,18/07/2025,19/07/2025
-Santiago,Miami,13/12/2025,23/12/2025
-Campo Grande,Porto Alegre,01/07/2025,11/07/2025
-Fortaleza,Dubai,26/11/2025,28/11/2025
-Toronto,Miami,06/08/2025,09/08/2025
-Rio de Janeiro,Tóquio,28/10/2025,05/11/2025
-Manaus,João Pessoa,11/04/2025,15/04/2025
-Nova York,Natal,30/04/2025,14/05/2025
-Palmas,Frankfurt,24/06/2025,25/06/2025
-Macapá,Pequim,15/12/2025,30/12/2025
-Cidade do México,Campo Grande,06/09/2025,12/09/2025
-Cuiabá,Roma,19/04/2025,23/04/2025
-Lisboa,São Paulo,06/09/2025,11/09/2025
-Brasília,Nova York,10/07/2025,23/07/2025
-Palmas,Amsterdã,23/10/2025,06/11/2025
-Salvador,Vitória,11/11/2025,13/11/2025
-Lisboa,Roma,10/12/2025,14/12/2025
-Belo Horizonte,Madri,25/09/2025,06/10/2025
-Florianópolis,Maceió,07/09/2025,12/09/2025
-Macapá,Porto Velho,14/09/2025,22/09/2025
-Porto Alegre,Aracaju,01/09/2025,06/09/2025
-Curitiba,Natal,26/10/2025,28/10/2025
-Fortaleza,Palmas,26/06/2025,29/06/2025
-Tóquio,Roma,14/11/2025,21/11/2025
-Goiânia,Toronto,04/05/2025,12/05/2025
-Belém,Tóquio,16/08/2025,27/08/2025
-Recife,Natal,17/11/2025,01/12/2025
-Londres,Dubai,16/07/2025,19/07/2025
-João Pessoa,Tóquio,21/04/2025,01/05/2025
-Curitiba,Teresina,05/06/2025,07/06/2025
-Lisboa,Amsterdã,17/05/2025,21/05/2025
-Goiânia,Rio de Janeiro,13/12/2025,26/12/2025
-Maceió,Lisboa,29/07/2025,13/08/2025
-Vitória,Porto Alegre,06/05/2025,16/05/2025
-Teresina,Salvador,04/12/2025,16/12/2025
-Rio Branco,Lima,31/08/2025,11/09/2025
-Macapá,Cuiabá,07/11/2025,17/11/2025
-Santiago,Palmas,15/08/2025,28/08/2025
-Los Angeles,Campo Grande,14/06/2025,28/06/2025
-Porto Velho,Roma,16/10/2025,28/10/2025
-Londres,Fortaleza,05/08/2025,19/08/2025
-Nova York,Palmas,25/05/2025,30/05/2025
-Porto Velho,Maceió,07/04/2025,12/04/2025
-Amsterdã,São Paulo,06/05/2025,08/05/2025
-Belém,Maceió,11/04/2025,24/04/2025
-Porto Alegre,Belo Horizonte,30/05/2025,07/06/2025
-Brasília,Campo Grande,22/06/2025,26/06/2025
-Rio de Janeiro,Frankfurt,26/04/2025,06/05/2025
-Natal,Lima,20/08/2025,24/08/2025
-Los Angeles,Vitória,01/09/2025,05/09/2025
-Pequim,Los Angeles,11/10/2025,22/10/2025
-Buenos Aires,Palmas,22/11/2025,27/11/2025
-Fortaleza,Paris,20/05/2025,31/05/2025
-Lima,Dubai,27/09/2025,11/10/2025
-Porto Alegre,Palmas,22/07/2025,29/07/2025
-Santiago,Londres,02/11/2025,06/11/2025
-João Pessoa,São Luís,24/07/2025,07/08/2025
-Lima,Nova York,28/12/2025,02/01/2026
-Lima,Recife,20/07/2025,31/07/2025
-Salvador,Macapá,11/05/2025,26/05/2025
-Roma,Cuiabá,22/12/2025,26/12/2025
-São Luís,Boa Vista,07/09/2025,17/09/2025
-Nova York,Buenos Aires,29/07/2025,07/08/2025
-Tóquio,Nova York,16/05/2025,18/05/2025
-Lima,Salvador,17/04/2025,26/04/2025
-Manaus,Campo Grande,23/08/2025,26/08/2025
-Lima,Rio de Janeiro,26/09/2025,06/10/2025
-Boa Vista,Amsterdã,17/06/2025,20/06/2025
-Manaus,Belo Horizonte,22/08/2025,27/08/2025
-Goiânia,Teresina,21/04/2025,30/04/2025
-Tóquio,Pequim,18/11/2025,24/11/2025
-Vitória,Brasília,11/06/2025,23/06/2025
-Cuiabá,Frankfurt,13/11/2025,16/11/2025
-Porto Velho,Los Angeles,22/04/2025,28/04/2025
-Teresina,Tóquio,28/06/2025,07/07/2025
-Frankfurt,Paris,14/05/2025,25/05/2025
-Manaus,Frankfurt,13/04/2025,15/04/2025
-Recife,Porto Alegre,29/05/2025,01/06/2025
-Londres,Natal,01/09/2025,12/09/2025
-Cuiabá,Manaus,09/05/2025,11/05/2025
-Cidade do México,Tóquio,15/12/2025,18/12/2025
-Frankfurt,Campo Grande,12/12/2025,16/12/2025
-Dubai,João Pessoa,15/12/2025,25/12/2025
-Miami,Dubai,08/04/2025,22/04/2025
-Dubai,Maceió,08/05/2025,12/05/2025
-Macapá,Vitória,20/11/2025,02/12/2025
-Natal,Buenos Aires,24/11/2025,04/12/2025
-Buenos Aires,Campo Grande,24/10/2025,07/11/2025
-Vitória,João Pessoa,02/05/2025,13/05/2025
-Fortaleza,São Luís,19/05/2025,26/05/2025
-Lima,Belo Horizonte,02/06/2025,04/06/2025
-João Pessoa,Pequim,30/05/2025,08/06/2025
-Pequim,Macapá,17/12/2025,19/12/2025
-Brasília,Santiago,20/04/2025,23/04/2025
-Maceió,Nova York,30/11/2025,06/12/2025
-Natal,Amsterdã,16/04/2025,21/04/2025
-Manaus,Buenos Aires,08/06/2025,23/06/2025
-Amsterdã,Recife,15/12/2025,18/12/2025
-Toronto,São Paulo,08/05/2025,22/05/2025
-Goiânia,Lisboa,27/11/2025,07/12/2025
-Belém,Toronto,13/10/2025,16/10/2025
-Cuiabá,São Luís,08/04/2025,11/04/2025
-Amsterdã,Palmas,01/10/2025,08/10/2025
-Teresina,Recife,26/07/2025,03/08/2025
-Fortaleza,Tóquio,14/07/2025,16/07/2025
-Bogotá,Fortaleza,06/11/2025,21/11/2025
-Santiago,Porto Velho,28/04/2025,03/05/2025
-Roma,Cuiabá,15/07/2025,25/07/2025
-São Luís,Brasília,20/10/2025,02/11/2025
-Roma,Madri,15/05/2025,27/05/2025
-Lisboa,Maceió,28/06/2025,02/07/2025
-Cidade do México,Aracaju,16/12/2025,21/12/2025
-Boa Vista,Santiago,28/12/2025,02/01/2026
-Los Angeles,Bogotá,17/10/2025,25/10/2025
-Macapá,Belém,09/11/2025,15/11/2025
-Miami,Natal,16/10/2025,25/10/2025
-Boa Vista,Lisboa,14/05/2025,17/05/2025
-Nova York,Fortaleza,19/10/2025,27/10/2025
-Porto Alegre,Aracaju,30/09/2025,13/10/2025
-Florianópolis,Paris,09/08/2025,11/08/2025
-Amsterdã,Cuiabá,06/06/2025,08/06/2025
-Dubai,Amsterdã,29/09/2025,06/10/2025
-Santiago,Goiânia,09/07/2025,24/07/2025
-Los Angeles,São Luís,18/09/2025,28/09/2025
-Fortaleza,Teresina,31/12/2025,01/01/2026
-Teresina,Nova York,27/12/2025,11/01/2026
-Nova York,Fortaleza,15/05/2025,17/05/2025
-Madri,Teresina,06/07/2025,17/07/2025
-Goiânia,Madri,11/06/2025,22/06/2025
-Pequim,Santiago,21/05/2025,25/05/2025
-Dubai,Santiago,05/07/2025,19/07/2025
-Pequim,Maceió,14/06/2025,17/06/2025
-Miami,Madri,01/11/2025,14/11/2025
-Los Angeles,Toronto,16/04/2025,24/04/2025
-Brasília,Dubai,19/05/2025,24/05/2025
-Natal,Belo Horizonte,21/07/2025,30/07/2025
-Tóquio,João Pessoa,01/07/2025,12/07/2025
-São Luís,Teresina,02/12/2025,10/12/2025
-Bogotá,Porto Alegre,19/04/2025,20/04/2025
-Nova York,Curitiba,07/05/2025,13/05/2025
-Curitiba,Campo Grande,16/08/2025,27/08/2025
-Brasília,Belo Horizonte,15/10/2025,20/10/2025
-Cidade do México,Rio Branco,15/05/2025,28/05/2025
-Los Angeles,Belo Horizonte,16/10/2025,24/10/2025
-Rio de Janeiro,Porto Velho,22/10/2025,06/11/2025
-Manaus,Amsterdã,04/06/2025,14/06/2025
-São Paulo,Rio de Janeiro,13/12/2025,20/12/2025
-Porto Alegre,Natal,15/10/2025,22/10/2025
-Campo Grande,Maceió,13/10/2025,16/10/2025
-Miami,Salvador,04/11/2025,09/11/2025
-Tóquio,Miami,27/08/2025,04/09/2025
-Bogotá,Campo Grande,08/06/2025,14/06/2025
-Frankfurt,São Paulo,22/06/2025,04/07/2025
-Goiânia,Manaus,09/04/2025,17/04/2025
-Madri,Roma,10/07/2025,17/07/2025
-Campo Grande,Porto Alegre,12/10/2025,22/10/2025
-Los Angeles,João Pessoa,24/12/2025,30/12/2025
-Aracaju,Manaus,24/11/2025,29/11/2025
-Los Angeles,Cuiabá,11/05/2025,13/05/2025
-Pequim,Recife,17/04/2025,21/04/2025
-Toronto,Tóquio,07/09/2025,19/09/2025
-Recife,Fortaleza,02/06/2025,15/06/2025
-Dubai,Campo Grande,27/05/2025,30/05/2025
-Santiago,Nova York,03/09/2025,08/09/2025
-Belém,Manaus,27/05/2025,09/06/2025
-Rio Branco,Nova York,13/08/2025,20/08/2025
-Toronto,Manaus,19/09/2025,22/09/2025
-Goiânia,Manaus,27/11/2025,08/12/2025
-Cuiabá,Los Angeles,10/04/2025,18/04/2025
-Florianópolis,Goiânia,17/08/2025,25/08/2025
-Natal,Porto Alegre,31/08/2025,06/09/2025
-Amsterdã,Rio Branco,30/11/2025,12/12/2025
-João Pessoa,Rio de Janeiro,01/05/2025,09/05/2025
-Frankfurt,São Luís,02/08/2025,11/08/2025
-Rio de Janeiro,João Pessoa,19/10/2025,27/10/2025
-Boa Vista,Fortaleza,14/12/2025,24/12/2025
-Santiago,Lisboa,06/10/2025,07/10/2025
-Goiânia,Vitória,17/04/2025,23/04/2025
-São Luís,Buenos Aires,21/09/2025,23/09/2025
-Recife,Vitória,15/12/2025,23/12/2025
-Tóquio,Porto Velho,17/07/2025,21/07/2025
-Goiânia,Madri,21/12/2025,23/12/2025
-Maceió,Belém,24/07/2025,26/07/2025
-Bogotá,Maceió,10/11/2025,14/11/2025
-Florianópolis,Natal,08/09/2025,17/09/2025
-Buenos Aires,Goiânia,24/12/2025,30/12/2025
-Porto Velho,Macapá,24/04/2025,27/04/2025
-João Pessoa,Lisboa,12/12/2025,25/12/2025
-Brasília,Natal,25/12/2025,08/01/2026
-Tóquio,Los Angeles,27/08/2025,01/09/2025
-Frankfurt,Maceió,27/12/2025,01/01/2026
-Brasília,Belém,12/04/2025,17/04/2025
-Aracaju,Lisboa,21/04/2025,03/05/2025
-Teresina,Londres,19/09/2025,03/10/2025
-Manaus,Campo Grande,15/04/2025,29/04/2025
-Rio Branco,Manaus,20/12/2025,01/01/2026
-Toronto,Maceió,30/07/2025,02/08/2025
-Dubai,Teresina,13/05/2025,26/05/2025
-Macapá,Florianópolis,25/08/2025,02/09/2025
-Santiago,Paris,08/10/2025,20/10/2025
-Rio Branco,Tóquio,21/10/2025,05/11/2025
-Brasília,São Paulo,31/08/2025,11/09/2025
-Lisboa,Roma,07/11/2025,09/11/2025
-Nova York,Tóquio,10/08/2025,13/08/2025
-Paris,Vitória,04/09/2025,18/09/2025
-Vitória,Madri,11/11/2025,18/11/2025
-Pequim,Paris,26/06/2025,10/07/2025
-Madri,Santiago,04/07/2025,07/07/2025
-Bogotá,Roma,07/08/2025,11/08/2025
-Bogotá,Toronto,14/11/2025,21/11/2025
-Dubai,Boa Vista,12/09/2025,26/09/2025
-Goiânia,Boa Vista,03/05/2025,09/05/2025
-Frankfurt,Amsterdã,26/06/2025,07/07/2025
-Lisboa,Cuiabá,30/12/2025,03/01/2026
-Rio Branco,Frankfurt,27/08/2025,06/09/2025
-Londres,Rio Branco,19/04/2025,29/04/2025
-Vitória,Belo Horizonte,08/08/2025,15/08/2025
-Fortaleza,Rio Branco,28/10/2025,04/11/2025
-Toronto,Manaus,20/11/2025,04/12/2025
-Dubai,Nova York,16/07/2025,28/07/2025
-Madri,Roma,25/06/2025,26/06/2025
-João Pessoa,Belo Horizonte,08/11/2025,21/11/2025
-Brasília,Natal,05/09/2025,07/09/2025
-Vitória,Frankfurt,09/09/2025,19/09/2025
-Recife,Natal,11/04/2025,14/04/2025
-Tóquio,Belém,15/12/2025,29/12/2025
-Tóquio,São Paulo,05/12/2025,17/12/2025
-São Luís,Belém,09/05/2025,14/05/2025
-Macapá,Porto Velho,24/12/2025,02/01/2026
-Londres,Porto Alegre,11/12/2025,15/12/2025
-Recife,Natal,17/07/2025,26/07/2025
-Los Angeles,Macapá,17/06/2025,18/06/2025
-Fortaleza,Vitória,22/06/2025,27/06/2025
-Brasília,Tóquio,13/12/2025,28/12/2025
-Bogotá,Toronto,30/12/2025,09/01/2026
-Boa Vista,Santiago,27/08/2025,07/09/2025
-Madri,Palmas,21/11/2025,23/11/2025
-Belém,Belo Horizonte,11/10/2025,20/10/2025
-Brasília,Toronto,19/10/2025,23/10/2025
-Roma,Rio Branco,29/06/2025,06/07/2025
-Belo Horizonte,Recife,05/07/2025,14/07/2025
-Madri,Amsterdã,06/05/2025,14/05/2025
-Cuiabá,Goiânia,06/08/2025,11/08/2025
-Londres,Roma,21/05/2025,01/06/2025
-Londres,Bogotá,06/11/2025,08/11/2025
-Florianópolis,Los Angeles,31/08/2025,14/09/2025
-Rio Branco,Dubai,03/07/2025,10/07/2025
-Rio Branco,Curitiba,25/06/2025,01/07/2025
-Natal,São Paulo,02/11/2025,07/11/2025
-Fortaleza,Aracaju,21/10/2025,23/10/2025
-Rio de Janeiro,Tóquio,15/04/2025,22/04/2025
-Macapá,Pequim,13/08/2025,23/08/2025
-Macapá,Aracaju,06/06/2025,10/06/2025
-São Luís,Belo Horizonte,14/09/2025,26/09/2025
-Vitória,São Luís,23/08/2025,06/09/2025
-Madri,Miami,15/04/2025,24/04/2025
-Boa Vista,Frankfurt,05/06/2025,06/06/2025
-Lisboa,Porto Velho,12/08/2025,14/08/2025
-Palmas,Aracaju,17/10/2025,23/10/2025
-Lisboa,Rio de Janeiro,19/04/2025,20/04/2025
-Roma,Porto Alegre,29/04/2025,12/05/2025
-Dubai,Macapá,10/06/2025,11/06/2025
-Curitiba,Nova York,24/09/2025,28/09/2025
-Palmas,Fortaleza,04/11/2025,06/11/2025
-Belo Horizonte,Rio de Janeiro,12/10/2025,25/10/2025
-Florianópolis,Macapá,13/04/2025,14/04/2025
-Rio de Janeiro,João Pessoa,01/12/2025,12/12/2025
-Paris,Belém,31/12/2025,15/01/2026
-Belo Horizonte,Amsterdã,31/10/2025,03/11/2025
-Buenos Aires,Manaus,15/08/2025,20/08/2025
-Teresina,Salvador,07/11/2025,22/11/2025
-Curitiba,Recife,27/04/2025,10/05/2025
-Macapá,Toronto,18/11/2025,19/11/2025
-Dubai,Vitória,16/07/2025,27/07/2025
-Salvador,Cuiabá,26/07/2025,01/08/2025
-Porto Velho,Amsterdã,13/11/2025,16/11/2025
-Frankfurt,João Pessoa,16/10/2025,21/10/2025
-João Pessoa,Aracaju,03/11/2025,13/11/2025
-Salvador,São Luís,26/04/2025,10/05/2025
-Roma,Santiago,08/11/2025,13/11/2025
-Manaus,Natal,08/10/2025,09/10/2025
-Vitória,Amsterdã,05/11/2025,20/11/2025
-Lima,Brasília,15/05/2025,29/05/2025
-Boa Vista,Porto Alegre,07/10/2025,13/10/2025
-Porto Velho,Palmas,21/04/2025,02/05/2025
-Aracaju,Curitiba,30/12/2025,04/01/2026
-Toronto,Natal,30/04/2025,01/05/2025
-Frankfurt,Campo Grande,08/11/2025,20/11/2025
-Cuiabá,Macapá,30/05/2025,12/06/2025
-Belo Horizonte,Palmas,06/06/2025,20/06/2025
-Pequim,Dubai,13/10/2025,26/10/2025
-Florianópolis,Manaus,24/09/2025,04/10/2025
-Fortaleza,Teresina,04/06/2025,11/06/2025
-Cidade do México,Dubai,17/06/2025,01/07/2025
-Cidade do México,Curitiba,01/05/2025,08/05/2025
-Natal,Campo Grande,09/06/2025,24/06/2025
-Porto Alegre,Miami,13/06/2025,18/06/2025
-Tóquio,Belém,26/10/2025,29/10/2025
-João Pessoa,Rio Branco,28/06/2025,07/07/2025
-São Paulo,Manaus,15/05/2025,30/05/2025
-Londres,Santiago,09/05/2025,19/05/2025
-João Pessoa,Rio de Janeiro,01/12/2025,14/12/2025
-Brasília,Rio de Janeiro,17/07/2025,25/07/2025
-Salvador,Vitória,14/06/2025,15/06/2025
-Palmas,Porto Velho,18/12/2025,21/12/2025
-Santiago,Salvador,09/10/2025,17/10/2025
-Boa Vista,Teresina,24/08/2025,28/08/2025
-Toronto,Rio Branco,15/05/2025,20/05/2025
-Recife,Porto Velho,07/10/2025,20/10/2025
-Londres,Salvador,22/11/2025,24/11/2025
-Londres,Amsterdã,02/10/2025,05/10/2025
-Maceió,Curitiba,01/05/2025,11/05/2025
-Lisboa,Paris,14/07/2025,20/07/2025
-Porto Alegre,Lisboa,20/11/2025,04/12/2025
-São Paulo,Nova York,03/09/2025,10/09/2025
-Lima,Curitiba,08/10/2025,22/10/2025
-Belém,São Paulo,19/06/2025,20/06/2025
-Bogotá,Rio de Janeiro,17/04/2025,20/04/2025
-Boa Vista,Roma,04/12/2025,11/12/2025
-Maceió,Macapá,26/12/2025,31/12/2025
-Paris,Brasília,24/05/2025,05/06/2025
-Londres,Santiago,09/05/2025,10/05/2025
-Cidade do México,Dubai,27/07/2025,08/08/2025
-Curitiba,Campo Grande,06/09/2025,17/09/2025
-Bogotá,Toronto,13/06/2025,20/06/2025
-Curitiba,Fortaleza,12/10/2025,26/10/2025
-Bogotá,Lima,21/04/2025,28/04/2025
-Aracaju,Cidade do México,28/06/2025,01/07/2025
-Brasília,Goiânia,15/07/2025,17/07/2025
-Vitória,Porto Velho,02/11/2025,13/11/2025
-Pequim,Salvador,16/04/2025,01/05/2025
-Rio de Janeiro,Belo Horizonte,29/05/2025,06/06/2025
-Boa Vista,Belo Horizonte,17/12/2025,22/12/2025
-Lima,Florianópolis,19/12/2025,29/12/2025
-Campo Grande,Vitória,16/06/2025,24/06/2025
-Toronto,Brasília,26/12/2025,10/01/2026
-Brasília,Lima,27/07/2025,10/08/2025
-Paris,Lisboa,10/10/2025,18/10/2025
-Lisboa,Tóquio,04/06/2025,06/06/2025
-João Pessoa,Curitiba,17/07/2025,21/07/2025
-Goiânia,Nova York,01/11/2025,13/11/2025
-São Paulo,Amsterdã,16/07/2025,19/07/2025
-Dubai,Curitiba,20/09/2025,02/10/2025
-Tóquio,Rio Branco,05/12/2025,13/12/2025
-Recife,Belém,29/08/2025,04/09/2025
-Porto Alegre,Bogotá,19/11/2025,30/11/2025
-Maceió,Vitória,30/12/2025,02/01/2026
-Curitiba,Los Angeles,29/05/2025,09/06/2025
-Brasília,Porto Alegre,03/10/2025,15/10/2025
-Vitória,Lisboa,14/07/2025,19/07/2025
-Amsterdã,Paris,17/05/2025,21/05/2025
-Porto Velho,Dubai,03/12/2025,14/12/2025
-Belo Horizonte,Londres,18/10/2025,20/10/2025
-Rio de Janeiro,São Luís,17/12/2025,01/01/2026
-Teresina,São Paulo,28/10/2025,09/11/2025
-Belém,Brasília,31/12/2025,14/01/2026
-Manaus,Lima,11/09/2025,24/09/2025
-Frankfurt,Macapá,23/06/2025,08/07/2025
-Vitória,Maceió,20/04/2025,01/05/2025
-Madri,Lisboa,23/10/2025,06/11/2025
-Los Angeles,Paris,11/04/2025,23/04/2025
-Macapá,Porto Velho,03/11/2025,11/11/2025
-Cidade do México,Porto Velho,01/09/2025,11/09/2025
-Bogotá,Aracaju,18/10/2025,01/11/2025
-São Paulo,Curitiba,10/04/2025,16/04/2025
-Goiânia,Los Angeles,11/05/2025,26/05/2025
-Aracaju,Tóquio,22/12/2025,06/01/2026
-Lima,Pequim,09/12/2025,10/12/2025
-Campo Grande,Aracaju,08/12/2025,19/12/2025
-Florianópolis,Curitiba,27/10/2025,31/10/2025
-Cidade do México,Amsterdã,29/10/2025,05/11/2025
-Frankfurt,Pequim,04/12/2025,09/12/2025
-Miami,Porto Velho,15/11/2025,18/11/2025
-Tóquio,Lima,10/04/2025,18/04/2025
-Dubai,Porto Velho,16/10/2025,31/10/2025
-Cuiabá,Porto Alegre,08/06/2025,19/06/2025
-Dubai,Miami,26/12/2025,02/01/2026
-Roma,Londres,07/09/2025,13/09/2025
-Boa Vista,Los Angeles,06/08/2025,19/08/2025
-Rio de Janeiro,Cuiabá,28/07/2025,29/07/2025
-Pequim,Rio Branco,04/07/2025,10/07/2025
-João Pessoa,Lisboa,10/06/2025,12/06/2025
-Macapá,Toronto,24/06/2025,01/07/2025
-Porto Alegre,Paris,15/07/2025,16/07/2025
-Lima,Campo Grande,04/12/2025,18/12/2025
-Curitiba,São Luís,13/11/2025,21/11/2025
-Lisboa,Porto Alegre,08/11/2025,18/11/2025
-Bogotá,João Pessoa,27/12/2025,28/12/2025
-Belém,Porto Alegre,28/09/2025,05/10/2025
-Fortaleza,Manaus,19/07/2025,25/07/2025
-Nova York,Florianópolis,22/05/2025,31/05/2025
-João Pessoa,Brasília,15/04/2025,19/04/2025
-Natal,São Luís,22/12/2025,31/12/2025
-Cuiabá,Lisboa,06/12/2025,07/12/2025
-Belém,Madri,31/05/2025,13/06/2025
-Toronto,Aracaju,13/12/2025,20/12/2025
-Rio de Janeiro,Amsterdã,09/07/2025,11/07/2025
-Toronto,Pequim,18/05/2025,22/05/2025
-Bogotá,Cuiabá,01/06/2025,02/06/2025
-Palmas,Brasília,27/07/2025,06/08/2025
-Dubai,Belo Horizonte,17/10/2025,01/11/2025
-Vitória,Lisboa,08/12/2025,11/12/2025
-João Pessoa,Cuiabá,08/04/2025,20/04/2025
-Paris,Bogotá,15/06/2025,16/06/2025
-Santiago,Porto Velho,04/09/2025,09/09/2025
-Natal,Madri,10/12/2025,25/12/2025
-Roma,Paris,11/10/2025,14/10/2025
-Pequim,Campo Grande,20/09/2025,22/09/2025
-Aracaju,Vitória,18/09/2025,25/09/2025
-Boa Vista,Nova York,29/10/2025,04/11/2025
-Macapá,Santiago,02/11/2025,06/11/2025
-Curitiba,Boa Vista,07/07/2025,09/07/2025
-Lima,Belém,03/09/2025,07/09/2025
-Maceió,Recife,22/11/2025,28/11/2025
-Salvador,Madri,11/10/2025,15/10/2025
-Fortaleza,Frankfurt,12/10/2025,19/10/2025
-Pequim,Toronto,02/11/2025,10/11/2025
-Amsterdã,Manaus,05/06/2025,14/06/2025
-Amsterdã,Porto Alegre,31/10/2025,12/11/2025
-Vitória,Salvador,05/06/2025,18/06/2025
-Campo Grande,Belém,12/07/2025,14/07/2025
-Florianópolis,Aracaju,08/10/2025,16/10/2025
-Recife,Goiânia,19/12/2025,30/12/2025
-Palmas,Rio Branco,03/08/2025,15/08/2025
-Porto Alegre,Frankfurt,22/10/2025,04/11/2025
-Lima,Rio Branco,05/10/2025,08/10/2025
-Brasília,Recife,25/05/2025,27/05/2025
-Florianópolis,Maceió,19/05/2025,31/05/2025
-Goiânia,Belo Horizonte,01/07/2025,09/07/2025
-São Luís,Rio de Janeiro,19/07/2025,21/07/2025
-Madri,Lisboa,10/05/2025,18/05/2025
-Brasília,Frankfurt,23/05/2025,07/06/2025
-Lima,Florianópolis,11/09/2025,20/09/2025
-Campo Grande,Florianópolis,10/09/2025,13/09/2025
-Aracaju,Nova York,26/04/2025,02/05/2025
-Porto Alegre,Los Angeles,27/08/2025,30/08/2025
-Lisboa,Porto Alegre,16/09/2025,25/09/2025
-Frankfurt,Fortaleza,04/11/2025,05/11/2025
-Porto Velho,Maceió,22/11/2025,29/11/2025
-Nova York,Boa Vista,06/10/2025,21/10/2025
-São Paulo,Fortaleza,26/08/2025,08/09/2025
-Dubai,Santiago,15/09/2025,23/09/2025
-São Paulo,Miami,22/09/2025,24/09/2025
-Fortaleza,Aracaju,07/08/2025,08/08/2025
-Boa Vista,Maceió,18/11/2025,28/11/2025
-Brasília,Lisboa,17/05/2025,28/05/2025
-Roma,Paris,03/07/2025,16/07/2025
-Curitiba,Aracaju,05/12/2025,20/12/2025
-Belo Horizonte,Buenos Aires,06/12/2025,18/12/2025
-Buenos Aires,Nova York,13/10/2025,20/10/2025
-Vitória,Lisboa,27/10/2025,03/11/2025
-Curitiba,Maceió,13/07/2025,23/07/2025
-Florianópolis,Boa Vista,23/09/2025,06/10/2025
-Curitiba,Cidade do México,31/10/2025,13/11/2025
-Campo Grande,Salvador,14/04/2025,16/04/2025
-Recife,Toronto,21/09/2025,23/09/2025
-Nova York,Rio de Janeiro,07/11/2025,15/11/2025
-Porto Velho,Bogotá,17/06/2025,23/06/2025
-Belém,Cuiabá,28/07/2025,03/08/2025
-Palmas,Frankfurt,16/04/2025,21/04/2025
-Belo Horizonte,São Paulo,15/11/2025,23/11/2025
-Boa Vista,Vitória,28/12/2025,06/01/2026
-Cidade do México,Teresina,08/07/2025,14/07/2025
-João Pessoa,Londres,15/08/2025,21/08/2025
-Rio de Janeiro,Lima,02/06/2025,05/06/2025
-Recife,Rio de Janeiro,14/09/2025,18/09/2025
-Dubai,Natal,22/12/2025,26/12/2025
-Belo Horizonte,Palmas,17/11/2025,24/11/2025
-Florianópolis,Boa Vista,29/06/2025,08/07/2025
-Belo Horizonte,Pequim,16/10/2025,31/10/2025
-Aracaju,Miami,16/12/2025,28/12/2025
-Belém,Toronto,02/11/2025,09/11/2025
-Maceió,Miami,21/08/2025,03/09/2025
-Dubai,Miami,19/07/2025,30/07/2025
-Macapá,Maceió,25/12/2025,30/12/2025
-São Luís,Teresina,01/06/2025,03/06/2025
-Boa Vista,Porto Alegre,02/12/2025,11/12/2025
-Belo Horizonte,Campo Grande,17/12/2025,31/12/2025
-Lisboa,Macapá,03/10/2025,08/10/2025
-Florianópolis,Palmas,28/07/2025,05/08/2025
-Madri,Miami,16/06/2025,28/06/2025
-Teresina,Boa Vista,17/09/2025,23/09/2025
-Natal,Buenos Aires,25/05/2025,05/06/2025
-Cuiabá,Tóquio,17/09/2025,24/09/2025
-Pequim,Florianópolis,15/10/2025,25/10/2025
-Santiago,São Luís,05/07/2025,16/07/2025
-Recife,Cuiabá,19/05/2025,27/05/2025
-Rio Branco,Recife,13/11/2025,27/11/2025
-Brasília,Porto Velho,14/11/2025,16/11/2025
-Brasília,Frankfurt,28/07/2025,10/08/2025
-São Luís,Belo Horizonte,30/09/2025,05/10/2025
-Santiago,Nova York,10/11/2025,16/11/2025
-Nova York,Fortaleza,11/09/2025,16/09/2025
-Santiago,Brasília,01/05/2025,06/05/2025
-Pequim,Madri,19/06/2025,25/06/2025
-Pequim,Belém,25/11/2025,02/12/2025
-Pequim,Natal,03/06/2025,08/06/2025
-Maceió,Boa Vista,05/11/2025,14/11/2025
-Pequim,Cuiabá,04/06/2025,08/06/2025
-Lisboa,Madri,02/09/2025,10/09/2025
-Recife,Brasília,08/06/2025,16/06/2025
-Macapá,Pequim,12/07/2025,21/07/2025
-Toronto,Amsterdã,08/10/2025,13/10/2025
-Amsterdã,Brasília,07/06/2025,09/06/2025
-Recife,Salvador,19/06/2025,21/06/2025
-Belo Horizonte,Pequim,04/10/2025,15/10/2025
-Porto Velho,Los Angeles,22/08/2025,26/08/2025
-Rio Branco,Los Angeles,19/05/2025,25/05/2025
-Buenos Aires,Bogotá,19/10/2025,21/10/2025
-Tóquio,Cuiabá,28/11/2025,11/12/2025
-Cuiabá,João Pessoa,18/06/2025,21/06/2025
-Tóquio,Frankfurt,28/09/2025,05/10/2025
-Rio Branco,Amsterdã,31/12/2025,11/01/2026
-Lisboa,Nova York,03/12/2025,05/12/2025
-Florianópolis,Porto Velho,23/08/2025,27/08/2025
-Fortaleza,Tóquio,29/10/2025,31/10/2025
-Teresina,Campo Grande,26/10/2025,31/10/2025
-Belo Horizonte,Toronto,25/07/2025,02/08/2025
-Campo Grande,Florianópolis,18/04/2025,27/04/2025
-Aracaju,Cuiabá,28/05/2025,01/06/2025
-Macapá,Campo Grande,05/09/2025,12/09/2025
-Belém,Madri,24/07/2025,29/07/2025
-Vitória,Cidade do México,03/06/2025,17/06/2025
-Cidade do México,Belém,31/10/2025,11/11/2025
-Aracaju,Nova York,13/08/2025,21/08/2025
-Tóquio,Bogotá,30/09/2025,12/10/2025
-Bogotá,Salvador,15/06/2025,21/06/2025
-Cidade do México,Nova York,22/12/2025,25/12/2025
-Paris,Porto Alegre,10/06/2025,25/06/2025
-Pequim,Amsterdã,14/11/2025,20/11/2025
-João Pessoa,Vitória,07/12/2025,15/12/2025
-Teresina,Pequim,27/07/2025,07/08/2025
-Lisboa,Manaus,29/12/2025,07/01/2026
-Aracaju,Roma,08/05/2025,19/05/2025
-Bogotá,Porto Alegre,27/09/2025,07/10/2025
-Roma,Miami,06/08/2025,10/08/2025
-Aracaju,Goiânia,09/05/2025,21/05/2025
-Amsterdã,Macapá,22/07/2025,30/07/2025
-Belém,Rio de Janeiro,03/06/2025,10/06/2025
-Lima,Cuiabá,13/07/2025,17/07/2025
-Toronto,Pequim,05/09/2025,10/09/2025
-Miami,Paris,19/05/2025,25/05/2025
-Brasília,Buenos Aires,10/11/2025,19/11/2025
-Natal,Curitiba,10/09/2025,22/09/2025
-Roma,Aracaju,17/04/2025,23/04/2025
-Miami,Aracaju,16/04/2025,28/04/2025
-Lisboa,Cuiabá,14/06/2025,16/06/2025
-São Luís,Teresina,19/09/2025,24/09/2025
-Madri,Bogotá,30/08/2025,31/08/2025
-Natal,Curitiba,18/06/2025,23/06/2025
-Dubai,Natal,04/11/2025,16/11/2025
-Fortaleza,Los Angeles,05/09/2025,17/09/2025
-Curitiba,Brasília,23/07/2025,03/08/2025
-Cidade do México,Roma,15/06/2025,19/06/2025
-Cuiabá,Rio Branco,14/12/2025,26/12/2025
-Curitiba,Macapá,06/12/2025,16/12/2025
-Dubai,João Pessoa,06/07/2025,08/07/2025
-Teresina,Nova York,22/10/2025,27/10/2025
-João Pessoa,Curitiba,05/10/2025,18/10/2025
-Goiânia,Salvador,13/05/2025,20/05/2025
-Vitória,Boa Vista,15/07/2025,18/07/2025
-Boa Vista,Natal,14/08/2025,25/08/2025
-Palmas,Frankfurt,10/06/2025,14/06/2025
-Los Angeles,João Pessoa,08/09/2025,10/09/2025
-Aracaju,Los Angeles,07/05/2025,22/05/2025
-Paris,Vitória,12/12/2025,26/12/2025
-Recife,Roma,12/07/2025,25/07/2025
-Frankfurt,Lima,11/04/2025,17/04/2025
-Toronto,Salvador,24/06/2025,03/07/2025
-Campo Grande,Curitiba,30/10/2025,11/11/2025
-Recife,Porto Velho,12/09/2025,25/09/2025
-Boa Vista,Lima,05/05/2025,06/05/2025
-Curitiba,Roma,20/04/2025,21/04/2025
-Fortaleza,Goiânia,25/12/2025,07/01/2026
-Vitória,Toronto,27/05/2025,08/06/2025
-Londres,Salvador,29/09/2025,08/10/2025
-Natal,Manaus,12/06/2025,21/06/2025
-Toronto,Porto Alegre,08/08/2025,09/08/2025
-Curitiba,Rio de Janeiro,10/04/2025,19/04/2025
-Los Angeles,Maceió,15/11/2025,29/11/2025
-Paris,Dubai,08/10/2025,22/10/2025
-Florianópolis,Rio Branco,18/08/2025,31/08/2025
-Curitiba,Pequim,07/09/2025,11/09/2025
-Paris,Recife,17/08/2025,18/08/2025
-Lisboa,Curitiba,21/06/2025,28/06/2025
-Goiânia,Maceió,15/12/2025,17/12/2025
-Tóquio,Paris,29/05/2025,13/06/2025
-Manaus,Buenos Aires,14/11/2025,19/11/2025
-Brasília,Lima,16/06/2025,27/06/2025
-Nova York,Recife,09/09/2025,20/09/2025
-Pequim,Lima,15/08/2025,16/08/2025
-Macapá,Curitiba,08/09/2025,21/09/2025
-Porto Alegre,Los Angeles,05/09/2025,06/09/2025
-São Paulo,Lima,03/10/2025,06/10/2025
-Salvador,Palmas,07/09/2025,09/09/2025
-Londres,Cuiabá,09/07/2025,10/07/2025
-Macapá,Lima,04/08/2025,16/08/2025
-Dubai,Goiânia,24/04/2025,25/04/2025
-Vitória,Rio de Janeiro,15/06/2025,16/06/2025
-Amsterdã,Belém,28/06/2025,12/07/2025
-Florianópolis,Miami,26/11/2025,03/12/2025
-Madri,Nova York,23/07/2025,28/07/2025
-Campo Grande,Los Angeles,05/08/2025,09/08/2025
-Buenos Aires,Fortaleza,11/06/2025,13/06/2025
-Curitiba,Frankfurt,29/04/2025,14/05/2025
-Lisboa,Fortaleza,04/06/2025,11/06/2025
-Toronto,Santiago,15/04/2025,18/04/2025
-Brasília,Vitória,10/08/2025,18/08/2025
-Toronto,São Luís,23/06/2025,03/07/2025
-São Luís,Porto Alegre,19/09/2025,03/10/2025
-Palmas,Maceió,22/12/2025,23/12/2025
-Bogotá,Lisboa,13/06/2025,28/06/2025
-Macapá,Pequim,18/10/2025,29/10/2025
-Toronto,Dubai,29/10/2025,30/10/2025
-Toronto,Boa Vista,03/10/2025,16/10/2025
-Lisboa,Los Angeles,12/09/2025,18/09/2025
-Maceió,Vitória,22/09/2025,03/10/2025
-Belo Horizonte,Manaus,19/04/2025,26/04/2025
-Porto Velho,Belém,30/12/2025,04/01/2026
-João Pessoa,Roma,03/11/2025,04/11/2025
-Santiago,João Pessoa,05/05/2025,15/05/2025
-Toronto,Amsterdã,24/11/2025,05/12/2025
-Boa Vista,Amsterdã,02/06/2025,08/06/2025
-Buenos Aires,Curitiba,27/09/2025,06/10/2025
-Vitória,Natal,16/09/2025,18/09/2025
-Los Angeles,São Luís,29/05/2025,31/05/2025
-Maceió,Campo Grande,12/11/2025,27/11/2025
-São Luís,Londres,17/08/2025,30/08/2025
-Brasília,Rio de Janeiro,20/09/2025,21/09/2025
-Aracaju,Natal,29/06/2025,09/07/2025
-Campo Grande,Aracaju,06/10/2025,13/10/2025
-Rio de Janeiro,São Paulo,25/08/2025,07/09/2025
-Teresina,Belém,28/11/2025,10/12/2025
-Pequim,Miami,13/07/2025,14/07/2025
-Paris,Los Angeles,13/05/2025,28/05/2025
-Pequim,Salvador,20/09/2025,21/09/2025
-Belém,Amsterdã,24/12/2025,08/01/2026
-Buenos Aires,Bogotá,05/08/2025,08/08/2025
-Belo Horizonte,São Paulo,28/07/2025,12/08/2025
-Belo Horizonte,Nova York,09/07/2025,13/07/2025
-Tóquio,Londres,25/11/2025,09/12/2025
-Nova York,Paris,10/08/2025,23/08/2025
-Lima,Porto Velho,27/06/2025,02/07/2025
-Belo Horizonte,Dubai,29/12/2025,12/01/2026
-Amsterdã,Curitiba,19/06/2025,22/06/2025
-Fortaleza,Maceió,21/04/2025,23/04/2025
-Miami,Palmas,16/10/2025,24/10/2025
-Porto Alegre,Palmas,22/12/2025,26/12/2025
-Fortaleza,Belém,31/05/2025,04/06/2025
-Vitória,Nova York,06/08/2025,07/08/2025
-Belo Horizonte,Florianópolis,22/08/2025,04/09/2025
-Lisboa,Tóquio,20/05/2025,28/05/2025
-Palmas,Amsterdã,06/08/2025,16/08/2025
-Recife,Natal,25/05/2025,02/06/2025
-Santiago,Brasília,10/04/2025,17/04/2025
-Natal,Pequim,27/09/2025,09/10/2025
-Fortaleza,Goiânia,13/04/2025,19/04/2025
-Belém,Aracaju,14/08/2025,18/08/2025
-Macapá,Toronto,25/11/2025,09/12/2025
-Salvador,Macapá,25/06/2025,05/07/2025
-Manaus,Natal,14/09/2025,22/09/2025
-Boa Vista,Pequim,24/08/2025,08/09/2025
-Dubai,Londres,31/12/2025,13/01/2026
-Teresina,Toronto,27/08/2025,10/09/2025
-Frankfurt,Tóquio,28/05/2025,12/06/2025
-Porto Velho,Rio de Janeiro,02/08/2025,05/08/2025
-Amsterdã,Belém,11/09/2025,12/09/2025
-Frankfurt,Salvador,06/06/2025,16/06/2025
-São Paulo,Londres,17/12/2025,28/12/2025
-Boa Vista,Tóquio,26/05/2025,06/06/2025
-Recife,Amsterdã,18/10/2025,02/11/2025
-Palmas,Goiânia,10/05/2025,12/05/2025
-Toronto,João Pessoa,17/11/2025,19/11/2025
-Amsterdã,Salvador,05/12/2025,15/12/2025
-Roma,Rio de Janeiro,29/08/2025,09/09/2025
-Dubai,Maceió,20/10/2025,29/10/2025
-Porto Velho,Macapá,17/12/2025,19/12/2025
-Belém,Paris,18/08/2025,22/08/2025
-Miami,Macapá,26/09/2025,06/10/2025
-Brasília,Porto Velho,26/07/2025,07/08/2025
-Vitória,Aracaju,26/09/2025,28/09/2025
-Paris,Goiânia,07/12/2025,15/12/2025
-Cuiabá,Florianópolis,04/09/2025,14/09/2025
-Tóquio,São Paulo,19/04/2025,25/04/2025
-Roma,Miami,14/06/2025,21/06/2025
-Cuiabá,Fortaleza,21/11/2025,30/11/2025
-Bogotá,Miami,26/06/2025,30/06/2025
-São Luís,Palmas,30/12/2025,05/01/2026
-Fortaleza,Goiânia,26/06/2025,07/07/2025
-Tóquio,Lisboa,14/04/2025,18/04/2025
-Roma,Paris,19/04/2025,23/04/2025
-Curitiba,Cidade do México,19/10/2025,30/10/2025
-Campo Grande,Santiago,22/10/2025,28/10/2025
-Aracaju,São Paulo,08/04/2025,11/04/2025
-Pequim,Miami,18/05/2025,26/05/2025
-Belo Horizonte,Paris,14/08/2025,27/08/2025
-Campo Grande,Goiânia,30/09/2025,08/10/2025
-Brasília,Florianópolis,20/09/2025,29/09/2025
-Roma,Tóquio,30/06/2025,05/07/2025
-Brasília,Frankfurt,27/07/2025,02/08/2025
-Porto Alegre,Macapá,29/09/2025,30/09/2025
-Aracaju,Toronto,28/11/2025,13/12/2025
-Recife,Florianópolis,09/07/2025,19/07/2025
-Curitiba,Recife,02/08/2025,06/08/2025
-Florianópolis,Goiânia,07/05/2025,22/05/2025
-São Luís,Paris,27/05/2025,02/06/2025
-Buenos Aires,Goiânia,18/11/2025,22/11/2025
-Porto Alegre,Maceió,17/10/2025,31/10/2025
-Teresina,Toronto,08/05/2025,21/05/2025
-Goiânia,Manaus,15/10/2025,19/10/2025
-Vitória,João Pessoa,21/06/2025,28/06/2025
-Paris,Belo Horizonte,15/07/2025,28/07/2025
-Salvador,Aracaju,25/11/2025,01/12/2025
-Vitória,Natal,10/09/2025,23/09/2025
-Campo Grande,Frankfurt,31/07/2025,03/08/2025
-Curitiba,Rio Branco,17/09/2025,21/09/2025
-Goiânia,Roma,02/06/2025,11/06/2025
-Boa Vista,Natal,13/10/2025,21/10/2025
-Macapá,Belém,14/12/2025,19/12/2025
-Curitiba,Belo Horizonte,17/04/2025,28/04/2025
-Lisboa,Salvador,26/08/2025,28/08/2025
-Dubai,Manaus,27/05/2025,04/06/2025
-Salvador,Frankfurt,11/11/2025,26/11/2025
-Porto Alegre,Recife,05/10/2025,15/10/2025
-Rio Branco,Fortaleza,02/12/2025,17/12/2025
-Bogotá,Amsterdã,25/09/2025,03/10/2025
-Porto Alegre,Rio Branco,24/11/2025,06/12/2025
-Los Angeles,Nova York,04/08/2025,18/08/2025
-São Paulo,Madri,27/05/2025,29/05/2025
-Porto Alegre,Curitiba,23/10/2025,27/10/2025
-Bogotá,Cuiabá,13/07/2025,15/07/2025
-Roma,Porto Velho,20/11/2025,28/11/2025
-Frankfurt,Campo Grande,02/05/2025,14/05/2025
-Fortaleza,Tóquio,07/04/2025,15/04/2025
-Toronto,Macapá,05/05/2025,19/05/2025
-Belém,Miami,23/04/2025,25/04/2025
-São Luís,Boa Vista,11/07/2025,22/07/2025
-Goiânia,Lima,14/07/2025,16/07/2025
-Londres,Roma,26/06/2025,02/07/2025
-Frankfurt,Porto Alegre,01/07/2025,05/07/2025
-Curitiba,Dubai,14/08/2025,19/08/2025
-Porto Alegre,Lima,06/05/2025,17/05/2025
-Lisboa,Rio de Janeiro,05/05/2025,16/05/2025
-Lima,Boa Vista,19/11/2025,20/11/2025
-Paris,Amsterdã,10/11/2025,16/11/2025
-Dubai,Brasília,08/10/2025,16/10/2025
-Maceió,Palmas,28/10/2025,11/11/2025
-Vitória,Tóquio,05/10/2025,11/10/2025
-Boa Vista,Toronto,28/10/2025,08/11/2025
-Cuiabá,João Pessoa,17/05/2025,30/05/2025
-São Paulo,Londres,17/06/2025,21/06/2025
-Belo Horizonte,Miami,12/04/2025,23/04/2025
-Porto Alegre,Palmas,16/05/2025,17/05/2025
-Aracaju,Nova York,26/12/2025,04/01/2026
-Teresina,Miami,17/08/2025,29/08/2025
-Bogotá,Brasília,15/06/2025,18/06/2025
-Buenos Aires,Pequim,20/07/2025,26/07/2025
-Porto Velho,Cuiabá,15/06/2025,19/06/2025
+São Luís,Amsterdã,09/09/2025,22/09/2025
+Bogotá,Vitória,20/06/2025,25/06/2025
+Amsterdã,Belém,10/12/2025,13/12/2025
+Miami,Maceió,24/09/2025,01/10/2025
+Santiago,Rio de Janeiro,15/05/2025,29/05/2025
+Rio Branco,Fortaleza,10/10/2025,13/10/2025
+Buenos Aires,Lima,23/05/2025,30/05/2025
+Pequim,Campo Grande,17/04/2025,19/04/2025
+Pequim,Natal,14/06/2025,22/06/2025
+Macapá,Rio Branco,03/06/2025,16/06/2025
+Porto Velho,Londres,19/12/2025,28/12/2025
+Fortaleza,Miami,26/08/2025,28/08/2025
+Aracaju,Porto Velho,13/06/2025,15/06/2025
+Vitória,Cidade do México,14/04/2025,29/04/2025
+Roma,Natal,05/12/2025,09/12/2025
+Cidade do México,Porto Velho,06/12/2025,10/12/2025
+Miami,Fortaleza,30/10/2025,07/11/2025
+Bogotá,São Luís,10/11/2025,19/11/2025
+Florianópolis,Belém,18/06/2025,21/06/2025
+Salvador,Lima,13/10/2025,16/10/2025
+Natal,Florianópolis,08/09/2025,13/09/2025
+Teresina,João Pessoa,07/08/2025,09/08/2025
+Miami,Santiago,16/06/2025,20/06/2025
+Brasília,Campo Grande,13/04/2025,18/04/2025
+Cidade do México,Pequim,28/06/2025,09/07/2025
+Dubai,Salvador,07/11/2025,17/11/2025
+São Luís,Toronto,05/05/2025,06/05/2025
+Belo Horizonte,Rio de Janeiro,31/10/2025,02/11/2025
+Cuiabá,Cidade do México,14/11/2025,28/11/2025
+Campo Grande,Tóquio,29/05/2025,01/06/2025
+Rio Branco,Lisboa,17/08/2025,30/08/2025
+Buenos Aires,Londres,06/07/2025,20/07/2025
+Toronto,Natal,20/11/2025,26/11/2025
+Rio Branco,João Pessoa,04/08/2025,13/08/2025
+Londres,Salvador,16/09/2025,28/09/2025
+Lima,Curitiba,05/06/2025,10/06/2025
+Pequim,Lisboa,12/07/2025,13/07/2025
+Boa Vista,Bogotá,28/12/2025,12/01/2026
+Curitiba,Paris,27/07/2025,09/08/2025
+Lisboa,Natal,15/07/2025,30/07/2025
+Aracaju,Rio Branco,27/08/2025,07/09/2025
+Miami,Londres,26/11/2025,09/12/2025
+Roma,Los Angeles,08/12/2025,22/12/2025
+Belém,Cuiabá,26/07/2025,09/08/2025
+Pequim,Rio Branco,11/09/2025,23/09/2025
+João Pessoa,Boa Vista,26/08/2025,06/09/2025
+Roma,Boa Vista,09/09/2025,11/09/2025
+Los Angeles,Lima,01/10/2025,13/10/2025
+Salvador,São Paulo,11/07/2025,26/07/2025
+Belo Horizonte,Teresina,10/06/2025,17/06/2025
+Lisboa,Cuiabá,14/06/2025,26/06/2025
+São Luís,Macapá,27/05/2025,31/05/2025
+Natal,Frankfurt,20/04/2025,03/05/2025
+Porto Alegre,Roma,08/06/2025,18/06/2025
+Roma,Porto Alegre,20/04/2025,30/04/2025
+Belo Horizonte,Aracaju,11/06/2025,12/06/2025
+Cuiabá,Belém,04/05/2025,15/05/2025
+Campo Grande,Nova York,09/06/2025,19/06/2025
+Fortaleza,Macapá,25/08/2025,26/08/2025
+São Paulo,Tóquio,01/10/2025,09/10/2025
+João Pessoa,Lisboa,30/11/2025,09/12/2025
+Fortaleza,Amsterdã,29/06/2025,13/07/2025
+Belo Horizonte,Miami,07/04/2025,22/04/2025
+Londres,Brasília,08/08/2025,15/08/2025
+Roma,Belém,25/05/2025,07/06/2025
+Teresina,Toronto,31/05/2025,11/06/2025
+Madri,Brasília,01/05/2025,08/05/2025
+Porto Velho,Paris,20/05/2025,01/06/2025
+Manaus,Campo Grande,03/12/2025,18/12/2025
+Rio de Janeiro,Toronto,14/12/2025,16/12/2025
+Porto Velho,Amsterdã,03/11/2025,05/11/2025
+Cuiabá,Londres,05/08/2025,20/08/2025
+João Pessoa,Belém,23/07/2025,01/08/2025
+Nova York,Toronto,20/11/2025,02/12/2025
+Miami,Roma,28/11/2025,03/12/2025
+Los Angeles,Madri,22/11/2025,07/12/2025
+Curitiba,Roma,03/10/2025,13/10/2025
+João Pessoa,Belo Horizonte,12/06/2025,25/06/2025
+Belém,Maceió,27/05/2025,03/06/2025
+Roma,Maceió,29/04/2025,09/05/2025
+Rio Branco,Belém,15/11/2025,19/11/2025
+São Paulo,Belém,28/11/2025,10/12/2025
+Recife,Lisboa,08/11/2025,16/11/2025
+Rio de Janeiro,Cidade do México,24/05/2025,08/06/2025
+Miami,Boa Vista,02/08/2025,10/08/2025
+Buenos Aires,Madri,23/06/2025,24/06/2025
+Miami,Campo Grande,10/10/2025,17/10/2025
+Amsterdã,Campo Grande,30/08/2025,06/09/2025
+Frankfurt,Paris,26/10/2025,02/11/2025
+Natal,Miami,06/07/2025,12/07/2025
+Santiago,Curitiba,14/11/2025,26/11/2025
+Fortaleza,Lima,18/07/2025,24/07/2025
+Nova York,Porto Velho,20/11/2025,30/11/2025
+Vitória,Salvador,05/12/2025,10/12/2025
+Palmas,Brasília,14/05/2025,29/05/2025
+Porto Alegre,Lisboa,15/09/2025,29/09/2025
+Campo Grande,Los Angeles,28/12/2025,06/01/2026
+Curitiba,Belo Horizonte,10/08/2025,23/08/2025
+Goiânia,Natal,04/09/2025,11/09/2025
+Buenos Aires,Paris,19/10/2025,24/10/2025
+Belém,Tóquio,24/04/2025,27/04/2025
+Cidade do México,Cuiabá,07/06/2025,17/06/2025
+Brasília,Boa Vista,18/06/2025,30/06/2025
+Londres,Fortaleza,08/09/2025,10/09/2025
+Maceió,São Luís,19/09/2025,21/09/2025
+São Paulo,Los Angeles,21/08/2025,22/08/2025
+Los Angeles,Vitória,05/05/2025,13/05/2025
+Tóquio,Lisboa,12/12/2025,17/12/2025
+Porto Alegre,Miami,24/08/2025,25/08/2025
+Porto Velho,Curitiba,02/10/2025,14/10/2025
+Curitiba,Cidade do México,07/04/2025,21/04/2025
+Santiago,Porto Velho,15/09/2025,19/09/2025
+Manaus,Buenos Aires,19/12/2025,03/01/2026
+Recife,Paris,24/12/2025,26/12/2025
+Belo Horizonte,Roma,16/04/2025,17/04/2025
+Cuiabá,Dubai,30/09/2025,03/10/2025
+Frankfurt,Macapá,08/10/2025,15/10/2025
+Recife,Cuiabá,26/10/2025,04/11/2025
+Belém,Goiânia,08/07/2025,21/07/2025
+João Pessoa,Tóquio,07/04/2025,14/04/2025
+Porto Alegre,Santiago,23/08/2025,05/09/2025
+Cuiabá,Belo Horizonte,21/07/2025,24/07/2025
+Belo Horizonte,Belém,20/08/2025,29/08/2025
+Salvador,Porto Velho,19/05/2025,31/05/2025
+Porto Alegre,Recife,28/11/2025,13/12/2025
+São Luís,Cuiabá,25/11/2025,02/12/2025
+Lisboa,João Pessoa,11/10/2025,21/10/2025
+Teresina,Boa Vista,25/11/2025,05/12/2025
+Porto Alegre,Frankfurt,31/05/2025,09/06/2025
+Belo Horizonte,Madri,05/07/2025,17/07/2025
+Fortaleza,Maceió,28/05/2025,12/06/2025
+São Paulo,Paris,07/04/2025,19/04/2025
+Tóquio,Macapá,03/09/2025,05/09/2025
+Manaus,Salvador,15/10/2025,29/10/2025
+São Luís,Vitória,27/11/2025,12/12/2025
+Macapá,Cuiabá,20/05/2025,04/06/2025
+Cidade do México,Boa Vista,14/11/2025,25/11/2025
+Pequim,Roma,22/04/2025,01/05/2025
+Rio Branco,Buenos Aires,22/04/2025,24/04/2025
+Porto Velho,Palmas,02/08/2025,10/08/2025
+Teresina,Aracaju,02/10/2025,04/10/2025
+Maceió,Cidade do México,20/09/2025,30/09/2025
+Pequim,Amsterdã,08/08/2025,10/08/2025
+Natal,Lisboa,28/11/2025,03/12/2025
+Frankfurt,Campo Grande,06/05/2025,14/05/2025
+Dubai,Pequim,27/05/2025,29/05/2025
+Aracaju,São Luís,15/06/2025,25/06/2025
+Tóquio,Dubai,19/04/2025,20/04/2025
+Buenos Aires,Paris,01/05/2025,13/05/2025
+Rio de Janeiro,Campo Grande,01/08/2025,06/08/2025
+Dubai,Toronto,10/08/2025,11/08/2025
+Lima,Lisboa,23/05/2025,26/05/2025
+Santiago,Lima,04/06/2025,14/06/2025
+Campo Grande,Belo Horizonte,28/05/2025,11/06/2025
+Nova York,Toronto,12/07/2025,14/07/2025
+Cidade do México,Santiago,08/07/2025,21/07/2025
+Santiago,São Luís,11/06/2025,15/06/2025
+Rio Branco,Goiânia,12/05/2025,26/05/2025
+Toronto,Lisboa,18/11/2025,02/12/2025
+Belo Horizonte,Brasília,21/09/2025,06/10/2025
+Cuiabá,Belém,08/04/2025,23/04/2025
+Belo Horizonte,Nova York,21/09/2025,30/09/2025
+São Luís,Porto Velho,04/12/2025,17/12/2025
+Salvador,Londres,07/08/2025,22/08/2025
+Vitória,Florianópolis,08/06/2025,14/06/2025
+Lima,Salvador,12/06/2025,13/06/2025
+Lisboa,Amsterdã,17/08/2025,30/08/2025
+Frankfurt,Teresina,29/10/2025,07/11/2025
+Dubai,Pequim,24/11/2025,06/12/2025
+Porto Velho,Buenos Aires,07/12/2025,11/12/2025
+Belo Horizonte,Goiânia,18/09/2025,28/09/2025
+João Pessoa,Frankfurt,30/07/2025,01/08/2025
+Miami,Rio Branco,23/10/2025,25/10/2025
+Lisboa,Pequim,16/11/2025,21/11/2025
+Pequim,Miami,04/09/2025,15/09/2025
+São Luís,Cuiabá,27/12/2025,31/12/2025
+Buenos Aires,Porto Alegre,12/12/2025,18/12/2025
+Natal,Madri,09/05/2025,23/05/2025
+Teresina,Vitória,08/11/2025,21/11/2025
+Porto Velho,São Paulo,04/09/2025,05/09/2025
+Curitiba,Recife,06/11/2025,12/11/2025
+Palmas,Los Angeles,12/11/2025,27/11/2025
+Vitória,Natal,03/12/2025,11/12/2025
+Palmas,Buenos Aires,18/04/2025,03/05/2025
+Teresina,São Paulo,03/12/2025,16/12/2025
+Goiânia,Porto Alegre,09/06/2025,17/06/2025
+Londres,Frankfurt,08/11/2025,11/11/2025
+Manaus,Lisboa,17/12/2025,21/12/2025
+Rio de Janeiro,Vitória,27/08/2025,28/08/2025
+Teresina,Palmas,20/06/2025,29/06/2025
+São Luís,Nova York,13/05/2025,23/05/2025
+São Luís,Dubai,13/05/2025,27/05/2025
+Santiago,Nova York,14/06/2025,25/06/2025
+Florianópolis,Santiago,17/11/2025,23/11/2025
+Belo Horizonte,Curitiba,01/09/2025,15/09/2025
+Toronto,Boa Vista,03/12/2025,08/12/2025
+Vitória,Porto Velho,11/04/2025,12/04/2025
+Cuiabá,Maceió,16/04/2025,23/04/2025
+Natal,Londres,27/10/2025,28/10/2025
+Rio de Janeiro,Goiânia,25/06/2025,07/07/2025
+Bogotá,Palmas,05/12/2025,06/12/2025
+Boa Vista,Belo Horizonte,24/09/2025,07/10/2025
+Lisboa,Buenos Aires,09/06/2025,20/06/2025
+Boa Vista,Goiânia,26/11/2025,04/12/2025
+Nova York,Porto Velho,21/09/2025,22/09/2025
+Vitória,Miami,04/10/2025,10/10/2025
+Goiânia,Dubai,14/04/2025,15/04/2025
+Rio de Janeiro,Rio Branco,14/12/2025,15/12/2025
+Maceió,Pequim,14/06/2025,29/06/2025
+Madri,Manaus,10/04/2025,24/04/2025
+Toronto,Porto Alegre,21/11/2025,04/12/2025
+Paris,Lima,02/05/2025,05/05/2025
+Manaus,Madri,04/08/2025,13/08/2025
+Campo Grande,Londres,22/09/2025,06/10/2025
+Florianópolis,Curitiba,10/11/2025,23/11/2025
+Lima,Goiânia,21/05/2025,22/05/2025
+Rio Branco,Fortaleza,25/12/2025,30/12/2025
+Salvador,Natal,25/07/2025,30/07/2025
+Pequim,Frankfurt,31/05/2025,05/06/2025
+Recife,João Pessoa,02/12/2025,07/12/2025
+Santiago,João Pessoa,10/07/2025,20/07/2025
+Palmas,Dubai,24/08/2025,29/08/2025
+Roma,Teresina,19/12/2025,29/12/2025
+Lisboa,Porto Alegre,23/08/2025,29/08/2025
+Manaus,Dubai,12/09/2025,19/09/2025
+Natal,Cidade do México,19/11/2025,21/11/2025
+Fortaleza,Curitiba,24/07/2025,06/08/2025
+Lima,Goiânia,27/12/2025,28/12/2025
+Belo Horizonte,Los Angeles,05/05/2025,10/05/2025
+Natal,Los Angeles,12/05/2025,23/05/2025
+Porto Alegre,Porto Velho,12/12/2025,20/12/2025
+Tóquio,Brasília,11/11/2025,13/11/2025
+Tóquio,Cuiabá,30/07/2025,08/08/2025
+Bogotá,Rio de Janeiro,23/10/2025,27/10/2025
+Londres,Lisboa,20/05/2025,03/06/2025
+Goiânia,Los Angeles,02/12/2025,14/12/2025
+Cuiabá,Belém,20/11/2025,26/11/2025
+Amsterdã,Tóquio,08/10/2025,20/10/2025
+Aracaju,Amsterdã,02/06/2025,04/06/2025
+Rio Branco,Toronto,01/09/2025,12/09/2025
+Brasília,Amsterdã,14/09/2025,26/09/2025
+Manaus,Londres,09/10/2025,21/10/2025
+Porto Alegre,Londres,15/04/2025,25/04/2025
+Cuiabá,São Luís,06/05/2025,15/05/2025
+Manaus,Aracaju,18/11/2025,30/11/2025
+Curitiba,Los Angeles,28/07/2025,03/08/2025
+Cuiabá,Belém,23/04/2025,06/05/2025
+São Paulo,Roma,31/05/2025,02/06/2025
+Teresina,Los Angeles,18/12/2025,01/01/2026
+Porto Velho,Londres,12/07/2025,24/07/2025
+Belo Horizonte,Rio de Janeiro,10/10/2025,13/10/2025
+Florianópolis,Cuiabá,03/08/2025,11/08/2025
+Teresina,Campo Grande,07/11/2025,10/11/2025
+Maceió,Lisboa,13/05/2025,15/05/2025
+Porto Velho,Florianópolis,20/05/2025,26/05/2025
+Cuiabá,Teresina,13/10/2025,27/10/2025
+Curitiba,Recife,30/07/2025,14/08/2025
+Porto Alegre,Goiânia,24/09/2025,02/10/2025
+Belo Horizonte,Salvador,27/10/2025,31/10/2025
+Cuiabá,Salvador,09/09/2025,13/09/2025
+Brasília,Cuiabá,30/09/2025,04/10/2025
+Buenos Aires,Lisboa,02/07/2025,16/07/2025
+Roma,Aracaju,02/10/2025,14/10/2025
+Nova York,Natal,22/09/2025,04/10/2025
+Palmas,Porto Velho,07/12/2025,22/12/2025
+Brasília,Cuiabá,19/07/2025,23/07/2025
+Dubai,Paris,05/05/2025,17/05/2025
+Amsterdã,Porto Alegre,30/04/2025,03/05/2025
+Buenos Aires,Brasília,19/11/2025,21/11/2025
+Rio Branco,Vitória,28/06/2025,12/07/2025
+São Luís,Rio Branco,30/11/2025,14/12/2025
+Natal,Nova York,22/12/2025,04/01/2026
+Teresina,Natal,10/06/2025,11/06/2025
+Amsterdã,Campo Grande,25/04/2025,04/05/2025
+Miami,Bogotá,23/09/2025,04/10/2025
+Cuiabá,Brasília,23/12/2025,27/12/2025
+Roma,Amsterdã,22/09/2025,30/09/2025
+Maceió,Pequim,08/08/2025,14/08/2025
+Tóquio,Nova York,20/04/2025,05/05/2025
+Curitiba,Salvador,26/06/2025,01/07/2025
+Lisboa,Curitiba,25/11/2025,05/12/2025
+Boa Vista,Miami,12/08/2025,19/08/2025
+Roma,Dubai,11/09/2025,16/09/2025
+Dubai,Porto Velho,08/12/2025,19/12/2025
+Pequim,Brasília,12/04/2025,16/04/2025
+Belém,Palmas,22/04/2025,30/04/2025
+Cuiabá,Aracaju,13/12/2025,23/12/2025
+Belo Horizonte,Maceió,04/07/2025,14/07/2025
+São Paulo,São Luís,20/06/2025,21/06/2025
+Madri,Amsterdã,10/11/2025,11/11/2025
+Belém,Campo Grande,22/06/2025,29/06/2025
+Aracaju,Porto Velho,26/09/2025,07/10/2025
+Cidade do México,Lisboa,19/12/2025,20/12/2025
+Paris,Belo Horizonte,03/11/2025,16/11/2025
+Curitiba,Maceió,03/06/2025,12/06/2025
+Lima,Boa Vista,25/09/2025,26/09/2025
+Lisboa,Dubai,14/11/2025,25/11/2025
+Rio de Janeiro,Teresina,19/11/2025,26/11/2025
+Macapá,Goiânia,04/07/2025,14/07/2025
+Nova York,Toronto,07/11/2025,22/11/2025
+Florianópolis,Rio Branco,05/07/2025,10/07/2025
+Miami,Vitória,29/05/2025,31/05/2025
+Madri,Salvador,08/07/2025,11/07/2025
+Porto Alegre,São Paulo,11/10/2025,24/10/2025
+Frankfurt,Belém,11/12/2025,25/12/2025
+Natal,Boa Vista,26/11/2025,28/11/2025
+Los Angeles,Nova York,13/10/2025,26/10/2025
+Recife,São Luís,15/08/2025,22/08/2025
+Lima,Lisboa,26/09/2025,28/09/2025
+Porto Alegre,Tóquio,22/12/2025,26/12/2025
+Recife,Belém,08/11/2025,09/11/2025
+Rio Branco,Manaus,06/05/2025,21/05/2025
+Fortaleza,Los Angeles,13/11/2025,28/11/2025
+Boa Vista,Lima,03/10/2025,09/10/2025
+Dubai,Miami,12/12/2025,22/12/2025
+Santiago,São Paulo,25/06/2025,27/06/2025
+Buenos Aires,Pequim,28/11/2025,01/12/2025
+João Pessoa,Lima,06/06/2025,09/06/2025
+Londres,Maceió,08/04/2025,10/04/2025
+Belém,Curitiba,06/06/2025,11/06/2025
+Palmas,Vitória,14/06/2025,20/06/2025
+Bogotá,Dubai,28/11/2025,04/12/2025
+Natal,São Paulo,26/04/2025,10/05/2025
+Maceió,São Luís,08/11/2025,14/11/2025
+Amsterdã,Lisboa,29/11/2025,05/12/2025
+Dubai,Recife,30/08/2025,08/09/2025
+Fortaleza,Maceió,18/04/2025,19/04/2025
+Santiago,Brasília,30/10/2025,02/11/2025
+Vitória,São Paulo,29/09/2025,01/10/2025
+São Luís,Lisboa,02/06/2025,14/06/2025
+Amsterdã,Santiago,12/07/2025,15/07/2025
+Manaus,Madri,25/12/2025,07/01/2026
+Cidade do México,Londres,21/06/2025,24/06/2025
+Goiânia,Lisboa,18/12/2025,31/12/2025
+Rio de Janeiro,Londres,16/06/2025,23/06/2025
+Lima,Rio de Janeiro,14/09/2025,27/09/2025
+Amsterdã,Rio de Janeiro,22/07/2025,06/08/2025
+Palmas,Rio Branco,22/11/2025,02/12/2025
+Aracaju,Rio de Janeiro,04/06/2025,09/06/2025
+Roma,Santiago,12/09/2025,23/09/2025
+Palmas,São Luís,11/06/2025,14/06/2025
+Rio de Janeiro,Belo Horizonte,30/10/2025,10/11/2025
+Maceió,Boa Vista,12/06/2025,14/06/2025
+Amsterdã,Paris,10/04/2025,15/04/2025
+Recife,Fortaleza,06/10/2025,13/10/2025
+Los Angeles,Rio de Janeiro,28/10/2025,04/11/2025
+Rio de Janeiro,Pequim,19/04/2025,24/04/2025
+Tóquio,Paris,29/06/2025,02/07/2025
+Brasília,Boa Vista,29/12/2025,30/12/2025
+Macapá,Toronto,20/04/2025,04/05/2025
+Fortaleza,Lisboa,08/11/2025,10/11/2025
+Salvador,Lima,01/07/2025,04/07/2025
+Florianópolis,Buenos Aires,09/10/2025,10/10/2025
+Campo Grande,Santiago,04/09/2025,16/09/2025
+Roma,Paris,01/09/2025,13/09/2025
+Cuiabá,São Paulo,22/10/2025,01/11/2025
+Buenos Aires,Teresina,26/08/2025,08/09/2025
+Campo Grande,Pequim,29/05/2025,13/06/2025
+Madri,São Paulo,23/05/2025,25/05/2025
+Palmas,Roma,23/06/2025,26/06/2025
+Buenos Aires,Maceió,22/11/2025,28/11/2025
+Los Angeles,Goiânia,15/04/2025,16/04/2025
+Florianópolis,Toronto,17/10/2025,30/10/2025
+São Luís,Pequim,22/09/2025,05/10/2025
+Rio Branco,Tóquio,10/07/2025,14/07/2025
+Los Angeles,Amsterdã,02/05/2025,15/05/2025
+João Pessoa,São Paulo,07/08/2025,13/08/2025
+Rio Branco,Maceió,06/09/2025,18/09/2025
+Nova York,Paris,15/07/2025,23/07/2025
+Frankfurt,Santiago,13/05/2025,27/05/2025
+Porto Alegre,Frankfurt,16/11/2025,01/12/2025
+Natal,Recife,02/05/2025,04/05/2025
+Pequim,Los Angeles,22/06/2025,30/06/2025
+Brasília,Rio de Janeiro,15/09/2025,23/09/2025
+Lima,João Pessoa,18/09/2025,21/09/2025
+Maceió,Natal,05/09/2025,18/09/2025
+Belém,Manaus,21/05/2025,25/05/2025
+Pequim,Cidade do México,19/08/2025,03/09/2025
+Nova York,Teresina,22/11/2025,23/11/2025
+Belém,Maceió,24/10/2025,31/10/2025
+Goiânia,Lisboa,13/05/2025,19/05/2025
+São Luís,São Paulo,08/05/2025,09/05/2025
+Tóquio,Boa Vista,08/09/2025,20/09/2025
+Cuiabá,Madri,25/05/2025,02/06/2025
+Cuiabá,Rio Branco,19/05/2025,26/05/2025
+Belém,Vitória,11/09/2025,17/09/2025
+Bogotá,Curitiba,27/08/2025,11/09/2025
+Teresina,Los Angeles,01/09/2025,16/09/2025
+Macapá,Santiago,05/09/2025,13/09/2025
+Porto Velho,Dubai,09/05/2025,18/05/2025
+Madri,Brasília,28/05/2025,01/06/2025
+Curitiba,Porto Velho,04/10/2025,13/10/2025
+Rio Branco,São Luís,29/05/2025,09/06/2025
+Lisboa,Frankfurt,16/04/2025,18/04/2025
+Maceió,Lima,10/05/2025,22/05/2025
+Salvador,Porto Velho,18/09/2025,28/09/2025
+Maceió,Macapá,14/07/2025,28/07/2025
+Brasília,Aracaju,27/06/2025,07/07/2025
+Tóquio,Macapá,04/05/2025,11/05/2025
+Rio Branco,Lima,07/11/2025,16/11/2025
+Lisboa,Pequim,09/10/2025,19/10/2025
+Cidade do México,Belém,22/10/2025,29/10/2025
+Amsterdã,Vitória,28/09/2025,12/10/2025
+Amsterdã,Lisboa,30/10/2025,12/11/2025
+Teresina,Rio de Janeiro,22/10/2025,26/10/2025
+Boa Vista,Lisboa,21/06/2025,24/06/2025
+São Luís,Florianópolis,28/05/2025,03/06/2025
+Belém,Natal,18/09/2025,02/10/2025
+Madri,Recife,11/11/2025,21/11/2025
+Amsterdã,Lisboa,18/12/2025,21/12/2025
+Teresina,Goiânia,01/09/2025,03/09/2025
+Porto Velho,Salvador,09/09/2025,16/09/2025
+Aracaju,Palmas,02/07/2025,03/07/2025
+São Paulo,Tóquio,30/07/2025,11/08/2025
+Miami,Porto Alegre,30/11/2025,08/12/2025
+Belo Horizonte,Lisboa,25/04/2025,29/04/2025
+Paris,Rio de Janeiro,11/09/2025,15/09/2025
+Nova York,Rio de Janeiro,17/05/2025,20/05/2025
+Pequim,Campo Grande,25/10/2025,31/10/2025
+Campo Grande,Natal,23/12/2025,03/01/2026
+Salvador,Paris,20/10/2025,27/10/2025
+Miami,Macapá,30/07/2025,11/08/2025
+Goiânia,São Luís,19/05/2025,20/05/2025
+Los Angeles,Rio de Janeiro,21/12/2025,04/01/2026
+Rio Branco,Porto Velho,27/09/2025,08/10/2025
+Lisboa,Santiago,03/10/2025,06/10/2025
+Londres,Teresina,18/07/2025,29/07/2025
+Cuiabá,Toronto,26/09/2025,05/10/2025
+Boa Vista,Recife,13/06/2025,15/06/2025
+Santiago,Frankfurt,01/05/2025,10/05/2025
+Roma,Lisboa,30/06/2025,07/07/2025
+Rio Branco,Lisboa,19/07/2025,27/07/2025
+Macapá,Porto Velho,08/04/2025,19/04/2025
+Brasília,São Luís,12/10/2025,24/10/2025
+Tóquio,Aracaju,28/12/2025,07/01/2026
+Fortaleza,Lima,25/09/2025,28/09/2025
+Frankfurt,São Paulo,24/12/2025,03/01/2026
+Vitória,Porto Velho,10/08/2025,17/08/2025
+Campo Grande,Rio de Janeiro,30/09/2025,14/10/2025
+Lima,Miami,30/11/2025,04/12/2025
+Miami,Pequim,08/11/2025,19/11/2025
+Rio Branco,Goiânia,06/12/2025,19/12/2025
+Lisboa,Porto Alegre,20/07/2025,23/07/2025
+Porto Velho,São Luís,05/07/2025,15/07/2025
+Toronto,Porto Velho,11/07/2025,24/07/2025
+Nova York,Lima,10/08/2025,14/08/2025
+Vitória,Fortaleza,06/12/2025,21/12/2025
+Madri,Belo Horizonte,28/11/2025,08/12/2025
+Natal,Nova York,03/08/2025,18/08/2025
+Rio Branco,Natal,14/07/2025,18/07/2025
+Florianópolis,Vitória,10/04/2025,16/04/2025
+Palmas,Buenos Aires,28/07/2025,29/07/2025
+Porto Alegre,Recife,14/04/2025,15/04/2025
+Los Angeles,Santiago,29/10/2025,31/10/2025
+Lima,Goiânia,16/11/2025,01/12/2025
+Campo Grande,Macapá,24/11/2025,27/11/2025
+Palmas,Frankfurt,21/10/2025,30/10/2025
+Brasília,Fortaleza,23/08/2025,24/08/2025
+Madri,João Pessoa,23/06/2025,03/07/2025
+Madri,Frankfurt,28/04/2025,03/05/2025
+Manaus,São Luís,08/09/2025,10/09/2025
+Paris,Boa Vista,22/08/2025,04/09/2025
+Bogotá,Aracaju,24/07/2025,02/08/2025
+Paris,Boa Vista,28/10/2025,10/11/2025
+Goiânia,Fortaleza,09/05/2025,10/05/2025
+Teresina,Campo Grande,03/10/2025,08/10/2025
+Aracaju,Madri,10/08/2025,20/08/2025
+Fortaleza,Buenos Aires,27/06/2025,04/07/2025
+Maceió,Paris,23/04/2025,29/04/2025
+Lisboa,Frankfurt,01/10/2025,16/10/2025
+Macapá,Los Angeles,13/06/2025,21/06/2025
+Roma,Vitória,29/06/2025,01/07/2025
+Rio de Janeiro,Salvador,13/12/2025,20/12/2025
+Miami,Nova York,26/08/2025,04/09/2025
+Miami,Campo Grande,28/04/2025,08/05/2025
+Macapá,Cuiabá,24/06/2025,01/07/2025
+Recife,Tóquio,09/10/2025,14/10/2025
+Macapá,João Pessoa,21/11/2025,23/11/2025
+Lima,Campo Grande,19/06/2025,20/06/2025
+Aracaju,Palmas,16/05/2025,24/05/2025
+Londres,Pequim,21/09/2025,05/10/2025
+Pequim,Los Angeles,19/08/2025,21/08/2025
+Campo Grande,Cuiabá,30/11/2025,06/12/2025
+Amsterdã,Palmas,05/05/2025,15/05/2025
+Goiânia,Toronto,06/05/2025,17/05/2025
+Madri,Tóquio,27/05/2025,08/06/2025
+Maceió,Campo Grande,20/10/2025,04/11/2025
+Rio Branco,Santiago,04/05/2025,05/05/2025
+Belo Horizonte,Cidade do México,12/08/2025,23/08/2025
+Porto Velho,Madri,17/05/2025,25/05/2025
+Curitiba,Dubai,01/10/2025,08/10/2025
+Manaus,Teresina,21/09/2025,06/10/2025
+Santiago,Aracaju,08/06/2025,14/06/2025
+Frankfurt,Maceió,28/04/2025,05/05/2025
+Pequim,Recife,17/06/2025,18/06/2025
+Rio de Janeiro,Belo Horizonte,08/07/2025,18/07/2025
+Toronto,Campo Grande,08/08/2025,21/08/2025
+São Luís,Campo Grande,13/06/2025,27/06/2025
+Roma,Lisboa,21/10/2025,22/10/2025
+Porto Velho,Lima,05/11/2025,07/11/2025
+Boa Vista,Maceió,17/09/2025,26/09/2025
+Cidade do México,Campo Grande,08/04/2025,15/04/2025
+Rio Branco,Bogotá,09/07/2025,17/07/2025
+Nova York,Cuiabá,08/08/2025,10/08/2025
+São Luís,João Pessoa,20/08/2025,24/08/2025
+Miami,Palmas,04/06/2025,13/06/2025
+Natal,Paris,18/08/2025,31/08/2025
+Teresina,Recife,08/08/2025,22/08/2025
+Belo Horizonte,Nova York,09/06/2025,11/06/2025
+Rio Branco,Rio de Janeiro,28/04/2025,01/05/2025
+João Pessoa,São Paulo,13/08/2025,22/08/2025
+Macapá,Tóquio,23/07/2025,01/08/2025
+São Paulo,Frankfurt,01/07/2025,02/07/2025
+São Paulo,Teresina,21/09/2025,06/10/2025
+Miami,Los Angeles,16/11/2025,23/11/2025
+Pequim,Maceió,24/11/2025,07/12/2025
+Boa Vista,Fortaleza,09/10/2025,17/10/2025
+Aracaju,Bogotá,29/11/2025,03/12/2025
+Macapá,Recife,04/05/2025,16/05/2025
+Tóquio,Campo Grande,24/12/2025,05/01/2026
+Cuiabá,Recife,07/11/2025,18/11/2025
+Campo Grande,Goiânia,25/12/2025,28/12/2025
+Tóquio,Salvador,13/10/2025,28/10/2025
+São Luís,Lisboa,29/04/2025,12/05/2025
+Brasília,Palmas,28/09/2025,29/09/2025
+Aracaju,Madri,24/04/2025,03/05/2025
+Roma,Brasília,29/10/2025,31/10/2025
+Paris,Nova York,11/05/2025,16/05/2025
+Miami,Vitória,25/09/2025,26/09/2025
+São Paulo,Madri,11/12/2025,17/12/2025
+Florianópolis,Aracaju,13/05/2025,18/05/2025
+Teresina,Maceió,23/12/2025,26/12/2025
+Pequim,Los Angeles,04/11/2025,19/11/2025
+Rio de Janeiro,Recife,03/12/2025,13/12/2025
+Roma,Maceió,24/10/2025,31/10/2025
+Lima,Recife,05/11/2025,16/11/2025
+Paris,Santiago,04/06/2025,07/06/2025
+João Pessoa,Cuiabá,25/06/2025,27/06/2025
+Paris,Roma,16/08/2025,24/08/2025
+Londres,Goiânia,28/11/2025,02/12/2025
+Salvador,Cidade do México,21/04/2025,01/05/2025
+Buenos Aires,Manaus,04/09/2025,09/09/2025
+Miami,Santiago,07/06/2025,21/06/2025
+Bogotá,Madri,21/12/2025,23/12/2025
+Los Angeles,Teresina,06/09/2025,09/09/2025
+Salvador,Lima,25/04/2025,09/05/2025
+São Paulo,Brasília,12/05/2025,22/05/2025
+Belém,Goiânia,24/09/2025,08/10/2025
+Natal,Santiago,19/12/2025,29/12/2025
+Campo Grande,Boa Vista,02/06/2025,16/06/2025
+São Luís,João Pessoa,24/05/2025,04/06/2025
+São Paulo,Lisboa,30/06/2025,12/07/2025
+Belo Horizonte,Campo Grande,27/10/2025,30/10/2025
+Cidade do México,Goiânia,06/09/2025,20/09/2025
+Aracaju,Macapá,22/08/2025,03/09/2025
+João Pessoa,Nova York,19/12/2025,02/01/2026
+Bogotá,Porto Velho,27/11/2025,10/12/2025
+Santiago,Vitória,01/12/2025,16/12/2025
+Recife,Teresina,02/09/2025,06/09/2025
+Vitória,Buenos Aires,24/08/2025,25/08/2025
+Natal,Miami,04/07/2025,06/07/2025
+Bogotá,Buenos Aires,07/08/2025,13/08/2025
+Pequim,Londres,25/09/2025,01/10/2025
+Curitiba,Frankfurt,30/07/2025,31/07/2025
+Porto Velho,Belo Horizonte,07/09/2025,22/09/2025
+Maceió,Madri,06/06/2025,18/06/2025
+Belém,Frankfurt,29/11/2025,30/11/2025
+Maceió,Goiânia,23/08/2025,29/08/2025
+Bogotá,João Pessoa,10/11/2025,24/11/2025
+Santiago,Vitória,28/07/2025,03/08/2025
+Lisboa,Aracaju,01/12/2025,15/12/2025
+Nova York,Londres,29/08/2025,07/09/2025
+Santiago,Goiânia,18/08/2025,24/08/2025
+Madri,Belo Horizonte,13/06/2025,17/06/2025
+Los Angeles,Dubai,08/12/2025,14/12/2025
+Recife,Rio Branco,02/06/2025,16/06/2025
+Paris,Recife,10/05/2025,15/05/2025
+Fortaleza,São Paulo,23/05/2025,02/06/2025
+Brasília,Fortaleza,15/09/2025,16/09/2025
+Aracaju,Porto Alegre,05/10/2025,15/10/2025
+Nova York,Natal,23/04/2025,24/04/2025
+Paris,Rio Branco,09/05/2025,13/05/2025
+Florianópolis,Brasília,25/05/2025,26/05/2025
+Pequim,Belo Horizonte,25/10/2025,30/10/2025
+Roma,Brasília,08/04/2025,14/04/2025
+Rio Branco,Roma,19/04/2025,25/04/2025
+Miami,Macapá,10/08/2025,20/08/2025
+Goiânia,Belo Horizonte,08/08/2025,18/08/2025
+Natal,Boa Vista,22/06/2025,05/07/2025
+Madri,Roma,09/11/2025,17/11/2025
+Paris,Brasília,12/07/2025,18/07/2025
+Toronto,Amsterdã,29/07/2025,01/08/2025
+Rio Branco,Natal,13/08/2025,25/08/2025
+Rio de Janeiro,Frankfurt,04/06/2025,14/06/2025
+Belém,Curitiba,08/08/2025,12/08/2025
+Natal,Roma,12/12/2025,18/12/2025
+Recife,Lima,11/05/2025,14/05/2025
+Lisboa,Curitiba,26/08/2025,01/09/2025
+Buenos Aires,Lima,15/11/2025,16/11/2025
+Florianópolis,Vitória,18/04/2025,21/04/2025
+Recife,Florianópolis,14/09/2025,29/09/2025
+Macapá,Cidade do México,24/11/2025,04/12/2025
+Cuiabá,Maceió,03/09/2025,14/09/2025
+Manaus,Cuiabá,14/12/2025,26/12/2025
+São Paulo,Porto Alegre,29/05/2025,10/06/2025
+Manaus,Los Angeles,29/04/2025,12/05/2025
+Bogotá,Frankfurt,08/10/2025,16/10/2025
+Brasília,Tóquio,03/08/2025,10/08/2025
+João Pessoa,Campo Grande,16/10/2025,18/10/2025
+Belo Horizonte,Curitiba,25/10/2025,04/11/2025
+Palmas,Dubai,13/04/2025,20/04/2025
+Pequim,São Luís,28/08/2025,31/08/2025
+São Luís,Nova York,07/11/2025,16/11/2025
+São Paulo,Macapá,05/11/2025,09/11/2025
+Natal,Teresina,15/10/2025,30/10/2025
+Buenos Aires,Rio Branco,26/07/2025,08/08/2025
+Los Angeles,Salvador,02/08/2025,13/08/2025
+Cuiabá,Teresina,30/11/2025,15/12/2025
+Teresina,Cuiabá,31/10/2025,12/11/2025
+Frankfurt,Roma,26/12/2025,27/12/2025
+Salvador,Brasília,09/07/2025,15/07/2025
+Buenos Aires,Santiago,19/05/2025,28/05/2025
+São Luís,Goiânia,26/11/2025,02/12/2025
+Brasília,João Pessoa,29/06/2025,11/07/2025
+Buenos Aires,São Paulo,09/05/2025,11/05/2025
+Natal,Brasília,11/06/2025,26/06/2025
+Vitória,Palmas,13/07/2025,25/07/2025
+Goiânia,Lima,10/12/2025,21/12/2025
+Porto Alegre,Recife,26/06/2025,02/07/2025
+Maceió,Miami,25/07/2025,01/08/2025
+Lima,Salvador,17/11/2025,24/11/2025
+Roma,Rio de Janeiro,02/10/2025,09/10/2025
+Curitiba,Toronto,03/10/2025,06/10/2025
+Recife,Salvador,20/06/2025,04/07/2025
+Palmas,Paris,22/12/2025,02/01/2026
+Roma,Aracaju,06/06/2025,17/06/2025
+Frankfurt,Porto Velho,31/12/2025,15/01/2026
+Curitiba,Roma,28/06/2025,12/07/2025
+Pequim,Vitória,09/08/2025,20/08/2025
+Natal,Cidade do México,15/04/2025,16/04/2025
+Maceió,Teresina,27/05/2025,08/06/2025
+Amsterdã,Manaus,26/08/2025,28/08/2025
+Campo Grande,Vitória,19/12/2025,26/12/2025
+Palmas,Macapá,09/05/2025,24/05/2025
+Salvador,Curitiba,27/10/2025,02/11/2025
+Brasília,Nova York,14/05/2025,21/05/2025
+Rio Branco,Buenos Aires,02/09/2025,14/09/2025
+Cuiabá,Pequim,23/12/2025,02/01/2026
+Rio Branco,Curitiba,17/08/2025,25/08/2025
+Londres,Belo Horizonte,29/12/2025,11/01/2026
+Santiago,Belém,25/05/2025,04/06/2025
+Tóquio,Vitória,16/11/2025,25/11/2025
+Belo Horizonte,Brasília,06/08/2025,10/08/2025
+Pequim,Santiago,26/11/2025,09/12/2025
+Miami,Los Angeles,07/07/2025,20/07/2025
+Londres,Macapá,17/09/2025,22/09/2025
+Cidade do México,São Luís,06/07/2025,14/07/2025
+Belém,Madri,16/09/2025,25/09/2025
+Brasília,Macapá,15/06/2025,19/06/2025
+Recife,Maceió,17/10/2025,26/10/2025
+João Pessoa,Curitiba,15/09/2025,20/09/2025
+Madri,Cuiabá,26/11/2025,05/12/2025
+Los Angeles,Porto Alegre,22/10/2025,23/10/2025
+Madri,Salvador,18/04/2025,29/04/2025
+Rio Branco,João Pessoa,06/12/2025,10/12/2025
+Vitória,Natal,08/12/2025,15/12/2025
+Porto Alegre,Tóquio,24/05/2025,29/05/2025
+Teresina,Nova York,14/11/2025,27/11/2025
+Miami,Dubai,30/07/2025,12/08/2025
+Florianópolis,São Luís,24/10/2025,08/11/2025
+Fortaleza,Paris,08/04/2025,12/04/2025
+Brasília,João Pessoa,11/09/2025,18/09/2025
+Madri,Recife,09/06/2025,20/06/2025
+São Luís,Paris,27/10/2025,01/11/2025
+Madri,Florianópolis,07/09/2025,10/09/2025
+Tóquio,Natal,08/11/2025,10/11/2025
+Macapá,São Paulo,08/10/2025,21/10/2025
+Los Angeles,Lima,23/07/2025,28/07/2025
+Miami,Manaus,22/06/2025,07/07/2025
+Belo Horizonte,Santiago,26/05/2025,29/05/2025
+Porto Velho,Porto Alegre,07/07/2025,14/07/2025
+Campo Grande,Amsterdã,04/06/2025,11/06/2025
+Goiânia,Dubai,28/06/2025,10/07/2025
+Campo Grande,Buenos Aires,06/12/2025,07/12/2025
+Frankfurt,Bogotá,26/11/2025,04/12/2025
+Belém,Recife,06/12/2025,11/12/2025
+Maceió,Vitória,03/05/2025,07/05/2025
+Manaus,Toronto,06/09/2025,17/09/2025
+Frankfurt,Boa Vista,18/08/2025,30/08/2025
+Londres,Paris,26/11/2025,04/12/2025
+São Luís,Dubai,29/06/2025,06/07/2025
+João Pessoa,Rio de Janeiro,16/04/2025,27/04/2025
+Vitória,Boa Vista,25/09/2025,09/10/2025
+Campo Grande,Lima,15/06/2025,29/06/2025
+Vitória,Madri,20/10/2025,28/10/2025
+Paris,Bogotá,25/10/2025,28/10/2025
+Roma,Campo Grande,21/11/2025,24/11/2025
+Buenos Aires,Cidade do México,12/09/2025,20/09/2025
+Belo Horizonte,Amsterdã,11/09/2025,15/09/2025
+Curitiba,Boa Vista,24/12/2025,30/12/2025
+São Paulo,Bogotá,27/07/2025,31/07/2025
+Cuiabá,Porto Velho,22/09/2025,23/09/2025
+Goiânia,Miami,16/04/2025,28/04/2025
+Paris,Frankfurt,08/06/2025,15/06/2025
+Teresina,Palmas,21/07/2025,25/07/2025
+Porto Velho,Teresina,01/05/2025,02/05/2025
+Porto Alegre,Santiago,11/10/2025,14/10/2025
+Belo Horizonte,Amsterdã,07/05/2025,09/05/2025
+Recife,Rio Branco,19/08/2025,24/08/2025
+Palmas,Rio de Janeiro,19/11/2025,24/11/2025
+João Pessoa,Buenos Aires,13/11/2025,18/11/2025
+João Pessoa,Roma,16/05/2025,25/05/2025
+Nova York,Boa Vista,01/11/2025,16/11/2025
+Toronto,Goiânia,28/05/2025,07/06/2025
+Rio Branco,Santiago,17/08/2025,19/08/2025
+Cidade do México,São Luís,02/05/2025,09/05/2025
+Aracaju,Bogotá,11/09/2025,23/09/2025
+São Luís,Florianópolis,19/05/2025,28/05/2025
+Frankfurt,Lisboa,20/10/2025,24/10/2025
+Florianópolis,Londres,06/12/2025,09/12/2025
+Fortaleza,Natal,02/09/2025,14/09/2025
+Florianópolis,Tóquio,27/10/2025,08/11/2025
+Palmas,Toronto,12/09/2025,27/09/2025
+Macapá,São Paulo,17/08/2025,25/08/2025
+Dubai,Bogotá,12/08/2025,20/08/2025
+São Paulo,São Luís,21/08/2025,22/08/2025
+Porto Velho,Toronto,24/12/2025,04/01/2026
+Lima,Aracaju,23/12/2025,30/12/2025
+Amsterdã,Pequim,04/06/2025,12/06/2025
+Belém,Manaus,07/10/2025,09/10/2025
+Campo Grande,Toronto,10/08/2025,14/08/2025
+Brasília,Belém,14/12/2025,24/12/2025
+Recife,João Pessoa,11/12/2025,20/12/2025
+Amsterdã,Goiânia,15/08/2025,26/08/2025
+Toronto,Los Angeles,20/09/2025,25/09/2025
+Nova York,Cuiabá,21/04/2025,25/04/2025
+Lisboa,Rio de Janeiro,19/07/2025,25/07/2025
+Recife,Roma,31/12/2025,15/01/2026
+Londres,Campo Grande,29/10/2025,04/11/2025
+Amsterdã,Pequim,02/12/2025,16/12/2025
+Belém,Rio de Janeiro,27/05/2025,29/05/2025
+Aracaju,São Paulo,18/08/2025,01/09/2025
+Vitória,Cidade do México,17/04/2025,02/05/2025
+Florianópolis,Nova York,08/09/2025,23/09/2025
+Cidade do México,Nova York,16/12/2025,25/12/2025
+Curitiba,Lisboa,06/05/2025,11/05/2025
+Goiânia,Roma,10/06/2025,15/06/2025
+Buenos Aires,Cuiabá,05/11/2025,08/11/2025
+Roma,Teresina,16/06/2025,20/06/2025
+Teresina,Tóquio,10/10/2025,21/10/2025
+Dubai,Boa Vista,19/11/2025,21/11/2025
+Brasília,Pequim,27/09/2025,28/09/2025
+Dubai,Salvador,30/10/2025,05/11/2025
+Amsterdã,Natal,25/11/2025,07/12/2025
+Paris,Macapá,11/04/2025,23/04/2025
+Amsterdã,Curitiba,27/04/2025,29/04/2025
+Santiago,Londres,09/09/2025,18/09/2025
+Brasília,Dubai,09/04/2025,18/04/2025
+Belém,Buenos Aires,27/06/2025,28/06/2025
+Rio de Janeiro,Palmas,29/08/2025,09/09/2025
+Curitiba,Dubai,05/05/2025,15/05/2025
+Bogotá,Paris,17/12/2025,20/12/2025
+Buenos Aires,Teresina,12/12/2025,24/12/2025
+Bogotá,São Paulo,27/12/2025,03/01/2026
+Cuiabá,Palmas,26/07/2025,07/08/2025
+Santiago,Palmas,25/11/2025,30/11/2025
+São Luís,Toronto,07/11/2025,15/11/2025
+Belo Horizonte,Madri,20/10/2025,04/11/2025
+Buenos Aires,Porto Velho,13/05/2025,21/05/2025
+Nova York,Natal,25/08/2025,09/09/2025
+Campo Grande,Manaus,15/09/2025,20/09/2025
+Goiânia,Dubai,13/07/2025,19/07/2025
+Vitória,Fortaleza,25/09/2025,27/09/2025
+Miami,Rio de Janeiro,08/10/2025,16/10/2025
+Dubai,Cidade do México,17/05/2025,22/05/2025
+Porto Alegre,Goiânia,13/07/2025,19/07/2025
+Curitiba,Roma,18/06/2025,27/06/2025
+Londres,Bogotá,20/12/2025,29/12/2025
+Vitória,Los Angeles,31/10/2025,09/11/2025
+Porto Velho,Aracaju,20/07/2025,26/07/2025
+Cuiabá,Toronto,26/09/2025,03/10/2025
+Campo Grande,Natal,05/09/2025,14/09/2025
+Paris,Lima,17/07/2025,26/07/2025
+Teresina,Natal,21/10/2025,30/10/2025
+Dubai,Madri,11/08/2025,12/08/2025
+São Paulo,Amsterdã,12/06/2025,14/06/2025
+Goiânia,Miami,30/12/2025,05/01/2026
+João Pessoa,Macapá,17/12/2025,29/12/2025
+Recife,Goiânia,25/05/2025,26/05/2025
+Frankfurt,Boa Vista,30/08/2025,03/09/2025
+Vitória,Porto Alegre,22/11/2025,23/11/2025
+Miami,Natal,16/07/2025,22/07/2025
+Los Angeles,Manaus,21/10/2025,02/11/2025
+Fortaleza,Natal,02/11/2025,11/11/2025
+Goiânia,Brasília,14/08/2025,15/08/2025
+Londres,Santiago,11/06/2025,17/06/2025
+Rio Branco,Florianópolis,25/08/2025,02/09/2025
+Belém,Los Angeles,30/12/2025,04/01/2026
+Los Angeles,Nova York,21/12/2025,02/01/2026
+Cidade do México,Cuiabá,16/07/2025,29/07/2025
+Amsterdã,Rio Branco,13/05/2025,16/05/2025
+Aracaju,João Pessoa,02/09/2025,09/09/2025
+Bogotá,Brasília,23/10/2025,05/11/2025
+Rio de Janeiro,Recife,26/11/2025,05/12/2025
+Cuiabá,Lima,11/08/2025,26/08/2025
+Cidade do México,Aracaju,25/10/2025,01/11/2025
+Toronto,Rio Branco,08/04/2025,15/04/2025
+Toronto,Curitiba,22/09/2025,05/10/2025
+Bogotá,Macapá,12/05/2025,21/05/2025
+Londres,Pequim,15/08/2025,25/08/2025
+Vitória,Roma,13/08/2025,26/08/2025
+Belém,Salvador,06/08/2025,16/08/2025
+Madri,Londres,23/07/2025,31/07/2025
+Lisboa,Boa Vista,13/10/2025,24/10/2025
+São Paulo,Lima,07/05/2025,17/05/2025
+Belo Horizonte,São Paulo,05/06/2025,13/06/2025
+Santiago,Rio de Janeiro,25/07/2025,31/07/2025
+Roma,Los Angeles,12/11/2025,27/11/2025
+Toronto,Manaus,23/07/2025,02/08/2025
+Rio Branco,Buenos Aires,23/10/2025,06/11/2025
+Miami,Boa Vista,11/09/2025,18/09/2025
+Florianópolis,Cuiabá,22/06/2025,26/06/2025
+Goiânia,Porto Alegre,10/05/2025,21/05/2025
+Buenos Aires,Macapá,27/10/2025,04/11/2025
+Goiânia,São Paulo,03/09/2025,09/09/2025
+Dubai,Amsterdã,04/11/2025,18/11/2025
+Cuiabá,Dubai,27/05/2025,05/06/2025
+Bogotá,Rio Branco,01/08/2025,03/08/2025
+São Luís,Belo Horizonte,21/07/2025,02/08/2025
+Amsterdã,Boa Vista,14/05/2025,25/05/2025
+Buenos Aires,Toronto,26/09/2025,28/09/2025
+Paris,Brasília,11/10/2025,23/10/2025
+Madri,Nova York,26/06/2025,30/06/2025
+Salvador,Porto Alegre,27/05/2025,31/05/2025
+Santiago,Lisboa,19/12/2025,30/12/2025
+Londres,Goiânia,18/11/2025,20/11/2025
+Manaus,Frankfurt,21/06/2025,30/06/2025
+Vitória,Lisboa,25/09/2025,26/09/2025
+Boa Vista,Cuiabá,22/07/2025,02/08/2025
+Paris,Cidade do México,26/07/2025,09/08/2025
+Cuiabá,Campo Grande,07/05/2025,13/05/2025
+Dubai,Cidade do México,19/05/2025,01/06/2025
+Bogotá,Vitória,29/09/2025,01/10/2025
+Santiago,Madri,22/08/2025,27/08/2025
+Frankfurt,Dubai,08/12/2025,19/12/2025
+Curitiba,Campo Grande,03/11/2025,05/11/2025
+Nova York,Palmas,01/06/2025,04/06/2025
+Toronto,Curitiba,04/05/2025,19/05/2025
+Madri,Miami,08/11/2025,18/11/2025
+Brasília,São Luís,04/09/2025,05/09/2025
+Porto Alegre,Dubai,10/07/2025,19/07/2025
+Paris,Vitória,06/08/2025,21/08/2025
+Maceió,Dubai,05/09/2025,07/09/2025
+João Pessoa,Maceió,27/08/2025,29/08/2025
+Frankfurt,Boa Vista,29/10/2025,09/11/2025
+Bogotá,Florianópolis,15/08/2025,23/08/2025
+Recife,João Pessoa,27/07/2025,06/08/2025
+Campo Grande,Rio Branco,15/05/2025,23/05/2025
+Pequim,Dubai,20/09/2025,05/10/2025
+Fortaleza,Teresina,06/07/2025,11/07/2025
+Cuiabá,Maceió,22/06/2025,29/06/2025
+Santiago,Palmas,26/06/2025,28/06/2025
+Boa Vista,Tóquio,15/12/2025,30/12/2025
+Goiânia,Los Angeles,29/05/2025,04/06/2025
+Natal,Teresina,24/12/2025,02/01/2026
+Frankfurt,Tóquio,09/12/2025,19/12/2025
+Vitória,Aracaju,08/05/2025,23/05/2025
+Cidade do México,Roma,22/09/2025,30/09/2025
+Recife,Natal,08/07/2025,13/07/2025
+Belo Horizonte,Cidade do México,29/09/2025,30/09/2025
+Goiânia,Lisboa,30/06/2025,07/07/2025
+Belém,Palmas,15/04/2025,21/04/2025
+Goiânia,Recife,18/11/2025,22/11/2025
+Macapá,Santiago,12/12/2025,13/12/2025
+Florianópolis,Porto Alegre,29/12/2025,09/01/2026
+Madri,Rio de Janeiro,03/05/2025,13/05/2025
+Fortaleza,Frankfurt,07/07/2025,21/07/2025
+Porto Alegre,Fortaleza,01/06/2025,16/06/2025
+Roma,Rio Branco,11/08/2025,20/08/2025
+Curitiba,Palmas,27/09/2025,04/10/2025
+Manaus,Florianópolis,31/10/2025,14/11/2025
+Paris,Cidade do México,06/06/2025,09/06/2025
+Belo Horizonte,Manaus,21/08/2025,25/08/2025
+Roma,Belém,11/07/2025,15/07/2025
+Pequim,Palmas,13/04/2025,24/04/2025
+Londres,Boa Vista,21/09/2025,06/10/2025
+Salvador,Lisboa,19/09/2025,01/10/2025
+Buenos Aires,São Luís,02/12/2025,15/12/2025
+Rio Branco,Belém,13/12/2025,25/12/2025
+Londres,Cuiabá,28/07/2025,06/08/2025
+Teresina,Boa Vista,23/09/2025,25/09/2025
+Macapá,Rio de Janeiro,30/11/2025,01/12/2025
+Miami,Santiago,07/09/2025,11/09/2025
+Santiago,Los Angeles,25/05/2025,03/06/2025
+Fortaleza,Toronto,19/09/2025,24/09/2025
+Macapá,Curitiba,24/04/2025,30/04/2025
+Salvador,São Luís,14/06/2025,27/06/2025
+Toronto,Belo Horizonte,21/08/2025,01/09/2025
+Cidade do México,Teresina,19/12/2025,29/12/2025
+Nova York,Goiânia,26/05/2025,04/06/2025
+João Pessoa,Fortaleza,29/12/2025,09/01/2026
+Cidade do México,Manaus,28/08/2025,01/09/2025
+Rio Branco,Brasília,23/06/2025,28/06/2025
+Palmas,Teresina,26/05/2025,02/06/2025
+Londres,Pequim,05/09/2025,08/09/2025
+Lima,Los Angeles,15/06/2025,24/06/2025
+Campo Grande,Belo Horizonte,22/07/2025,02/08/2025
+Amsterdã,Toronto,11/08/2025,24/08/2025
+Belém,Florianópolis,23/05/2025,29/05/2025
+Salvador,João Pessoa,08/11/2025,20/11/2025
+Maceió,Recife,30/06/2025,09/07/2025
+Campo Grande,Nova York,21/11/2025,26/11/2025
+Manaus,Tóquio,12/09/2025,13/09/2025
+Fortaleza,Dubai,07/06/2025,21/06/2025
+Recife,Aracaju,16/12/2025,28/12/2025
+Paris,Florianópolis,28/05/2025,01/06/2025
+Madri,Amsterdã,22/08/2025,31/08/2025
+Belo Horizonte,Curitiba,19/07/2025,22/07/2025
+Goiânia,Frankfurt,27/09/2025,10/10/2025
+Boa Vista,Rio Branco,10/05/2025,11/05/2025
+Aracaju,Macapá,07/07/2025,15/07/2025
+Aracaju,Bogotá,27/08/2025,31/08/2025
+Florianópolis,Macapá,22/04/2025,23/04/2025
+Natal,São Luís,20/09/2025,25/09/2025
+Lima,Amsterdã,19/07/2025,27/07/2025
+Santiago,Toronto,18/12/2025,24/12/2025
+Vitória,Cidade do México,06/12/2025,16/12/2025
+Buenos Aires,Recife,23/09/2025,27/09/2025
+Lima,João Pessoa,03/10/2025,07/10/2025
+Belém,Toronto,26/07/2025,02/08/2025
+Macapá,Londres,15/09/2025,18/09/2025
+Belo Horizonte,Nova York,14/08/2025,26/08/2025
+Vitória,Lima,26/05/2025,08/06/2025
+Pequim,Recife,23/09/2025,08/10/2025
+Pequim,Natal,20/08/2025,23/08/2025
+Madri,Roma,01/05/2025,08/05/2025
+Tóquio,Santiago,25/09/2025,08/10/2025
+Porto Alegre,São Paulo,16/08/2025,23/08/2025
+Bogotá,Belo Horizonte,12/09/2025,26/09/2025
+Fortaleza,Cuiabá,21/07/2025,25/07/2025
+Macapá,Pequim,29/09/2025,09/10/2025
+Natal,Vitória,26/09/2025,27/09/2025
+Porto Velho,Curitiba,05/12/2025,10/12/2025
+São Luís,Maceió,10/07/2025,25/07/2025
+São Paulo,Natal,21/04/2025,30/04/2025
+Roma,Lima,29/08/2025,10/09/2025
+São Luís,Goiânia,23/06/2025,28/06/2025
+Roma,Londres,24/09/2025,28/09/2025
+Recife,Cuiabá,07/09/2025,12/09/2025
+Rio Branco,Madri,16/08/2025,22/08/2025
+Fortaleza,Recife,22/10/2025,01/11/2025
+Pequim,Cuiabá,27/10/2025,04/11/2025
+Cuiabá,Porto Alegre,28/11/2025,05/12/2025
+Rio de Janeiro,Campo Grande,24/10/2025,07/11/2025
+Londres,Vitória,30/04/2025,11/05/2025
+Roma,Nova York,16/08/2025,19/08/2025
+Los Angeles,São Paulo,18/11/2025,03/12/2025
+Miami,Boa Vista,30/11/2025,08/12/2025
+Roma,Aracaju,18/12/2025,20/12/2025
+Pequim,Teresina,16/09/2025,22/09/2025
+Cidade do México,Maceió,20/04/2025,05/05/2025
+Teresina,Frankfurt,20/06/2025,04/07/2025
+Palmas,Miami,07/10/2025,08/10/2025
+Pequim,Paris,30/11/2025,06/12/2025
+Vitória,Madri,25/04/2025,29/04/2025
+Vitória,Cuiabá,01/11/2025,07/11/2025
+Amsterdã,Aracaju,31/08/2025,09/09/2025
+Maceió,São Paulo,11/05/2025,21/05/2025
+Goiânia,Salvador,12/07/2025,24/07/2025
+São Luís,Paris,05/05/2025,09/05/2025
+Teresina,Bogotá,21/06/2025,24/06/2025
+Palmas,Belo Horizonte,03/11/2025,09/11/2025
+Aracaju,Dubai,27/06/2025,12/07/2025
+São Luís,Santiago,16/05/2025,23/05/2025
+Aracaju,Vitória,25/11/2025,06/12/2025
+Macapá,Los Angeles,14/07/2025,17/07/2025
+Salvador,Lima,14/04/2025,22/04/2025
+Rio de Janeiro,Aracaju,22/04/2025,26/04/2025
+Natal,Vitória,26/08/2025,10/09/2025
+São Luís,Bogotá,18/08/2025,25/08/2025
+Buenos Aires,Los Angeles,02/05/2025,07/05/2025
+Miami,Buenos Aires,25/10/2025,08/11/2025
+Tóquio,São Paulo,15/06/2025,17/06/2025
+Pequim,Rio de Janeiro,03/11/2025,10/11/2025
+Cidade do México,Vitória,11/07/2025,12/07/2025
+Maceió,Paris,31/12/2025,07/01/2026
+Porto Alegre,São Luís,26/06/2025,11/07/2025
+Pequim,Boa Vista,30/08/2025,06/09/2025
+Palmas,Bogotá,24/07/2025,27/07/2025
+Cuiabá,Santiago,08/06/2025,14/06/2025
+Porto Alegre,Fortaleza,08/04/2025,17/04/2025
+Nova York,Rio de Janeiro,07/11/2025,16/11/2025
+Rio Branco,Santiago,07/05/2025,16/05/2025
+Amsterdã,Salvador,30/08/2025,10/09/2025
+Pequim,Dubai,13/10/2025,17/10/2025
+Vitória,Tóquio,05/07/2025,07/07/2025
+Nova York,Tóquio,10/07/2025,13/07/2025
+Londres,João Pessoa,01/11/2025,14/11/2025
+Porto Alegre,João Pessoa,05/08/2025,10/08/2025
+Belém,Nova York,02/05/2025,06/05/2025
+Curitiba,Brasília,21/07/2025,25/07/2025
+Pequim,Brasília,17/10/2025,25/10/2025
+Belo Horizonte,Londres,07/06/2025,15/06/2025
+Bogotá,Salvador,22/12/2025,04/01/2026
+Cuiabá,Buenos Aires,21/06/2025,04/07/2025
+Boa Vista,São Luís,27/10/2025,10/11/2025
+Porto Alegre,Brasília,02/11/2025,07/11/2025
+Porto Alegre,Fortaleza,26/09/2025,01/10/2025
+São Paulo,Amsterdã,31/07/2025,05/08/2025
+Teresina,Lisboa,01/10/2025,14/10/2025
+Natal,Pequim,21/08/2025,24/08/2025
+Buenos Aires,Dubai,13/06/2025,20/06/2025
+Macapá,Bogotá,07/10/2025,20/10/2025
+Amsterdã,Fortaleza,16/07/2025,30/07/2025
+Belém,Aracaju,14/09/2025,18/09/2025
+Tóquio,Maceió,22/08/2025,31/08/2025
+Brasília,Londres,18/04/2025,24/04/2025
+Belo Horizonte,Porto Alegre,04/05/2025,11/05/2025
+Salvador,Rio de Janeiro,27/11/2025,06/12/2025
+Belo Horizonte,Belém,23/05/2025,01/06/2025
+Belo Horizonte,Maceió,30/04/2025,08/05/2025
+Aracaju,Fortaleza,26/11/2025,04/12/2025
+Amsterdã,Palmas,23/10/2025,05/11/2025
+Recife,Florianópolis,14/11/2025,22/11/2025
+Los Angeles,Lima,07/08/2025,10/08/2025
+Cidade do México,Boa Vista,11/11/2025,18/11/2025
+Rio Branco,Buenos Aires,20/10/2025,21/10/2025
+Belém,Toronto,11/12/2025,17/12/2025
+Belo Horizonte,Cidade do México,04/06/2025,17/06/2025
+Lima,Amsterdã,04/12/2025,09/12/2025
+Dubai,Natal,24/06/2025,05/07/2025
+Brasília,Florianópolis,05/06/2025,13/06/2025
+Recife,Pequim,19/06/2025,30/06/2025
+Miami,São Luís,10/08/2025,24/08/2025
+São Luís,Curitiba,17/12/2025,22/12/2025
+Palmas,Teresina,21/09/2025,23/09/2025
+Lisboa,Frankfurt,26/04/2025,03/05/2025
+Salvador,Santiago,22/07/2025,30/07/2025
+Lisboa,Santiago,01/05/2025,10/05/2025
+Recife,Belo Horizonte,01/05/2025,06/05/2025
+Lima,Miami,04/08/2025,10/08/2025
+Toronto,Miami,05/06/2025,06/06/2025
+Tóquio,Miami,20/08/2025,03/09/2025
+Cidade do México,Rio Branco,17/09/2025,18/09/2025
+Nova York,Porto Velho,11/06/2025,17/06/2025
+Florianópolis,Goiânia,30/07/2025,01/08/2025
+São Luís,Santiago,19/06/2025,23/06/2025
+Palmas,Campo Grande,19/12/2025,02/01/2026
+Manaus,Porto Alegre,17/10/2025,31/10/2025
+Los Angeles,Teresina,03/05/2025,08/05/2025
+Pequim,Manaus,13/08/2025,14/08/2025
+Buenos Aires,São Paulo,19/09/2025,03/10/2025
+Recife,Vitória,16/11/2025,30/11/2025
+Macapá,Teresina,07/07/2025,22/07/2025
+Toronto,São Paulo,21/12/2025,03/01/2026
+Cidade do México,Manaus,30/04/2025,09/05/2025
+Frankfurt,Palmas,19/09/2025,22/09/2025
+Vitória,Bogotá,30/07/2025,01/08/2025
+São Luís,Dubai,22/08/2025,30/08/2025
+Manaus,Tóquio,28/08/2025,10/09/2025
+Palmas,Porto Velho,05/06/2025,20/06/2025
+Miami,Roma,05/08/2025,17/08/2025
+Bogotá,Frankfurt,27/07/2025,28/07/2025
+Belém,São Luís,02/08/2025,07/08/2025
+Porto Velho,Recife,05/08/2025,17/08/2025
+Brasília,Macapá,11/08/2025,22/08/2025
+Natal,São Paulo,14/11/2025,23/11/2025
+Pequim,Aracaju,04/06/2025,12/06/2025
+Tóquio,São Paulo,13/06/2025,23/06/2025
+Teresina,Natal,20/09/2025,23/09/2025
+Belo Horizonte,Bogotá,16/05/2025,28/05/2025
+Londres,Madri,25/08/2025,09/09/2025
+Palmas,Brasília,18/07/2025,30/07/2025
+Frankfurt,Nova York,26/06/2025,30/06/2025
+Goiânia,Porto Velho,12/10/2025,26/10/2025
+Cidade do México,Campo Grande,07/12/2025,20/12/2025
+Maceió,Pequim,26/12/2025,30/12/2025
+Amsterdã,São Luís,14/10/2025,18/10/2025
+Goiânia,Frankfurt,15/07/2025,18/07/2025
+Brasília,Madri,23/10/2025,02/11/2025
+Toronto,Londres,17/05/2025,01/06/2025
+Macapá,Manaus,27/07/2025,29/07/2025
+São Luís,Manaus,20/10/2025,30/10/2025
+Cuiabá,Tóquio,24/10/2025,08/11/2025
+Porto Alegre,Maceió,19/07/2025,22/07/2025
+Florianópolis,Roma,23/04/2025,07/05/2025
+Macapá,Los Angeles,09/08/2025,17/08/2025
+Macapá,Rio Branco,03/09/2025,12/09/2025
+Natal,São Luís,27/05/2025,05/06/2025
+Nova York,Recife,04/08/2025,12/08/2025
+Belém,Boa Vista,14/06/2025,24/06/2025
+São Luís,Salvador,02/12/2025,07/12/2025
+Fortaleza,Rio de Janeiro,08/06/2025,16/06/2025
+Lima,Vitória,13/09/2025,17/09/2025
+Macapá,Fortaleza,11/08/2025,24/08/2025
+Fortaleza,Belo Horizonte,12/09/2025,22/09/2025
+Los Angeles,Roma,01/12/2025,16/12/2025
+Natal,Pequim,01/05/2025,03/05/2025
+Brasília,Los Angeles,23/05/2025,03/06/2025
+Florianópolis,Vitória,15/04/2025,24/04/2025
+Cidade do México,Manaus,09/07/2025,24/07/2025
+Recife,Macapá,20/09/2025,21/09/2025
+Lisboa,Cuiabá,07/09/2025,10/09/2025
+Florianópolis,Lima,19/09/2025,28/09/2025
+Porto Velho,Boa Vista,16/07/2025,18/07/2025
+Aracaju,Florianópolis,10/12/2025,19/12/2025
+Lima,Cidade do México,06/05/2025,20/05/2025
+Roma,Aracaju,26/11/2025,07/12/2025
+Amsterdã,São Paulo,15/09/2025,21/09/2025
+Aracaju,Teresina,15/05/2025,27/05/2025
+Londres,Porto Velho,11/06/2025,20/06/2025
+João Pessoa,Nova York,14/04/2025,23/04/2025
+Rio de Janeiro,Amsterdã,04/06/2025,10/06/2025
+Porto Velho,Goiânia,16/04/2025,20/04/2025
+João Pessoa,Curitiba,06/09/2025,16/09/2025
+Bogotá,Buenos Aires,24/12/2025,08/01/2026
+Macapá,Rio Branco,01/06/2025,14/06/2025
+São Luís,Tóquio,10/07/2025,11/07/2025
+Roma,Recife,14/06/2025,17/06/2025
+Nova York,Rio Branco,19/06/2025,22/06/2025
+Campo Grande,Porto Alegre,04/12/2025,14/12/2025
+Cidade do México,Vitória,24/08/2025,29/08/2025
+Tóquio,Manaus,06/08/2025,08/08/2025
+Vitória,Buenos Aires,18/05/2025,27/05/2025
+Rio de Janeiro,Pequim,04/12/2025,18/12/2025
+Curitiba,Santiago,17/08/2025,24/08/2025
+Los Angeles,Salvador,12/06/2025,19/06/2025
+São Luís,Maceió,02/06/2025,09/06/2025
+Goiânia,Brasília,13/07/2025,20/07/2025
+Los Angeles,Santiago,23/09/2025,02/10/2025
+Roma,Buenos Aires,02/11/2025,13/11/2025
+Rio Branco,Curitiba,17/10/2025,22/10/2025
+Porto Velho,Natal,10/06/2025,22/06/2025
+Teresina,Fortaleza,14/12/2025,18/12/2025
+Miami,Manaus,16/06/2025,18/06/2025
+Cidade do México,Porto Velho,05/06/2025,19/06/2025
+Londres,Amsterdã,12/12/2025,16/12/2025
+Campo Grande,Miami,04/07/2025,06/07/2025
+São Luís,Londres,21/08/2025,02/09/2025
+Porto Velho,São Paulo,13/05/2025,26/05/2025
+Frankfurt,Dubai,10/12/2025,19/12/2025
+Porto Alegre,Madri,04/11/2025,09/11/2025
+Boa Vista,Miami,14/10/2025,15/10/2025
+Macapá,Pequim,14/09/2025,18/09/2025
+Maceió,Lisboa,25/06/2025,27/06/2025
+Rio de Janeiro,Rio Branco,18/07/2025,25/07/2025
+Madri,Aracaju,05/12/2025,20/12/2025
+São Luís,Cidade do México,09/09/2025,23/09/2025
+Bogotá,Buenos Aires,14/09/2025,22/09/2025
+Cuiabá,Fortaleza,11/08/2025,23/08/2025
+Dubai,Londres,24/04/2025,30/04/2025
+Brasília,Belo Horizonte,09/10/2025,17/10/2025
+Tóquio,Belém,05/06/2025,08/06/2025
+Miami,Natal,14/12/2025,18/12/2025
+Curitiba,Goiânia,21/11/2025,25/11/2025
+Cidade do México,Madri,01/12/2025,02/12/2025
+Lisboa,Curitiba,25/07/2025,07/08/2025
+Salvador,Nova York,16/09/2025,24/09/2025
+Madri,Lima,19/04/2025,30/04/2025
+Pequim,Curitiba,21/04/2025,29/04/2025
+Florianópolis,Nova York,11/10/2025,25/10/2025
+Recife,Rio Branco,21/07/2025,05/08/2025
+Rio de Janeiro,Porto Velho,22/05/2025,04/06/2025
+Frankfurt,São Paulo,13/07/2025,21/07/2025
+Paris,Rio de Janeiro,11/12/2025,21/12/2025
+Los Angeles,Londres,11/07/2025,16/07/2025
+São Luís,Frankfurt,05/07/2025,19/07/2025
+Londres,Madri,17/05/2025,24/05/2025
+Tóquio,Teresina,25/04/2025,30/04/2025
+Pequim,Belém,18/12/2025,25/12/2025
+Porto Alegre,Aracaju,25/10/2025,07/11/2025
+Campo Grande,Vitória,16/07/2025,20/07/2025
+Brasília,Rio de Janeiro,06/11/2025,20/11/2025
+Madri,Amsterdã,20/09/2025,30/09/2025
+São Paulo,Cuiabá,17/10/2025,25/10/2025
+Macapá,Recife,14/11/2025,21/11/2025
+Cidade do México,Cuiabá,23/08/2025,06/09/2025
+Buenos Aires,Toronto,03/11/2025,06/11/2025
+Cidade do México,Porto Alegre,24/06/2025,25/06/2025
+Goiânia,Teresina,24/05/2025,04/06/2025
+Manaus,João Pessoa,24/12/2025,28/12/2025
+Nova York,Tóquio,11/06/2025,14/06/2025
+Maceió,Aracaju,24/11/2025,04/12/2025
+Fortaleza,Cuiabá,08/07/2025,23/07/2025
+Santiago,Fortaleza,18/06/2025,26/06/2025
+Cidade do México,Paris,29/05/2025,09/06/2025
+Aracaju,Maceió,08/11/2025,09/11/2025
+Rio de Janeiro,Natal,24/08/2025,03/09/2025
+Aracaju,Londres,27/09/2025,08/10/2025
+Belém,Pequim,04/07/2025,12/07/2025
+Palmas,João Pessoa,09/11/2025,23/11/2025
+Vitória,Cuiabá,02/05/2025,12/05/2025
+Belém,Santiago,10/05/2025,14/05/2025
+Manaus,Curitiba,20/09/2025,26/09/2025
+Paris,Cuiabá,19/12/2025,02/01/2026
+Madri,Roma,01/07/2025,10/07/2025
+São Paulo,Manaus,27/08/2025,10/09/2025
+Miami,São Luís,09/09/2025,16/09/2025
+Frankfurt,Recife,15/12/2025,18/12/2025
+Palmas,Teresina,22/07/2025,03/08/2025
+Buenos Aires,Campo Grande,04/10/2025,09/10/2025
+Frankfurt,Bogotá,14/10/2025,20/10/2025
+Pequim,Paris,21/08/2025,26/08/2025
+Rio Branco,Roma,08/04/2025,14/04/2025
+Porto Velho,Dubai,26/04/2025,02/05/2025
+Porto Alegre,João Pessoa,06/05/2025,11/05/2025
+Brasília,Curitiba,09/12/2025,10/12/2025
+Miami,Madri,05/07/2025,09/07/2025
+Toronto,Buenos Aires,10/12/2025,17/12/2025
+Curitiba,Salvador,19/08/2025,29/08/2025
+Boa Vista,Los Angeles,05/05/2025,18/05/2025
+Maceió,João Pessoa,29/05/2025,12/06/2025
+Curitiba,Los Angeles,12/05/2025,18/05/2025
+Palmas,Natal,29/06/2025,10/07/2025
+João Pessoa,Brasília,07/11/2025,09/11/2025
+Pequim,Belém,09/04/2025,14/04/2025
+Natal,Macapá,15/12/2025,26/12/2025
+Curitiba,Porto Alegre,28/06/2025,12/07/2025
+Aracaju,Goiânia,02/06/2025,03/06/2025
+Porto Alegre,São Paulo,20/05/2025,27/05/2025
+Roma,Rio Branco,14/06/2025,24/06/2025
+Londres,Miami,19/08/2025,20/08/2025
+Porto Alegre,Porto Velho,15/06/2025,26/06/2025
+Roma,Recife,04/05/2025,06/05/2025
+Campo Grande,Curitiba,22/09/2025,05/10/2025
+São Luís,Frankfurt,15/09/2025,20/09/2025
+Nova York,Frankfurt,20/05/2025,03/06/2025
+Miami,Cuiabá,20/08/2025,26/08/2025
+Los Angeles,Bogotá,07/05/2025,09/05/2025
+Belém,Aracaju,31/07/2025,04/08/2025
+Dubai,Tóquio,08/06/2025,15/06/2025
+Rio Branco,Bogotá,29/10/2025,07/11/2025
+Porto Alegre,Lisboa,26/07/2025,29/07/2025
+Boa Vista,Amsterdã,29/06/2025,07/07/2025
+Buenos Aires,Vitória,17/04/2025,24/04/2025
+Teresina,Frankfurt,27/04/2025,06/05/2025
+Palmas,Curitiba,09/10/2025,17/10/2025
+Rio de Janeiro,Vitória,27/10/2025,03/11/2025
+Natal,Rio Branco,11/07/2025,19/07/2025
+Rio Branco,Brasília,30/06/2025,02/07/2025
+Curitiba,Santiago,28/07/2025,09/08/2025
+Recife,Porto Velho,10/07/2025,16/07/2025
+Lisboa,Toronto,05/05/2025,08/05/2025
+Londres,Tóquio,24/05/2025,29/05/2025
+Campo Grande,Porto Velho,12/12/2025,27/12/2025
+Fortaleza,Manaus,28/04/2025,05/05/2025
+Paris,Salvador,10/10/2025,24/10/2025
+São Paulo,Buenos Aires,09/10/2025,15/10/2025
+Miami,Florianópolis,14/08/2025,21/08/2025
+Frankfurt,Madri,14/10/2025,22/10/2025
+Tóquio,Frankfurt,03/05/2025,08/05/2025
+Bogotá,Manaus,16/11/2025,27/11/2025
+Curitiba,Londres,22/08/2025,28/08/2025
+Cidade do México,Salvador,18/10/2025,31/10/2025
+Boa Vista,Porto Alegre,09/09/2025,12/09/2025
+Londres,Campo Grande,17/12/2025,24/12/2025
+Londres,Paris,17/11/2025,25/11/2025
+Palmas,Cidade do México,18/05/2025,02/06/2025
+Buenos Aires,Pequim,24/11/2025,29/11/2025
+Bogotá,Brasília,12/08/2025,14/08/2025
+Dubai,Boa Vista,04/09/2025,18/09/2025
+Dubai,Lima,02/07/2025,14/07/2025
+Roma,Cuiabá,21/08/2025,28/08/2025
+Fortaleza,Miami,13/11/2025,18/11/2025
+Toronto,Amsterdã,01/07/2025,15/07/2025
+Cidade do México,Santiago,08/09/2025,09/09/2025
+Campo Grande,Dubai,01/09/2025,06/09/2025
+Manaus,Roma,06/09/2025,10/09/2025
+Dubai,Belo Horizonte,05/06/2025,06/06/2025
+João Pessoa,Pequim,09/09/2025,18/09/2025
+Dubai,Rio Branco,26/04/2025,04/05/2025
+Palmas,Nova York,27/05/2025,04/06/2025
+São Paulo,Boa Vista,19/10/2025,22/10/2025
+Londres,Porto Alegre,11/09/2025,23/09/2025
+Fortaleza,Amsterdã,26/12/2025,06/01/2026
+Curitiba,Brasília,08/05/2025,23/05/2025
+Vitória,São Paulo,29/12/2025,10/01/2026
+Goiânia,Pequim,26/08/2025,07/09/2025
+São Paulo,Bogotá,02/07/2025,15/07/2025
+Amsterdã,Roma,14/06/2025,16/06/2025
+Fortaleza,Dubai,15/05/2025,19/05/2025
+Toronto,Manaus,21/09/2025,05/10/2025
+Aracaju,Manaus,09/09/2025,20/09/2025
+Goiânia,Cidade do México,14/08/2025,24/08/2025
+Brasília,Porto Alegre,12/05/2025,22/05/2025
+Frankfurt,Roma,22/10/2025,26/10/2025
+Dubai,Bogotá,26/09/2025,02/10/2025
+Paris,Cuiabá,28/12/2025,04/01/2026
+Paris,Goiânia,24/04/2025,26/04/2025
+Dubai,Santiago,22/05/2025,06/06/2025
+Amsterdã,Frankfurt,07/08/2025,16/08/2025
+Tóquio,Campo Grande,03/08/2025,12/08/2025
+Cuiabá,Vitória,05/12/2025,08/12/2025
+Amsterdã,Brasília,23/10/2025,28/10/2025
+Natal,Maceió,23/10/2025,29/10/2025
+Curitiba,Nova York,28/10/2025,10/11/2025
+Toronto,Curitiba,07/12/2025,20/12/2025
+Florianópolis,Lima,12/06/2025,18/06/2025
+Natal,Porto Alegre,08/09/2025,22/09/2025
+Fortaleza,Londres,15/09/2025,23/09/2025
+Campo Grande,João Pessoa,21/11/2025,02/12/2025
+Curitiba,Vitória,18/09/2025,24/09/2025
+Palmas,Amsterdã,12/06/2025,23/06/2025
+Miami,Madri,15/05/2025,18/05/2025
+Cuiabá,Rio de Janeiro,17/06/2025,30/06/2025
+Manaus,Teresina,17/06/2025,01/07/2025
+Goiânia,Salvador,03/05/2025,10/05/2025
+São Paulo,Nova York,12/04/2025,24/04/2025
+Bogotá,Manaus,03/07/2025,08/07/2025
+Tóquio,Londres,09/12/2025,13/12/2025
+Lima,São Paulo,13/08/2025,26/08/2025
+Buenos Aires,Dubai,28/10/2025,10/11/2025
+Teresina,Palmas,01/07/2025,05/07/2025
+Belo Horizonte,Tóquio,17/10/2025,31/10/2025
+Goiânia,Recife,09/07/2025,15/07/2025
+Rio Branco,Rio de Janeiro,14/06/2025,20/06/2025
+São Paulo,Cidade do México,14/12/2025,20/12/2025
+Cidade do México,Recife,19/09/2025,26/09/2025
+Bogotá,Londres,06/10/2025,09/10/2025
+Natal,Macapá,07/07/2025,17/07/2025
+Los Angeles,Cidade do México,25/11/2025,09/12/2025
+Teresina,Goiânia,27/12/2025,05/01/2026
+Cuiabá,Brasília,12/09/2025,19/09/2025
+Fortaleza,Vitória,27/09/2025,28/09/2025
+Pequim,Cuiabá,22/12/2025,06/01/2026
+Tóquio,Pequim,03/11/2025,09/11/2025
+João Pessoa,Campo Grande,23/06/2025,29/06/2025
+Campo Grande,Santiago,03/09/2025,10/09/2025
+Cidade do México,Salvador,02/06/2025,16/06/2025
+Nova York,Roma,07/08/2025,09/08/2025
+Macapá,Goiânia,31/08/2025,15/09/2025
+Tóquio,Brasília,24/05/2025,05/06/2025
+Manaus,Londres,28/06/2025,12/07/2025
+Maceió,Santiago,22/08/2025,31/08/2025
+Porto Alegre,Lisboa,07/12/2025,10/12/2025
+Los Angeles,Goiânia,20/04/2025,23/04/2025
+Los Angeles,Buenos Aires,15/07/2025,24/07/2025
+Teresina,Cuiabá,11/06/2025,21/06/2025
+Cuiabá,Belo Horizonte,09/11/2025,21/11/2025
+Maceió,Belém,10/10/2025,23/10/2025
+Nova York,Tóquio,09/10/2025,21/10/2025
+Cuiabá,Goiânia,04/05/2025,08/05/2025
+Buenos Aires,Lisboa,21/04/2025,28/04/2025
+Curitiba,Campo Grande,13/11/2025,22/11/2025
+Cidade do México,Miami,22/11/2025,06/12/2025
+São Paulo,Lisboa,26/12/2025,29/12/2025
+Boa Vista,Natal,02/11/2025,10/11/2025
+Belo Horizonte,Goiânia,13/04/2025,20/04/2025
+Palmas,Natal,21/08/2025,28/08/2025
+Nova York,Pequim,27/11/2025,05/12/2025
+São Paulo,Belém,18/11/2025,24/11/2025
+Teresina,Tóquio,20/10/2025,23/10/2025
+Campo Grande,Cuiabá,15/07/2025,27/07/2025
+Buenos Aires,Teresina,17/08/2025,27/08/2025
+Belo Horizonte,Goiânia,29/05/2025,31/05/2025
+Porto Alegre,Nova York,30/06/2025,06/07/2025
+Maceió,Aracaju,23/05/2025,30/05/2025
+Porto Alegre,Rio Branco,25/10/2025,26/10/2025
+Bogotá,Aracaju,03/10/2025,10/10/2025
+Lima,Teresina,22/06/2025,07/07/2025
+Lima,Bogotá,22/09/2025,06/10/2025
+Maceió,Aracaju,02/11/2025,17/11/2025
+Pequim,Toronto,05/11/2025,17/11/2025
+Belém,Santiago,10/06/2025,23/06/2025
+Porto Velho,São Luís,13/12/2025,21/12/2025
+Madri,Goiânia,25/09/2025,30/09/2025
+Fortaleza,João Pessoa,27/07/2025,11/08/2025
+Palmas,Paris,25/11/2025,26/11/2025
+Roma,Frankfurt,06/06/2025,14/06/2025
+Santiago,Florianópolis,28/08/2025,11/09/2025
+Frankfurt,Goiânia,25/09/2025,04/10/2025
+Dubai,Paris,02/06/2025,10/06/2025
+João Pessoa,Manaus,15/11/2025,20/11/2025
+Frankfurt,Recife,23/07/2025,28/07/2025
+Palmas,Natal,06/11/2025,07/11/2025
+Miami,Belo Horizonte,21/08/2025,22/08/2025
+Londres,João Pessoa,06/10/2025,17/10/2025
+Macapá,Toronto,15/06/2025,21/06/2025
+Teresina,Salvador,31/08/2025,05/09/2025
+Bogotá,Toronto,25/07/2025,31/07/2025
+Brasília,Florianópolis,05/09/2025,10/09/2025
+Manaus,Lisboa,09/04/2025,24/04/2025
+Curitiba,Toronto,12/11/2025,24/11/2025
+Miami,Pequim,08/10/2025,23/10/2025
+Palmas,Aracaju,25/05/2025,02/06/2025
+Campo Grande,Toronto,15/05/2025,24/05/2025
+Porto Velho,Amsterdã,01/09/2025,04/09/2025
+Buenos Aires,Fortaleza,30/09/2025,05/10/2025
+Teresina,Cidade do México,01/11/2025,04/11/2025
+Maceió,Tóquio,02/11/2025,10/11/2025
+Recife,Manaus,19/09/2025,28/09/2025
+Amsterdã,Roma,16/06/2025,19/06/2025
+Pequim,Londres,13/07/2025,28/07/2025
+Toronto,Recife,28/05/2025,29/05/2025
+Fortaleza,Los Angeles,04/12/2025,05/12/2025
+Los Angeles,Brasília,22/12/2025,04/01/2026
+Teresina,Salvador,08/10/2025,21/10/2025
+Florianópolis,Nova York,29/07/2025,11/08/2025
+Los Angeles,Fortaleza,25/08/2025,07/09/2025
+Brasília,Tóquio,13/10/2025,19/10/2025
+Madri,Rio de Janeiro,17/12/2025,26/12/2025
+Manaus,Curitiba,07/11/2025,14/11/2025
+Amsterdã,Salvador,29/04/2025,07/05/2025
+Lisboa,Cuiabá,20/06/2025,27/06/2025
+Nova York,Toronto,31/08/2025,06/09/2025
+Vitória,Brasília,24/09/2025,06/10/2025
+Miami,Belo Horizonte,06/11/2025,14/11/2025
+Miami,Santiago,04/09/2025,06/09/2025
+Lisboa,Nova York,13/12/2025,25/12/2025
+Santiago,Porto Alegre,19/12/2025,03/01/2026
+Aracaju,Fortaleza,06/08/2025,10/08/2025
+Rio de Janeiro,Amsterdã,07/04/2025,15/04/2025
+Belo Horizonte,Salvador,25/10/2025,02/11/2025
+Boa Vista,Recife,14/05/2025,19/05/2025
+Goiânia,Rio Branco,21/04/2025,24/04/2025
+Maceió,Teresina,17/04/2025,20/04/2025
+Santiago,Rio Branco,15/06/2025,23/06/2025
+Manaus,Maceió,25/10/2025,04/11/2025
+Salvador,Londres,07/04/2025,21/04/2025
+Vitória,Natal,14/08/2025,27/08/2025
+Paris,Toronto,21/08/2025,23/08/2025
+Rio de Janeiro,Curitiba,01/05/2025,16/05/2025
+Londres,Rio Branco,23/12/2025,04/01/2026
+Porto Alegre,Goiânia,17/09/2025,01/10/2025
+Cidade do México,Bogotá,30/11/2025,12/12/2025
+Dubai,Palmas,22/11/2025,24/11/2025
+Campo Grande,Natal,29/06/2025,08/07/2025
+Bogotá,Tóquio,04/05/2025,15/05/2025
+Palmas,Brasília,07/06/2025,18/06/2025
+Brasília,Lisboa,27/08/2025,08/09/2025
+Vitória,Porto Velho,15/05/2025,27/05/2025
+Teresina,Boa Vista,25/12/2025,01/01/2026
+Porto Velho,Florianópolis,05/12/2025,18/12/2025
+Rio de Janeiro,Frankfurt,22/06/2025,28/06/2025
+Paris,Miami,07/12/2025,17/12/2025
+Frankfurt,Bogotá,03/09/2025,14/09/2025
+Lisboa,Paris,20/12/2025,22/12/2025
+São Paulo,Amsterdã,25/12/2025,06/01/2026
+Belém,Porto Velho,10/08/2025,20/08/2025
+Boa Vista,Vitória,26/06/2025,08/07/2025
+Tóquio,Amsterdã,02/06/2025,08/06/2025
+Vitória,Boa Vista,03/09/2025,08/09/2025
+Curitiba,Cuiabá,13/10/2025,19/10/2025
+Buenos Aires,Paris,01/10/2025,02/10/2025
+Vitória,Lisboa,23/04/2025,02/05/2025
+Porto Alegre,Miami,23/11/2025,27/11/2025
+Los Angeles,Teresina,01/11/2025,06/11/2025
+Amsterdã,Boa Vista,17/06/2025,01/07/2025
+São Paulo,Rio Branco,15/08/2025,26/08/2025
+Curitiba,Porto Velho,16/09/2025,17/09/2025
+Porto Alegre,Lisboa,28/08/2025,08/09/2025
+Roma,Toronto,01/10/2025,05/10/2025
+Dubai,Bogotá,08/04/2025,12/04/2025
+Campo Grande,Miami,17/05/2025,01/06/2025
+Pequim,Recife,13/04/2025,23/04/2025
+Madri,Bogotá,20/12/2025,02/01/2026
+Cidade do México,Belém,04/06/2025,06/06/2025
+Aracaju,São Luís,12/10/2025,17/10/2025
+Fortaleza,Miami,12/05/2025,20/05/2025
+Palmas,São Paulo,20/06/2025,01/07/2025
+Belém,João Pessoa,27/05/2025,07/06/2025
+Belo Horizonte,Cuiabá,14/11/2025,24/11/2025
+Campo Grande,Amsterdã,09/05/2025,21/05/2025
+Londres,João Pessoa,14/05/2025,29/05/2025
+Toronto,Nova York,26/05/2025,05/06/2025
+Porto Alegre,Roma,13/07/2025,24/07/2025
+Manaus,Porto Velho,25/12/2025,01/01/2026
+Porto Velho,Maceió,19/12/2025,27/12/2025
+Palmas,São Luís,20/06/2025,01/07/2025
+Recife,Santiago,25/10/2025,06/11/2025
+Cuiabá,Recife,11/08/2025,22/08/2025
+Madri,Curitiba,22/10/2025,24/10/2025
+Florianópolis,Maceió,13/10/2025,27/10/2025
+Dubai,Santiago,26/06/2025,01/07/2025
+Natal,Cidade do México,19/11/2025,26/11/2025
+Fortaleza,Goiânia,07/04/2025,21/04/2025
+Paris,Aracaju,13/12/2025,28/12/2025
+São Luís,Santiago,18/09/2025,22/09/2025
+Lima,Paris,28/12/2025,06/01/2026
+Buenos Aires,Bogotá,13/04/2025,27/04/2025
+Maceió,Miami,11/10/2025,17/10/2025
+Paris,Natal,29/07/2025,07/08/2025
+Porto Velho,São Luís,07/09/2025,11/09/2025
+Buenos Aires,Rio Branco,19/10/2025,24/10/2025
+Aracaju,São Paulo,07/07/2025,15/07/2025
+Lima,Goiânia,01/05/2025,14/05/2025
+Cidade do México,Campo Grande,17/05/2025,23/05/2025
+Miami,Aracaju,06/07/2025,11/07/2025
+Roma,São Luís,08/12/2025,12/12/2025
+Lima,Lisboa,28/09/2025,01/10/2025
+Aracaju,João Pessoa,02/06/2025,07/06/2025
+Porto Velho,Nova York,03/05/2025,13/05/2025
+Los Angeles,Miami,11/04/2025,15/04/2025
+Pequim,Fortaleza,14/07/2025,29/07/2025
+Brasília,João Pessoa,03/08/2025,18/08/2025
+Palmas,Brasília,11/08/2025,20/08/2025
+Palmas,Tóquio,07/10/2025,15/10/2025
+Teresina,São Paulo,06/10/2025,13/10/2025
+Manaus,Curitiba,12/04/2025,23/04/2025
+Roma,Pequim,31/05/2025,03/06/2025
+Macapá,Florianópolis,05/09/2025,19/09/2025
+Cuiabá,Lima,19/04/2025,20/04/2025
+Cuiabá,Brasília,25/11/2025,29/11/2025
+Boa Vista,Teresina,22/06/2025,28/06/2025
+Belo Horizonte,Santiago,10/11/2025,19/11/2025
+Lima,Salvador,07/10/2025,09/10/2025
+Fortaleza,Toronto,15/10/2025,22/10/2025
+Dubai,Buenos Aires,09/07/2025,21/07/2025
+Madri,Tóquio,22/04/2025,27/04/2025
+Porto Velho,Roma,05/06/2025,11/06/2025
+Belém,Santiago,06/09/2025,17/09/2025
+São Luís,Fortaleza,22/10/2025,03/11/2025
+Rio de Janeiro,Miami,17/09/2025,30/09/2025
+Londres,Cuiabá,29/09/2025,30/09/2025
+Toronto,Macapá,05/10/2025,06/10/2025
+Amsterdã,Rio Branco,11/11/2025,17/11/2025
+Lisboa,Belém,06/11/2025,12/11/2025
+Rio Branco,Vitória,19/12/2025,29/12/2025
+Cidade do México,Teresina,30/08/2025,01/09/2025
+Santiago,Maceió,16/04/2025,17/04/2025
+Fortaleza,Salvador,02/08/2025,15/08/2025
+Porto Alegre,Pequim,09/08/2025,19/08/2025
+Bogotá,Rio Branco,24/06/2025,01/07/2025
+Cidade do México,João Pessoa,17/10/2025,01/11/2025
+Salvador,Frankfurt,08/10/2025,15/10/2025
+Aracaju,São Paulo,26/12/2025,28/12/2025
+Campo Grande,Lima,30/06/2025,02/07/2025
+Vitória,Porto Velho,19/11/2025,02/12/2025
+Pequim,Vitória,30/10/2025,05/11/2025
+Buenos Aires,Los Angeles,29/12/2025,30/12/2025
+Macapá,Natal,30/11/2025,05/12/2025
+Toronto,João Pessoa,30/09/2025,02/10/2025
+Lisboa,Curitiba,20/09/2025,29/09/2025
+Buenos Aires,João Pessoa,08/09/2025,19/09/2025
+Bogotá,Santiago,16/12/2025,23/12/2025
+Rio de Janeiro,Cidade do México,16/12/2025,20/12/2025
+Porto Velho,Lisboa,24/12/2025,07/01/2026
+Amsterdã,Cidade do México,14/10/2025,26/10/2025
+Cidade do México,Natal,07/05/2025,11/05/2025
+Maceió,Belém,31/08/2025,07/09/2025
+Paris,Brasília,19/04/2025,26/04/2025
+Manaus,Cuiabá,13/11/2025,19/11/2025
+Natal,Cuiabá,15/04/2025,21/04/2025
+Macapá,Cuiabá,30/11/2025,08/12/2025
+Pequim,Buenos Aires,17/08/2025,25/08/2025
+Los Angeles,Salvador,23/11/2025,03/12/2025
+Frankfurt,Rio Branco,24/09/2025,05/10/2025
+Teresina,Macapá,04/05/2025,17/05/2025
+Vitória,Frankfurt,11/08/2025,19/08/2025
+Belo Horizonte,Paris,06/11/2025,18/11/2025
+São Luís,Amsterdã,07/09/2025,19/09/2025
+Bogotá,Rio de Janeiro,06/06/2025,12/06/2025
+Macapá,Madri,12/06/2025,18/06/2025
+Roma,Campo Grande,01/07/2025,11/07/2025
+Natal,Porto Alegre,23/10/2025,07/11/2025
+Frankfurt,Palmas,22/11/2025,07/12/2025
+Aracaju,Belém,22/04/2025,06/05/2025
+Tóquio,Cuiabá,16/05/2025,30/05/2025
+Boa Vista,Natal,04/12/2025,06/12/2025
+Fortaleza,Cuiabá,12/06/2025,21/06/2025
+Dubai,Brasília,13/12/2025,17/12/2025
+Lisboa,Amsterdã,02/05/2025,11/05/2025
+Recife,Maceió,29/09/2025,02/10/2025
+Porto Alegre,Campo Grande,12/06/2025,19/06/2025
+Cidade do México,Bogotá,23/04/2025,08/05/2025
+Los Angeles,João Pessoa,03/06/2025,09/06/2025
+Santiago,Recife,30/07/2025,13/08/2025
+Belo Horizonte,Vitória,22/09/2025,02/10/2025
+Buenos Aires,Miami,12/05/2025,16/05/2025
+Dubai,Roma,28/07/2025,12/08/2025
+Macapá,Tóquio,02/11/2025,08/11/2025
+Rio Branco,Madri,04/07/2025,08/07/2025
+Lisboa,Tóquio,31/10/2025,07/11/2025
+Maceió,Lisboa,18/07/2025,24/07/2025
+Buenos Aires,Campo Grande,11/04/2025,14/04/2025
+Frankfurt,Lima,23/08/2025,29/08/2025
+Madri,Macapá,03/12/2025,13/12/2025
+Toronto,Rio Branco,26/10/2025,01/11/2025
+Cidade do México,Cuiabá,28/04/2025,07/05/2025
+Nova York,Aracaju,01/11/2025,10/11/2025
+Santiago,Roma,12/12/2025,26/12/2025
+Salvador,Porto Alegre,25/07/2025,02/08/2025
+Pequim,Dubai,30/07/2025,04/08/2025
+Dubai,Londres,07/10/2025,12/10/2025
+João Pessoa,Paris,21/09/2025,29/09/2025
+Pequim,Brasília,06/05/2025,11/05/2025
+Miami,Fortaleza,07/11/2025,22/11/2025
+Amsterdã,Salvador,17/07/2025,01/08/2025
+Lisboa,Paris,02/10/2025,12/10/2025
+Toronto,Roma,01/05/2025,06/05/2025
+Lisboa,Aracaju,15/10/2025,21/10/2025
+Teresina,Lima,19/06/2025,29/06/2025
+Natal,Dubai,25/06/2025,07/07/2025
+Rio Branco,Los Angeles,08/11/2025,22/11/2025
+Maceió,Roma,16/10/2025,21/10/2025
+Frankfurt,Vitória,02/06/2025,07/06/2025
+Cidade do México,Goiânia,09/09/2025,15/09/2025
+Boa Vista,Rio Branco,01/05/2025,14/05/2025
+Cidade do México,Manaus,27/05/2025,06/06/2025
+Porto Velho,Tóquio,23/08/2025,06/09/2025
+Londres,João Pessoa,30/09/2025,04/10/2025
+Porto Velho,Aracaju,06/09/2025,14/09/2025
+São Luís,Amsterdã,03/06/2025,05/06/2025
+Rio de Janeiro,Cuiabá,25/04/2025,06/05/2025
+Lisboa,Palmas,15/09/2025,18/09/2025
+Florianópolis,Bogotá,13/04/2025,16/04/2025
+Salvador,Palmas,02/12/2025,08/12/2025
+Porto Velho,Amsterdã,22/05/2025,02/06/2025
+Rio Branco,Paris,26/06/2025,30/06/2025
+Belém,Palmas,14/06/2025,24/06/2025
+Goiânia,Rio Branco,12/11/2025,22/11/2025
+João Pessoa,Teresina,10/04/2025,25/04/2025
+Nova York,Porto Alegre,28/11/2025,30/11/2025
+Macapá,Buenos Aires,04/08/2025,19/08/2025
+Teresina,João Pessoa,21/06/2025,04/07/2025
+Cidade do México,Natal,22/06/2025,30/06/2025
+Rio de Janeiro,Florianópolis,23/06/2025,24/06/2025
+Belém,Los Angeles,27/08/2025,28/08/2025
+Aracaju,Tóquio,29/07/2025,09/08/2025
+Rio de Janeiro,Paris,14/07/2025,15/07/2025
+Teresina,Santiago,24/07/2025,05/08/2025
+Teresina,Maceió,20/06/2025,29/06/2025
+São Paulo,Palmas,05/11/2025,18/11/2025
+São Paulo,Macapá,28/05/2025,06/06/2025
+Natal,Buenos Aires,09/05/2025,15/05/2025
+Vitória,Goiânia,05/08/2025,19/08/2025
+João Pessoa,Bogotá,18/07/2025,31/07/2025
+Cidade do México,Nova York,23/05/2025,29/05/2025
+Madri,Boa Vista,24/10/2025,27/10/2025
+Paris,São Luís,04/05/2025,17/05/2025
+Rio de Janeiro,Tóquio,16/07/2025,24/07/2025
+Lima,Recife,26/08/2025,06/09/2025
+Nova York,Rio Branco,26/07/2025,09/08/2025
+Vitória,Curitiba,07/06/2025,12/06/2025
+Lisboa,Natal,27/06/2025,11/07/2025
+Goiânia,Campo Grande,01/06/2025,08/06/2025
+Dubai,Belo Horizonte,24/04/2025,28/04/2025
+Palmas,Frankfurt,02/08/2025,06/08/2025
+Amsterdã,Curitiba,17/10/2025,19/10/2025
+Florianópolis,Bogotá,17/09/2025,27/09/2025
+Manaus,Lima,07/06/2025,12/06/2025
+Belo Horizonte,Frankfurt,04/11/2025,08/11/2025
+São Luís,Goiânia,27/09/2025,06/10/2025
+Aracaju,Recife,13/06/2025,23/06/2025
+Rio Branco,Lisboa,13/10/2025,21/10/2025
+Pequim,Maceió,02/11/2025,05/11/2025
+Palmas,Toronto,10/08/2025,23/08/2025
+Amsterdã,Lima,03/06/2025,10/06/2025
+Belém,Manaus,10/10/2025,13/10/2025
+São Luís,Goiânia,01/11/2025,07/11/2025
+Aracaju,Madri,02/07/2025,08/07/2025
+Frankfurt,Londres,31/05/2025,11/06/2025
+Porto Velho,Lisboa,04/12/2025,15/12/2025
+Florianópolis,Roma,08/04/2025,10/04/2025
+Madri,Buenos Aires,27/06/2025,07/07/2025
+Frankfurt,Miami,07/05/2025,22/05/2025
+Lisboa,Belo Horizonte,14/06/2025,16/06/2025
+Belo Horizonte,Florianópolis,09/04/2025,24/04/2025
+Lima,Aracaju,05/11/2025,09/11/2025
+Florianópolis,Dubai,08/11/2025,15/11/2025
+Rio Branco,Brasília,03/12/2025,06/12/2025
+São Luís,Paris,16/06/2025,28/06/2025
+Buenos Aires,Belém,12/05/2025,27/05/2025
+Rio Branco,Dubai,23/04/2025,06/05/2025
+Salvador,Cuiabá,06/07/2025,16/07/2025
+Brasília,Londres,13/08/2025,25/08/2025
+Porto Alegre,São Luís,13/11/2025,26/11/2025
+Curitiba,Lisboa,26/05/2025,08/06/2025
+Cuiabá,Porto Velho,07/11/2025,18/11/2025
+Porto Velho,Los Angeles,09/10/2025,18/10/2025
+São Paulo,Belém,11/11/2025,21/11/2025
+Rio Branco,Natal,30/06/2025,04/07/2025
+Boa Vista,Belém,18/10/2025,22/10/2025
+Cuiabá,Lima,14/09/2025,16/09/2025
+Miami,Paris,12/11/2025,17/11/2025
+Frankfurt,Tóquio,13/10/2025,15/10/2025
+Florianópolis,São Paulo,21/05/2025,22/05/2025
+Lisboa,Porto Alegre,08/11/2025,19/11/2025
+João Pessoa,Santiago,25/08/2025,27/08/2025
+Aracaju,Frankfurt,30/05/2025,09/06/2025
+Natal,Londres,24/04/2025,29/04/2025
+Palmas,Londres,24/08/2025,29/08/2025
+Paris,Recife,31/08/2025,02/09/2025
+Madri,Amsterdã,27/11/2025,28/11/2025
+Boa Vista,Campo Grande,01/07/2025,06/07/2025
+Rio de Janeiro,Aracaju,01/12/2025,03/12/2025
+Toronto,Londres,22/08/2025,06/09/2025
+Belo Horizonte,São Luís,11/12/2025,13/12/2025
+Pequim,Los Angeles,11/08/2025,26/08/2025
+Dubai,Manaus,16/07/2025,25/07/2025
+Natal,Cuiabá,04/08/2025,11/08/2025
+Nova York,Vitória,17/05/2025,31/05/2025
+Amsterdã,Palmas,08/05/2025,23/05/2025
+Lima,Miami,26/09/2025,01/10/2025
+Toronto,Lisboa,15/07/2025,23/07/2025
+Natal,Florianópolis,28/11/2025,13/12/2025
+Belo Horizonte,Maceió,07/07/2025,11/07/2025
+Londres,Palmas,01/07/2025,14/07/2025
+Santiago,Florianópolis,27/11/2025,02/12/2025
+Rio Branco,Porto Alegre,14/08/2025,26/08/2025
+Paris,Buenos Aires,14/04/2025,27/04/2025
+Natal,São Luís,02/11/2025,12/11/2025
+Paris,Dubai,13/05/2025,20/05/2025
+Aracaju,Brasília,24/11/2025,29/11/2025
+Madri,Bogotá,09/11/2025,21/11/2025
+Lima,Aracaju,18/07/2025,25/07/2025
+Porto Alegre,Maceió,31/05/2025,02/06/2025
+São Paulo,Porto Velho,20/09/2025,28/09/2025
+Rio de Janeiro,Tóquio,17/07/2025,01/08/2025
+Aracaju,Tóquio,26/10/2025,08/11/2025
+Curitiba,Rio Branco,24/07/2025,06/08/2025
+Belém,Campo Grande,10/08/2025,22/08/2025
+Porto Velho,Boa Vista,17/07/2025,18/07/2025
+Paris,Salvador,02/11/2025,03/11/2025
+Macapá,Boa Vista,15/05/2025,17/05/2025
+Manaus,Campo Grande,12/06/2025,18/06/2025
+Porto Alegre,Pequim,13/11/2025,19/11/2025
+São Paulo,Rio Branco,25/07/2025,03/08/2025
+Amsterdã,Lisboa,02/08/2025,16/08/2025
+Fortaleza,Tóquio,06/05/2025,18/05/2025
+Lisboa,Maceió,25/12/2025,27/12/2025
+Tóquio,Palmas,30/09/2025,13/10/2025
+Los Angeles,Campo Grande,11/06/2025,14/06/2025
+Fortaleza,Teresina,22/04/2025,23/04/2025
+Natal,Goiânia,26/11/2025,07/12/2025
+Miami,Toronto,02/11/2025,11/11/2025
+Frankfurt,Pequim,11/12/2025,23/12/2025
+Frankfurt,Campo Grande,10/10/2025,13/10/2025
+Pequim,Los Angeles,26/06/2025,03/07/2025
+Belo Horizonte,Toronto,29/07/2025,12/08/2025
+Natal,Brasília,04/06/2025,11/06/2025
+Goiânia,Fortaleza,14/10/2025,16/10/2025
+Campo Grande,Aracaju,28/10/2025,07/11/2025
+Frankfurt,Porto Velho,07/12/2025,08/12/2025
+Lima,Belo Horizonte,18/09/2025,21/09/2025
+Rio de Janeiro,Roma,15/04/2025,28/04/2025
+Campo Grande,Belo Horizonte,09/05/2025,10/05/2025
+Belo Horizonte,Cidade do México,20/10/2025,01/11/2025
+Madri,Aracaju,28/12/2025,03/01/2026
+Cuiabá,Manaus,29/10/2025,30/10/2025
+Madri,Goiânia,21/11/2025,04/12/2025
+Frankfurt,João Pessoa,28/04/2025,12/05/2025
+Rio de Janeiro,Belo Horizonte,30/04/2025,04/05/2025
+Frankfurt,Goiânia,23/12/2025,03/01/2026
+Maceió,Dubai,26/12/2025,29/12/2025
+São Paulo,Miami,13/07/2025,14/07/2025
+Miami,Porto Alegre,15/05/2025,20/05/2025
+São Paulo,Curitiba,06/09/2025,08/09/2025
+Paris,Curitiba,05/10/2025,16/10/2025
+Nova York,Cidade do México,13/05/2025,25/05/2025
+Macapá,Cidade do México,21/10/2025,30/10/2025
+Buenos Aires,Pequim,03/11/2025,15/11/2025
+Cuiabá,Manaus,19/06/2025,04/07/2025
+Recife,Bogotá,31/10/2025,12/11/2025
+Roma,Fortaleza,09/07/2025,10/07/2025
+Buenos Aires,Natal,23/10/2025,01/11/2025
+Dubai,Campo Grande,19/09/2025,21/09/2025
+Campo Grande,Tóquio,11/06/2025,17/06/2025
+Pequim,Fortaleza,06/08/2025,13/08/2025
+Campo Grande,São Luís,30/11/2025,11/12/2025
+Fortaleza,Palmas,20/07/2025,23/07/2025
+Tóquio,João Pessoa,05/07/2025,08/07/2025
+Porto Alegre,Recife,20/11/2025,28/11/2025
+Londres,Fortaleza,08/08/2025,22/08/2025
+Bogotá,São Luís,23/11/2025,06/12/2025
+Porto Velho,Buenos Aires,16/12/2025,17/12/2025
+Paris,Nova York,13/09/2025,24/09/2025
+Recife,Goiânia,06/11/2025,09/11/2025
+Belém,Belo Horizonte,19/06/2025,29/06/2025
+Rio Branco,Santiago,16/06/2025,18/06/2025
+Florianópolis,Curitiba,27/12/2025,28/12/2025
+Frankfurt,Maceió,12/09/2025,16/09/2025
+Maceió,Teresina,03/10/2025,17/10/2025
+Rio de Janeiro,Madri,12/07/2025,18/07/2025
+Miami,Lisboa,27/07/2025,29/07/2025
+Pequim,Fortaleza,07/10/2025,15/10/2025
+Florianópolis,São Luís,17/05/2025,29/05/2025
+Aracaju,Belém,31/10/2025,01/11/2025
+Frankfurt,Goiânia,22/11/2025,05/12/2025
+Amsterdã,Fortaleza,02/07/2025,10/07/2025
+Maceió,Cuiabá,17/10/2025,25/10/2025
+Campo Grande,Tóquio,26/06/2025,28/06/2025
+Maceió,Boa Vista,13/10/2025,16/10/2025
+Roma,São Luís,27/06/2025,04/07/2025
+Goiânia,Rio Branco,20/05/2025,03/06/2025
+Fortaleza,Campo Grande,07/06/2025,11/06/2025
+Lisboa,Boa Vista,30/06/2025,10/07/2025
+Paris,Curitiba,06/10/2025,15/10/2025
+João Pessoa,Londres,11/11/2025,26/11/2025
+Rio de Janeiro,Paris,31/12/2025,14/01/2026
+Lisboa,Aracaju,11/11/2025,16/11/2025
+Madri,Vitória,18/09/2025,19/09/2025
+Natal,Madri,19/12/2025,02/01/2026
+Vitória,Brasília,28/10/2025,07/11/2025
+Vitória,Santiago,09/05/2025,13/05/2025
+Paris,Fortaleza,03/10/2025,16/10/2025
+Aracaju,Miami,28/08/2025,03/09/2025
+Rio Branco,Roma,08/05/2025,11/05/2025
+Lima,Palmas,25/11/2025,29/11/2025
+São Luís,Goiânia,04/08/2025,06/08/2025
+Fortaleza,Teresina,18/10/2025,25/10/2025
+Buenos Aires,Natal,26/05/2025,30/05/2025
+Brasília,Natal,04/11/2025,06/11/2025
+Miami,Los Angeles,14/11/2025,27/11/2025
+Belo Horizonte,Curitiba,22/09/2025,27/09/2025
+Florianópolis,Palmas,12/08/2025,17/08/2025
+Pequim,Madri,09/09/2025,15/09/2025
+Florianópolis,Vitória,30/06/2025,07/07/2025
+Paris,Macapá,24/10/2025,03/11/2025
+Fortaleza,Palmas,09/06/2025,15/06/2025
+São Paulo,Natal,05/06/2025,09/06/2025
+Bogotá,Porto Alegre,05/06/2025,13/06/2025
+Maceió,Salvador,05/08/2025,17/08/2025
+Campo Grande,Madri,14/12/2025,20/12/2025
+Bogotá,Curitiba,10/10/2025,17/10/2025
+Lisboa,São Paulo,10/06/2025,21/06/2025
+Dubai,Natal,05/11/2025,12/11/2025
+Manaus,Buenos Aires,31/07/2025,05/08/2025
+Palmas,Brasília,12/06/2025,26/06/2025
+João Pessoa,Boa Vista,15/08/2025,29/08/2025
+Florianópolis,Pequim,13/07/2025,21/07/2025
+Manaus,Natal,28/05/2025,12/06/2025
+Salvador,Cuiabá,09/12/2025,15/12/2025
+Rio Branco,Teresina,11/10/2025,13/10/2025
+Vitória,Dubai,19/04/2025,29/04/2025
+Palmas,Salvador,11/04/2025,12/04/2025
+Salvador,Rio de Janeiro,30/09/2025,05/10/2025
+Miami,Lima,30/10/2025,04/11/2025
+Bogotá,Los Angeles,17/08/2025,26/08/2025
+Santiago,Pequim,17/08/2025,01/09/2025
+Fortaleza,Cidade do México,07/04/2025,14/04/2025
+Frankfurt,Cuiabá,27/11/2025,30/11/2025
+Los Angeles,Belo Horizonte,11/09/2025,23/09/2025
+Curitiba,Miami,02/08/2025,11/08/2025
+Buenos Aires,João Pessoa,20/07/2025,31/07/2025
+Los Angeles,Madri,03/06/2025,16/06/2025
+Londres,Campo Grande,17/11/2025,01/12/2025
+Porto Velho,Teresina,23/05/2025,26/05/2025
+Manaus,Teresina,12/08/2025,16/08/2025
+Aracaju,Vitória,02/09/2025,16/09/2025
+Roma,Lima,02/12/2025,11/12/2025
+Fortaleza,Rio Branco,05/07/2025,17/07/2025
+Campo Grande,Porto Velho,05/08/2025,19/08/2025
+Tóquio,Amsterdã,24/09/2025,03/10/2025
+Paris,Porto Velho,02/09/2025,12/09/2025
+Londres,Cuiabá,26/07/2025,05/08/2025
+Buenos Aires,Nova York,29/06/2025,14/07/2025
+Campo Grande,Miami,29/04/2025,06/05/2025
+Maceió,Bogotá,22/04/2025,26/04/2025
+Goiânia,Natal,16/10/2025,29/10/2025
+João Pessoa,Madri,26/09/2025,03/10/2025
+Aracaju,Cidade do México,16/04/2025,19/04/2025
+Santiago,Cidade do México,27/07/2025,02/08/2025
+Los Angeles,Salvador,09/06/2025,11/06/2025
+Florianópolis,Toronto,17/08/2025,31/08/2025
+Florianópolis,Macapá,19/04/2025,22/04/2025
+Porto Alegre,Manaus,29/07/2025,11/08/2025
+João Pessoa,Madri,08/10/2025,18/10/2025
+Amsterdã,São Luís,30/05/2025,02/06/2025
+Florianópolis,Vitória,16/11/2025,17/11/2025
+Londres,Boa Vista,26/09/2025,29/09/2025
+Rio de Janeiro,Boa Vista,03/08/2025,18/08/2025
+Belém,Belo Horizonte,12/12/2025,16/12/2025
+Salvador,Goiânia,15/08/2025,25/08/2025
+Manaus,Porto Alegre,18/07/2025,28/07/2025
+Vitória,Paris,05/05/2025,20/05/2025
+Madri,Maceió,21/11/2025,27/11/2025
+Macapá,Rio Branco,02/11/2025,17/11/2025
+Londres,Maceió,24/12/2025,27/12/2025
+Manaus,Cuiabá,04/06/2025,18/06/2025
+Buenos Aires,Goiânia,16/04/2025,21/04/2025
+Dubai,Santiago,24/08/2025,30/08/2025
+Natal,Teresina,09/10/2025,23/10/2025
+Palmas,Vitória,27/04/2025,06/05/2025
+Belo Horizonte,Cidade do México,20/04/2025,03/05/2025
+Macapá,Brasília,13/04/2025,16/04/2025
+Cuiabá,Natal,29/04/2025,01/05/2025
+João Pessoa,Belém,11/06/2025,13/06/2025
+Florianópolis,Cidade do México,20/09/2025,25/09/2025
+Cidade do México,Miami,03/10/2025,13/10/2025
+Fortaleza,Londres,19/07/2025,26/07/2025
+Nova York,Paris,19/10/2025,23/10/2025
+Fortaleza,Amsterdã,16/06/2025,22/06/2025
+Manaus,Maceió,28/11/2025,10/12/2025
+Brasília,Rio de Janeiro,26/04/2025,11/05/2025
+Porto Alegre,Rio de Janeiro,18/11/2025,20/11/2025
+Lisboa,Goiânia,26/08/2025,30/08/2025
+Toronto,Cuiabá,16/09/2025,23/09/2025
+Amsterdã,Dubai,27/10/2025,02/11/2025
+Cidade do México,Los Angeles,26/04/2025,04/05/2025
+Boa Vista,Lisboa,12/10/2025,18/10/2025
+Palmas,Fortaleza,23/09/2025,30/09/2025
+São Paulo,Rio Branco,25/11/2025,30/11/2025
+Florianópolis,Nova York,29/06/2025,03/07/2025
+Curitiba,Boa Vista,31/08/2025,03/09/2025
+Lisboa,Porto Velho,08/07/2025,11/07/2025
+Nova York,Belém,02/05/2025,05/05/2025
+Salvador,Belém,02/09/2025,15/09/2025
+Boa Vista,Amsterdã,21/05/2025,29/05/2025
+Florianópolis,Manaus,13/09/2025,16/09/2025
+Palmas,Florianópolis,08/04/2025,13/04/2025
+Vitória,Maceió,13/06/2025,15/06/2025
+Los Angeles,Salvador,03/08/2025,05/08/2025
+Maceió,Campo Grande,13/10/2025,21/10/2025
+Maceió,Miami,20/05/2025,27/05/2025
+Belo Horizonte,Cuiabá,17/07/2025,21/07/2025
+Macapá,Palmas,05/12/2025,06/12/2025
+Porto Velho,Buenos Aires,03/05/2025,10/05/2025
+Brasília,Teresina,17/05/2025,19/05/2025
+São Paulo,Paris,28/09/2025,02/10/2025
+Frankfurt,Lisboa,24/09/2025,29/09/2025
+Macapá,Teresina,14/08/2025,17/08/2025
+Pequim,Palmas,15/07/2025,30/07/2025
+Porto Alegre,Rio Branco,06/10/2025,15/10/2025
+Lisboa,Cidade do México,29/08/2025,01/09/2025
+Amsterdã,São Paulo,13/04/2025,18/04/2025
+Frankfurt,Teresina,19/07/2025,03/08/2025
+Goiânia,Santiago,12/07/2025,17/07/2025
+Fortaleza,Buenos Aires,28/04/2025,10/05/2025
+Goiânia,Paris,21/06/2025,01/07/2025
+Brasília,Amsterdã,23/11/2025,24/11/2025
+Rio Branco,Santiago,14/07/2025,15/07/2025
+Paris,Campo Grande,22/04/2025,03/05/2025
+Miami,Florianópolis,05/11/2025,16/11/2025
+Toronto,Belo Horizonte,05/11/2025,16/11/2025
+Brasília,Santiago,11/10/2025,23/10/2025
+Goiânia,Vitória,23/05/2025,05/06/2025
+Salvador,Cidade do México,05/11/2025,13/11/2025
+Salvador,Belo Horizonte,31/05/2025,03/06/2025
+João Pessoa,Brasília,05/10/2025,19/10/2025
+João Pessoa,Maceió,15/11/2025,27/11/2025
+Goiânia,Londres,04/06/2025,16/06/2025
+Porto Alegre,Pequim,02/06/2025,15/06/2025
+Fortaleza,Salvador,01/08/2025,16/08/2025
+Porto Alegre,Porto Velho,03/11/2025,09/11/2025
+São Luís,São Paulo,27/07/2025,30/07/2025
+Natal,Vitória,21/12/2025,22/12/2025
+Los Angeles,Pequim,28/09/2025,02/10/2025
+Los Angeles,Natal,23/09/2025,24/09/2025
+Vitória,Toronto,29/04/2025,08/05/2025
+Nova York,Maceió,03/05/2025,10/05/2025
+Maceió,Nova York,03/09/2025,14/09/2025
+Salvador,Belém,12/07/2025,26/07/2025
+São Paulo,Lima,22/08/2025,05/09/2025
+Paris,Belém,30/08/2025,07/09/2025
+Porto Velho,Madri,16/06/2025,17/06/2025
+Salvador,Miami,05/05/2025,17/05/2025
+Los Angeles,Goiânia,25/12/2025,05/01/2026
+Fortaleza,Recife,22/08/2025,05/09/2025
+Fortaleza,Cidade do México,28/04/2025,03/05/2025
+Belo Horizonte,Curitiba,31/05/2025,09/06/2025
+Porto Alegre,Los Angeles,02/10/2025,06/10/2025
+Amsterdã,Goiânia,11/08/2025,13/08/2025
+Aracaju,Amsterdã,17/09/2025,18/09/2025
+Florianópolis,Los Angeles,12/12/2025,26/12/2025
+Florianópolis,Vitória,30/08/2025,14/09/2025
+Roma,Natal,06/08/2025,12/08/2025
+Porto Alegre,Tóquio,01/09/2025,11/09/2025
+Palmas,Roma,24/07/2025,04/08/2025
+Manaus,Florianópolis,23/05/2025,06/06/2025
+Miami,Buenos Aires,13/08/2025,26/08/2025
+São Paulo,Maceió,21/05/2025,03/06/2025
+Toronto,Frankfurt,16/04/2025,23/04/2025
+Recife,Boa Vista,01/11/2025,13/11/2025
+Los Angeles,Vitória,05/12/2025,17/12/2025
+Maceió,Goiânia,04/07/2025,07/07/2025
+Manaus,Porto Alegre,05/09/2025,13/09/2025
+Teresina,São Luís,02/08/2025,07/08/2025
+Cuiabá,Fortaleza,21/10/2025,29/10/2025
+Cidade do México,Aracaju,25/10/2025,29/10/2025
+Maceió,Rio de Janeiro,08/09/2025,09/09/2025
+Cuiabá,Amsterdã,24/06/2025,05/07/2025
+Rio Branco,Fortaleza,28/07/2025,09/08/2025
+Brasília,Natal,11/11/2025,14/11/2025
+Campo Grande,Fortaleza,22/08/2025,06/09/2025
+Belém,Aracaju,13/12/2025,19/12/2025
+Salvador,Santiago,20/07/2025,31/07/2025
+Dubai,Maceió,29/04/2025,09/05/2025
+Porto Velho,Buenos Aires,30/07/2025,02/08/2025
+Paris,Boa Vista,18/11/2025,19/11/2025
+Manaus,Dubai,06/11/2025,13/11/2025
+Toronto,Cuiabá,14/10/2025,23/10/2025
+São Luís,Londres,07/12/2025,12/12/2025
+Toronto,Miami,15/12/2025,27/12/2025
+Bogotá,Los Angeles,14/06/2025,15/06/2025
+Vitória,Florianópolis,22/08/2025,26/08/2025
+Palmas,Rio de Janeiro,23/07/2025,07/08/2025
+Nova York,Salvador,27/12/2025,05/01/2026
+Porto Alegre,Miami,16/10/2025,26/10/2025
+Rio Branco,Boa Vista,24/09/2025,28/09/2025
+Cidade do México,Lima,06/07/2025,13/07/2025
+Curitiba,Madri,03/07/2025,18/07/2025
+Miami,Macapá,23/11/2025,02/12/2025
+Rio de Janeiro,Goiânia,14/09/2025,28/09/2025
+Roma,Los Angeles,12/09/2025,18/09/2025
+Lisboa,Palmas,04/10/2025,15/10/2025
+Curitiba,Lisboa,26/07/2025,09/08/2025
+Madri,Pequim,06/08/2025,21/08/2025
+Vitória,Brasília,02/05/2025,07/05/2025
+Pequim,Boa Vista,19/08/2025,31/08/2025
+Manaus,Porto Velho,07/11/2025,12/11/2025
+Frankfurt,São Luís,01/06/2025,02/06/2025
+Miami,Porto Alegre,15/08/2025,16/08/2025
+Salvador,Cidade do México,06/12/2025,09/12/2025
+São Luís,Roma,24/07/2025,30/07/2025
+Buenos Aires,Dubai,08/05/2025,20/05/2025
+Roma,Curitiba,09/10/2025,20/10/2025
+Bogotá,Boa Vista,27/10/2025,11/11/2025
+Manaus,Teresina,12/04/2025,24/04/2025
+São Luís,Brasília,07/07/2025,14/07/2025
+Aracaju,Palmas,28/10/2025,30/10/2025
+Goiânia,João Pessoa,26/04/2025,10/05/2025
+Dubai,Los Angeles,31/10/2025,12/11/2025
+Manaus,Cidade do México,17/09/2025,19/09/2025
+Belo Horizonte,Porto Velho,19/10/2025,26/10/2025
+Pequim,Tóquio,01/11/2025,10/11/2025
+Rio de Janeiro,Maceió,13/04/2025,18/04/2025
+São Paulo,Bogotá,01/06/2025,06/06/2025
+Toronto,Recife,23/12/2025,29/12/2025
+Miami,São Luís,30/10/2025,06/11/2025
+Maceió,Fortaleza,24/06/2025,07/07/2025
+Londres,Madri,26/06/2025,28/06/2025
+Madri,Cidade do México,23/12/2025,26/12/2025
+Bogotá,Buenos Aires,09/11/2025,14/11/2025
+Amsterdã,Maceió,06/07/2025,12/07/2025
+Cidade do México,Macapá,25/08/2025,03/09/2025
+Toronto,Palmas,03/05/2025,10/05/2025
+Dubai,Curitiba,27/12/2025,11/01/2026
+Lisboa,Porto Velho,21/09/2025,01/10/2025
+Paris,São Paulo,09/11/2025,11/11/2025
+Cidade do México,Fortaleza,21/06/2025,26/06/2025
+Pequim,Teresina,25/06/2025,27/06/2025
+Amsterdã,Boa Vista,15/08/2025,21/08/2025
+Santiago,Manaus,27/05/2025,02/06/2025
+Dubai,Boa Vista,15/07/2025,30/07/2025
+Salvador,Tóquio,13/08/2025,14/08/2025
+Salvador,Maceió,19/10/2025,30/10/2025
+Brasília,Belém,27/11/2025,30/11/2025
+Florianópolis,Londres,19/06/2025,20/06/2025
+Brasília,Campo Grande,10/04/2025,11/04/2025
+Curitiba,Vitória,15/04/2025,18/04/2025
+Londres,Lima,06/06/2025,17/06/2025
+Macapá,Boa Vista,25/11/2025,27/11/2025
+São Luís,São Paulo,06/08/2025,18/08/2025
+Salvador,Goiânia,24/12/2025,29/12/2025
+Florianópolis,Fortaleza,20/09/2025,05/10/2025
+São Paulo,Santiago,10/07/2025,25/07/2025
+Belém,Paris,31/08/2025,01/09/2025
+Macapá,Aracaju,19/10/2025,21/10/2025
+Goiânia,Brasília,14/11/2025,15/11/2025
+Santiago,Bogotá,13/10/2025,17/10/2025
+Porto Velho,Belém,23/04/2025,29/04/2025
+Bogotá,Los Angeles,08/08/2025,15/08/2025
+Goiânia,Palmas,26/06/2025,01/07/2025
+São Luís,Toronto,20/09/2025,21/09/2025
+Belo Horizonte,Dubai,03/10/2025,10/10/2025
+Palmas,Paris,19/11/2025,03/12/2025
+Teresina,Campo Grande,09/07/2025,17/07/2025
+Cidade do México,Roma,29/09/2025,14/10/2025
+Salvador,Porto Alegre,09/12/2025,23/12/2025
+Campo Grande,Londres,11/09/2025,13/09/2025
+Macapá,Belém,04/07/2025,13/07/2025
+Boa Vista,Pequim,08/04/2025,16/04/2025
+Recife,Dubai,13/10/2025,27/10/2025
+Paris,Cuiabá,24/08/2025,31/08/2025
+Dubai,Curitiba,12/04/2025,15/04/2025
+Brasília,Teresina,23/10/2025,26/10/2025
+São Paulo,Toronto,23/07/2025,24/07/2025
+Nova York,Paris,25/07/2025,05/08/2025
+Palmas,Porto Velho,25/08/2025,31/08/2025
+Belo Horizonte,Lima,18/12/2025,22/12/2025
+Belém,Lisboa,31/08/2025,05/09/2025
+Rio de Janeiro,Miami,24/09/2025,08/10/2025
+Madri,Vitória,04/10/2025,05/10/2025
+Goiânia,Belo Horizonte,01/10/2025,07/10/2025
+Porto Velho,Natal,26/08/2025,01/09/2025
+São Luís,Belo Horizonte,20/12/2025,29/12/2025
+Rio Branco,Cuiabá,27/08/2025,29/08/2025
+Toronto,Cuiabá,05/10/2025,18/10/2025
+Goiânia,Pequim,07/10/2025,20/10/2025
+Los Angeles,Maceió,24/04/2025,28/04/2025
+Santiago,Nova York,04/08/2025,16/08/2025
+Porto Velho,Belo Horizonte,12/12/2025,23/12/2025
+Frankfurt,Amsterdã,20/11/2025,29/11/2025
+Manaus,Goiânia,19/06/2025,20/06/2025
+Boa Vista,Maceió,01/05/2025,13/05/2025
+Campo Grande,Manaus,26/09/2025,10/10/2025
+Miami,Roma,03/10/2025,16/10/2025
+Curitiba,Teresina,23/08/2025,02/09/2025
+Goiânia,Lisboa,14/08/2025,15/08/2025
+Salvador,Cuiabá,20/05/2025,01/06/2025
+Recife,Nova York,15/05/2025,19/05/2025
+Bogotá,Rio de Janeiro,31/10/2025,07/11/2025
+Brasília,Lisboa,19/11/2025,29/11/2025
+Santiago,Belém,12/04/2025,20/04/2025
+Goiânia,São Luís,14/05/2025,21/05/2025
+Miami,Dubai,10/09/2025,16/09/2025
+Paris,Curitiba,03/08/2025,10/08/2025
+João Pessoa,Nova York,06/06/2025,14/06/2025
+Fortaleza,São Luís,24/05/2025,08/06/2025
+São Paulo,Natal,15/12/2025,27/12/2025
+Macapá,Roma,21/05/2025,03/06/2025
+Los Angeles,Porto Velho,13/08/2025,26/08/2025
+São Luís,Campo Grande,25/07/2025,04/08/2025
+São Paulo,Cidade do México,29/09/2025,01/10/2025
+Buenos Aires,Recife,10/07/2025,18/07/2025
+João Pessoa,Natal,17/04/2025,28/04/2025
+Belo Horizonte,Curitiba,15/12/2025,20/12/2025
+Manaus,Nova York,07/09/2025,18/09/2025
+Buenos Aires,São Luís,13/06/2025,23/06/2025
+São Luís,Roma,21/12/2025,02/01/2026
+Belém,Paris,15/12/2025,23/12/2025
+Palmas,Salvador,26/10/2025,30/10/2025
+Lisboa,Toronto,16/10/2025,28/10/2025
+Rio de Janeiro,Rio Branco,29/10/2025,08/11/2025
+Bogotá,Aracaju,10/05/2025,13/05/2025
+Natal,Macapá,13/07/2025,25/07/2025
+Curitiba,Toronto,25/12/2025,31/12/2025
+Curitiba,Lisboa,16/09/2025,19/09/2025
+Santiago,Macapá,28/09/2025,03/10/2025
+Frankfurt,Pequim,21/11/2025,30/11/2025
+Santiago,Roma,27/08/2025,09/09/2025
+Tóquio,Palmas,14/08/2025,29/08/2025
+Paris,Teresina,13/12/2025,22/12/2025
+Roma,Goiânia,13/05/2025,25/05/2025
+Dubai,Brasília,10/11/2025,13/11/2025
+Porto Velho,Fortaleza,10/07/2025,16/07/2025
+Lima,João Pessoa,03/12/2025,11/12/2025
+Lima,Cidade do México,21/09/2025,24/09/2025
+São Paulo,Madri,10/04/2025,18/04/2025
+Campo Grande,Rio Branco,06/08/2025,21/08/2025
+Salvador,Paris,06/10/2025,10/10/2025
+João Pessoa,Porto Alegre,18/04/2025,24/04/2025
+Nova York,Aracaju,23/04/2025,08/05/2025
+Palmas,Salvador,12/11/2025,23/11/2025
+Belo Horizonte,Buenos Aires,26/11/2025,03/12/2025
+Rio Branco,Bogotá,21/07/2025,24/07/2025
+Palmas,Amsterdã,16/05/2025,24/05/2025
+Fortaleza,Lima,21/04/2025,04/05/2025
+Nova York,Frankfurt,30/07/2025,13/08/2025
+Recife,Porto Alegre,08/12/2025,20/12/2025
+Fortaleza,Los Angeles,06/06/2025,16/06/2025
+Nova York,Boa Vista,04/05/2025,10/05/2025
+Frankfurt,Miami,22/04/2025,28/04/2025
+Amsterdã,Bogotá,27/09/2025,28/09/2025
+Belo Horizonte,Lima,02/06/2025,13/06/2025
+Lisboa,Boa Vista,31/10/2025,10/11/2025
+Toronto,Campo Grande,14/11/2025,19/11/2025
+Curitiba,Belém,22/05/2025,03/06/2025
+Curitiba,Toronto,20/10/2025,03/11/2025
+Amsterdã,Roma,19/09/2025,21/09/2025
+Paris,Manaus,21/12/2025,01/01/2026
+Goiânia,Tóquio,10/11/2025,24/11/2025
+Lisboa,Boa Vista,07/05/2025,09/05/2025
+Cuiabá,Florianópolis,28/10/2025,31/10/2025
+Palmas,Toronto,10/06/2025,15/06/2025
+Belém,Santiago,07/11/2025,09/11/2025
+Teresina,Maceió,30/07/2025,09/08/2025
+Fortaleza,Campo Grande,15/10/2025,29/10/2025
+Manaus,Salvador,07/05/2025,11/05/2025
+Londres,Curitiba,23/12/2025,29/12/2025
+Buenos Aires,Goiânia,22/08/2025,05/09/2025
+Lisboa,Amsterdã,05/08/2025,11/08/2025
+Pequim,Campo Grande,21/09/2025,29/09/2025
+Curitiba,Natal,04/10/2025,19/10/2025
+Fortaleza,Belém,02/08/2025,17/08/2025
+Roma,Miami,09/06/2025,24/06/2025
+São Paulo,Nova York,06/08/2025,09/08/2025
+Recife,Goiânia,02/09/2025,06/09/2025
+Bogotá,Belém,05/08/2025,11/08/2025
+Rio Branco,João Pessoa,25/04/2025,04/05/2025
+Tóquio,Vitória,09/11/2025,20/11/2025
+Goiânia,Manaus,03/05/2025,14/05/2025
+Buenos Aires,Recife,07/08/2025,16/08/2025
+Lisboa,Vitória,10/08/2025,20/08/2025
+Rio Branco,Teresina,03/08/2025,16/08/2025
+Miami,Dubai,22/09/2025,06/10/2025
+Belém,Toronto,12/07/2025,26/07/2025
+Goiânia,Santiago,29/09/2025,08/10/2025
+Nova York,Brasília,22/08/2025,25/08/2025
+Belo Horizonte,Miami,16/04/2025,24/04/2025
+Buenos Aires,Aracaju,18/06/2025,28/06/2025
+Florianópolis,Dubai,15/05/2025,19/05/2025
+Palmas,Cuiabá,24/05/2025,26/05/2025
+Rio Branco,Natal,04/08/2025,17/08/2025
+Recife,Pequim,15/07/2025,30/07/2025
+Teresina,Pequim,08/06/2025,12/06/2025
+Curitiba,Palmas,18/08/2025,24/08/2025
+Macapá,Pequim,08/08/2025,20/08/2025
+São Paulo,Amsterdã,05/10/2025,15/10/2025
+Tóquio,Fortaleza,30/12/2025,03/01/2026
+Bogotá,São Luís,04/11/2025,18/11/2025
+Campo Grande,Porto Velho,21/10/2025,02/11/2025
+Manaus,Dubai,18/04/2025,29/04/2025
+Miami,Roma,26/08/2025,08/09/2025
+Londres,Madri,20/05/2025,02/06/2025
+Dubai,São Paulo,10/08/2025,15/08/2025
+Los Angeles,Paris,19/06/2025,03/07/2025
+Rio de Janeiro,Lima,19/12/2025,27/12/2025
+São Luís,Los Angeles,09/04/2025,17/04/2025
+Recife,Aracaju,12/07/2025,15/07/2025
+Rio de Janeiro,Brasília,12/10/2025,24/10/2025
+Roma,Paris,31/12/2025,08/01/2026
+Cuiabá,João Pessoa,10/11/2025,24/11/2025
+Porto Velho,Rio de Janeiro,14/07/2025,21/07/2025
+Bogotá,Vitória,22/11/2025,03/12/2025
+Belo Horizonte,Salvador,27/10/2025,28/10/2025
+Florianópolis,Vitória,01/12/2025,16/12/2025
+Cuiabá,Macapá,02/10/2025,10/10/2025
+Tóquio,Dubai,24/10/2025,27/10/2025
+Pequim,Lisboa,03/10/2025,18/10/2025
+Manaus,Los Angeles,29/07/2025,31/07/2025
+Santiago,Macapá,04/07/2025,08/07/2025
+Maceió,Palmas,30/06/2025,09/07/2025
+Natal,Vitória,15/07/2025,29/07/2025
+Palmas,Porto Alegre,20/11/2025,25/11/2025
+Fortaleza,Rio Branco,15/10/2025,21/10/2025
+Maceió,Curitiba,13/09/2025,19/09/2025
+Campo Grande,Teresina,22/06/2025,24/06/2025
+Vitória,Miami,18/04/2025,01/05/2025
+Boa Vista,Porto Alegre,09/09/2025,22/09/2025
+Frankfurt,Campo Grande,04/06/2025,17/06/2025
+Madri,Porto Velho,04/07/2025,07/07/2025
+Lisboa,Rio Branco,04/06/2025,19/06/2025
+Dubai,Los Angeles,17/10/2025,24/10/2025
+Pequim,Teresina,29/10/2025,02/11/2025
+Londres,Salvador,11/05/2025,13/05/2025
+Lisboa,Frankfurt,11/12/2025,22/12/2025
+Salvador,Santiago,09/05/2025,12/05/2025
+Santiago,Roma,09/05/2025,16/05/2025
+Lisboa,São Paulo,05/11/2025,13/11/2025
+Recife,Campo Grande,25/04/2025,08/05/2025
+Macapá,Tóquio,08/07/2025,10/07/2025
+Pequim,Lima,12/09/2025,14/09/2025
+Campo Grande,Toronto,11/10/2025,22/10/2025
+Amsterdã,Londres,06/12/2025,14/12/2025
+Cidade do México,Madri,16/08/2025,24/08/2025
+Londres,Tóquio,30/04/2025,05/05/2025
+Natal,Belém,04/05/2025,14/05/2025
+Boa Vista,Nova York,26/08/2025,03/09/2025
+Roma,João Pessoa,20/08/2025,26/08/2025
+Bogotá,Rio Branco,05/10/2025,13/10/2025
+Buenos Aires,Belo Horizonte,01/08/2025,05/08/2025
+Londres,Curitiba,30/04/2025,07/05/2025
+Belém,Buenos Aires,01/10/2025,02/10/2025
+Los Angeles,Goiânia,10/10/2025,13/10/2025
+Miami,Paris,08/11/2025,17/11/2025
+Fortaleza,Cuiabá,01/10/2025,11/10/2025
+Nova York,Belém,06/05/2025,08/05/2025
+Brasília,Lima,06/05/2025,17/05/2025
+Natal,Cidade do México,26/04/2025,08/05/2025
+Santiago,Amsterdã,14/11/2025,26/11/2025
+Maceió,Porto Alegre,24/05/2025,02/06/2025
+Lima,Frankfurt,05/10/2025,16/10/2025
+Cidade do México,Toronto,02/11/2025,15/11/2025
+Cidade do México,Porto Alegre,16/09/2025,18/09/2025
+Teresina,Vitória,26/11/2025,02/12/2025
+Macapá,Cidade do México,06/09/2025,08/09/2025
+Florianópolis,Campo Grande,05/05/2025,11/05/2025
+Palmas,Belo Horizonte,14/11/2025,15/11/2025
+Fortaleza,Maceió,03/11/2025,18/11/2025
+Tóquio,Maceió,10/12/2025,17/12/2025
+Los Angeles,Rio Branco,25/05/2025,03/06/2025
+Pequim,Santiago,10/07/2025,18/07/2025
+Manaus,Amsterdã,01/07/2025,15/07/2025
+Natal,Curitiba,24/12/2025,03/01/2026
+Santiago,Roma,26/11/2025,29/11/2025
+Porto Alegre,Belém,07/08/2025,17/08/2025
+João Pessoa,Palmas,29/08/2025,06/09/2025
+Vitória,Nova York,02/05/2025,07/05/2025
+Campo Grande,Macapá,26/10/2025,01/11/2025
+Palmas,Rio Branco,12/05/2025,25/05/2025
+Roma,Pequim,12/08/2025,21/08/2025
+Florianópolis,Roma,30/08/2025,14/09/2025
+Buenos Aires,Porto Velho,08/09/2025,19/09/2025
+Porto Velho,Maceió,28/07/2025,02/08/2025
+Paris,Brasília,01/07/2025,14/07/2025
+São Luís,Brasília,06/07/2025,14/07/2025
+Nova York,Dubai,27/09/2025,30/09/2025
+São Luís,Macapá,27/10/2025,29/10/2025
+Boa Vista,Dubai,06/05/2025,19/05/2025
+Campo Grande,Amsterdã,20/11/2025,03/12/2025
+Belém,Macapá,18/11/2025,28/11/2025
+Roma,Paris,12/07/2025,22/07/2025
+São Paulo,João Pessoa,22/09/2025,27/09/2025
+Paris,Vitória,01/06/2025,16/06/2025
+Recife,São Luís,02/12/2025,11/12/2025
+João Pessoa,Cuiabá,17/12/2025,21/12/2025
+Santiago,Teresina,16/04/2025,19/04/2025
+Pequim,Brasília,17/10/2025,27/10/2025
+Paris,Lisboa,25/09/2025,05/10/2025
+Campo Grande,Rio Branco,13/09/2025,17/09/2025
+Paris,Curitiba,20/10/2025,27/10/2025
+Boa Vista,Brasília,26/05/2025,05/06/2025
+Manaus,Miami,25/04/2025,29/04/2025
+Palmas,Londres,12/04/2025,15/04/2025
+Campo Grande,Londres,11/10/2025,20/10/2025
+Paris,Tóquio,30/09/2025,12/10/2025
+Dubai,Rio Branco,13/06/2025,21/06/2025
+Porto Alegre,Cidade do México,29/10/2025,03/11/2025
+Manaus,Roma,23/11/2025,03/12/2025
+Lisboa,Londres,08/05/2025,14/05/2025
+Manaus,Porto Velho,07/06/2025,13/06/2025
+Londres,Dubai,25/04/2025,29/04/2025
+Teresina,Manaus,11/06/2025,25/06/2025
+Salvador,Lisboa,19/11/2025,25/11/2025
+Nova York,Cidade do México,15/11/2025,28/11/2025
+Toronto,Rio Branco,01/09/2025,07/09/2025
+Curitiba,Maceió,28/09/2025,12/10/2025
+Lima,Brasília,28/10/2025,11/11/2025
+Boa Vista,Maceió,28/10/2025,05/11/2025
+Aracaju,Tóquio,16/07/2025,28/07/2025
+Teresina,Dubai,04/10/2025,09/10/2025
+Buenos Aires,São Luís,30/04/2025,15/05/2025
+Londres,Florianópolis,06/11/2025,16/11/2025
+Boa Vista,Toronto,17/09/2025,21/09/2025
+Florianópolis,Rio Branco,26/11/2025,02/12/2025
+Rio de Janeiro,Salvador,21/09/2025,02/10/2025
+Amsterdã,Rio de Janeiro,22/09/2025,07/10/2025
+Curitiba,São Luís,23/11/2025,07/12/2025
+Natal,Frankfurt,23/06/2025,06/07/2025
+Frankfurt,Recife,11/05/2025,23/05/2025
+Rio Branco,Rio de Janeiro,16/10/2025,22/10/2025
+Lisboa,Porto Velho,15/05/2025,18/05/2025
+Londres,Natal,29/08/2025,02/09/2025
+Los Angeles,João Pessoa,29/05/2025,10/06/2025
+Bogotá,Boa Vista,05/06/2025,08/06/2025
+São Luís,Maceió,19/09/2025,27/09/2025
+Santiago,Porto Velho,26/12/2025,09/01/2026
+João Pessoa,Frankfurt,12/10/2025,14/10/2025
+Pequim,Cuiabá,10/12/2025,18/12/2025
+Pequim,Tóquio,15/08/2025,20/08/2025
+Frankfurt,Belém,06/06/2025,15/06/2025
+Cuiabá,Amsterdã,16/11/2025,26/11/2025
+Brasília,Frankfurt,05/12/2025,14/12/2025
+Londres,Pequim,10/09/2025,19/09/2025
+Rio Branco,Goiânia,09/07/2025,10/07/2025
+Los Angeles,Buenos Aires,28/06/2025,02/07/2025
+Lisboa,Campo Grande,19/11/2025,03/12/2025
+Rio Branco,Dubai,25/07/2025,05/08/2025
+Madri,Buenos Aires,16/10/2025,20/10/2025
+Palmas,Miami,12/07/2025,17/07/2025
+Maceió,Buenos Aires,16/10/2025,28/10/2025
+Brasília,Cidade do México,09/06/2025,17/06/2025
+Goiânia,Porto Velho,09/06/2025,13/06/2025
+Toronto,Belo Horizonte,23/12/2025,01/01/2026
+Teresina,Recife,02/08/2025,11/08/2025
+Los Angeles,Porto Alegre,01/10/2025,10/10/2025
+Belo Horizonte,Rio Branco,31/08/2025,06/09/2025
+Paris,Roma,13/11/2025,24/11/2025
+Brasília,Manaus,06/11/2025,19/11/2025
+Curitiba,Santiago,29/05/2025,01/06/2025
+Natal,Dubai,16/08/2025,26/08/2025
+Miami,Los Angeles,26/06/2025,03/07/2025
+Natal,Aracaju,02/07/2025,11/07/2025
+Macapá,Tóquio,29/04/2025,07/05/2025
+João Pessoa,Curitiba,26/12/2025,01/01/2026
+São Paulo,Aracaju,02/09/2025,14/09/2025
+Miami,Recife,17/05/2025,18/05/2025
+Belém,Macapá,28/04/2025,10/05/2025
+Porto Alegre,Teresina,28/07/2025,08/08/2025
+Belo Horizonte,Buenos Aires,10/08/2025,24/08/2025
+Amsterdã,São Paulo,25/08/2025,29/08/2025
+Macapá,São Paulo,27/04/2025,05/05/2025
+Maceió,Toronto,17/04/2025,27/04/2025
+João Pessoa,São Paulo,13/06/2025,19/06/2025
+Belo Horizonte,Toronto,01/11/2025,06/11/2025
+Lisboa,Campo Grande,10/10/2025,14/10/2025
+Boa Vista,Campo Grande,10/06/2025,18/06/2025
+Florianópolis,Los Angeles,28/12/2025,11/01/2026
+Rio Branco,Porto Alegre,18/04/2025,21/04/2025
+Buenos Aires,Curitiba,22/09/2025,04/10/2025
+Recife,Santiago,16/10/2025,31/10/2025
+Nova York,Lima,07/10/2025,10/10/2025
+Lima,Buenos Aires,28/12/2025,31/12/2025
+Nova York,Belo Horizonte,13/07/2025,26/07/2025
+Goiânia,Palmas,04/12/2025,16/12/2025
+Bogotá,Roma,22/09/2025,04/10/2025
+Lima,Bogotá,13/07/2025,15/07/2025
+Lima,Los Angeles,28/12/2025,06/01/2026
+Tóquio,Belo Horizonte,01/05/2025,09/05/2025
+Belém,Amsterdã,22/09/2025,02/10/2025
+Natal,Cuiabá,22/11/2025,01/12/2025
+Los Angeles,Vitória,04/11/2025,05/11/2025
+Recife,Fortaleza,14/04/2025,25/04/2025
+Cidade do México,João Pessoa,15/10/2025,26/10/2025
+São Luís,Amsterdã,13/05/2025,24/05/2025
+Salvador,Porto Velho,28/10/2025,01/11/2025
+Lima,Boa Vista,15/06/2025,25/06/2025
+Fortaleza,Porto Alegre,27/12/2025,06/01/2026
+Belo Horizonte,Natal,21/08/2025,25/08/2025
+Aracaju,Santiago,12/06/2025,25/06/2025
+Brasília,Goiânia,18/11/2025,26/11/2025
+Los Angeles,Dubai,20/08/2025,28/08/2025
+Rio de Janeiro,Amsterdã,26/08/2025,31/08/2025
+Lima,Vitória,26/07/2025,01/08/2025
+Belo Horizonte,Porto Velho,20/09/2025,21/09/2025
+Paris,Salvador,01/12/2025,16/12/2025
+Toronto,Aracaju,02/05/2025,11/05/2025
+Goiânia,Frankfurt,12/10/2025,13/10/2025
+Manaus,Roma,27/05/2025,05/06/2025
+Macapá,Buenos Aires,29/05/2025,31/05/2025
+Florianópolis,Lima,04/12/2025,18/12/2025
+Goiânia,Paris,13/04/2025,18/04/2025
+Amsterdã,Bogotá,15/05/2025,22/05/2025
+Tóquio,Aracaju,04/09/2025,11/09/2025
+Porto Velho,Paris,12/11/2025,27/11/2025
+Teresina,Paris,30/11/2025,02/12/2025
+Boa Vista,Campo Grande,07/08/2025,16/08/2025
+Porto Velho,São Luís,23/05/2025,29/05/2025
+Tóquio,Boa Vista,30/12/2025,13/01/2026
+Frankfurt,Bogotá,25/08/2025,29/08/2025
+Belo Horizonte,Goiânia,13/07/2025,15/07/2025
+Vitória,Roma,03/12/2025,12/12/2025
+Belo Horizonte,Vitória,07/05/2025,09/05/2025
+Belém,Amsterdã,15/07/2025,19/07/2025
+Boa Vista,Los Angeles,09/07/2025,24/07/2025
+Florianópolis,Fortaleza,03/05/2025,17/05/2025
+Campo Grande,Madri,03/10/2025,10/10/2025
+Cidade do México,São Luís,22/12/2025,05/01/2026
+Manaus,Porto Alegre,05/08/2025,11/08/2025
+Natal,Dubai,10/06/2025,22/06/2025
+Fortaleza,Florianópolis,16/06/2025,26/06/2025
+Belo Horizonte,João Pessoa,11/10/2025,26/10/2025
+São Paulo,Maceió,09/07/2025,10/07/2025
+Londres,Roma,20/08/2025,03/09/2025
+Los Angeles,Curitiba,10/09/2025,20/09/2025
+Aracaju,Brasília,04/08/2025,19/08/2025
+Lisboa,Palmas,25/10/2025,09/11/2025
+São Luís,Palmas,31/10/2025,11/11/2025
+Frankfurt,Rio de Janeiro,09/05/2025,14/05/2025
+Buenos Aires,Amsterdã,18/11/2025,28/11/2025
+São Luís,Recife,12/10/2025,18/10/2025
+Aracaju,Pequim,26/05/2025,07/06/2025
+Miami,Pequim,20/04/2025,26/04/2025
+Londres,Dubai,26/09/2025,09/10/2025
+Belém,Miami,17/11/2025,23/11/2025
+Curitiba,Natal,16/08/2025,29/08/2025
+Maceió,Lima,17/10/2025,23/10/2025
+Porto Alegre,Vitória,24/06/2025,02/07/2025
+São Luís,Aracaju,30/12/2025,14/01/2026
+Curitiba,Rio Branco,13/12/2025,21/12/2025
+Frankfurt,São Paulo,24/04/2025,25/04/2025
+Pequim,Rio Branco,06/06/2025,07/06/2025
+Roma,Boa Vista,04/06/2025,07/06/2025
+Salvador,Palmas,30/10/2025,11/11/2025
+Paris,Santiago,22/07/2025,03/08/2025
+São Paulo,Buenos Aires,07/07/2025,21/07/2025
+Vitória,Recife,10/11/2025,23/11/2025
+Boa Vista,São Luís,11/09/2025,23/09/2025
+Macapá,São Luís,15/06/2025,29/06/2025
+Miami,Pequim,22/08/2025,28/08/2025
+Fortaleza,São Paulo,04/10/2025,13/10/2025
+Lima,Miami,31/10/2025,09/11/2025
+Paris,Buenos Aires,15/04/2025,28/04/2025
+Pequim,Macapá,16/05/2025,23/05/2025
+Lisboa,São Paulo,23/09/2025,27/09/2025
+Santiago,Natal,04/05/2025,12/05/2025
+Porto Velho,Los Angeles,07/06/2025,20/06/2025
+Manaus,Roma,15/04/2025,20/04/2025
+Amsterdã,Los Angeles,31/07/2025,11/08/2025
+Santiago,Macapá,30/08/2025,12/09/2025
+Buenos Aires,Brasília,10/10/2025,16/10/2025
+Manaus,Curitiba,20/12/2025,21/12/2025
+Natal,Palmas,10/05/2025,19/05/2025
+Maceió,São Luís,09/10/2025,22/10/2025
+Teresina,Buenos Aires,17/06/2025,26/06/2025
+São Luís,Roma,18/07/2025,30/07/2025
+Boa Vista,Madri,28/07/2025,02/08/2025
+Dubai,Bogotá,30/12/2025,08/01/2026
+Belo Horizonte,Frankfurt,09/06/2025,20/06/2025
+Pequim,João Pessoa,15/08/2025,20/08/2025
+Palmas,Recife,31/12/2025,15/01/2026
+Cidade do México,Nova York,17/05/2025,24/05/2025
+Rio Branco,Palmas,22/10/2025,04/11/2025
+São Paulo,Campo Grande,08/07/2025,19/07/2025
+Rio Branco,Boa Vista,14/05/2025,19/05/2025
+Tóquio,Aracaju,24/07/2025,29/07/2025
+Los Angeles,Paris,11/06/2025,26/06/2025
+Brasília,Rio de Janeiro,12/06/2025,21/06/2025
+Macapá,Lima,22/12/2025,04/01/2026
+Frankfurt,Amsterdã,04/06/2025,08/06/2025
+Goiânia,Brasília,07/08/2025,17/08/2025
+São Paulo,Buenos Aires,26/04/2025,06/05/2025
+Recife,Campo Grande,28/05/2025,01/06/2025
+Recife,Pequim,10/07/2025,23/07/2025
+Lisboa,São Paulo,18/11/2025,23/11/2025
+Florianópolis,Teresina,04/08/2025,08/08/2025
+Toronto,Pequim,14/12/2025,15/12/2025
+Goiânia,Campo Grande,25/05/2025,31/05/2025
+Manaus,Santiago,02/07/2025,17/07/2025
+Vitória,Goiânia,12/11/2025,15/11/2025
+Amsterdã,Palmas,05/08/2025,16/08/2025
+Amsterdã,Porto Velho,07/08/2025,20/08/2025
+Goiânia,Porto Velho,09/08/2025,21/08/2025
+Lisboa,Vitória,21/07/2025,22/07/2025
+Dubai,Porto Alegre,06/09/2025,09/09/2025
+Boa Vista,Santiago,24/10/2025,01/11/2025
+Teresina,Vitória,16/12/2025,24/12/2025
+Campo Grande,Santiago,19/10/2025,21/10/2025
+Santiago,Madri,18/12/2025,28/12/2025
+Dubai,Cidade do México,02/11/2025,17/11/2025
+Frankfurt,Vitória,10/07/2025,13/07/2025
+Porto Velho,Vitória,24/06/2025,01/07/2025
+Rio Branco,Paris,23/11/2025,25/11/2025
+Boa Vista,Palmas,27/12/2025,07/01/2026
+Lima,Boa Vista,14/10/2025,18/10/2025
+Natal,Roma,10/05/2025,22/05/2025
+Paris,Bogotá,23/06/2025,07/07/2025
+Dubai,Toronto,06/10/2025,09/10/2025
+Recife,João Pessoa,28/07/2025,30/07/2025
+Fortaleza,Amsterdã,09/06/2025,20/06/2025
+Madri,São Luís,11/06/2025,21/06/2025
+Palmas,Boa Vista,08/11/2025,19/11/2025
+Teresina,Lima,25/11/2025,07/12/2025
+São Luís,Rio de Janeiro,23/09/2025,26/09/2025
+Pequim,Londres,13/09/2025,22/09/2025
+João Pessoa,Los Angeles,17/04/2025,29/04/2025
+Curitiba,Roma,05/11/2025,17/11/2025
+Macapá,Aracaju,14/06/2025,27/06/2025
+Tóquio,Rio de Janeiro,10/04/2025,21/04/2025
+São Paulo,Recife,19/09/2025,26/09/2025
+Manaus,Porto Alegre,20/08/2025,31/08/2025
+Recife,Paris,25/07/2025,02/08/2025
+Teresina,Natal,29/04/2025,07/05/2025
+Pequim,Maceió,25/10/2025,29/10/2025
+Florianópolis,Maceió,02/11/2025,05/11/2025
+São Paulo,Nova York,11/09/2025,25/09/2025
+Frankfurt,Buenos Aires,05/05/2025,18/05/2025
+Salvador,Cidade do México,01/08/2025,06/08/2025
+João Pessoa,Cidade do México,16/07/2025,22/07/2025
+São Luís,Natal,22/10/2025,30/10/2025
+Campo Grande,Aracaju,06/09/2025,20/09/2025
+João Pessoa,Curitiba,22/06/2025,04/07/2025
+Tóquio,Brasília,23/11/2025,25/11/2025
+Brasília,Campo Grande,13/12/2025,22/12/2025
+Dubai,São Paulo,16/11/2025,22/11/2025
+Teresina,Tóquio,13/12/2025,25/12/2025
+São Luís,Londres,04/11/2025,16/11/2025
+Santiago,Manaus,24/10/2025,05/11/2025
+Amsterdã,Salvador,30/04/2025,12/05/2025
+Santiago,Nova York,16/08/2025,26/08/2025
+Belém,Cidade do México,21/08/2025,27/08/2025
+Nova York,Los Angeles,08/06/2025,17/06/2025
+Bogotá,São Paulo,22/06/2025,28/06/2025
+Porto Alegre,Londres,02/12/2025,03/12/2025
+Dubai,Bogotá,27/08/2025,11/09/2025
+Vitória,Teresina,29/07/2025,13/08/2025
+Vitória,Bogotá,28/04/2025,06/05/2025
+Recife,Cidade do México,23/11/2025,28/11/2025
+São Paulo,Goiânia,28/06/2025,10/07/2025
+Santiago,Macapá,18/08/2025,28/08/2025
+São Luís,Recife,02/11/2025,04/11/2025
+Rio Branco,Rio de Janeiro,24/12/2025,27/12/2025
+Lima,São Paulo,26/08/2025,10/09/2025
+Salvador,Palmas,11/05/2025,25/05/2025
+Natal,Amsterdã,23/10/2025,27/10/2025
+Maceió,Fortaleza,24/04/2025,06/05/2025
+Salvador,Macapá,21/12/2025,22/12/2025
+Pequim,Maceió,30/05/2025,04/06/2025
+Curitiba,São Luís,18/06/2025,27/06/2025
+Palmas,João Pessoa,08/10/2025,20/10/2025
+São Paulo,Lima,04/08/2025,15/08/2025
+Boa Vista,Bogotá,10/11/2025,13/11/2025
+Curitiba,Londres,14/08/2025,25/08/2025
+Teresina,Boa Vista,13/07/2025,22/07/2025
+Bogotá,Belo Horizonte,20/10/2025,29/10/2025
+Macapá,Toronto,10/05/2025,15/05/2025
+Rio de Janeiro,Recife,06/06/2025,09/06/2025
+Boa Vista,Vitória,04/09/2025,12/09/2025
+Nova York,Amsterdã,17/09/2025,21/09/2025
+João Pessoa,Campo Grande,30/12/2025,02/01/2026
+Teresina,São Luís,09/05/2025,22/05/2025
+Fortaleza,Porto Velho,04/09/2025,06/09/2025
+Roma,Natal,21/12/2025,22/12/2025
+Amsterdã,Miami,11/11/2025,15/11/2025
+Belém,Cuiabá,20/12/2025,27/12/2025
+Bogotá,Porto Velho,03/11/2025,12/11/2025
+Los Angeles,Belo Horizonte,09/07/2025,10/07/2025
+Macapá,Roma,19/11/2025,25/11/2025
+Frankfurt,Madri,26/05/2025,29/05/2025
+Roma,Londres,13/08/2025,16/08/2025
+Belo Horizonte,Fortaleza,13/06/2025,25/06/2025
+Fortaleza,Dubai,03/08/2025,15/08/2025
+Pequim,Amsterdã,15/12/2025,18/12/2025
+Teresina,São Paulo,04/12/2025,11/12/2025
+Santiago,Belo Horizonte,17/05/2025,22/05/2025
+Belém,Rio Branco,27/10/2025,03/11/2025
+Frankfurt,Amsterdã,25/06/2025,06/07/2025
+Palmas,Manaus,07/09/2025,16/09/2025
+Lisboa,Curitiba,02/09/2025,12/09/2025
+Aracaju,Belém,15/08/2025,18/08/2025
+Florianópolis,Miami,25/09/2025,06/10/2025
+Brasília,Porto Alegre,05/09/2025,20/09/2025
+Pequim,Rio de Janeiro,30/11/2025,05/12/2025
+Fortaleza,Pequim,11/08/2025,15/08/2025
+João Pessoa,Curitiba,01/06/2025,12/06/2025
+Macapá,São Luís,27/11/2025,04/12/2025
+Buenos Aires,Florianópolis,20/11/2025,02/12/2025
+Teresina,Florianópolis,12/10/2025,27/10/2025
+Florianópolis,Salvador,26/11/2025,01/12/2025
+Los Angeles,Tóquio,30/07/2025,07/08/2025
+Curitiba,Goiânia,11/08/2025,14/08/2025
+Roma,Brasília,10/09/2025,14/09/2025
+Frankfurt,Natal,22/05/2025,31/05/2025
+Pequim,Rio de Janeiro,23/11/2025,02/12/2025
+Vitória,Los Angeles,07/06/2025,11/06/2025
+Macapá,Boa Vista,14/11/2025,19/11/2025
+Porto Alegre,Lima,09/10/2025,14/10/2025
+Lisboa,Los Angeles,19/08/2025,25/08/2025
+Manaus,Nova York,24/08/2025,01/09/2025
+Porto Velho,Salvador,13/04/2025,25/04/2025
+Teresina,Santiago,28/08/2025,06/09/2025
+Lisboa,Bogotá,07/06/2025,22/06/2025
+Miami,Brasília,19/08/2025,28/08/2025
+Belém,Brasília,27/12/2025,05/01/2026
+Miami,Macapá,13/10/2025,25/10/2025
+Lisboa,Maceió,16/12/2025,29/12/2025
+Pequim,Santiago,07/08/2025,09/08/2025
+Dubai,Santiago,14/06/2025,27/06/2025
+Lisboa,São Paulo,06/08/2025,10/08/2025
+São Luís,Lisboa,07/06/2025,15/06/2025
+Palmas,Fortaleza,08/09/2025,17/09/2025
+Maceió,Dubai,21/10/2025,29/10/2025
+Salvador,Lisboa,30/05/2025,06/06/2025
+Goiânia,Porto Velho,30/10/2025,04/11/2025
+Rio Branco,Bogotá,31/07/2025,08/08/2025
+Rio Branco,Porto Velho,18/12/2025,30/12/2025
+Fortaleza,Curitiba,26/10/2025,07/11/2025
+Dubai,Macapá,03/11/2025,16/11/2025
+Dubai,Florianópolis,28/11/2025,29/11/2025
+Recife,Maceió,08/10/2025,14/10/2025
+Teresina,Lisboa,15/04/2025,27/04/2025
+Pequim,Curitiba,25/12/2025,31/12/2025
+Cuiabá,Macapá,14/04/2025,29/04/2025
+Nova York,Bogotá,29/05/2025,07/06/2025
+Natal,Buenos Aires,25/05/2025,02/06/2025
+Teresina,Boa Vista,21/06/2025,06/07/2025
+Pequim,Bogotá,24/08/2025,26/08/2025
+Palmas,Frankfurt,19/10/2025,31/10/2025
+Brasília,Manaus,22/11/2025,03/12/2025
+Miami,Belém,28/06/2025,09/07/2025
+Porto Alegre,Palmas,23/08/2025,25/08/2025
+Natal,João Pessoa,10/07/2025,11/07/2025
+Fortaleza,Curitiba,30/06/2025,13/07/2025
+Cuiabá,João Pessoa,13/07/2025,27/07/2025
+Manaus,Tóquio,29/08/2025,10/09/2025
+Roma,Campo Grande,26/09/2025,04/10/2025
+Toronto,Miami,15/07/2025,27/07/2025
+Dubai,Goiânia,17/09/2025,20/09/2025
+Brasília,Lima,14/05/2025,15/05/2025
+Toronto,Vitória,26/07/2025,27/07/2025
+Santiago,Fortaleza,02/05/2025,15/05/2025
+Lisboa,Roma,06/08/2025,21/08/2025
+Los Angeles,Salvador,14/08/2025,28/08/2025
+Palmas,Campo Grande,10/05/2025,11/05/2025
+Madri,Paris,09/12/2025,17/12/2025
+Porto Alegre,Salvador,25/06/2025,29/06/2025
+São Paulo,Palmas,10/09/2025,18/09/2025
+Maceió,Los Angeles,24/11/2025,07/12/2025
+Florianópolis,Londres,12/10/2025,14/10/2025
+Buenos Aires,Florianópolis,19/11/2025,23/11/2025
+Roma,Paris,11/05/2025,24/05/2025
+Lima,Pequim,21/09/2025,26/09/2025
+Boa Vista,Londres,29/06/2025,12/07/2025
+Nova York,Vitória,31/05/2025,02/06/2025
+Belém,Lima,31/12/2025,07/01/2026
+Londres,João Pessoa,29/12/2025,08/01/2026
+Goiânia,Frankfurt,28/09/2025,03/10/2025
+Brasília,Porto Velho,19/05/2025,26/05/2025
+João Pessoa,Toronto,08/08/2025,13/08/2025
+João Pessoa,São Paulo,12/09/2025,15/09/2025
+Frankfurt,Cidade do México,24/07/2025,30/07/2025
+Amsterdã,Brasília,29/08/2025,04/09/2025
+Maceió,Belo Horizonte,26/09/2025,08/10/2025
+Porto Velho,Buenos Aires,13/09/2025,14/09/2025
+Nova York,Cidade do México,07/08/2025,19/08/2025
+Macapá,Palmas,11/09/2025,25/09/2025
+Aracaju,Curitiba,18/05/2025,28/05/2025
+Cidade do México,Fortaleza,19/04/2025,29/04/2025
+Palmas,Natal,17/05/2025,27/05/2025
+Lima,Bogotá,22/05/2025,23/05/2025
+Cuiabá,São Paulo,02/05/2025,16/05/2025
+Salvador,Cidade do México,28/11/2025,04/12/2025
+Dubai,Madri,26/10/2025,03/11/2025
+Bogotá,Belém,07/05/2025,16/05/2025
+Florianópolis,Macapá,20/11/2025,22/11/2025
+Madri,Curitiba,05/10/2025,15/10/2025
+Pequim,Cuiabá,04/11/2025,18/11/2025
+Madri,Nova York,12/11/2025,15/11/2025
+Madri,Porto Velho,22/08/2025,05/09/2025
+São Luís,Florianópolis,11/04/2025,20/04/2025
+Rio de Janeiro,Cidade do México,17/07/2025,23/07/2025
+Los Angeles,Toronto,21/12/2025,29/12/2025
+João Pessoa,Palmas,07/05/2025,22/05/2025
+Goiânia,Cuiabá,03/06/2025,16/06/2025
+Recife,João Pessoa,12/08/2025,15/08/2025
+Lisboa,Florianópolis,12/08/2025,15/08/2025
+Porto Velho,Miami,04/10/2025,06/10/2025
+Los Angeles,Lisboa,26/12/2025,06/01/2026
+Amsterdã,Los Angeles,01/05/2025,02/05/2025
+Miami,Belém,23/11/2025,04/12/2025
+Nova York,Roma,04/12/2025,14/12/2025
+Rio de Janeiro,Boa Vista,01/12/2025,08/12/2025
+Lisboa,Santiago,01/05/2025,05/05/2025
+Lisboa,Goiânia,08/09/2025,17/09/2025
+Miami,Goiânia,20/10/2025,30/10/2025
+Macapá,Palmas,24/12/2025,27/12/2025
+Toronto,Vitória,26/10/2025,02/11/2025
+Dubai,Cidade do México,31/07/2025,05/08/2025
+Buenos Aires,Teresina,09/07/2025,21/07/2025
+Miami,Paris,21/06/2025,24/06/2025
+Macapá,São Luís,26/11/2025,05/12/2025
+Porto Velho,Campo Grande,10/10/2025,20/10/2025
+Lisboa,Brasília,27/10/2025,11/11/2025
+Paris,Pequim,02/06/2025,04/06/2025
+Recife,Teresina,21/04/2025,23/04/2025
+Manaus,Madri,07/06/2025,12/06/2025
+Manaus,Rio de Janeiro,19/05/2025,22/05/2025
+Fortaleza,Macapá,26/12/2025,03/01/2026
+Lima,Porto Alegre,16/09/2025,17/09/2025
+Pequim,Macapá,16/04/2025,27/04/2025
+Porto Alegre,Roma,10/12/2025,12/12/2025
+Tóquio,Los Angeles,31/12/2025,06/01/2026
+Dubai,Boa Vista,13/05/2025,17/05/2025
+Santiago,Lisboa,20/10/2025,02/11/2025
+Recife,Teresina,20/08/2025,22/08/2025
+Tóquio,Porto Alegre,10/07/2025,21/07/2025
+Vitória,Curitiba,03/12/2025,11/12/2025
+Santiago,Lima,28/11/2025,12/12/2025
+Londres,Curitiba,07/10/2025,16/10/2025
+Curitiba,Porto Alegre,30/06/2025,11/07/2025
+Florianópolis,Campo Grande,15/06/2025,27/06/2025
+Belo Horizonte,Teresina,11/10/2025,21/10/2025
+Campo Grande,Madri,31/10/2025,14/11/2025
+Tóquio,Fortaleza,21/12/2025,23/12/2025
+São Paulo,Maceió,11/10/2025,20/10/2025
+Maceió,Curitiba,11/12/2025,22/12/2025
+Lisboa,Dubai,21/11/2025,01/12/2025
+Aracaju,Toronto,29/04/2025,06/05/2025
+Belo Horizonte,Teresina,01/08/2025,03/08/2025
+Palmas,Dubai,01/08/2025,03/08/2025
+Lisboa,Fortaleza,14/05/2025,29/05/2025
+Recife,Los Angeles,25/06/2025,10/07/2025
+Macapá,Bogotá,11/04/2025,18/04/2025
+Tóquio,Porto Alegre,19/12/2025,31/12/2025
+Pequim,Goiânia,04/09/2025,07/09/2025
+Porto Velho,Buenos Aires,09/10/2025,14/10/2025
+Lima,Roma,06/06/2025,20/06/2025
+Pequim,Aracaju,24/11/2025,02/12/2025
+Palmas,Lisboa,14/07/2025,26/07/2025
+Paris,São Luís,18/12/2025,29/12/2025
+São Luís,Salvador,27/11/2025,29/11/2025
+Pequim,Macapá,28/11/2025,03/12/2025
+Frankfurt,Toronto,25/08/2025,26/08/2025
+Paris,Roma,14/10/2025,24/10/2025
+Manaus,Cidade do México,18/12/2025,28/12/2025
+Los Angeles,Miami,05/10/2025,16/10/2025
+Curitiba,Frankfurt,11/12/2025,20/12/2025
+Bogotá,João Pessoa,05/12/2025,17/12/2025
+Buenos Aires,Los Angeles,19/06/2025,22/06/2025
+Miami,Campo Grande,18/09/2025,29/09/2025
+Aracaju,Manaus,16/09/2025,23/09/2025
+Aracaju,Santiago,20/08/2025,29/08/2025
+Belém,João Pessoa,14/05/2025,19/05/2025
+Manaus,São Luís,06/11/2025,21/11/2025
+Porto Alegre,Porto Velho,04/12/2025,11/12/2025
+Santiago,Salvador,28/06/2025,11/07/2025
+Bogotá,Los Angeles,15/06/2025,28/06/2025
+Santiago,Cuiabá,15/06/2025,30/06/2025
+Miami,Toronto,12/04/2025,21/04/2025
+Palmas,Natal,17/12/2025,18/12/2025
+Nova York,Goiânia,03/11/2025,06/11/2025
+São Paulo,Lima,29/09/2025,07/10/2025
+Porto Velho,Maceió,08/09/2025,21/09/2025
+Palmas,Paris,17/07/2025,24/07/2025
+Rio de Janeiro,Florianópolis,28/11/2025,10/12/2025
+Natal,Boa Vista,18/06/2025,19/06/2025
+Pequim,Belo Horizonte,22/04/2025,28/04/2025
+Salvador,Rio de Janeiro,04/08/2025,07/08/2025
+Rio Branco,Rio de Janeiro,26/05/2025,04/06/2025
+Londres,Curitiba,25/08/2025,01/09/2025
+Buenos Aires,Brasília,26/08/2025,09/09/2025
+Aracaju,Palmas,02/10/2025,17/10/2025
+Amsterdã,Cuiabá,20/08/2025,21/08/2025
+Vitória,Amsterdã,26/09/2025,01/10/2025
+Palmas,Aracaju,30/11/2025,01/12/2025
+Pequim,Manaus,21/04/2025,25/04/2025
+Goiânia,Rio de Janeiro,18/11/2025,29/11/2025
+Tóquio,Amsterdã,25/09/2025,28/09/2025
+Londres,Palmas,06/05/2025,08/05/2025
+Cuiabá,Maceió,07/07/2025,16/07/2025
+João Pessoa,Macapá,21/05/2025,04/06/2025
+São Paulo,Teresina,22/04/2025,05/05/2025
+Pequim,Brasília,14/05/2025,23/05/2025
+Vitória,Londres,07/11/2025,08/11/2025
+Madri,Cidade do México,30/08/2025,14/09/2025
+Dubai,Belo Horizonte,24/05/2025,07/06/2025
+Los Angeles,Boa Vista,19/11/2025,25/11/2025
+Santiago,Lisboa,05/10/2025,18/10/2025
+Fortaleza,Teresina,13/05/2025,26/05/2025
+Miami,Londres,14/12/2025,21/12/2025
+Manaus,Lisboa,21/12/2025,26/12/2025
+Curitiba,Cidade do México,18/05/2025,29/05/2025
+Miami,Rio de Janeiro,19/04/2025,25/04/2025
+São Luís,Tóquio,16/09/2025,01/10/2025
+Santiago,Macapá,16/08/2025,21/08/2025
+Belém,São Paulo,28/06/2025,01/07/2025
+Cuiabá,Cidade do México,25/04/2025,28/04/2025
+Cuiabá,Teresina,21/11/2025,01/12/2025
+Santiago,Frankfurt,08/05/2025,16/05/2025
+Frankfurt,São Luís,30/11/2025,06/12/2025
+Miami,São Luís,29/08/2025,12/09/2025
+Rio Branco,Toronto,10/08/2025,17/08/2025
+Macapá,Santiago,24/04/2025,07/05/2025
+Brasília,Maceió,17/08/2025,22/08/2025
+Lima,Tóquio,24/12/2025,02/01/2026
+Bogotá,Lima,02/12/2025,04/12/2025
+Cuiabá,Paris,05/05/2025,11/05/2025
+Cidade do México,Nova York,17/11/2025,30/11/2025
+Nova York,Belo Horizonte,02/08/2025,12/08/2025
+Manaus,Goiânia,25/07/2025,09/08/2025
+Recife,João Pessoa,04/08/2025,10/08/2025
+Santiago,Rio de Janeiro,31/10/2025,05/11/2025
+Campo Grande,Palmas,20/09/2025,24/09/2025
+Nova York,Madri,12/05/2025,20/05/2025
+Fortaleza,Campo Grande,04/08/2025,05/08/2025
+Vitória,Dubai,21/10/2025,24/10/2025
+Buenos Aires,Roma,08/10/2025,17/10/2025
+Vitória,Paris,25/09/2025,30/09/2025
+Vitória,Nova York,19/04/2025,24/04/2025
+Miami,Florianópolis,26/08/2025,02/09/2025
+Toronto,Roma,15/12/2025,23/12/2025
+Porto Velho,Cidade do México,25/10/2025,31/10/2025
+Londres,Belém,25/06/2025,07/07/2025
+Belém,São Luís,30/07/2025,08/08/2025
+Campo Grande,João Pessoa,30/04/2025,14/05/2025
+Buenos Aires,Belém,30/11/2025,04/12/2025
+Los Angeles,Palmas,02/05/2025,04/05/2025
+Cuiabá,Santiago,10/07/2025,11/07/2025
+Belo Horizonte,Dubai,05/11/2025,13/11/2025
+Paris,Florianópolis,18/06/2025,30/06/2025
+Fortaleza,Rio Branco,13/12/2025,19/12/2025
+Porto Velho,Los Angeles,23/09/2025,01/10/2025
+Belém,João Pessoa,23/12/2025,04/01/2026
+Campo Grande,Pequim,14/05/2025,16/05/2025
+Salvador,Curitiba,17/11/2025,22/11/2025
+Pequim,Campo Grande,29/06/2025,07/07/2025
+Toronto,Porto Velho,13/08/2025,24/08/2025
+Manaus,Paris,05/08/2025,18/08/2025
+Los Angeles,Dubai,05/11/2025,11/11/2025
+Tóquio,Madri,28/06/2025,30/06/2025
+Palmas,Buenos Aires,10/12/2025,13/12/2025
+Teresina,Palmas,28/10/2025,11/11/2025
+Aracaju,Porto Velho,02/11/2025,10/11/2025
+Nova York,João Pessoa,27/10/2025,01/11/2025
+Campo Grande,Buenos Aires,25/12/2025,29/12/2025
+Vitória,João Pessoa,09/05/2025,12/05/2025
+Miami,Cuiabá,05/07/2025,15/07/2025
+Paris,Goiânia,09/05/2025,20/05/2025
+Recife,Toronto,16/06/2025,18/06/2025
+Tóquio,Belém,28/11/2025,06/12/2025
+João Pessoa,Macapá,19/09/2025,28/09/2025
+Recife,Goiânia,14/11/2025,25/11/2025
+Buenos Aires,Palmas,10/04/2025,15/04/2025
+São Luís,Paris,16/06/2025,29/06/2025
+Campo Grande,Porto Alegre,01/12/2025,11/12/2025
+Teresina,Frankfurt,13/12/2025,17/12/2025
+Nova York,Porto Alegre,03/05/2025,16/05/2025
+Belo Horizonte,Campo Grande,13/06/2025,27/06/2025
+Campo Grande,Amsterdã,15/12/2025,21/12/2025
+Salvador,Campo Grande,16/12/2025,23/12/2025
+Rio Branco,Palmas,04/09/2025,16/09/2025
+Boa Vista,Lisboa,23/07/2025,02/08/2025
+Fortaleza,Miami,30/12/2025,04/01/2026
+Londres,Goiânia,09/04/2025,12/04/2025
+São Luís,João Pessoa,10/12/2025,20/12/2025
+Lisboa,Vitória,20/05/2025,03/06/2025
+Miami,Nova York,27/07/2025,03/08/2025
+Buenos Aires,Goiânia,29/09/2025,12/10/2025
+Lima,Fortaleza,05/06/2025,19/06/2025
+Roma,Vitória,27/05/2025,02/06/2025
+Brasília,Salvador,17/06/2025,20/06/2025
+Maceió,Londres,11/12/2025,23/12/2025
+Dubai,São Luís,19/11/2025,03/12/2025
+Rio Branco,Pequim,05/10/2025,19/10/2025
+Bogotá,Macapá,30/05/2025,06/06/2025
+Madri,Bogotá,15/04/2025,25/04/2025
+Recife,Boa Vista,18/07/2025,25/07/2025
+Lima,Palmas,22/08/2025,27/08/2025
+Porto Alegre,Londres,18/12/2025,28/12/2025
+Paris,Maceió,23/09/2025,05/10/2025
+Toronto,Florianópolis,25/05/2025,02/06/2025
+Fortaleza,Boa Vista,18/10/2025,23/10/2025
+Rio de Janeiro,Palmas,30/10/2025,12/11/2025
+São Paulo,Recife,22/10/2025,31/10/2025
+Teresina,Porto Alegre,13/04/2025,20/04/2025
+Goiânia,Londres,01/07/2025,05/07/2025
+Frankfurt,Curitiba,04/05/2025,07/05/2025
+Lima,Palmas,17/12/2025,21/12/2025
+Rio Branco,Roma,06/07/2025,16/07/2025
+Los Angeles,Toronto,21/08/2025,22/08/2025
+Frankfurt,Bogotá,13/09/2025,25/09/2025
+Belém,Rio Branco,14/06/2025,27/06/2025
+Aracaju,Curitiba,24/09/2025,09/10/2025
+Toronto,Londres,02/09/2025,16/09/2025
+Natal,São Paulo,08/04/2025,10/04/2025
+João Pessoa,Rio de Janeiro,21/09/2025,22/09/2025
+Rio de Janeiro,Amsterdã,13/04/2025,19/04/2025
+Natal,Amsterdã,23/09/2025,04/10/2025
+Toronto,Aracaju,22/06/2025,26/06/2025
+Tóquio,Fortaleza,16/05/2025,20/05/2025
+Cuiabá,Toronto,16/11/2025,22/11/2025
+Belo Horizonte,Recife,07/04/2025,13/04/2025
+Miami,Rio Branco,23/08/2025,02/09/2025
+Maceió,Brasília,30/05/2025,06/06/2025
+Amsterdã,Miami,13/04/2025,26/04/2025
+São Luís,Florianópolis,24/11/2025,07/12/2025
+Los Angeles,Santiago,03/06/2025,07/06/2025
+São Paulo,Belém,02/09/2025,16/09/2025
+Bogotá,Londres,16/09/2025,23/09/2025
+Rio Branco,Belém,16/07/2025,30/07/2025
+São Paulo,Lisboa,15/04/2025,28/04/2025
+Miami,Rio Branco,14/10/2025,16/10/2025
+São Paulo,Miami,25/12/2025,04/01/2026
+Dubai,Campo Grande,28/05/2025,30/05/2025
+Cidade do México,Manaus,25/08/2025,31/08/2025
+Pequim,Buenos Aires,18/09/2025,30/09/2025
+São Luís,Aracaju,29/05/2025,08/06/2025
+Buenos Aires,Pequim,15/11/2025,28/11/2025
+Dubai,Salvador,14/10/2025,18/10/2025
+Belém,Paris,16/12/2025,31/12/2025
+Nova York,Roma,14/12/2025,23/12/2025
+Fortaleza,Lima,07/12/2025,12/12/2025
+Campo Grande,Bogotá,10/11/2025,21/11/2025
+Cidade do México,Goiânia,06/06/2025,09/06/2025
+Los Angeles,Porto Velho,03/09/2025,15/09/2025
+Rio Branco,Vitória,20/07/2025,22/07/2025
+Lisboa,Dubai,21/11/2025,27/11/2025
+Manaus,Santiago,14/04/2025,16/04/2025
+Toronto,São Paulo,08/07/2025,11/07/2025
+Teresina,Fortaleza,03/08/2025,06/08/2025
+Rio Branco,Curitiba,19/04/2025,20/04/2025
+Dubai,Florianópolis,29/07/2025,03/08/2025
+Boa Vista,Campo Grande,28/07/2025,12/08/2025
+Roma,Belém,19/05/2025,22/05/2025
+São Paulo,Salvador,25/07/2025,31/07/2025
+Porto Velho,Palmas,25/06/2025,30/06/2025
+Pequim,Maceió,18/05/2025,20/05/2025
+Maceió,Recife,20/12/2025,22/12/2025
+Londres,Recife,11/04/2025,18/04/2025
+Rio de Janeiro,Manaus,17/09/2025,29/09/2025
+Toronto,Londres,06/12/2025,16/12/2025
+Miami,Recife,20/08/2025,22/08/2025
+São Luís,Cuiabá,31/12/2025,09/01/2026
+Rio Branco,Curitiba,28/08/2025,31/08/2025
+Roma,Santiago,06/08/2025,14/08/2025
+Buenos Aires,Nova York,30/06/2025,03/07/2025
+Teresina,Nova York,31/08/2025,03/09/2025
+Toronto,Rio de Janeiro,30/11/2025,12/12/2025
+Aracaju,Pequim,19/06/2025,25/06/2025
+Tóquio,Londres,12/08/2025,20/08/2025
+Natal,Amsterdã,20/10/2025,31/10/2025
+Dubai,Brasília,21/11/2025,23/11/2025
+Palmas,Miami,01/08/2025,14/08/2025
+Palmas,Dubai,28/11/2025,02/12/2025
+Cuiabá,Vitória,29/10/2025,08/11/2025
+Salvador,Porto Velho,05/05/2025,19/05/2025
+Paris,Brasília,11/05/2025,21/05/2025
+Natal,Aracaju,19/05/2025,02/06/2025
+Porto Alegre,Bogotá,09/06/2025,20/06/2025
+Florianópolis,Toronto,21/04/2025,04/05/2025
+Maceió,Campo Grande,12/11/2025,21/11/2025
+Buenos Aires,Toronto,27/08/2025,01/09/2025
+Lima,Fortaleza,29/09/2025,03/10/2025
+Goiânia,Campo Grande,16/06/2025,26/06/2025
+Frankfurt,Natal,04/12/2025,06/12/2025
+Brasília,Dubai,09/06/2025,21/06/2025
+Florianópolis,Nova York,24/04/2025,01/05/2025
+Recife,Pequim,16/06/2025,28/06/2025
+Bogotá,Brasília,11/05/2025,21/05/2025
+Frankfurt,Maceió,17/09/2025,19/09/2025
+Cuiabá,Belém,27/12/2025,03/01/2026
+Palmas,Recife,15/07/2025,18/07/2025
+Pequim,Recife,21/09/2025,23/09/2025
+Campo Grande,Dubai,21/04/2025,01/05/2025
+Bogotá,Florianópolis,26/08/2025,30/08/2025
+Aracaju,São Luís,09/06/2025,17/06/2025
+Bogotá,São Paulo,09/04/2025,23/04/2025
+Belo Horizonte,Natal,01/10/2025,14/10/2025
+Dubai,Belo Horizonte,17/12/2025,24/12/2025
+Palmas,Vitória,14/12/2025,20/12/2025
+Vitória,Boa Vista,29/05/2025,05/06/2025
+Cidade do México,Goiânia,22/10/2025,26/10/2025
+Lisboa,Londres,23/08/2025,30/08/2025
+Pequim,Salvador,22/07/2025,27/07/2025
+Amsterdã,Rio de Janeiro,01/12/2025,14/12/2025
+Belo Horizonte,Salvador,07/09/2025,12/09/2025
+Florianópolis,Toronto,11/04/2025,18/04/2025
+Madri,Manaus,25/10/2025,07/11/2025

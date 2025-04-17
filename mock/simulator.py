@@ -63,7 +63,7 @@ def gerar_dados_em_thread(numero_registros, arquivo_saida, thread_id):
 # Função principal
 def main():
     arquivo_saida = os.path.join(os.path.dirname(__file__), 'data/dados_viagens_2025.csv')
-    total_registros = 1000  # Total de registros a serem gerados
+    total_registros = 3000  # Total de registros a serem gerados
     num_threads = 4  # Número de threads
     registros_por_thread = total_registros // num_threads
 

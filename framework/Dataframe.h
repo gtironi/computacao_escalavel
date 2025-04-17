@@ -168,43 +168,35 @@ public:
      * @return Um novo DataFrame contendo apenas as linhas onde a correspondência ocorreu.
      */
     Dataframe filtroByValue(const string& strNomeColuna, const VDTYPES& valor) {
-        Dataframe auxDf;
-        auxDf.vstrColumnsName = vstrColumnsName;
+    Dataframe auxDf;
+    auxDf.vstrColumnsName = vstrColumnsName;
 
-        for (auto col : columns){
-            Series auxSerie(col.strGetName(), col.strGetType());
-            auxDf.columns.push_back(auxSerie);
-        }
+    for (const auto& col : columns) {
+        auxDf.columns.emplace_back(col.strGetName(), col.strGetType());
+    }
 
-        vector<int> index;
+    auto it = find(vstrColumnsName.begin(), vstrColumnsName.end(), strNomeColuna);
+    if (it == vstrColumnsName.end()) {
+        throw std::invalid_argument("Coluna '" + strNomeColuna + "' não encontrada.");
+    }
 
-        auto it = find(vstrColumnsName.begin(), vstrColumnsName.end(), strNomeColuna);
-        if (it == vstrColumnsName.end()) {
-            cerr << "Erro: Coluna '" << strNomeColuna << "' não encontrada." << endl;
-            return auxDf;
-        }
+    int colIndex = distance(vstrColumnsName.begin(), it);
+    const auto& data = columns[colIndex].getData();
 
-        int colIndex = distance(vstrColumnsName.begin(), it);
-
-        for (size_t i = 0; i < columns[colIndex].getData().size(); i++) {
-
-            if (columns[colIndex].getData()[i] == valor) {
-                index.push_back(i);
-            }
-        }
-
-        for (int i : index) {
+    for (size_t i = 0; i < data.size(); ++i) {
+        if (data[i] == valor) {
             vector<VDTYPES> auxRow;
-            for (auto& col : columns) {
+            for (const auto& col : columns) {
                 if (i < col.getData().size()) {
                     auxRow.push_back(col.getData()[i]);
                 }
             }
             auxDf.adicionaLinha(auxRow);
         }
-
-        return auxDf;
     }
+
+    return auxDf;
+}
 
     /**
      * @brief Empilha dois DataFrames horizontalmente, desde que tenham o mesmo número de colunas e tipos de colunas.
