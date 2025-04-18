@@ -49,20 +49,39 @@ private:
         }
     }
 
+    /**
+     * @brief Determina o tipo de dado como string
+     * @return Nome do tipo
+     */
+    static string typeName() {
+        if constexpr (is_same_v<T, int>)    return "int";
+        else if constexpr (is_same_v<T, double>) return "double";
+        else if constexpr (is_same_v<T, bool>)   return "bool";
+        else if constexpr (is_same_v<T, string>) return "string";
+        else return "unknown";
+    }
+
 public:
     /**
      * @brief Construtor da classe Series
      * @param columnName Nome da coluna
      */
-    explicit Series(const string& columnName) : strColumnName(columnName) {}
+    explicit Series(const string& columnName) 
+        : strColumnName(columnName) 
+    {
+        strColumnType = typeName();
+    }
 
     /**
      * @brief Construtor completo com nome e dados
      * @param columnName Nome da coluna
      * @param data Vetor de dados
      */
-    Series(const string& columnName, const vector<T>& data) : 
-        strColumnName(columnName), vecColumnData(data.begin(), data.end()) {}
+    Series(const string& columnName, const vector<T>& data) 
+        : strColumnName(columnName), vecColumnData(data.begin(), data.end()) 
+    {
+        strColumnType = typeName();
+    }
 
     /**
      * @brief Construtor completo com nome e tipo
@@ -161,7 +180,7 @@ public:
      * @return Fluxo de saída atualizado.
      */
     friend ostream& operator<<(ostream& os, const Series& series) {
-        os << series.strColumnName << ": [";
+        os << series.strColumnName << " <" << series.strColumnType << ">: [";
         
         size_t limit = min(series.vecColumnData.size(), static_cast<size_t>(5));
         

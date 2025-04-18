@@ -313,7 +313,11 @@ public:
         int index_width = 5;
 
         os << left << setw(index_width) << "" << "  ";
-        for (auto& name : dfInput.vstrColumnsName) {
+        for (auto& col : dfInput.columns) {
+            string name = col.strGetName();
+            string type = col.strGetType();
+            name += " <" + type + ">";
+
             string header_name = (name.size() > size_t(col_width))
                 ? (name.substr(0, col_width - 3) + "...")
                 : name;
