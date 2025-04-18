@@ -398,9 +398,14 @@ class Transformer {
                                 args[i] = &historyDataframes[i];
                             }
                         }
+                        for (int i = 0; i < numInputBuffers; i++){
+                            cout << args[i] << endl;
+                            cout << i << endl;
+                        }
+
 
                         // Adiciona a tarefa do transformador com esse dataframe na fila
-                        taskqueue->push_task([this, val = std::move(value)]() mutable {
+                        taskqueue->push_task([this, val = std::move(args)]() mutable {
                             this->create_task(std::move(val));
                         });
                         // Diminui o semáforo do buffer de saída (reserva um espaço para a saída da tarefa)
@@ -421,10 +426,20 @@ class Transformer {
         }
 
         
-        virtual T run(T dataframe) = 0;
+        virtual T run(std::vector<T*> dataframe) = 0;
 
         // Função que encapsula a tarefa e o salvamento no buffer
-        void create_task(T value) {
+        void create_task(std::vector<T*> value) {
+            // std::vector<T> dfs;
+            // for (int i = 0; i < value.size(); i++) {
+            //     std::cout << i << std::endl;
+            //     if (value[i] == nullptr) {
+            //         std::cerr << "[ERRO] Ponteiro nulo no índice " << i << std::endl;
+            //         throw std::runtime_error("Ponteiro nulo detectado!");
+            //     }
+            //     dfs.push_back(*value[i]);  // cria cópias dos objetos apontados
+            // }
+            
             T data = run(value);
             for (int i = 0; i < numOutputBuffers; i++)
             {
