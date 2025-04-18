@@ -42,7 +42,10 @@ int main() {
     Extrator<Dataframe> extrator("./mock/data/dados_viagens_2025.csv", "csv", 1000);
     manager.addExtractor(&extrator);
 
-    Filter transformer(extrator.get_output_buffer(), 2);
+    std::vector<Buffer<Dataframe>*> buffers;
+    buffers.push_back(extrator.get_output_buffer());
+
+    Filter transformer(buffers, 2);
     manager.addTransformer(&transformer);
 
     DataPrinter loader1(transformer.get_output_buffer());

@@ -103,7 +103,7 @@ public:
 
     TaskQueue* get_taskqueue() const { return taskqueue; }
     void set_taskqueue(TaskQueue* tq) { taskqueue = tq; }
-    Buffer<T>& get_output_buffer() { return outputBuffer; }
+    Buffer<T>* get_output_buffer() { return outputBuffer; }
     string getFilesFlag() const { return this->strFilesFlag; }
     int getBatchSize() const { return this->iTamanhoBatch; }
 
@@ -293,7 +293,7 @@ template <typename T>
 class Transformer {
     protected:
         // Buffer das entradas
-        Buffer<T>& input_buffer;
+        std::vector<Buffer<T>*> input_buffers;
         // Buffer das saídas
         std::vector<Buffer<T>> output_buffers;
         // Fila de tarefas onde salva das tasks
@@ -302,8 +302,8 @@ class Transformer {
         int nextOutputBuffer = 0;
 
     public:
-        Transformer(Buffer<T>& in, int num_outputs = 1)
-            : input_buffer(in), output_buffers(num_outputs), numOutputBuffers(num_outputs) {}
+        Transformer(std::vector<Buffer<T>*> in, int num_outputs = 1)
+            : input_buffers(in), output_buffers(num_outputs), numOutputBuffers(num_outputs) {}
         // Função para pegar o buffer de saída
         Buffer<T>& get_output_buffer() { 
             if (nextOutputBuffer >= numOutputBuffers)
@@ -319,38 +319,53 @@ class Transformer {
         // Método que enfileira as tarefas na fila de tarefas
         void enqueue_tasks(){
             // Enquanto o buffer de entrada não tiver terminado...
-            while (!input_buffer.atomicGetInputDataFinished()) {
-                // Se tiver espaço no buffer de saída...
-                bool canSendTask = true;
-                for (int i = 0; i < numOutputBuffers; i++)
+            while (true) {
+                bool canContinue = false;
+                for (int i = 0; i < input_buffers.size; i++)
                 {
-                    if (get_output_buffer_by_index(i).get_semaphore().get_count() <= 0)
+                    if (!input_buffers[i].atomicGetInputDataFinished())
                     {
-                        canSendTask = false;
-                        break;
+                        canContinue = true;
                     }
                 }
-                if (canSendTask)
+                if (canContinue)
                 {
-                    // Tenta pegar um dataframe do buffer de entrada
-                    // (Redundante com a verificação do while, mas pode evitar problemas
-                    // como tentar tirar algo do buffer com ele vazio)
-                    std::optional<T> maybe_value = input_buffer.pop();
-                    // Se não tiver retornado um dataframe, encerra o método
-                    if (!maybe_value.has_value()) {
-                        return;
-                    }
-                    T value = std::move(*maybe_value);
-                    // Adiciona a tarefa do transformador com esse dataframe na fila
-                    taskqueue->push_task([this, val = std::move(value)]() mutable {
-                        this->create_task(std::move(val));
-                    });
-                    // Diminui o semáforo do buffer de saída (reserva um espaço para a saída da tarefa)
-                    
+                    // Se tiver espaço no buffer de saída...
+                    bool canSendTask = true;
                     for (int i = 0; i < numOutputBuffers; i++)
                     {
-                        get_output_buffer_by_index(i).get_semaphore().wait();
+                        if (get_output_buffer_by_index(i).get_semaphore().get_count() <= 0)
+                        {
+                            canSendTask = false;
+                            break;
+                        }
                     }
+                    if (canSendTask)
+                    {
+                        // Tenta pegar um dataframe do buffer de entrada
+                        // (Redundante com a verificação do while, mas pode evitar problemas
+                        // como tentar tirar algo do buffer com ele vazio)
+                        std::optional<T> maybe_value = input_buffers[0].pop();
+                        // Se não tiver retornado um dataframe, encerra o método
+                        if (!maybe_value.has_value()) {
+                            return;
+                        }
+                        T value = std::move(*maybe_value);
+                        // Adiciona a tarefa do transformador com esse dataframe na fila
+                        taskqueue->push_task([this, val = std::move(value)]() mutable {
+                            this->create_task(std::move(val));
+                        });
+                        // Diminui o semáforo do buffer de saída (reserva um espaço para a saída da tarefa)
+                        
+                        for (int i = 0; i < numOutputBuffers; i++)
+                        {
+                            get_output_buffer_by_index(i).get_semaphore().wait();
+                        }
+                    }
+                }
+                else
+                {
+                    break;
                 }
             }
             // Depois de acabado, avisa o buffer de saída que acabou
