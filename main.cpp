@@ -10,8 +10,8 @@ class Filter : public Transformer<Dataframe> {
     public:
         using Transformer::Transformer; // Inherit constructor
 
-        Dataframe run(Dataframe input) override {
-            Dataframe output = input.filtroByValue("cidade_destino", "Rio de Janeiro");
+        Dataframe run(std::vector<Dataframe> input) override {
+            Dataframe output = input[0].filtroByValue("cidade_destino", "Rio de Janeiro");
             return output;
         }
     };
