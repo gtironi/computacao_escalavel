@@ -385,28 +385,26 @@ class Transformer {
                             historyDataframes[currentInputBuffer].vStack(value);
                         }
 
-                        std::vector<T*> args(numInputBuffers);
+                        std::vector<std::shared_ptr<T>> args(numInputBuffers);
 
                         for (int i = 0; i < numInputBuffers; i++)
                         {
                             if (i == currentInputBuffer)
                             {
-                                args[i] = &value;
+                                args[i] = std::make_shared<T>(std::move(value));
                             }
                             else
                             {
-                                args[i] = &historyDataframes[i];
+                                args[i] = std::make_shared<T>(historyDataframes[i]); // ou pegar referência
                             }
                         }
-                        for (int i = 0; i < numInputBuffers; i++){
-                            cout << args[i] << endl;
-                            cout << i << endl;
-                        }
 
-
-                        // Adiciona a tarefa do transformador com esse dataframe na fila
-                        taskqueue->push_task([this, val = std::move(args)]() mutable {
-                            this->create_task(std::move(val));
+                        taskqueue->push_task([this, args = std::move(args)]() mutable {
+                            std::vector<T*> raw_args;
+                            for (auto& ptr : args) {
+                                raw_args.push_back(ptr.get());
+                            }
+                            this->create_task(std::move(raw_args));
                         });
                         // Diminui o semáforo do buffer de saída (reserva um espaço para a saída da tarefa)
                         
