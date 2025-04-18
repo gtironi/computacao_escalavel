@@ -231,7 +231,10 @@ public:
                         taskqueue->push_task([this, val = value]() mutable {
                             this->create_task(val);
                         });
-                        // this->outputBuffer.get_semaphore().wait();
+                        for (int i = 0; i < numOutputBuffers; i++)
+                            {
+                                get_output_buffer_by_index(i).get_semaphore().wait();
+                            }
                     }
                 }
 
@@ -241,7 +244,10 @@ public:
                     taskqueue->push_task([this, val = value]() mutable {
                         this->create_task(val);
                     });
-                    get_output_buffer_by_index(0).get_semaphore().wait();
+                    for (int i = 0; i < numOutputBuffers; i++)
+                        {
+                            get_output_buffer_by_index(i).get_semaphore().wait();
+                        }
                 }
 
                 sqlite3_finalize(stmt);
@@ -251,7 +257,10 @@ public:
         }
 
         // Avisa ao buffer de saída que os dados acabaram
-        get_output_buffer_by_index(0).setInputTasksCreated();
+        for (int i = 0; i < numOutputBuffers; i++)
+            {
+                get_output_buffer_by_index(i).setInputTasksCreated();
+            }
     }
 
     T run(const string& strTextBlock){
