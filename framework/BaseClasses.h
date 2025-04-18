@@ -308,10 +308,10 @@ public:
         T data = run(value);
 
         for (int i = 0; i < numOutputBuffers; i++)
-            {
-                get_output_buffer_by_index(i).push(data);
-            }
-     }
+        {
+            get_output_buffer_by_index(i).push(data);
+        }
+    }
 
 
     /**
