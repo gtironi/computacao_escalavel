@@ -296,19 +296,22 @@ class Transformer {
         // Buffer das entradas
         Buffer<T>& input_buffer;
         // Buffer das saídas
-        Buffer<T> output_buffer;
+        std::vector<Buffer<T>> output_buffer;
         // Fila de tarefas onde salva das tasks
         TaskQueue* taskqueue = nullptr;
 
     public:
-        explicit Transformer(Buffer<T>& in) : input_buffer(in) {}
+        Transformer(Buffer<T>& in, int num_outputs = 1)
+            : input_buffer(in), output_buffer(num_outputs) {}
+        // Função para pegar o buffer de saída
+        Buffer<T>& get_output_buffer() { return output_buffer[0]; }
 
         // Método que enfileira as tarefas na fila de tarefas
         void enqueue_tasks(){
             // Enquanto o buffer de entrada não tiver terminado...
             while (!input_buffer.atomicGetInputDataFinished()) {
                 // Se tiver espaço no buffer de saída...
-                if (output_buffer.get_semaphore().get_count() > 0)
+                if (get_output_buffer().get_semaphore().get_count() > 0)
                 {
                     // Tenta pegar um dataframe do buffer de entrada
                     // (Redundante com a verificação do while, mas pode evitar problemas
@@ -324,21 +327,20 @@ class Transformer {
                         this->create_task(std::move(val));
                     });
                     // Diminui o semáforo do buffer de saída (reserva um espaço para a saída da tarefa)
-                    output_buffer.get_semaphore().wait();
+                    get_output_buffer().get_semaphore().wait();
                 }
             }
             // Depois de acabado, avisa o buffer de saída que acabou
             finishBuffer();
         }
 
-        // Função para pegar o buffer de saída
-        Buffer<T>& get_output_buffer() { return output_buffer; }
+        
         virtual T run(T dataframe) = 0;
 
         // Função que encapsula a tarefa e o salvamento no buffer
         void create_task(T value) {
             T data = run(value);
-            output_buffer.push(data);
+            get_output_buffer().push(data);
         }
 
         virtual ~Transformer() = default;
@@ -348,7 +350,7 @@ class Transformer {
         // Método para avisar ao buffer de saída que os dados acabaram
         void finishBuffer()
         {
-            output_buffer.setInputTasksCreated();
+            get_output_buffer().setInputTasksCreated();
         }
 };
 
