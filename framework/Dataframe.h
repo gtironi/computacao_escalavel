@@ -282,6 +282,14 @@ public:
 
         return os;
     }
+
+    void vStack(Dataframe& df_other)
+    {
+        for (int i = 0; i < df_other.columns.size(); i++)
+        {
+            this -> columns[i].hStack(df_other.columns[i]);
+        }
+    }
 };
 
 #endif

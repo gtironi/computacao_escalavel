@@ -300,10 +300,19 @@ class Transformer {
         TaskQueue* taskqueue = nullptr;
         int numOutputBuffers;
         int nextOutputBuffer = 0;
+        int numInputBuffers;
+        std::vector<T> historyDataframes;
 
     public:
         Transformer(std::vector<Buffer<T>*> in, int num_outputs = 1)
-            : input_buffers(in), output_buffers(num_outputs), numOutputBuffers(num_outputs) {}
+            : input_buffers(in), output_buffers(num_outputs), numOutputBuffers(num_outputs), numInputBuffers(input_buffers.size())
+            {
+                if (numInputBuffers > 1)
+                {
+                    historyDataframes.resize(numInputBuffers);
+                }
+            }
+
         // Função para pegar o buffer de saída
         Buffer<T>& get_output_buffer() { 
             if (nextOutputBuffer >= numOutputBuffers)
@@ -345,12 +354,51 @@ class Transformer {
                         // Tenta pegar um dataframe do buffer de entrada
                         // (Redundante com a verificação do while, mas pode evitar problemas
                         // como tentar tirar algo do buffer com ele vazio)
-                        std::optional<T> maybe_value = input_buffers[0] -> pop();
-                        // Se não tiver retornado um dataframe, encerra o método
-                        if (!maybe_value.has_value()) {
-                            return;
+                        std::optional<T> maybe_value;
+                        int currentInputBuffer;
+
+                        for (int i = 0; i < numInputBuffers; i++)
+                        {
+                            maybe_value = input_buffers[i] -> pop(numInputBuffers > 1);
+                            // Se não tiver retornado um dataframe, encerra o método
+                            if (maybe_value.has_value()) {
+                                currentInputBuffer = i;
+                                break;
+                            }
+
+                            for (int i = 0; i < numInputBuffers; i++)
+                            {
+                                if (!input_buffers[i] -> atomicGetInputDataFinished())
+                                {
+                                    maybe_value = input_buffers[i] -> pop();
+                                    currentInputBuffer = i;
+                                    break;
+                                }
+                            }
                         }
+
+                        
                         T value = std::move(*maybe_value);
+
+                        if (numInputBuffers > 1)
+                        {
+                            historyDataframes[currentInputBuffer].vStack(value);
+                        }
+
+                        std::vector<T*> args(numInputBuffers);
+
+                        for (int i = 0; i < numInputBuffers; i++)
+                        {
+                            if (i == currentInputBuffer)
+                            {
+                                args[i] = &value;
+                            }
+                            else
+                            {
+                                args[i] = &historyDataframes[i];
+                            }
+                        }
+
                         // Adiciona a tarefa do transformador com esse dataframe na fila
                         taskqueue->push_task([this, val = std::move(value)]() mutable {
                             this->create_task(std::move(val));

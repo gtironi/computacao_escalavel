@@ -36,9 +36,9 @@ public:
     }
     
     // Método para retirar o próximo elemento do buffer
-    std::optional<T> pop() {
+    std::optional<T> pop(bool multiInput = false) {
         // Se os dados de input já tiverem acabado, retorna null
-        if (getInputDataFinished())
+        if (getInputDataFinished() || (multiInput && queue.empty()))
         {
             return std::nullopt;
         }
