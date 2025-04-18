@@ -223,7 +223,7 @@ public:
         }
 
         // Avisa ao buffer de saída que os dados acabaram
-        outputBuffer.setInputTasksCreated();
+        finishBuffer();
     }
 
     T run(const string& strTextBlock){
@@ -455,6 +455,7 @@ class Transformer {
             for (int i = 0; i < numOutputBuffers; i++)
             {
                 get_output_buffer_by_index(i).setInputTasksCreated();
+                std::cout << "Mudou: " << get_output_buffer_by_index(i).getInputTasksCreated() << std::endl;
             }
         }
 };
@@ -479,7 +480,7 @@ class Loader {
             // Tenta pegar um dataframe do buffer de entrada
             // (Redundante com a verificação do while, mas pode evitar problemas
             // como tentar tirar algo do buffer com ele vazio)
-            std::optional<T> maybe_value = input_buffer.pop();
+            std::optional<T> maybe_value = input_buffer.pop(false, true);
             // Se não tiver retornado um dataframe, encerra o método
             if (!maybe_value.has_value()) {
                 return;

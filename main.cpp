@@ -40,21 +40,21 @@ int main() {
     Manager<Dataframe> manager(7);
 
     // Create pipeline components
-    Extrator<Dataframe> extrator("./mock/data/dados_viagens_2025.csv", "csv", 1000);
+    Extrator<Dataframe> extrator("./mock/data/dados_viagens_2025.csv", "csv", 100);
     manager.addExtractor(&extrator);
 
     std::vector<Buffer<Dataframe>*> buffers;
     
     buffers.push_back(&extrator.get_output_buffer());
 
-    Filter transformer(buffers, 2);
+    Filter transformer(buffers);
     manager.addTransformer(&transformer);
 
     DataPrinter loader1(transformer.get_output_buffer());
     manager.addLoader(&loader1);
 
-    DataPrinter loader2(transformer.get_output_buffer());
-    manager.addLoader(&loader2);
+    // DataPrinter loader2(transformer.get_output_buffer());
+    // manager.addLoader(&loader2);
 
 
     auto start_time = std::chrono::high_resolution_clock::now();
