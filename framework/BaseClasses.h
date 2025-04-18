@@ -46,21 +46,19 @@ template <typename T>
 class Extrator {
 protected:
     vector<string> strColumnsName;
-    std::vector<Buffer<T>> output_buffers;
+    Buffer<Dataframe> outputBuffer;
     TaskQueue* taskqueue = nullptr;
     string strFilesFlag;
     int iTamanhoBatch;
     ifstream file;
     sqlite3* bancoDeDados;
     string strNomeTabela;
-    int numOutputBuffers;
-    int nextOutputBuffer = 0;
 
 public:
     /**
      * @brief Construtor padrão.
      */
-    Extrator(const string& strFilesPath, const string& strFilesFlag, int iTamanhoBatch, const string& strNomeTabela = "Nada", int num_outputs = 1): output_buffers(num_outputs), numOutputBuffers(num_outputs){
+    Extrator(const string& strFilesPath, const string& strFilesFlag, int iTamanhoBatch, const string& strNomeTabela = "Nada"){
         this->strFilesFlag = strFilesFlag;
         this->iTamanhoBatch = iTamanhoBatch;
         this->strNomeTabela = strNomeTabela;
@@ -105,17 +103,7 @@ public:
 
     TaskQueue* get_taskqueue() const { return taskqueue; }
     void set_taskqueue(TaskQueue* tq) { taskqueue = tq; }
-    // Função para pegar o buffer de saída
-    Buffer<T>& get_output_buffer() { 
-        if (nextOutputBuffer >= numOutputBuffers)
-        {
-            cout << "ERROR: NUMBER OF USED BUFFERS EXCEEDED NUMBER OF CREATED BUFFERS!" << endl;
-            throw out_of_range("Número de buffers excedido!");
-        }
-        return output_buffers[nextOutputBuffer++];
-    }
-
-    Buffer<T>& get_output_buffer_by_index(int index) { return output_buffers[index]; }
+    Buffer<T>& get_output_buffer() { return outputBuffer; }
     string getFilesFlag() const { return this->strFilesFlag; }
     int getBatchSize() const { return this->iTamanhoBatch; }
 
@@ -162,16 +150,6 @@ public:
         {
             string line;
             while (getline(file, line)) {
-                bool canSendTask = true;
-                for (int i = 0; i < numOutputBuffers; i++)
-                {
-                    if (get_output_buffer_by_index(i).get_semaphore().get_count() <= 0)
-                    {
-                        canSendTask = false;
-                        break;
-                    }
-                }
-                if (canSendTask){
                 // Ignora a primeira linha (cabeçalho)
                 if (iContador == 0) {
                     iContador++;
@@ -185,25 +163,19 @@ public:
                     taskqueue->push_task([this, val = value]() mutable {
                         this->create_task(val);
                     });
-                    for (int i = 0; i < numOutputBuffers; i++)
-                    {
-                        get_output_buffer_by_index(i).get_semaphore().wait();
-                    }
+                    this->outputBuffer.get_semaphore().wait();
                 }
                 // cout << iContador << endl;
                 iContador++;
             }
-        }
+
             // Adiciona o último bloco, se houver
             if (!strBlocoDeTexto.empty()) {
                 string value = strBlocoDeTexto;
                 taskqueue->push_task([this, val = value]() mutable {
                     this->create_task(val);
                 });
-                for (int i = 0; i < numOutputBuffers; i++)
-                    {
-                        get_output_buffer_by_index(i).get_semaphore().wait();
-                    }
+                this->outputBuffer.get_semaphore().wait();
             }
 
         }
@@ -231,10 +203,7 @@ public:
                         taskqueue->push_task([this, val = value]() mutable {
                             this->create_task(val);
                         });
-                        for (int i = 0; i < numOutputBuffers; i++)
-                            {
-                                get_output_buffer_by_index(i).get_semaphore().wait();
-                            }
+                        // this->outputBuffer.get_semaphore().wait();
                     }
                 }
 
@@ -244,10 +213,7 @@ public:
                     taskqueue->push_task([this, val = value]() mutable {
                         this->create_task(val);
                     });
-                    for (int i = 0; i < numOutputBuffers; i++)
-                        {
-                            get_output_buffer_by_index(i).get_semaphore().wait();
-                        }
+                    this->outputBuffer.get_semaphore().wait();
                 }
 
                 sqlite3_finalize(stmt);
@@ -257,10 +223,7 @@ public:
         }
 
         // Avisa ao buffer de saída que os dados acabaram
-        for (int i = 0; i < numOutputBuffers; i++)
-            {
-                get_output_buffer_by_index(i).setInputTasksCreated();
-            }
+        outputBuffer.setInputTasksCreated();
     }
 
     T run(const string& strTextBlock){
@@ -276,42 +239,38 @@ public:
     Dataframe dfSubExtractor(const string& strBlocoDeTexto) {
         Dataframe dfAuxiliar;
         dfAuxiliar.vstrColumnsName = this->strColumnsName;
-    
+
         // Preparar as colunas
         for (const auto& col : this->strColumnsName) {
             dfAuxiliar.columns.emplace_back(col, "string"); // talvez usar tipo real
         }
-    
+
         stringstream ss(strBlocoDeTexto);
         string line;
-    
+
         while (getline(ss, line)) {
             stringstream ssLine(line);
             string cell;
             vector<VDTYPES> convertedRow;
             convertedRow.reserve(dfAuxiliar.vstrColumnsName.size());
-    
+
             size_t colIndex = 0;
             while (getline(ssLine, cell, ',')) {
                 // Exemplo de parse mais eficiente (precisa de mapeamento real dos tipos)
                 convertedRow.emplace_back(std::move(cell));
                 colIndex++;
             }
-    
+
             dfAuxiliar.adicionaLinha(std::move(convertedRow));
         }
-    
+
         return dfAuxiliar;
     }
 
     void create_task(const string& value) {
         T data = run(value);
-
-        for (int i = 0; i < numOutputBuffers; i++)
-        {
-            get_output_buffer_by_index(i).push(data);
-        }
-    }
+        this->outputBuffer.push(data);
+     }
 
 
     /**
@@ -325,7 +284,7 @@ public:
 
     void finishBuffer()
     {
-        get_output_buffer_by_index(0).setInputTasksCreated();
+        outputBuffer.setInputTasksCreated();
     }
 };
 
