@@ -111,6 +111,7 @@ public:
         if (nextOutputBuffer >= numOutputBuffers)
         {
             cout << "ERROR: NUMBER OF USED BUFFERS EXCEEDED NUMBER OF CREATED BUFFERS!" << endl;
+            throw runtime_error("ERROR: NUMBER OF USED BUFFERS EXCEEDED NUMBER OF CREATED BUFFERS!");
         }
         return output_buffers[nextOutputBuffer++];
     }
@@ -165,12 +166,14 @@ public:
                 bool canSendTask = true;
                 for (int i = 0; i < numOutputBuffers; i++)
                 {
+                    std::cout << i << get_output_buffer_by_index(i).get_semaphore().get_count() << std::endl;
                     if (get_output_buffer_by_index(i).get_semaphore().get_count() <= 0)
                     {
                         canSendTask = false;
                         break;
                     }
                 }
+                
                 if (canSendTask){
                     // Ignora a primeira linha (cabeçalho)
                 if (iContador == 0) {
@@ -185,6 +188,7 @@ public:
                     taskqueue->push_task([this, val = value]() mutable {
                         this->create_task(val);
                     });
+                    
                     for (int i = 0; i < numOutputBuffers; i++)
                     {
                         get_output_buffer_by_index(i).get_semaphore().wait();
@@ -193,21 +197,18 @@ public:
                 // cout << iContador << endl;
                 iContador++;
             }
-            // Adiciona o último bloco, se houver
-            if (!strBlocoDeTexto.empty()) {
-                string value = strBlocoDeTexto;
-                taskqueue->push_task([this, val = value]() mutable {
-                    this->create_task(val);
-                });
-                for (int i = 0; i < numOutputBuffers; i++)
-                {
-                    get_output_buffer_by_index(i).get_semaphore().wait();
+                // Adiciona o último bloco, se houver
+                if (!strBlocoDeTexto.empty()) {
+                    string value = strBlocoDeTexto;
+                    taskqueue->push_task([this, val = value]() mutable {
+                        this->create_task(val);
+                    });
+                    for (int i = 0; i < numOutputBuffers; i++)
+                    {
+                        get_output_buffer_by_index(i).get_semaphore().wait();
+                    }
                 }
             }
-        }
-
-            
-
         }
         else if (this->strFilesFlag == "sql"){
             string sql = "SELECT * FROM " + this->strNomeTabela+ ";";
@@ -265,9 +266,9 @@ public:
                 }
 
                 sqlite3_finalize(stmt);
-            } else {
-                throw runtime_error("Erro ao preparar consulta SQL.");
-            }
+                } else {
+                    throw runtime_error("Erro ao preparar consulta SQL.");
+                }
         }
 
         // Avisa ao buffer de saída que os dados acabaram
@@ -318,10 +319,9 @@ public:
 
     void create_task(const string& value) {
         T data = run(value);
-        for (int i = 0; i < numOutputBuffers; i++)
-                    {
-                        get_output_buffer_by_index(i).get_semaphore().wait();
-                    }
+        for (int i = 0; i < numOutputBuffers; i++) {
+            get_output_buffer_by_index(i).push(data);
+        }
      }
 
 
@@ -364,6 +364,7 @@ class Transformer {
             if (nextOutputBuffer >= numOutputBuffers)
             {
                 cout << "ERROR: NUMBER OF USED BUFFERS EXCEEDED NUMBER OF CREATED BUFFERS!" << endl;
+                throw out_of_range("Número de buffers excedido!");
             }
             return output_buffers[nextOutputBuffer++];
         }
