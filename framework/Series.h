@@ -26,6 +26,29 @@ private:
     vector<T> vecColumnData; ///< Dados armazenados na coluna
     string strColumnType; ///< Tipo da coluna
 
+    /**
+     * @brief Converte um valor any para string
+     * @param value Valor a ser convertido
+     * @return String representando o valor
+     */
+    string anyToString(const any& value) const {
+        try {
+            if (value.type() == typeid(string)) {
+                return any_cast<string>(value);
+            } else if (value.type() == typeid(bool)) {
+                return any_cast<bool>(value) ? "true" : "false";
+            } else if (value.type() == typeid(int)) {
+                return to_string(any_cast<int>(value));
+            } else if (value.type() == typeid(double)) {
+                return to_string(any_cast<double>(value));
+            } else {
+                return "[Unsupported Type]";
+            }
+        } catch (const bad_any_cast&) {
+            return "[Error]";
+        }
+    }
+
 public:
     /**
      * @brief Construtor da classe Series
@@ -47,9 +70,11 @@ public:
      * @param columnType Tipo da coluna
      */
     Series(const string& columnName, const string& columnType)
-        : strColumnName(columnName), strColumnType(columnType)
-    {
-    }
+        : strColumnName(columnName), strColumnType(columnType) {}
+
+
+    Series(const string& columnName, const string& columnType, const vector<T>& data)
+        : strColumnName(columnName), strColumnType(columnType), vecColumnData(data) {}
     
     /**
      * @brief Construtor padrão
@@ -96,7 +121,7 @@ public:
     string strGetType() const {
         return strColumnType;
     }
-
+    
     /**
      * @brief Retorna o número de elementos da coluna.
      * @return Tamanho do vetor de dados.

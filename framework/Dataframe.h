@@ -4,12 +4,11 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <any>
-#include <algorithm>
 #include <iomanip>
 #include <map>
 #include <any>
 #include "Series.h"
+
 using namespace std;
 
 static inline string anyToString(const any& value) {
@@ -39,6 +38,9 @@ public:
     vector<string> vstrColumnsName; ///< Vetor que armazena os nomes das colunas
     vector<Series<any>> columns; ///< Vetor que armazena as colunas do DataFrame
 
+    /**
+     * @brief Construtor padrão do DataFrame.
+     */
     Dataframe() = default;
 
     /**
@@ -159,7 +161,7 @@ public:
      */
     bool adicionaLinha(const vector<any>& novaLinha) {
         if (novaLinha.size() != columns.size()) {
-            cerr << "Número de valores não corresponde ao número de colunas.\n";
+            cout << "Datapoint com tamanho inválido. É: " << novaLinha.size() << " - Deveria ser: " << columns.size() << endl;
             return false;
         }
 
@@ -182,6 +184,7 @@ public:
         for (size_t i = 0; i < columns.size(); i++) {
             columns[i].bAdicionaElemento(novaLinha[i]);
         }
+
         return true;
     }
 
@@ -191,14 +194,15 @@ public:
      * @return true se a remoção for bem-sucedida, false caso contrário.
      */
     bool removeLinha(int iIndex) {
-        auto shape = getShape();
-        if (iIndex < 0 || iIndex >= shape.first) {
+        if (iIndex < 0 || iIndex >= this->getShape().first) {
             cerr << "Índice inválido para remoção de linha." << endl;
             return false;
         }
-        for (auto& col : columns) {
-            col.bRemovePeloIndex(iIndex);
+
+        for (size_t i = 0; i < columns.size(); i++) {
+            columns[i].bRemovePeloIndex(iIndex);
         }
+
         return true;
     }
 
@@ -211,9 +215,13 @@ public:
     Dataframe filtroByValue(const string& strNomeColuna, const any& valor) {
         Dataframe auxDf;
         auxDf.vstrColumnsName = vstrColumnsName;
-        for (auto& col : columns) {
+    
+        // Criar estrutura das colunas no novo dataframe
+        for (const auto& col : columns) {
             auxDf.columns.emplace_back(col.strGetName(), col.strGetType());
         }
+    
+        // Localiza a coluna de filtro
         auto it = find(vstrColumnsName.begin(), vstrColumnsName.end(), strNomeColuna);
         if (it == vstrColumnsName.end()) {
             throw std::invalid_argument("Coluna '" + strNomeColuna + "' não encontrada.");
@@ -240,6 +248,7 @@ public:
                 }
             }
         }
+    
         return auxDf;
     }
 
@@ -248,22 +257,20 @@ public:
      * @param other O DataFrame a ser empilhado.
      */
     void hStack(Dataframe& other) {
-        if (columns.size() != other.columns.size()) {
-            cerr << "DataFrames com tamanhos diferentes. Não é possível empilhar." << endl;
+        if (this->columns.size() != other.columns.size()) {
+            cout << "DataFrames com tamanhos diferentes. Não é possível empilhar." << endl;
             return;
         }
+
         for (size_t i = 0; i < columns.size(); i++) {
-            int total = other.getShape().first;
-            for (int row = 0; row < total; ++row) {
-                columns[i].bAdicionaElemento(other.columns[i].retornaElemento(row));
+            if (columns[i].strGetType() != other.columns[i].strGetType()) {
+                cout << "Tipos de colunas diferentes. Não é possível empilhar." << endl;
+                return;
             }
         }
-    }
 
-    friend ostream& operator<<(ostream& os, const Dataframe& dfInput) {
-        if (dfInput.columns.empty()) {
-            os << "[Empty DataFrame]\n";
-            return os;
+        for (size_t i = 0; i < columns.size(); i++) {
+            columns[i].hStack(other.columns[i]);
         }
     }
 
@@ -272,15 +279,18 @@ public:
      */
     void printHeader(ostream& os, const Dataframe& df, int col_width = 15, int index_width = 5) {
         os << left << setw(index_width) << "" << "  ";
-        for (auto& name : dfInput.vstrColumnsName) {
-            string header_name = (name.size() > size_t(col_width))
-                ? (name.substr(0, col_width - 3) + "...")
-                : name;
+        for (const auto& name : df.vstrColumnsName) {
+            string header_name = name.substr(0, col_width);
+            if (name.length() > col_width) {
+                header_name[col_width - 3] = header_name[col_width - 2] = header_name[col_width - 1] = '.';
+            }
             os << left << setw(col_width) << header_name << "  ";
         }
-        os << "\n" << left << setw(index_width) << "" << "  ";
-        for (size_t i = 0; i < num_cols; i++) {
-            os << left << setw(col_width) << string(col_width, '-') << "  ";
+        os << "\n";
+
+        os << left << setw(index_width) << "" << "  ";
+        for (size_t i = 0; i < df.vstrColumnsName.size(); ++i) {
+            os << left << setw(col_width) << "------------" << "  ";
         }
         os << "\n";
     }
@@ -302,6 +312,19 @@ public:
         int col_width = 15; // Largura fixa das colunas
         int index_width = 5;
 
+        os << left << setw(index_width) << "" << "  ";
+        for (auto& name : dfInput.vstrColumnsName) {
+            string header_name = (name.size() > size_t(col_width))
+                ? (name.substr(0, col_width - 3) + "...")
+                : name;
+            os << left << setw(col_width) << header_name << "  ";
+        }
+        os << "\n" << left << setw(index_width) << "" << "  ";
+        for (size_t i = 0; i < num_cols; i++) {
+            os << left << setw(col_width) << string(col_width, '-') << "  ";
+        }
+        os << "\n";
+
         for (size_t i = 0; i < num_rows; ++i) {
             os << left << setw(index_width) << i << "  ";
             for (size_t j = 0; j < num_cols; ++j) {
@@ -312,6 +335,7 @@ public:
             }
             os << "\n";
         }
+
         return os;
     }
 };
