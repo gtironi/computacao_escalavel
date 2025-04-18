@@ -1,5 +1,5 @@
-#ifndef DATAFRAME_H
-#define DATAFRAME_H
+#ifndef SERIES_HPP
+#define SERIES_HPP
 
 #include <iostream>
 #include <string>
