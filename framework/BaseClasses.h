@@ -200,7 +200,10 @@ public:
                 taskqueue->push_task([this, val = value]() mutable {
                     this->create_task(val);
                 });
-                get_output_buffer_by_index(0).get_semaphore().wait();
+                for (int i = 0; i < numOutputBuffers; i++)
+                    {
+                        get_output_buffer_by_index(i).get_semaphore().wait();
+                    }
             }
 
         }
