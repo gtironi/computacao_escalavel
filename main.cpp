@@ -42,7 +42,7 @@ int main() {
     Extrator<Dataframe> extrator("./mock/data/dados_viagens_2025.csv", "csv", 1000);
     manager.addExtractor(&extrator);
 
-    Filter transformer(extrator.get_output_buffer(), 2);
+    Filter transformer(extrator.get_output_buffer(), 3);
     manager.addTransformer(&transformer);
 
     DataPrinter loader1(transformer.get_output_buffer());
@@ -50,6 +50,9 @@ int main() {
 
     DataPrinter loader2(transformer.get_output_buffer());
     manager.addLoader(&loader2);
+
+    DataPrinter loader3(transformer.get_output_buffer());
+    manager.addLoader(&loader3);
 
     auto start_time = std::chrono::high_resolution_clock::now();
 
