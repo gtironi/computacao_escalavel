@@ -12,6 +12,7 @@
 #include <stdexcept>
 #include <typeinfo>
 #include <regex>
+#include <any>
 
 using namespace std;
 
@@ -432,12 +433,14 @@ const map<string, string> TYPEMAP = {
 /**
  * @class Series
  * @brief Representa uma coluna de um DataFrame, contendo um nome, um tipo e um vetor de dados.
+ * @tparam T Tipo dos dados armazenados na Series
  */
+template <typename T>
 class Series {
 private:
     string strColumnName;  ///< Nome da coluna
     string strColumnType;  ///< Tipo da coluna
-    vector<VDTYPES> vecColumnData; ///< Dados armazenados na coluna
+    vector<T> vecColumnData; ///< Dados armazenados na coluna
 
 public:
     /**
@@ -448,16 +451,88 @@ public:
     Series(const string& columnName, const string& columnType) : strColumnName(columnName), strColumnType(columnType) {}
     
     /**
+     * @brief Construtor básico apenas com nome
+     * @param columnName Nome da coluna
+     */
+    Series(const string& columnName) : strColumnName(columnName) {
+        // Determinar tipo automaticamente baseado em T
+        if constexpr (is_same_v<T, int>)
+            strColumnType = "int";
+        else if constexpr (is_same_v<T, double>)
+            strColumnType = "double";
+        else if constexpr (is_same_v<T, string>)
+            strColumnType = "string";
+        else if constexpr (is_same_v<T, bool>)
+            strColumnType = "bool";
+        else if constexpr (is_same_v<T, char>)
+            strColumnType = "char";
+        else if constexpr (is_same_v<T, DateDay>)
+            strColumnType = "dateday";
+        else if constexpr (is_same_v<T, DateTime>)
+            strColumnType = "datetime";
+        else
+            strColumnType = "any";
+    }
+
+    /**
+     * @brief Construtor completo com nome e dados
+     * @param columnName Nome da coluna
+     * @param data Vetor de dados
+     */
+    Series(const string& columnName, const vector<T>& data) : 
+        strColumnName(columnName), vecColumnData(data) {
+        // Determinar tipo automaticamente
+        if constexpr (is_same_v<T, int>)
+            strColumnType = "int";
+        else if constexpr (is_same_v<T, double>)
+            strColumnType = "double";
+        else if constexpr (is_same_v<T, string>)
+            strColumnType = "string";
+        else if constexpr (is_same_v<T, bool>)
+            strColumnType = "bool";
+        else if constexpr (is_same_v<T, char>)
+            strColumnType = "char";
+        else if constexpr (is_same_v<T, DateDay>)
+            strColumnType = "dateday";
+        else if constexpr (is_same_v<T, DateTime>)
+            strColumnType = "datetime";
+        else
+            strColumnType = "any";
+    }
+    
+    /**
+     * @brief Construtor padrão
+     */
+    Series() : strColumnName(""), strColumnType("") {}
+
+    /**
      * @brief Construtor de cópia da classe Series
      * @param other Objeto Series a ser copiado
      */
-    Series(const Series& other) : strColumnName(other.strColumnName), strColumnType(other.strColumnType), vecColumnData(other.vecColumnData) {}
+    Series(const Series& other) : 
+        strColumnName(other.strColumnName), 
+        strColumnType(other.strColumnType), 
+        vecColumnData(other.vecColumnData) {}
+
+    /**
+     * @brief Construtor de movimento
+     * @param other Objeto Series a ser movido
+     */
+    Series(Series&& other) noexcept : 
+        strColumnName(std::move(other.strColumnName)), 
+        strColumnType(std::move(other.strColumnType)), 
+        vecColumnData(std::move(other.vecColumnData)) {}
+
+    /**
+     * @brief Destrutor virtual padrão
+     */
+    virtual ~Series() = default;
 
     /**
      * @brief Altera o nome da coluna.
      * @param strNovoNome Novo nome da coluna.
      */
-    void setName(string& strNovoNome){
+    void setName(const string& strNovoNome) {
         strColumnName = strNovoNome;
     }
 
@@ -481,10 +556,14 @@ public:
      * @brief Retorna o número de elementos da coluna.
      * @return Tamanho do vetor de dados.
      */
-    size_t iGetSize(){
+    size_t iGetSize() const {
         return vecColumnData.size();
     }
 
+    /**
+     * @brief Pré-aloca espaço para n elementos
+     * @param n Número de elementos a reservar
+     */
     void reserve(size_t n) {
         vecColumnData.reserve(n);
     }
@@ -493,7 +572,7 @@ public:
      * @brief Retorna o vetor de dados da coluna.
      * @return Vetor contendo os dados.
      */
-    const vector<VDTYPES> getData() const {
+    const vector<T>& getData() const {
         return vecColumnData;
     }
 
@@ -509,9 +588,11 @@ public:
         size_t limit = min(series.vecColumnData.size(), static_cast<size_t>(5));
         
         for (size_t i = 0; i < limit; ++i) {
-            if (series.strColumnType == "string") { os << '"'; }
-            visit([&os](auto&& value) { os << value; }, series.vecColumnData[i]);
-            if (series.strColumnType == "string") { os << '"'; }
+            if constexpr (is_same_v<T, string>) { 
+                os << '"' << series.vecColumnData[i] << '"'; 
+            } else {
+                os << series.vecColumnData[i];
+            }
 
             if (i < limit - 1) os << ", ";
         }
@@ -525,7 +606,6 @@ public:
         return os;
     }
     
-
     /**
      * @brief Sobrecarga do operador de atribuição.
      * @param other Objeto Series a ser atribuído.
@@ -541,13 +621,42 @@ public:
     }
 
     /**
+     * @brief Sobrecarga do operador de atribuição por movimento
+     * @param other Objeto Series a ser movido
+     * @return Referência para o objeto atual
+     */
+    Series& operator=(Series&& other) noexcept {
+        if (this != &other) {
+            strColumnName = std::move(other.strColumnName);
+            strColumnType = std::move(other.strColumnType);
+            vecColumnData = std::move(other.vecColumnData);
+        }
+        return *this;
+    }
+
+    /**
      * @brief Adiciona um elemento à coluna
      * @param elemento Elemento a ser adicionado
      * @return true se a operação for bem-sucedida, false caso contrário
      */
-    bool bAdicionaElemento(const VDTYPES& elemento) {
+    bool bAdicionaElemento(const T& elemento) {
         try {
             vecColumnData.push_back(elemento);
+            return true;
+        } catch (...) {
+            cerr << "Falha ao adicionar elemento." << endl;
+            return false;
+        }
+    }
+
+    /**
+     * @brief Adiciona um elemento à coluna (versão para movimento)
+     * @param elemento Elemento a ser adicionado
+     * @return true se a operação for bem-sucedida, false caso contrário
+     */
+    bool bAdicionaElemento(T&& elemento) {
+        try {
+            vecColumnData.push_back(std::move(elemento));
             return true;
         } catch (...) {
             cerr << "Falha ao adicionar elemento." << endl;
@@ -575,7 +684,7 @@ public:
      * @return true se a remoção for bem-sucedida, false caso contrário.
      */
     bool bRemovePeloIndex(int iIndex) {
-        if (iIndex < 0 || iIndex >= vecColumnData.size()) {
+        if (iIndex < 0 || iIndex >= static_cast<int>(vecColumnData.size())) {
             cerr << "Índice fora dos limites." << endl;
             return false;
         }
@@ -589,51 +698,11 @@ public:
      * @param iIndex Índice do elemento
      * @return Elemento armazenado no índice especificado
      */
-    VDTYPES retornaElemento(int iIndex) {
-        if (iIndex >= 0 && iIndex < vecColumnData.size()) {
+    const T& retornaElemento(int iIndex) const {
+        if (iIndex >= 0 && iIndex < static_cast<int>(vecColumnData.size())) {
             return vecColumnData[iIndex];
         } else {
-            cerr << "Índice fora dos limites." << endl;
-            return VDTYPES{};
-        }
-    }
-
-    /**
-     * @brief Exibe os dados da coluna no console
-     */
-    void printColuna() {
-        cout << "Column Name: " << this->strGetName() << "\n";
-        cout << "Column Type: " << this->strGetType() << "\n";
-        cout << "Data: ";
-        for (const auto& value : vecColumnData) {
-            visit([](const auto& val) { cout << val << " "; }, value);
-        }
-        cout << "\n";
-    }
-
-    /**
-     * @brief Calcula a média dos elementos da Series, se forem numéricos.
-     * @return O valor da média como float.
-     * @note Essa função só funciona para Series de tipos numéricos.
-     */
-    float mean() {
-        if (this->strGetType() == "int" || this->strGetType() == "double" || this->strGetType() == "float") {
-            double sum = 0.0;
-            int count = 0;
-
-            for (const auto& val : vecColumnData) {
-                std::visit([&](auto&& arg) {
-                    if constexpr (std::is_arithmetic_v<std::decay_t<decltype(arg)>>) {
-                        sum += arg;
-                        count++;
-                    }
-                }, val);
-            }
-
-            return count > 0 ? sum / count : 0.0;
-        } else {
-            cout << "Método desenvolvido apenas para Series do tipo numérica." << endl;
-            return 0.0f;
+            throw out_of_range("Índice fora dos limites: " + to_string(iIndex));
         }
     }
 
@@ -641,7 +710,7 @@ public:
      * @brief Empilha duas Series horizontalmente, desde que tenham o mesmo tipo.
      * @param other A outra Series a ser empilhada.
      */
-    void hStack(Series& other) {
+    void hStack(const Series<T>& other) {
         if (this->strGetType() != other.strGetType()) {
             cout << "Tipos de colunas diferentes. Não é possível empilhar." << endl;
             return;
@@ -651,64 +720,23 @@ public:
     }
 
     /**
-     * @brief Ajusta automaticamente o tipo da coluna com base nos seus elementos.
+     * @brief Método que permite adicionar um elemento como no exemplo fornecido
+     * @param value Valor a ser adicionado
      */
-    void AjustandoType() {
-        bool isInt = true, isDouble = true, isDateDay = true, isDateTime = true;
-    
-        static const regex regexDate(R"(^\d{2}-\d{2}-\d{4}$)");
-        static const regex regexDateTime(R"(^\d{2}-\d{2}-\d{4} \d{2}:\d{2}:\d{2}$)");
-    
-        for (const auto& value : vecColumnData) {
-            if (holds_alternative<string>(value)) {
-                string strVal = get<string>(value);
-    
-                strVal.erase(remove_if(strVal.begin(), strVal.end(), ::isspace), strVal.end());
-    
-                if (strVal.empty()) {
-                    isInt = isDouble = isDateDay = isDateTime = false;
-                    continue;
-                }
-    
-                isInt = isInt && regex_match(strVal, regex(R"(^-?\d+$)")); 
-                isDouble = isDouble && (isInt || regex_match(strVal, regex(R"(^-?\d+\.\d+$)")));
-                isDateDay = isDateDay && regex_match(strVal, regexDate);
-                isDateTime = isDateTime && regex_match(strVal, regexDateTime);
-    
-            } else {
-                isInt = isDouble = isDateDay = isDateTime = false;
-            }
-        }
-    
-        try {
-            if (isInt) {
-                strColumnType = "int";
-                transform(vecColumnData.begin(), vecColumnData.end(), vecColumnData.begin(), [](VDTYPES& v) { 
-                    return stoi(get<string>(v)); 
-                });
-            } else if (isDouble) {
-                strColumnType = "double";
-                transform(vecColumnData.begin(), vecColumnData.end(), vecColumnData.begin(), [](VDTYPES& v) { 
-                    return stod(get<string>(v)); 
-                });
-            } else if (isDateDay) {
-                strColumnType = "dateday";
-                transform(vecColumnData.begin(), vecColumnData.end(), vecColumnData.begin(), [](VDTYPES& v) { 
-                    return DateDay(get<string>(v)); 
-                });
-            } else if (isDateTime) {
-                strColumnType = "datetime";
-                transform(vecColumnData.begin(), vecColumnData.end(), vecColumnData.begin(), [](VDTYPES& v) { 
-                    return DateTime(get<string>(v)); 
-                });
-            } else {
-                strColumnType = "string"; 
-            }
-        } catch (const std::exception& e) {
-            cerr << "Erro ao converter valores: " << e.what() << endl;
-        }
+    void addData(const T& value) {
+        bAdicionaElemento(value);
     }
-    
+
+    /**
+     * @brief Método que permite adicionar um elemento por movimento
+     * @param value Valor a ser movido para a série
+     */
+    void addData(T&& value) {
+        bAdicionaElemento(std::move(value));
+    }
 };
+
+// Manter a classe Series original para compatibilidade
+using SeriesLegacy = Series<VDTYPES>;
 
 #endif

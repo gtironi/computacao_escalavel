@@ -234,7 +234,7 @@ public:
     /**
      * @brief Constrói um DataFrame a partir de um bloco de texto CSV.
      *
-     * @param strBlocoDeTextoCSV Bloco de texto CSV.
+     * @param strBlocoDeTexto Bloco de texto CSV.
      * @return DataFrame construído a partir do bloco de texto.
      */
     Dataframe dfSubExtractor(const string& strBlocoDeTexto) {
@@ -243,11 +243,17 @@ public:
     
         // Preparar as colunas
         for (const auto& col : this->strColumnsName) {
-            dfAuxiliar.columns.emplace_back(col, "string"); // talvez usar tipo real
+            dfAuxiliar.columns.emplace_back(col, "string");
         }
     
         stringstream ss(strBlocoDeTexto);
         string line;
+    
+        // Estimar o número de linhas para pré-alocar espaço
+        size_t estimatedRows = count(strBlocoDeTexto.begin(), strBlocoDeTexto.end(), '\n') + 1;
+        for (auto& col : dfAuxiliar.columns) {
+            col.reserve(estimatedRows);
+        }
     
         while (getline(ss, line)) {
             stringstream ssLine(line);
@@ -257,8 +263,14 @@ public:
     
             size_t colIndex = 0;
             while (getline(ssLine, cell, ',')) {
-                // Exemplo de parse mais eficiente (precisa de mapeamento real dos tipos)
+                // Adiciona a célula diretamente como string
                 convertedRow.emplace_back(std::move(cell));
+                colIndex++;
+            }
+    
+            // Completa a linha se necessário
+            while (colIndex < dfAuxiliar.vstrColumnsName.size()) {
+                convertedRow.emplace_back(string(""));
                 colIndex++;
             }
     

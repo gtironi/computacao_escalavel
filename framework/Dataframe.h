@@ -7,6 +7,7 @@
 #include <iomanip>
 #include <map>
 #include <variant>
+#include <any>
 #include "Series.h"
 
 using namespace std;
@@ -34,7 +35,7 @@ string variantToString(const VDTYPES& value) {
 class Dataframe {
 public:
     vector<string> vstrColumnsName; ///< Vetor que armazena os nomes das colunas
-    vector<Series> columns;        ///< Vetor que armazena as colunas do DataFrame
+    vector<Series<VDTYPES>> columns; ///< Vetor que armazena as colunas do DataFrame
 
     /**
      * @brief Construtor padrão do DataFrame.
@@ -51,6 +52,15 @@ public:
     }
 
     /**
+     * @brief Construtor de movimento do DataFrame.
+     * @param other Objeto Dataframe a ser movido.
+     */
+    Dataframe(Dataframe&& other) noexcept {
+        vstrColumnsName = std::move(other.vstrColumnsName);
+        columns = std::move(other.columns);
+    }
+
+    /**
      * @brief Sobrecarga do operador de atribuição.
      * @param other Objeto Dataframe a ser atribuído.
      * @return Referência para o objeto atribuído.
@@ -64,11 +74,24 @@ public:
     }
 
     /**
+     * @brief Sobrecarga do operador de atribuição por movimento.
+     * @param other Objeto Dataframe a ser movido.
+     * @return Referência para o objeto atribuído.
+     */
+    Dataframe& operator=(Dataframe&& other) noexcept {
+        if (this != &other) {
+            vstrColumnsName = std::move(other.vstrColumnsName);
+            columns = std::move(other.columns);
+        }
+        return *this;
+    }
+
+    /**
      * @brief Adiciona uma nova coluna (Series) ao DataFrame.
      * @param novaSerie Objeto Series a ser adicionado.
      * @return true se a adição for bem-sucedida, false caso contrário.
      */
-    bool adicionaColuna(Series novaSerie) {
+    bool adicionaColuna(Series<VDTYPES> novaSerie) {
 
         if (columns.empty()) {
             vstrColumnsName.push_back(novaSerie.strGetName());
@@ -98,6 +121,37 @@ public:
     }
 
     /**
+     * @brief Adiciona uma nova coluna genérica ao DataFrame.
+     * @tparam T Tipo dos dados na Series
+     * @param novaSerie Objeto Series<T> a ser adicionado.
+     * @return true se a adição for bem-sucedida, false caso contrário.
+     */
+    template <typename T>
+    bool adicionaColuna(const Series<T>& novaSerie) {
+        // Converter Series<T> para Series<VDTYPES>
+        Series<VDTYPES> serieConvertida(novaSerie.strGetName(), novaSerie.strGetType());
+        
+        for (size_t i = 0; i < novaSerie.iGetSize(); i++) {
+            // Tentativa de converter o valor T para VDTYPES (se compatível)
+            try {
+                if constexpr (is_convertible_v<T, VDTYPES>) {
+                    serieConvertida.bAdicionaElemento(novaSerie.retornaElemento(i));
+                } else {
+                    // Se não for diretamente convertível, armazena como string
+                    stringstream ss;
+                    ss << novaSerie.retornaElemento(i);
+                    serieConvertida.bAdicionaElemento(ss.str());
+                }
+            } catch (const exception& e) {
+                cerr << "Erro ao converter elemento: " << e.what() << endl;
+                return false;
+            }
+        }
+        
+        return adicionaColuna(serieConvertida);
+    }
+
+    /**
      * @brief Retorna o número de linhas e colunas do DataFrame.
      * @return Um par contendo (número de linhas, número de colunas).
      */
@@ -110,8 +164,7 @@ public:
 
     /**
      * @brief Adiciona uma nova linha ao DataFrame, inserindo os valores em cada coluna correspondente.
-     * @tparam Args Tipos dos valores a serem adicionados.
-     * @param args Valores a serem adicionados como uma nova linha.
+     * @param novaLinha Vetor de valores para adicionar como uma nova linha.
      * @return true se a linha for adicionada com sucesso, false caso contrário.
      */
     bool adicionaLinha(vector<VDTYPES> novaLinha) {
@@ -143,7 +196,7 @@ public:
     }
 
     /**
-     * @brief Remove uma linha específica do DataFrame, removendo o elemento correspondente de cada coluna.
+     * @brief Remove uma linha específica do DataFrame.
      * @param iIndex O índice da linha a ser removida.
      * @return true se a remoção for bem-sucedida, false caso contrário.
      */
@@ -162,7 +215,6 @@ public:
 
     /**
      * @brief Filtra o DataFrame com base em um valor específico de uma coluna.
-     *
      * @param strNomeColuna O nome da coluna na qual a filtragem será aplicada.
      * @param valor O valor a ser buscado na coluna.
      * @return Um novo DataFrame contendo apenas as linhas onde a correspondência ocorreu.
@@ -206,11 +258,9 @@ public:
     
         return auxDf;
     }
-    
-    
 
     /**
-     * @brief Empilha dois DataFrames horizontalmente, desde que tenham o mesmo número de colunas e tipos de colunas.
+     * @brief Empilha dois DataFrames horizontalmente.
      * @param other O DataFrame a ser empilhado.
      */
     void hStack(Dataframe& other) {
@@ -231,6 +281,9 @@ public:
         }
     }
 
+    /**
+     * @brief Método auxiliar para impressão do cabeçalho do DataFrame.
+     */
     void printHeader(ostream& os, const Dataframe& df, int col_width = 15, int index_width = 5) {
         os << left << setw(index_width) << "" << "  ";
         for (const auto& name : df.vstrColumnsName) {
@@ -251,9 +304,6 @@ public:
 
     /**
      * @brief Sobrecarga do operador de saída para imprimir o DataFrame.
-     * @param os O fluxo de saída.
-     * @param dfInput O DataFrame a ser impresso.
-     * @return O fluxo de saída atualizado.
      */
     friend ostream& operator<<(ostream& os, const Dataframe& dfInput) {
         Dataframe df = dfInput;
