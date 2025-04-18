@@ -306,7 +306,11 @@ public:
 
     void create_task(const string& value) {
         T data = run(value);
-        get_output_buffer_by_index(0).push(data);
+
+        for (int i = 0; i < numOutputBuffers; i++)
+            {
+                get_output_buffer_by_index(i).push(data);
+            }
      }
 
 
