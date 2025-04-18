@@ -53,10 +53,6 @@ int main() {
     // Start the pipeline
     manager.run();
 
-    std::cout << "Trabalho será finalizado" << std::endl;
-    manager.stop();
-    std::cout << "Trabalho finalizado" << std::endl;
-
     auto end_time = std::chrono::high_resolution_clock::now();
 
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
