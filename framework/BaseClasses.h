@@ -42,7 +42,6 @@ using namespace std;
 /**
  * @brief Classe base para extratores de dados.
  */
-
 template <typename T>
 class Extrator {
 protected:
@@ -54,14 +53,14 @@ protected:
     ifstream file;
     sqlite3* bancoDeDados;
     string strNomeTabela;
-    int nextOutputBuffer = 0;
     int numOutputBuffers;
+    int nextOutputBuffer = 0;
 
 public:
     /**
      * @brief Construtor padrão.
      */
-    Extrator(const string& strFilesPath, const string& strFilesFlag, int iTamanhoBatch, const string& strNomeTabela = "Nada",int num_outputs = 1):output_buffers(num_outputs), numOutputBuffers(num_outputs){
+    Extrator(const string& strFilesPath, const string& strFilesFlag, int iTamanhoBatch, const string& strNomeTabela = "Nada", int num_outputs = 1): output_buffers(num_outputs), numOutputBuffers(num_outputs){
         this->strFilesFlag = strFilesFlag;
         this->iTamanhoBatch = iTamanhoBatch;
         this->strNomeTabela = strNomeTabela;
@@ -111,17 +110,17 @@ public:
         if (nextOutputBuffer >= numOutputBuffers)
         {
             cout << "ERROR: NUMBER OF USED BUFFERS EXCEEDED NUMBER OF CREATED BUFFERS!" << endl;
-            throw runtime_error("ERROR: NUMBER OF USED BUFFERS EXCEEDED NUMBER OF CREATED BUFFERS!");
+            throw out_of_range("Número de buffers excedido!");
         }
         return output_buffers[nextOutputBuffer++];
     }
 
     Buffer<T>& get_output_buffer_by_index(int index) { return output_buffers[index]; }
-
     string getFilesFlag() const { return this->strFilesFlag; }
     int getBatchSize() const { return this->iTamanhoBatch; }
 
     void setTaskQueue(TaskQueue* tq) { this->taskqueue = tq; }
+    // void setOutputBuffer(Buffer<T>& outputBuffer) { this->outputBuffer = outputBuffer; }
     void setFilesFlag(const string& strFilesFlag) { this->strFilesFlag = strFilesFlag; }
     void setBatchSize(int iTamanhoBatch) { this->iTamanhoBatch = iTamanhoBatch; }
 
@@ -158,7 +157,7 @@ public:
      void enqueue_tasks(){
         string strBlocoDeTexto;
         int iContador = 0;
-        
+
         if (this->strFilesFlag == "csv")
         {
             string line;
@@ -166,16 +165,14 @@ public:
                 bool canSendTask = true;
                 for (int i = 0; i < numOutputBuffers; i++)
                 {
-                    std::cout << i << get_output_buffer_by_index(i).get_semaphore().get_count() << std::endl;
                     if (get_output_buffer_by_index(i).get_semaphore().get_count() <= 0)
                     {
                         canSendTask = false;
                         break;
                     }
                 }
-                
                 if (canSendTask){
-                    // Ignora a primeira linha (cabeçalho)
+                // Ignora a primeira linha (cabeçalho)
                 if (iContador == 0) {
                     iContador++;
                     continue;
@@ -188,7 +185,6 @@ public:
                     taskqueue->push_task([this, val = value]() mutable {
                         this->create_task(val);
                     });
-                    
                     for (int i = 0; i < numOutputBuffers; i++)
                     {
                         get_output_buffer_by_index(i).get_semaphore().wait();
@@ -197,36 +193,23 @@ public:
                 // cout << iContador << endl;
                 iContador++;
             }
-                // Adiciona o último bloco, se houver
-                if (!strBlocoDeTexto.empty()) {
-                    string value = strBlocoDeTexto;
-                    taskqueue->push_task([this, val = value]() mutable {
-                        this->create_task(val);
-                    });
-                    for (int i = 0; i < numOutputBuffers; i++)
-                    {
-                        get_output_buffer_by_index(i).get_semaphore().wait();
-                    }
-                }
+        }
+            // Adiciona o último bloco, se houver
+            if (!strBlocoDeTexto.empty()) {
+                string value = strBlocoDeTexto;
+                taskqueue->push_task([this, val = value]() mutable {
+                    this->create_task(val);
+                });
+                get_output_buffer_by_index(0).get_semaphore().wait();
             }
+
         }
         else if (this->strFilesFlag == "sql"){
             string sql = "SELECT * FROM " + this->strNomeTabela+ ";";
             sqlite3_stmt* stmt;
             if (sqlite3_prepare_v2(this->bancoDeDados, sql.c_str(), -1, &stmt, nullptr) == SQLITE_OK) {
                 while (sqlite3_step(stmt) == SQLITE_ROW) {
-                    bool canSendTask = true;
-                    for (int i = 0; i < numOutputBuffers; i++)
-                    {
-                        if (get_output_buffer_by_index(i).get_semaphore().get_count() <= 0)
-                        {
-                            canSendTask = false;
-                            break;
-                        }
-                    }
-                    if (canSendTask){
                     string line;
-
 
                     // Constrói uma linha de dados separada por vírgula
                     for (size_t i = 0; i < this->strColumnsName.size(); ++i) {
@@ -245,13 +228,9 @@ public:
                         taskqueue->push_task([this, val = value]() mutable {
                             this->create_task(val);
                         });
-                        for (int i = 0; i < numOutputBuffers; i++)
-                        {
-                            get_output_buffer_by_index(i).get_semaphore().wait();
-                        }
+                        // this->outputBuffer.get_semaphore().wait();
                     }
                 }
-            }
 
                 // Se ainda houver dados pendentes no bloco, processa o restante
                 if (!strBlocoDeTexto.empty()) {
@@ -259,21 +238,17 @@ public:
                     taskqueue->push_task([this, val = value]() mutable {
                         this->create_task(val);
                     });
-                    for (int i = 0; i < numOutputBuffers; i++)
-                    {
-                        get_output_buffer_by_index(i).get_semaphore().wait();
-                    }
+                    get_output_buffer_by_index(0).get_semaphore().wait();
                 }
 
                 sqlite3_finalize(stmt);
-                } else {
-                    throw runtime_error("Erro ao preparar consulta SQL.");
-                }
+            } else {
+                throw runtime_error("Erro ao preparar consulta SQL.");
+            }
         }
 
         // Avisa ao buffer de saída que os dados acabaram
-
-        finishBuffer();
+        get_output_buffer_by_index(0).setInputTasksCreated();
     }
 
     T run(const string& strTextBlock){
@@ -319,9 +294,7 @@ public:
 
     void create_task(const string& value) {
         T data = run(value);
-        for (int i = 0; i < numOutputBuffers; i++) {
-            get_output_buffer_by_index(i).push(data);
-        }
+        get_output_buffer_by_index(0).push(data);
      }
 
 
@@ -336,10 +309,7 @@ public:
 
     void finishBuffer()
     {
-        for (int i = 0; i < numOutputBuffers; i++)
-            {
-                get_output_buffer_by_index(i).setInputTasksCreated();
-            }
+        get_output_buffer_by_index(0).setInputTasksCreated();
     }
 };
 
