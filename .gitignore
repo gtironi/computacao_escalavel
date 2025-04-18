@@ -195,3 +195,6 @@ dmypy.json
 cython_debug/
 
 .vscode/
+**/programa
+**/profile.txt
+analysis.txt
