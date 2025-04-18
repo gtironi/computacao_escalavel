@@ -54,12 +54,14 @@ protected:
     ifstream file;
     sqlite3* bancoDeDados;
     string strNomeTabela;
+    int nextOutputBuffer = 0;
+    int numOutputBuffers;
 
 public:
     /**
      * @brief Construtor padrão.
      */
-    Extrator(const string& strFilesPath, const string& strFilesFlag, int iTamanhoBatch, const string& strNomeTabela = "Nada"){
+    Extrator(const string& strFilesPath, const string& strFilesFlag, int iTamanhoBatch, const string& strNomeTabela = "Nada",int num_outputs = 1): numOutputBuffers(num_outputs){
         this->strFilesFlag = strFilesFlag;
         this->iTamanhoBatch = iTamanhoBatch;
         this->strNomeTabela = strNomeTabela;
@@ -104,12 +106,21 @@ public:
 
     TaskQueue* get_taskqueue() const { return taskqueue; }
     void set_taskqueue(TaskQueue* tq) { taskqueue = tq; }
-    Buffer<T>& get_output_buffer() { return outputBuffer; }
+    // Função para pegar o buffer de saída
+    Buffer<T>& get_output_buffer() { 
+        if (nextOutputBuffer >= numOutputBuffers)
+        {
+            cout << "ERROR: NUMBER OF USED BUFFERS EXCEEDED NUMBER OF CREATED BUFFERS!" << endl;
+        }
+        return output_buffer[nextOutputBuffer++];
+    }
+
+    Buffer<T>& get_output_buffer_by_index(int index) { return output_buffer[index]; }
+
     string getFilesFlag() const { return this->strFilesFlag; }
     int getBatchSize() const { return this->iTamanhoBatch; }
 
     void setTaskQueue(TaskQueue* tq) { this->taskqueue = tq; }
-    // void setOutputBuffer(Buffer<T>& outputBuffer) { this->outputBuffer = outputBuffer; }
     void setFilesFlag(const string& strFilesFlag) { this->strFilesFlag = strFilesFlag; }
     void setBatchSize(int iTamanhoBatch) { this->iTamanhoBatch = iTamanhoBatch; }
 
