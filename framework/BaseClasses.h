@@ -15,7 +15,7 @@
 #include <regex>
 #include <sstream>
 #include "Series.h"
-
+#include <any>
 
 using namespace std;
 
@@ -258,13 +258,13 @@ public:
         while (getline(ss, line)) {
             stringstream ssLine(line);
             string cell;
-            vector<VDTYPES> convertedRow;
+            vector<any> convertedRow;
             convertedRow.reserve(dfAuxiliar.vstrColumnsName.size());
     
             size_t colIndex = 0;
             while (getline(ssLine, cell, ',')) {
                 // Adiciona a célula diretamente como string
-                convertedRow.emplace_back(std::move(cell));
+                convertedRow.emplace_back(cell);
                 colIndex++;
             }
     
@@ -274,7 +274,7 @@ public:
                 colIndex++;
             }
     
-            dfAuxiliar.adicionaLinha(std::move(convertedRow));
+            dfAuxiliar.adicionaLinha(convertedRow);
         }
     
         return dfAuxiliar;

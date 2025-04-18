@@ -10,20 +10,9 @@
 #include <typeinfo>
 #include <type_traits>
 #include <utility>
-#include <variant>
+#include <any>
 
 using namespace std;
-
-// Definição de VDTYPES como uma variante que pode conter diferentes tipos de dados
-using VDTYPES = std::variant<int, double, std::string, bool>;
-
-// Mapa que associa nomes de tipo C++ com strings de representação para verificação de tipos
-const std::map<std::string, std::string> TYPEMAP = {
-    {typeid(int).name(), "int"},
-    {typeid(double).name(), "double"},
-    {typeid(std::string).name(), "string"},
-    {typeid(bool).name(), "bool"}
-};
 
 /**
  * @class Series
@@ -50,7 +39,7 @@ public:
      * @param data Vetor de dados
      */
     Series(const string& columnName, const vector<T>& data) : 
-        strColumnName(columnName), vecColumnData(data) {}
+        strColumnName(columnName), vecColumnData(data.begin(), data.end()) {}
 
     /**
      * @brief Construtor completo com nome e tipo
@@ -128,7 +117,7 @@ public:
      * @brief Retorna o vetor de dados da coluna.
      * @return Vetor contendo os dados.
      */
-    const vector<T>& getData() const {
+    const vector<any>& getData() const {
         return vecColumnData;
     }
 
@@ -136,7 +125,7 @@ public:
      * @brief Obtém referência não-const ao vetor de dados
      * @return Referência ao vetor de dados
      */
-    vector<T>& getDataRef() {
+    vector<any>& getDataRef() {
         return vecColumnData;
     }
 
@@ -152,11 +141,7 @@ public:
         size_t limit = min(series.vecColumnData.size(), static_cast<size_t>(5));
         
         for (size_t i = 0; i < limit; ++i) {
-            if constexpr (is_same_v<T, string>) { 
-                os << '"' << series.vecColumnData[i] << '"'; 
-            } else {
-                os << series.vecColumnData[i];
-            }
+            os << series.anyToString(series.vecColumnData[i]);
 
             if (i < limit - 1) os << ", ";
         }
@@ -189,7 +174,7 @@ public:
      * @param elemento Elemento a ser adicionado
      * @return true se a operação for bem-sucedida, false caso contrário
      */
-    bool bAdicionaElemento(const T& elemento) {
+    bool bAdicionaElemento(const any& elemento) {
         vecColumnData.push_back(elemento);
         return true;
     }
@@ -199,7 +184,7 @@ public:
      * @param elemento Elemento a ser adicionado
      * @return true se a operação for bem-sucedida, false caso contrário
      */
-    bool bAdicionaElemento(T&& elemento) {
+    bool bAdicionaElemento(any&& elemento) {
         vecColumnData.push_back(std::move(elemento));
         return true;
     }
@@ -235,7 +220,7 @@ public:
      * @param iIndex Índice do elemento
      * @return Elemento armazenado no índice especificado
      */
-    const T& retornaElemento(int iIndex) const {
+    any retornaElemento(int iIndex) const {
         if (iIndex >= 0 && iIndex < static_cast<int>(vecColumnData.size())) {
             return vecColumnData[iIndex];
         } else {

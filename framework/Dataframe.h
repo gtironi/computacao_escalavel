@@ -6,26 +6,27 @@
 #include <vector>
 #include <iomanip>
 #include <map>
-#include <variant>
 #include <any>
 #include "Series.h"
 
 using namespace std;
 
-string variantToString(const VDTYPES& value) {
-    std::stringstream ss;
-    std::visit([&ss](auto&& arg) {
-        // Special handling for strings to potentially add quotes if desired,
-        // but for width calculation, raw string is better.
-        // For bool, print "true"/"false" instead of 1/0
-        using T = std::decay_t<decltype(arg)>;
-        if constexpr (std::is_same_v<T, bool>) {
-            ss << (arg ? "true" : "false");
+static inline string anyToString(const any& value) {
+    try {
+        if (value.type() == typeid(string)) {
+            return any_cast<string>(value);
+        } else if (value.type() == typeid(bool)) {
+            return any_cast<bool>(value) ? "true" : "false";
+        } else if (value.type() == typeid(int)) {
+            return to_string(any_cast<int>(value));
+        } else if (value.type() == typeid(double)) {
+            return to_string(any_cast<double>(value));
         } else {
-            ss << arg; // Use existing operator<< for DateDay, DateTime, etc.
+            return "[Unsupported Type]";
         }
-    }, value);
-    return ss.str();
+    } catch (const bad_any_cast&) {
+        return "[Error]";
+    }
 }
 
 /**
@@ -35,7 +36,7 @@ string variantToString(const VDTYPES& value) {
 class Dataframe {
 public:
     vector<string> vstrColumnsName; ///< Vetor que armazena os nomes das colunas
-    vector<Series<VDTYPES>> columns; ///< Vetor que armazena as colunas do DataFrame
+    vector<Series<any>> columns; ///< Vetor que armazena as colunas do DataFrame
 
     /**
      * @brief Construtor padrão do DataFrame.
@@ -91,7 +92,7 @@ public:
      * @param novaSerie Objeto Series a ser adicionado.
      * @return true se a adição for bem-sucedida, false caso contrário.
      */
-    bool adicionaColuna(Series<VDTYPES> novaSerie) {
+    bool adicionaColuna(Series<any> novaSerie) {
 
         if (columns.empty()) {
             vstrColumnsName.push_back(novaSerie.strGetName());
@@ -100,7 +101,6 @@ public:
 
         } else {
             bool viavel = true;
-
 
             for (size_t i = 0; i < columns.size(); i++) {
                 if (novaSerie.iGetSize() != columns[i].iGetSize()) {
@@ -128,20 +128,12 @@ public:
      */
     template <typename T>
     bool adicionaColuna(const Series<T>& novaSerie) {
-        // Converter Series<T> para Series<VDTYPES>
-        Series<VDTYPES> serieConvertida(novaSerie.strGetName(), novaSerie.strGetType());
+        // Converter Series<T> para Series<any>
+        Series<any> serieConvertida(novaSerie.strGetName(), novaSerie.strGetType());
         
         for (size_t i = 0; i < novaSerie.iGetSize(); i++) {
-            // Tentativa de converter o valor T para VDTYPES (se compatível)
             try {
-                if constexpr (is_convertible_v<T, VDTYPES>) {
-                    serieConvertida.bAdicionaElemento(novaSerie.retornaElemento(i));
-                } else {
-                    // Se não for diretamente convertível, armazena como string
-                    stringstream ss;
-                    ss << novaSerie.retornaElemento(i);
-                    serieConvertida.bAdicionaElemento(ss.str());
-                }
+                serieConvertida.bAdicionaElemento(novaSerie.retornaElemento(i));
             } catch (const exception& e) {
                 cerr << "Erro ao converter elemento: " << e.what() << endl;
                 return false;
@@ -167,7 +159,7 @@ public:
      * @param novaLinha Vetor de valores para adicionar como uma nova linha.
      * @return true se a linha for adicionada com sucesso, false caso contrário.
      */
-    bool adicionaLinha(vector<VDTYPES> novaLinha) {
+    bool adicionaLinha(const vector<any>& novaLinha) {
         if (novaLinha.size() != columns.size()) {
             cout << "Datapoint com tamanho inválido. É: " << novaLinha.size() << " - Deveria ser: " << columns.size() << endl;
             return false;
@@ -175,13 +167,14 @@ public:
 
         for (size_t i = 0; i < columns.size(); i++) {
             string expectedType = columns[i].strGetType();
-            bool valid = visit([&expectedType](const auto& val) -> bool {
-                auto it = TYPEMAP.find(typeid(val).name());
-                if (it == TYPEMAP.end()) {
-                    return false;
+            bool valid = true;
+            try {
+                if (anyToString(novaLinha[i]).empty()) {
+                    valid = false;
                 }
-                return it->second == expectedType;
-            }, novaLinha[i]);
+            } catch (const bad_any_cast&) {
+                valid = false;
+            }
             if (!valid) {
                 cerr << "Tipo de dado inválido para a coluna " << columns[i].strGetName() << ". Esperado: " << expectedType << endl;
                 return false;
@@ -219,7 +212,7 @@ public:
      * @param valor O valor a ser buscado na coluna.
      * @return Um novo DataFrame contendo apenas as linhas onde a correspondência ocorreu.
      */
-    Dataframe filtroByValue(const string& strNomeColuna, const VDTYPES& valor) {
+    Dataframe filtroByValue(const string& strNomeColuna, const any& valor) {
         Dataframe auxDf;
         auxDf.vstrColumnsName = vstrColumnsName;
     
@@ -239,7 +232,7 @@ public:
     
         // Pré-conta quantas linhas irão para o novo DataFrame
         size_t matchCount = count_if(data.begin(), data.end(), [&](const auto& el) {
-            return el == valor;
+            return anyToString(el) == anyToString(valor);
         });
     
         // Pré-aloca espaço nas colunas do novo dataframe
@@ -249,7 +242,7 @@ public:
     
         // Copia os dados filtrados diretamente
         for (size_t i = 0; i < data.size(); ++i) {
-            if (data[i] == valor) {
+            if (anyToString(data[i]) == anyToString(valor)) {
                 for (size_t j = 0; j < columns.size(); ++j) {
                     auxDf.columns[j].bAdicionaElemento(columns[j].retornaElemento(i));
                 }
@@ -322,7 +315,7 @@ public:
         for (size_t i = 0; i < num_rows; ++i) {
             os << left << setw(index_width) << i << "  ";
             for (size_t j = 0; j < num_cols; ++j) {
-                string val_str = variantToString(df.columns[j].retornaElemento(i));
+                string val_str = anyToString(df.columns[j].retornaElemento(i));
                 if (val_str.length() > col_width)
                     val_str[col_width - 3] = val_str[col_width - 2] = val_str[col_width - 1] = '.';
                 os << left << setw(col_width) << val_str.substr(0, col_width) << "  ";
