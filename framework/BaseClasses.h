@@ -14,30 +14,10 @@
 #include <map>
 #include <regex>
 #include <sstream>
+#include <any>
 #include "Series.h"
 
-
 using namespace std;
-
-// // Classe base para todos. Todos os stages precisam de uma task queue que será gerenciada pelo manager global
-// class Stage {
-//     protected:
-//         TaskQueue* taskqueue = nullptr;
-//         // std::atomic<bool> running{true};
-//     public:
-
-//         // Função que será escrita pelo usuário ao criar uma classe que herda de algum stage
-//         virtual void run() = 0;
-
-//         // Função que é um wrapper de run que será mandado para ser executada
-//         virtual void create_task() = 0;
-
-//         void set_taskqueue(TaskQueue* tq) { taskqueue = tq; }
-//         TaskQueue* get_taskqueue() const { return taskqueue; }
-
-//         virtual ~Stage() = default;
-
-// };
 
 /**
  * @brief Classe base para extratores de dados.
@@ -109,7 +89,6 @@ public:
     int getBatchSize() const { return this->iTamanhoBatch; }
 
     void setTaskQueue(TaskQueue* tq) { this->taskqueue = tq; }
-    // void setOutputBuffer(Buffer<T>& outputBuffer) { this->outputBuffer = outputBuffer; }
     void setFilesFlag(const string& strFilesFlag) { this->strFilesFlag = strFilesFlag; }
     void setBatchSize(int iTamanhoBatch) { this->iTamanhoBatch = iTamanhoBatch; }
 
@@ -166,7 +145,6 @@ public:
                     });
                     this->outputBuffer.get_semaphore().wait();
                 }
-                // cout << iContador << endl;
                 iContador++;
             }
 
@@ -204,7 +182,6 @@ public:
                         taskqueue->push_task([this, val = value]() mutable {
                             this->create_task(val);
                         });
-                        // this->outputBuffer.get_semaphore().wait();
                     }
                 }
 
@@ -252,17 +229,16 @@ public:
         while (getline(ss, line)) {
             stringstream ssLine(line);
             string cell;
-            vector<VDTYPES> convertedRow;
+            vector<any> convertedRow;
             convertedRow.reserve(dfAuxiliar.vstrColumnsName.size());
     
             size_t colIndex = 0;
             while (getline(ssLine, cell, ',')) {
-                // Exemplo de parse mais eficiente (precisa de mapeamento real dos tipos)
-                convertedRow.emplace_back(std::move(cell));
+                convertedRow.emplace_back(cell);
                 colIndex++;
             }
     
-            dfAuxiliar.adicionaLinha(std::move(convertedRow));
+            dfAuxiliar.adicionaLinha(convertedRow);
         }
     
         return dfAuxiliar;

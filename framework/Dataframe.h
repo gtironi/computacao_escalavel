@@ -4,27 +4,22 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <any>
+#include <algorithm>
 #include <iomanip>
-#include <map>
-#include <variant>
 #include "Series.h"
-
 using namespace std;
 
-string variantToString(const VDTYPES& value) {
-    std::stringstream ss;
-    std::visit([&ss](auto&& arg) {
-        // Special handling for strings to potentially add quotes if desired,
-        // but for width calculation, raw string is better.
-        // For bool, print "true"/"false" instead of 1/0
-        using T = std::decay_t<decltype(arg)>;
-        if constexpr (std::is_same_v<T, bool>) {
-            ss << (arg ? "true" : "false");
-        } else {
-            ss << arg; // Use existing operator<< for DateDay, DateTime, etc.
-        }
-    }, value);
-    return ss.str();
+static inline string anyToString(const any& value) {
+    try {
+        if (value.type() == typeid(int))      return to_string(any_cast<int>(value));
+        if (value.type() == typeid(double))   return to_string(any_cast<double>(value));
+        if (value.type() == typeid(bool))     return any_cast<bool>(value) ? "true" : "false";
+        if (value.type() == typeid(string))   return any_cast<string>(value);
+    } catch (...) {
+        return "[err]";
+    }
+    return "[unknown]";
 }
 
 /**
@@ -33,253 +28,141 @@ string variantToString(const VDTYPES& value) {
  */
 class Dataframe {
 public:
-    vector<string> vstrColumnsName; ///< Vetor que armazena os nomes das colunas
-    vector<Series> columns;        ///< Vetor que armazena as colunas do DataFrame
+    vector<string> vstrColumnsName;
+    vector<Series> columns;
 
-    /**
-     * @brief Construtor padrão do DataFrame.
-     */
     Dataframe() = default;
+    Dataframe(const Dataframe& other) = default;
+    Dataframe& operator=(const Dataframe& other) = default;
 
-    /**
-     * @brief Construtor de cópia do DataFrame.
-     * @param other Objeto Dataframe a ser copiado.
-     */
-    Dataframe(const Dataframe& other) {
-        vstrColumnsName = other.vstrColumnsName;
-        columns = other.columns;
-    }
-
-    /**
-     * @brief Sobrecarga do operador de atribuição.
-     * @param other Objeto Dataframe a ser atribuído.
-     * @return Referência para o objeto atribuído.
-     */
-    Dataframe& operator=(const Dataframe& other) {
-        if (this != &other) {
-            vstrColumnsName = other.vstrColumnsName;
-            columns = other.columns;
-        }
-        return *this;
-    }
-
-    /**
-     * @brief Adiciona uma nova coluna (Series) ao DataFrame.
-     * @param novaSerie Objeto Series a ser adicionado.
-     * @return true se a adição for bem-sucedida, false caso contrário.
-     */
-    bool adicionaColuna(Series novaSerie) {
-
+    bool adicionaColuna(const Series& novaSerie) {
         if (columns.empty()) {
             vstrColumnsName.push_back(novaSerie.strGetName());
             columns.push_back(novaSerie);
             return true;
-
-        } else {
-            bool viavel = true;
-
-
-            for (size_t i = 0; i < columns.size(); i++) {
-                if (novaSerie.iGetSize() != columns[i].iGetSize()) {
-                    viavel = false;
-                    break;
-                }
-            }
-
-            if (viavel) {
-                vstrColumnsName.push_back(novaSerie.strGetName());
-                columns.push_back(novaSerie);
-                return true;
-            } else {
-                cerr << "Erro: A nova coluna possui tamanho diferente das colunas existentes." << endl;
-                return false;
-            }
         }
-    }
-
-    /**
-     * @brief Retorna o número de linhas e colunas do DataFrame.
-     * @return Um par contendo (número de linhas, número de colunas).
-     */
-    pair<int, int> getShape() {
-        int iNumColunas = vstrColumnsName.size();
-        int iNumLinhas = columns.empty() ? 0 : columns[0].iGetSize();
-        pair<int, int> shape = {iNumLinhas, iNumColunas};
-        return shape;
-    }
-
-    /**
-     * @brief Adiciona uma nova linha ao DataFrame, inserindo os valores em cada coluna correspondente.
-     * @tparam Args Tipos dos valores a serem adicionados.
-     * @param args Valores a serem adicionados como uma nova linha.
-     * @return true se a linha for adicionada com sucesso, false caso contrário.
-     */
-    bool adicionaLinha(vector<VDTYPES> novaLinha) {
-        if (novaLinha.size() != columns.size()) {
-            cout << "Datapoint com tamanho inválido. É: " << novaLinha.size() << " - Deveria ser: " << columns.size() << endl;
+        size_t sizeNeeded = columns[0].iGetSize();
+        if (novaSerie.iGetSize() != sizeNeeded) {
+            cerr << "Erro: A nova coluna possui tamanho diferente das colunas existentes." << endl;
             return false;
         }
+        vstrColumnsName.push_back(novaSerie.strGetName());
+        columns.push_back(novaSerie);
+        return true;
+    }
 
-        for (size_t i = 0; i < columns.size(); i++) {
-            string expectedType = columns[i].strGetType();
-            bool valid = visit([&expectedType](const auto& val) -> bool {
-                auto it = TYPEMAP.find(typeid(val).name());
-                if (it == TYPEMAP.end()) {
-                    return false;
-                }
-                return it->second == expectedType;
-            }, novaLinha[i]);
-            if (!valid) {
-                cerr << "Tipo de dado inválido para a coluna " << columns[i].strGetName() << ". Esperado: " << expectedType << endl;
-                return false;
-            }
+    pair<int, int> getShape() const {
+        int iNumColunas = static_cast<int>(vstrColumnsName.size());
+        int iNumLinhas  = columns.empty() ? 0 : static_cast<int>(columns[0].iGetSize());
+        return make_pair(iNumLinhas, iNumColunas);
+    }
+
+    bool adicionaLinha(const vector<any>& novaLinha) {
+        if (novaLinha.size() != columns.size()) {
+            cerr << "Número de valores não corresponde ao número de colunas.\n";
+            return false;
         }
-
         for (size_t i = 0; i < columns.size(); i++) {
             columns[i].bAdicionaElemento(novaLinha[i]);
         }
-
         return true;
     }
 
-    /**
-     * @brief Remove uma linha específica do DataFrame, removendo o elemento correspondente de cada coluna.
-     * @param iIndex O índice da linha a ser removida.
-     * @return true se a remoção for bem-sucedida, false caso contrário.
-     */
     bool removeLinha(int iIndex) {
-        if (iIndex < 0 || iIndex >= this->getShape().first) {
+        auto shape = getShape();
+        if (iIndex < 0 || iIndex >= shape.first) {
             cerr << "Índice inválido para remoção de linha." << endl;
             return false;
         }
-
-        for (size_t i = 0; i < columns.size(); i++) {
-            columns[i].bRemovePeloIndex(iIndex);
+        for (auto& col : columns) {
+            col.bRemovePeloIndex(iIndex);
         }
-
         return true;
     }
 
-    /**
-     * @brief Filtra o DataFrame com base em um valor específico de uma coluna.
-     *
-     * @param strNomeColuna O nome da coluna na qual a filtragem será aplicada.
-     * @param valor O valor a ser buscado na coluna.
-     * @return Um novo DataFrame contendo apenas as linhas onde a correspondência ocorreu.
-     */
-    Dataframe filtroByValue(const string& strNomeColuna, const VDTYPES& valor) {
+    Dataframe filtroByValue(const string& strNomeColuna, const any& valor) {
         Dataframe auxDf;
         auxDf.vstrColumnsName = vstrColumnsName;
-    
-        // Criar estrutura das colunas no novo dataframe
-        for (const auto& col : columns) {
+        for (auto& col : columns) {
             auxDf.columns.emplace_back(col.strGetName(), col.strGetType());
         }
-    
-        // Localiza a coluna de filtro
         auto it = find(vstrColumnsName.begin(), vstrColumnsName.end(), strNomeColuna);
         if (it == vstrColumnsName.end()) {
-            throw std::invalid_argument("Coluna '" + strNomeColuna + "' não encontrada.");
+            cerr << "Coluna '" << strNomeColuna << "' não encontrada." << endl;
+            return auxDf;
         }
-    
-        int colIndex = distance(vstrColumnsName.begin(), it);
-        const auto& data = columns[colIndex].getData();
-    
-        // Pré-conta quantas linhas irão para o novo DataFrame
-        size_t matchCount = count_if(data.begin(), data.end(), [&](const auto& el) {
-            return el == valor;
-        });
-    
-        // Pré-aloca espaço nas colunas do novo dataframe
-        for (auto& col : auxDf.columns) {
-            col.reserve(matchCount);
+        int colIndex = static_cast<int>(distance(vstrColumnsName.begin(), it));
+        const int total = getShape().first;
+        // Pré-conta quantas linhas
+        size_t matchCount = 0;
+        for (int i = 0; i < total; ++i) {
+            any cellVal = columns[colIndex].retornaElemento(i);
+            if (cellVal.type() == valor.type() && cellVal.has_value() && valor.has_value()) {
+                if (anyToString(cellVal) == anyToString(valor)) matchCount++;
+            }
         }
-    
-        // Copia os dados filtrados diretamente
-        for (size_t i = 0; i < data.size(); ++i) {
-            if (data[i] == valor) {
-                for (size_t j = 0; j < columns.size(); ++j) {
-                    auxDf.columns[j].bAdicionaElemento(columns[j].retornaElemento(i));
+        for (auto& col : auxDf.columns) col.reserve(matchCount);
+
+        for (int i = 0; i < total; ++i) {
+            any cellVal = columns[colIndex].retornaElemento(i);
+            if (cellVal.type() == valor.type() && cellVal.has_value() && valor.has_value()) {
+                if (anyToString(cellVal) == anyToString(valor)) {
+                    for (size_t j = 0; j < columns.size(); ++j) {
+                        auxDf.columns[j].bAdicionaElemento(columns[j].retornaElemento(i));
+                    }
                 }
             }
         }
-    
         return auxDf;
     }
-    
-    
 
-    /**
-     * @brief Empilha dois DataFrames horizontalmente, desde que tenham o mesmo número de colunas e tipos de colunas.
-     * @param other O DataFrame a ser empilhado.
-     */
     void hStack(Dataframe& other) {
-        if (this->columns.size() != other.columns.size()) {
-            cout << "DataFrames com tamanhos diferentes. Não é possível empilhar." << endl;
+        if (columns.size() != other.columns.size()) {
+            cerr << "DataFrames com tamanhos diferentes. Não é possível empilhar." << endl;
             return;
         }
-
         for (size_t i = 0; i < columns.size(); i++) {
-            if (columns[i].strGetType() != other.columns[i].strGetType()) {
-                cout << "Tipos de colunas diferentes. Não é possível empilhar." << endl;
-                return;
+            int total = other.getShape().first;
+            for (int row = 0; row < total; ++row) {
+                columns[i].bAdicionaElemento(other.columns[i].retornaElemento(row));
             }
-        }
-
-        for (size_t i = 0; i < columns.size(); i++) {
-            columns[i].hStack(other.columns[i]);
         }
     }
 
-    void printHeader(ostream& os, const Dataframe& df, int col_width = 15, int index_width = 5) {
-        os << left << setw(index_width) << "" << "  ";
-        for (const auto& name : df.vstrColumnsName) {
-            string header_name = name.substr(0, col_width);
-            if (name.length() > col_width) {
-                header_name[col_width - 3] = header_name[col_width - 2] = header_name[col_width - 1] = '.';
-            }
-            os << left << setw(col_width) << header_name << "  ";
-        }
-        os << "\n";
-
-        os << left << setw(index_width) << "" << "  ";
-        for (size_t i = 0; i < df.vstrColumnsName.size(); ++i) {
-            os << left << setw(col_width) << "------------" << "  ";
-        }
-        os << "\n";
-    }
-
-    /**
-     * @brief Sobrecarga do operador de saída para imprimir o DataFrame.
-     * @param os O fluxo de saída.
-     * @param dfInput O DataFrame a ser impresso.
-     * @return O fluxo de saída atualizado.
-     */
     friend ostream& operator<<(ostream& os, const Dataframe& dfInput) {
-        Dataframe df = dfInput;
-        if (df.columns.empty()) {
+        if (dfInput.columns.empty()) {
             os << "[Empty DataFrame]\n";
             return os;
         }
+        auto shape = dfInput.getShape();
+        size_t num_rows = shape.first, num_cols = shape.second;
+        int col_width = 15, index_width = 5;
 
-        pair<int, int> shape = df.getShape();
+        // Imprime cabeçalho
+        os << left << setw(index_width) << "" << "  ";
+        for (auto& name : dfInput.vstrColumnsName) {
+            string header_name = (name.size() > size_t(col_width))
+                ? (name.substr(0, col_width - 3) + "...")
+                : name;
+            os << left << setw(col_width) << header_name << "  ";
+        }
+        os << "\n" << left << setw(index_width) << "" << "  ";
+        for (size_t i = 0; i < num_cols; i++) {
+            os << left << setw(col_width) << string(col_width, '-') << "  ";
+        }
+        os << "\n";
 
-        size_t num_rows = shape.first;
-        size_t num_cols = shape.second;
-        int col_width = 15; // Largura fixa das colunas
-        int index_width = 5;
-
+        // Imprime dados
         for (size_t i = 0; i < num_rows; ++i) {
             os << left << setw(index_width) << i << "  ";
             for (size_t j = 0; j < num_cols; ++j) {
-                string val_str = variantToString(df.columns[j].retornaElemento(i));
-                if (val_str.length() > col_width)
-                    val_str[col_width - 3] = val_str[col_width - 2] = val_str[col_width - 1] = '.';
-                os << left << setw(col_width) << val_str.substr(0, col_width) << "  ";
+                string val_str = anyToString(dfInput.columns[j].retornaElemento(i));
+                if (val_str.length() > size_t(col_width))
+                    val_str = val_str.substr(0, col_width - 3) + "...";
+                os << left << setw(col_width) << val_str << "  ";
             }
             os << "\n";
         }
-
         return os;
     }
 };
