@@ -43,7 +43,8 @@ int main() {
     manager.addExtractor(&extrator);
 
     std::vector<Buffer<Dataframe>*> buffers;
-    buffers.push_back(extrator.get_output_buffer());
+    
+    buffers.push_back(&extrator.get_output_buffer());
 
     Filter transformer(buffers, 2);
     manager.addTransformer(&transformer);

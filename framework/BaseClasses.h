@@ -103,7 +103,7 @@ public:
 
     TaskQueue* get_taskqueue() const { return taskqueue; }
     void set_taskqueue(TaskQueue* tq) { taskqueue = tq; }
-    Buffer<T>* get_output_buffer() { return outputBuffer; }
+    Buffer<T>& get_output_buffer() { return outputBuffer; }
     string getFilesFlag() const { return this->strFilesFlag; }
     int getBatchSize() const { return this->iTamanhoBatch; }
 
@@ -321,9 +321,9 @@ class Transformer {
             // Enquanto o buffer de entrada não tiver terminado...
             while (true) {
                 bool canContinue = false;
-                for (int i = 0; i < input_buffers.size; i++)
+                for (int i = 0; i < input_buffers.size(); i++)
                 {
-                    if (!input_buffers[i].atomicGetInputDataFinished())
+                    if (!input_buffers[i] -> atomicGetInputDataFinished())
                     {
                         canContinue = true;
                     }
@@ -345,7 +345,7 @@ class Transformer {
                         // Tenta pegar um dataframe do buffer de entrada
                         // (Redundante com a verificação do while, mas pode evitar problemas
                         // como tentar tirar algo do buffer com ele vazio)
-                        std::optional<T> maybe_value = input_buffers[0].pop();
+                        std::optional<T> maybe_value = input_buffers[0] -> pop();
                         // Se não tiver retornado um dataframe, encerra o método
                         if (!maybe_value.has_value()) {
                             return;
