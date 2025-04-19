@@ -35,7 +35,7 @@ def gerar_datas_2025():
     inicio = datetime(2025, 4, 7)
     fim = datetime(2025, 12, 31)
     delta = (fim - inicio).days + 1
-    return [(inicio + timedelta(days=i)).strftime('%Y-%m-%d') for i in range(delta)]
+    return [(inicio + timedelta(days=i)) for i in range(delta)]
 
 datas_2025 = gerar_datas_2025()
 
@@ -93,6 +93,9 @@ def gerar_dados_em_thread(hoteis_por_cidade_thread, fator_preco_cidade, arquivo_
                 preco = round(preco_base * fator_preco_cidade[cidade] * fator_aleatorio * multiplicador_tipo, 2)
 
                 for data in datas_2025:
+                    dia = data.day
+                    mes = data.month
+                    ano = data.year
                     ocupado = random.random() < 0.6
                     registros.append([
                         nome_hotel,
@@ -101,7 +104,9 @@ def gerar_dados_em_thread(hoteis_por_cidade_thread, fator_preco_cidade, arquivo_
                         numero_quarto,
                         capacidade,
                         preco,
-                        data,
+                        dia,
+                        mes,
+                        ano,
                         1 if ocupado else 0
                     ])
 
@@ -113,7 +118,7 @@ def gerar_dados_em_thread(hoteis_por_cidade_thread, fator_preco_cidade, arquivo_
 
 def main():
     arquivo_saida = os.path.join(os.path.dirname(__file__), 'data/dados_hoteis_2025.csv')
-    num_threads = 4
+    num_threads = 6
     hoteis_por_thread = 30  # Total de hotéis = threads * hoteis_por_thread
     total_hoteis = num_threads * hoteis_por_thread
     os.makedirs(os.path.dirname(arquivo_saida), exist_ok=True)
@@ -125,7 +130,7 @@ def main():
         writer = csv.writer(f)
         writer.writerow([
             'nome_hotel', 'cidade', 'tipo_quarto', 'numero_quarto',
-            'quantidade_pessoas', 'preco', 'data', 'ocupado'
+            'quantidade_pessoas', 'preco', 'dia', 'mes', 'ano', 'ocupado'
         ])
 
     print(f"Gerando dados com {total_hoteis} hotéis entre 07/04 e 31/12/2025 usando {num_threads} threads...\n")
