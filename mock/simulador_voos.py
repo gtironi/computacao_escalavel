@@ -29,7 +29,7 @@ def gerar_dados_voos_em_thread(datas, arquivo_saida, thread_id):
             dia, mes, ano = data.day, data.month, data.year
             for origem in cidades:
                 destinos_possiveis = [c for c in cidades if c != origem]
-                num_voos = random.randint(1, 3)
+                num_voos = random.randint(7, 18) ## Mudar aqui para aumentar a base -------------------------------------------
                 destinos = random.sample(destinos_possiveis, min(num_voos, len(destinos_possiveis)))
                 for destino in destinos:
                     assentos_totais = random.choice([100, 200])
