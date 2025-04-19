@@ -7,6 +7,7 @@
 #include <iomanip>
 #include <map>
 #include <any>
+#include <unordered_map>
 #include "Series.h"
 
 using namespace std;
@@ -154,6 +155,13 @@ public:
         return shape;
     }
 
+    pair<int, int> getShape() const {
+        int iNumColunas = vstrColumnsName.size();
+        int iNumLinhas = columns.empty() ? 0 : columns[0].iGetSize();
+        pair<int, int> shape = {iNumLinhas, iNumColunas};
+        return shape;
+    }
+
     /**
      * @brief Adiciona uma nova linha ao DataFrame, inserindo os valores em cada coluna correspondente.
      * @param novaLinha Vetor de valores para adicionar como uma nova linha.
@@ -279,6 +287,93 @@ public:
         for (size_t i = 0; i < columns.size(); i++) {
             columns[i].hStack(other.columns[i]);
         }
+    }
+
+    /**
+     * @brief Realiza merge (inner join) entre este DataFrame e outro,
+     *        usando uma ou mais colunas como chave.
+     * @param other DataFrame a ser combinado.
+     * @param on Vetor com nomes das colunas-chave.
+     * @param joinType Tipo de join (apenas Inner suportado).
+     * @return DataFrame resultante do merge.
+     */
+    Dataframe merge(const Dataframe& other, const vector<string>& on) const {
+        // 1. Validar colunas-chave e obter índices
+        vector<int> idxA, idxB;
+        for (const auto& key : on) {
+            auto itA = find(vstrColumnsName.begin(), vstrColumnsName.end(), key);
+            auto itB = find(other.vstrColumnsName.begin(), other.vstrColumnsName.end(), key);
+            if (itA == vstrColumnsName.end() || itB == other.vstrColumnsName.end())
+                throw invalid_argument("Coluna-chave '" + key + "' não encontrada em ambos DataFrames.");
+            idxA.push_back(distance(vstrColumnsName.begin(), itA));
+            idxB.push_back(distance(other.vstrColumnsName.begin(), itB));
+        }
+    
+        // 2. Criar DataFrame resultante
+        Dataframe result;
+        
+        // Adicionar todas as colunas de df1
+        result.vstrColumnsName = vstrColumnsName;
+        for (const auto& col : columns) {
+            result.columns.emplace_back(col.strGetName(), col.strGetType());
+        }
+    
+        // Adicionar colunas de df2 que não estão em 'on'
+        vector<size_t> other_cols_idx; // Índices das colunas de df2 a incluir
+        for (size_t j = 0; j < other.vstrColumnsName.size(); ++j) {
+            if (find(on.begin(), on.end(), other.vstrColumnsName[j]) == on.end()) {
+                result.vstrColumnsName.push_back(other.vstrColumnsName[j]);
+                result.columns.emplace_back(other.vstrColumnsName[j], other.columns[j].strGetType());
+                other_cols_idx.push_back(j);
+            }
+        }
+    
+        // 3. Criar lookup para linhas de df2
+        unordered_map<string, vector<int>> lookup;
+        auto make_key = [&](const Dataframe& df, int row, const vector<int>& idx) {
+            string k;
+            for (int i : idx) {
+                k += anyToString(df.columns[i].retornaElemento(row)) + "\u0001";
+            }
+            return k;
+        };
+    
+        int rowsB = other.getShape().first;
+        for (int i = 0; i < rowsB; ++i) {
+            lookup[make_key(other, i, idxB)].push_back(i);
+        }
+    
+        // 4. Percorrer linhas de df1 e juntar com correspondentes em df2
+        int rowsA = getShape().first;
+        vector<any> newRow;
+        newRow.reserve(result.vstrColumnsName.size());
+    
+        for (int i = 0; i < rowsA; ++i) {
+            string k = make_key(*this, i, idxA);
+            auto it = lookup.find(k);
+            if (it == lookup.end()) continue;
+    
+            for (int jB : it->second) {
+                newRow.clear();
+                
+                // Adicionar todas as colunas de df1
+                for (const auto& col : columns) {
+                    newRow.push_back(col.retornaElemento(i));
+                }
+                
+                // Adicionar colunas de df2 que não estão em 'on'
+                for (size_t j : other_cols_idx) {
+                    newRow.push_back(other.columns[j].retornaElemento(jB));
+                }
+    
+                // Adicionar a linha ao resultado
+                if (!result.adicionaLinha(newRow)) {
+                    cerr << "Erro ao adicionar linha no merge." << endl;
+                }
+            }
+        }
+    
+        return result;
     }
 
     /**
