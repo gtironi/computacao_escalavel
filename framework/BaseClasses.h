@@ -411,6 +411,8 @@ class Transformer {
                         for (int i = 0; i < numOutputBuffers; i++)
                         {
                             get_output_buffer_by_index(i).get_semaphore().wait();
+                            // Problema está aqui. ele diminui a contagem e chega em 0 mas não da finishbuffer (não sai do while. tem que ser atômico)
+                            cout << get_output_buffer_by_index(i).get_semaphore().get_count() << endl;
                         }
                     }
                 }

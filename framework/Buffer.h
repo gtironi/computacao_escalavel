@@ -37,6 +37,8 @@ public:
     
     // Método para retirar o próximo elemento do buffer
     std::optional<T> pop(bool multiInput = false, bool test = false) {
+        // Trava o mutex
+        std::unique_lock<std::mutex> lock(mtx);
         if (test)
         {
             std::cout << "1-" << 5000 - get_semaphore().get_count() << std::endl;
@@ -52,15 +54,14 @@ public:
             std::cout << "2-" << 5000 - get_semaphore().get_count() << std::endl;
         }
 
-        // Trava o mutex
-        std::unique_lock<std::mutex> lock(mtx);
+        
 
         if (test)
         {
             std::cout << "3-" << 5000 - get_semaphore().get_count() << std::endl;
         }
         // Espera até alguma coisa aparecer no buffer
-        cond.wait(lock, [this] { return !queue.empty(); });
+        cond.wait(lock, [this] { return !queue.empty() || getInputDataFinished(); });
         if (test)
         {
             std::cout << "4-" << 5000 - get_semaphore().get_count() << std::endl;
@@ -91,7 +92,7 @@ public:
         // ou dados no buffer esperando para serem pegos...
         if (test)
         {
-            std::cout << "8-" << 5000 - get_semaphore().get_count() << std::endl;
+            std::cout << "8-" << 5000 - get_semaphore().get_count() << getInputTasksCreated() << std::endl;
         }
         if (getInputTasksCreated() && get_semaphore().get_count() == get_max_size())
         {
@@ -122,8 +123,12 @@ public:
 
     // Método para definir quando as tarefas de input tiverem sido todas criadas
     void setInputTasksCreated() {
+        std::lock_guard<std::mutex> lock(mtx);
         inputTasksCreated = true;
         // TODO
+        // if (queue.empty()) {
+        //     inputDataFinished = true;
+        // }
         cond.notify_all();
     }
 
