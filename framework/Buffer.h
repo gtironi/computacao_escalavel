@@ -33,7 +33,6 @@ public:
         queue.push(std::move(value));
         // Avisa qualquer thread que esteja esperando algo entrar no buffer
         cond.notify_one();
-        std::cout << "Notificou" << std::endl;
     }
     
     // Método para retirar o próximo elemento do buffer
@@ -45,17 +44,9 @@ public:
         {
             return std::nullopt;
         }
-        if (test)
-        {
-            std::cout << "1-" << 5000 - get_semaphore().get_count() << std::endl;
-        }
-
-        std::cout << "Entrou no wait" << std::endl;
 
         // Espera até alguma coisa aparecer no buffer
         cond.wait(lock, [this] { return (!queue.empty()) || (getInputDataFinished()); });
-
-        std::cout << "Saiu do wait " << queue.size() << " " << getInputDataFinished() << std::endl;
 
         // Se os dados de input já tiverem acabado, retorna null
         if (getInputDataFinished())
@@ -65,16 +56,8 @@ public:
 
         // Pega o próximo valor
         T value = std::move(queue.front());
-        if (test)
-        {
-            std::cout << "5-" << 5000 - get_semaphore().get_count() << std::endl;
-        }
         // Tira da fila
         queue.pop();
-        if (test)
-        {
-            std::cout << "6-" << 5000 - get_semaphore().get_count() << std::endl;
-        }
 
         // Aumenta o semáforo dele (libera um espaço no buffer)
         semaphore.notify();
@@ -82,10 +65,6 @@ public:
         // Se todas as tarefas que colocam dados nesse buffer já tiverem sido criadas
         // e se não tiver mais nenhuma dessas tarefas esperando na fila
         // ou dados no buffer esperando para serem pegos...
-        if (test)
-        {
-            std::cout << "8-" << 5000 - get_semaphore().get_count() << getInputTasksCreated() << std::endl;
-        }
         if (getInputTasksCreated() && get_semaphore().get_count() == get_max_size())
         {
             // Define que os dados de input acabaram
@@ -150,7 +129,6 @@ public:
     
         // Se o buffer estiver vazio, então já podemos sinalizar fim de dados
         if (get_semaphore().get_count() == get_max_size()) {
-            std::cout << "Mudou o iDF" << std::endl;
             inputDataFinished = true;
         }
     

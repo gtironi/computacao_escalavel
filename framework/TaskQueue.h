@@ -57,9 +57,7 @@ class TaskQueue
             }
             // Pega uma tarefa e a remove da fila
             std::function<void()> task = tasks.front();
-            std::cout << "Fila1: " << tasks.size() << std::endl;
             tasks.pop();
-            std::cout << "Fila2: " << tasks.size() << std::endl;
             
             return task;
         }

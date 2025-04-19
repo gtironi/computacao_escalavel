@@ -406,15 +406,7 @@ class Transformer {
                             }
                             this->create_task(std::move(raw_args));
                         });
-                        // Diminui o semáforo do buffer de saída (reserva um espaço para a saída da tarefa)
-                        
-                        // for (int i = 0; i < numOutputBuffers; i++)
-                        // {
-                        //     cout << "Colocou1: " << 5000 - get_output_buffer_by_index(i).get_semaphore().get_count() << endl;
-                        //     // get_output_buffer_by_index(i).get_semaphore().wait();
-                        //     // Problema está aqui. ele diminui a contagem e chega em 0 mas não da finishbuffer (não sai do while. tem que ser atômico)
-                        //     cout << "Colocou2: " << 5000 - get_output_buffer_by_index(i).get_semaphore().get_count() << endl;
-                        // }
+                    
                     }
                 }
                 else
@@ -444,6 +436,7 @@ class Transformer {
             T data = run(value);
             for (int i = 0; i < numOutputBuffers; i++)
             {
+                // Diminui o semáforo do buffer de saída
                 get_output_buffer_by_index(i).get_semaphore().wait();
                 get_output_buffer_by_index(i).push(data);
             }
@@ -459,7 +452,6 @@ class Transformer {
             for (int i = 0; i < numOutputBuffers; i++)
             {
                 get_output_buffer_by_index(i).finalizeInput();
-                std::cout << "Mudou: " << get_output_buffer_by_index(i).getInputTasksCreated() << std::endl;
             }
         }
 };
@@ -484,10 +476,9 @@ class Loader {
             // Tenta pegar um dataframe do buffer de entrada
             // (Redundante com a verificação do while, mas pode evitar problemas
             // como tentar tirar algo do buffer com ele vazio)
-            std::optional<T> maybe_value = input_buffer.pop(false, true);
+            std::optional<T> maybe_value = input_buffer.pop();
             // Se não tiver retornado um dataframe, encerra o método
             if (!maybe_value.has_value()) {
-                std::cout << "Sem valor" << std::endl;
                 break;
             }
             T value = std::move(*maybe_value);
