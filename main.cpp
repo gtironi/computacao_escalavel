@@ -26,12 +26,12 @@ class DataPrinter : public Loader<Dataframe> {
 
         void run(Dataframe df) override {
             if (!headerPrinted) {
-                // df.printHeader(std::cout, df); // Print the dataframe head
+                df.printHeader(std::cout, df); // Print the dataframe head
                 headerPrinted = true;
             }
 
             // Print the dataframe contents
-            // std::cout << df;
+            std::cout << df;
         }
     };
 

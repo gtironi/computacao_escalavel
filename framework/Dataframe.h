@@ -283,13 +283,26 @@ public:
         return os;
     }
 
-    void vStack(Dataframe& df_other)
-    {
-        for (int i = 0; i < df_other.columns.size(); i++)
-        {
-            this -> columns[i].hStack(df_other.columns[i]);
+    void vStack(const Dataframe& df_other) {
+        // Se o dataframe atual está vazio, inicializa os cabeçalhos e as colunas com base no outro
+        if (this->columns.empty()) {
+            this->vstrColumnsName = df_other.vstrColumnsName;
+            
+            // Cria colunas vazias com base nas colunas de df_other
+            for (const Series& col : df_other.columns) {
+                // Supondo que você tenha algo como um construtor clone ou copia do tipo:
+                Series novaSerie(col.strGetName(), col.strGetType());
+                this->columns.push_back(novaSerie);
+            }
+        }
+    
+        // Empilha os dados de df_other
+        for (size_t i = 0; i < columns.size(); ++i) {
+            this->columns[i].hStack(const_cast<Series&>(df_other.columns[i]));
         }
     }
+    
+    
 };
 
 #endif
