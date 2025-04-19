@@ -43,23 +43,31 @@ class DataPrinter : public Loader<Dataframe> {
     };
 
 int main() {
-    // Create manager with 7 threads
+    // Inicializa o Manager
     Manager<Dataframe> manager(7);
 
-    // Create pipeline components
+    // Cria os extratores
     Extrator<Dataframe> extrator1("./mock/data/dados_viagens_2025.csv", "csv", 1000);
     manager.addExtractor(&extrator1);
     
     Extrator<Dataframe> extrator2("./mock/data/dados_viagens_2025.csv", "csv", 1000);
     manager.addExtractor(&extrator2);
 
+    // Inicializa o vetor de buffers de input
+    // O input buffer dos transformers sempre vai ser agora um vetor de ponteiros de buffer de dataframe
+    // Ele é inicializado e depois esses ponteiros são adicionados
+    // pegando os endereços dos buffers que se deseja colocar como input desse transformer
     std::vector<Buffer<Dataframe>*> inputs_buffers;
     inputs_buffers.push_back(&extrator1.get_output_buffer());
     inputs_buffers.push_back(&extrator2.get_output_buffer());
 
+    // Inicializa o transformer com o vetor de buffers de input e com o número de buffers de output
     Filter transformer(inputs_buffers, 2);
     manager.addTransformer(&transformer);
 
+    // Para criar um próximo bloco que recebe como input um dos blocos de output,
+    // basta passar como buffer de input o get_output_buffer() do bloco anterior
+    // A atribuição do buffer de saída seguinte é automática
     DataPrinter loader1(transformer.get_output_buffer());
     manager.addLoader(&loader1);
 
