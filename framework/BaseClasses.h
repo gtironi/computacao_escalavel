@@ -408,12 +408,13 @@ class Transformer {
                         });
                         // Diminui o semáforo do buffer de saída (reserva um espaço para a saída da tarefa)
                         
-                        for (int i = 0; i < numOutputBuffers; i++)
-                        {
-                            get_output_buffer_by_index(i).get_semaphore().wait();
-                            // Problema está aqui. ele diminui a contagem e chega em 0 mas não da finishbuffer (não sai do while. tem que ser atômico)
-                            cout << "Colocou: " << 5000 - get_output_buffer_by_index(i).get_semaphore().get_count() << endl;
-                        }
+                        // for (int i = 0; i < numOutputBuffers; i++)
+                        // {
+                        //     cout << "Colocou1: " << 5000 - get_output_buffer_by_index(i).get_semaphore().get_count() << endl;
+                        //     // get_output_buffer_by_index(i).get_semaphore().wait();
+                        //     // Problema está aqui. ele diminui a contagem e chega em 0 mas não da finishbuffer (não sai do while. tem que ser atômico)
+                        //     cout << "Colocou2: " << 5000 - get_output_buffer_by_index(i).get_semaphore().get_count() << endl;
+                        // }
                     }
                 }
                 else
@@ -443,6 +444,7 @@ class Transformer {
             T data = run(value);
             for (int i = 0; i < numOutputBuffers; i++)
             {
+                get_output_buffer_by_index(i).get_semaphore().wait();
                 get_output_buffer_by_index(i).push(data);
             }
         }
