@@ -33,38 +33,34 @@ public:
         queue.push(std::move(value));
         // Avisa qualquer thread que esteja esperando algo entrar no buffer
         cond.notify_one();
+        std::cout << "Notificou" << std::endl;
     }
     
     // Método para retirar o próximo elemento do buffer
     std::optional<T> pop(bool multiInput = false, bool test = false) {
         // Trava o mutex
         std::unique_lock<std::mutex> lock(mtx);
+        // Se os dados de input já tiverem acabado, retorna null
+        if (multiInput && queue.empty())
+        {
+            return std::nullopt;
+        }
         if (test)
         {
             std::cout << "1-" << 5000 - get_semaphore().get_count() << std::endl;
         }
+
+        std::cout << "Entrou no wait" << std::endl;
+
+        // Espera até alguma coisa aparecer no buffer
+        cond.wait(lock, [this] { return (!queue.empty()) || (getInputDataFinished()); });
+
+        std::cout << "Saiu do wait " << queue.size() << " " << getInputDataFinished() << std::endl;
+
         // Se os dados de input já tiverem acabado, retorna null
-        if (getInputDataFinished() || (multiInput && queue.empty()))
+        if (getInputDataFinished())
         {
             return std::nullopt;
-        }
-
-        if (test)
-        {
-            std::cout << "2-" << 5000 - get_semaphore().get_count() << std::endl;
-        }
-
-        
-
-        if (test)
-        {
-            std::cout << "3-" << 5000 - get_semaphore().get_count() << std::endl;
-        }
-        // Espera até alguma coisa aparecer no buffer
-        cond.wait(lock, [this] { return !queue.empty() || getInputDataFinished(); });
-        if (test)
-        {
-            std::cout << "4-" << 5000 - get_semaphore().get_count() << std::endl;
         }
 
         // Pega o próximo valor
@@ -82,10 +78,6 @@ public:
 
         // Aumenta o semáforo dele (libera um espaço no buffer)
         semaphore.notify();
-        if (test)
-        {
-            std::cout << "7-" << 5000 - get_semaphore().get_count() << std::endl;
-        }
 
         // Se todas as tarefas que colocam dados nesse buffer já tiverem sido criadas
         // e se não tiver mais nenhuma dessas tarefas esperando na fila
@@ -98,10 +90,6 @@ public:
         {
             // Define que os dados de input acabaram
             setInputDataFinished();
-        }
-        if (test)
-        {
-            std::cout << "9-" << 5000 - get_semaphore().get_count() << std::endl;
         }
 
         return value;
@@ -154,6 +142,19 @@ public:
     // Método para definir quando os dados de entrada acabarem
     void setInputDataFinished() {
         inputDataFinished = true;
+    }
+
+    void finalizeInput() {
+        std::lock_guard<std::mutex> lock(mtx);
+        inputTasksCreated = true;
+    
+        // Se o buffer estiver vazio, então já podemos sinalizar fim de dados
+        if (get_semaphore().get_count() == get_max_size()) {
+            std::cout << "Mudou o iDF" << std::endl;
+            inputDataFinished = true;
+        }
+    
+        cond.notify_all(); // Acorda todo mundo que estiver esperando
     }
 };
 

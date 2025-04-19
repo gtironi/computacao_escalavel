@@ -412,7 +412,7 @@ class Transformer {
                         {
                             get_output_buffer_by_index(i).get_semaphore().wait();
                             // Problema está aqui. ele diminui a contagem e chega em 0 mas não da finishbuffer (não sai do while. tem que ser atômico)
-                            cout << get_output_buffer_by_index(i).get_semaphore().get_count() << endl;
+                            cout << "Colocou: " << 5000 - get_output_buffer_by_index(i).get_semaphore().get_count() << endl;
                         }
                     }
                 }
@@ -456,7 +456,7 @@ class Transformer {
         {
             for (int i = 0; i < numOutputBuffers; i++)
             {
-                get_output_buffer_by_index(i).setInputTasksCreated();
+                get_output_buffer_by_index(i).finalizeInput();
                 std::cout << "Mudou: " << get_output_buffer_by_index(i).getInputTasksCreated() << std::endl;
             }
         }
@@ -485,7 +485,8 @@ class Loader {
             std::optional<T> maybe_value = input_buffer.pop(false, true);
             // Se não tiver retornado um dataframe, encerra o método
             if (!maybe_value.has_value()) {
-                return;
+                std::cout << "Sem valor" << std::endl;
+                break;
             }
             T value = std::move(*maybe_value);
             // Adiciona a tarefa do carregador com esse dataframe na fila
