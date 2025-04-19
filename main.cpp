@@ -8,11 +8,19 @@
 
 class Filter : public Transformer<Dataframe> {
     public:
-        using Transformer::Transformer; // Inherit constructor
-
+        using Transformer::Transformer; // Herda o construtor
+    
         Dataframe run(std::vector<Dataframe*> input) override {
-            Dataframe output = *input[0];
-            return output;
+            if (input.size() < 2) {
+                throw std::invalid_argument("Filter requires at least two input Dataframes.");
+            }
+    
+            // Obtém o número de linhas dos dois dataframes
+            int nrows1 = input[0]->getShape().second;
+            int nrows2 = input[1]->getShape().second;
+        
+            // Retorna o dataframe com menos linhas
+            return (nrows1 < nrows2) ? *input[0] : *input[1];
         }
     };
 
@@ -39,10 +47,10 @@ int main() {
     Manager<Dataframe> manager(7);
 
     // Create pipeline components
-    Extrator<Dataframe> extrator1("./mock/data/dados_viagens_2025.csv", "csv", 100);
+    Extrator<Dataframe> extrator1("./mock/data/dados_viagens_2025.csv", "csv", 1000);
     manager.addExtractor(&extrator1);
     
-    Extrator<Dataframe> extrator2("./mock/data/dados_viagens_2025.csv", "csv", 100);
+    Extrator<Dataframe> extrator2("./mock/data/dados_viagens_2025.csv", "csv", 1000);
     manager.addExtractor(&extrator2);
 
     std::vector<Buffer<Dataframe>*> inputs_buffers;

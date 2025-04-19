@@ -394,7 +394,6 @@ public:
                         // Armazena o histórico se houver múltiplas entradas
                         if (numInputBuffers > 1) {
                             historyDataframes[currentInputBuffer].hStack(value);
-                            cout << historyDataframes[currentInputBuffer] << endl;
                         }
 
                         // Prepara argumentos para a transformação
