@@ -278,117 +278,136 @@ public:
     }
 };
 
-// Classe do transformador
+// Classe base genérica para transformação de dados em um pipeline paralelo
+// T: Tipo dos dados processados (ex: Dataframe, estrutura customizada, etc.)
 template <typename T>
 class Transformer {
-    protected:
-        // Buffer das entradas
-        std::vector<Buffer<T>*> input_buffers;
-        // Buffer das saídas
-        std::vector<Buffer<T>> output_buffers;
-        // Fila de tarefas onde salva das tasks
-        TaskQueue* taskqueue = nullptr;
-        int numOutputBuffers;
-        int nextOutputBuffer = 0;
-        int numInputBuffers;
-        std::vector<T> historyDataframes;
+protected:
+    // Buffers de entrada (ponteiros, pois podem ser compartilhados entre componentes)
+    std::vector<Buffer<T>*> input_buffers;
 
-    public:
-        Transformer(std::vector<Buffer<T>*> in, int num_outputs = 1)
-            : input_buffers(in), output_buffers(num_outputs), numOutputBuffers(num_outputs), numInputBuffers(input_buffers.size())
-            {
-                if (numInputBuffers > 1)
-                {
-                    historyDataframes.resize(numInputBuffers);
+    // Buffers de saída (criados pela própria classe)
+    std::vector<Buffer<T>> output_buffers;
+
+    // Fila de tarefas onde serão enfileiradas as transformações
+    TaskQueue* taskqueue = nullptr;
+
+    // Número de buffers de saída e índice do próximo a ser usado
+    int numOutputBuffers;
+    int nextOutputBuffer = 0;
+
+    // Número de buffers de entrada
+    int numInputBuffers;
+
+    // Histórico de dataframes usados nas transformações, útil quando há múltiplas entradas
+    std::vector<T> historyDataframes;
+
+public:
+    /**
+     * Construtor do Transformer
+     * @param in - Buffers de entrada
+     * @param num_outputs - Número de buffers de saída a serem criados
+     */
+    Transformer(std::vector<Buffer<T>*> in, int num_outputs = 1)
+        : input_buffers(in), output_buffers(num_outputs), 
+          numOutputBuffers(num_outputs), numInputBuffers(input_buffers.size()) {
+        
+        // Inicializa o histórico de entradas se houver mais de um buffer de entrada
+        if (numInputBuffers > 1) {
+            historyDataframes.resize(numInputBuffers);
+        }
+    }
+
+    /**
+     * @brief Retorna o próximo buffer de saída disponível (avança o índice)
+     * @throws std::out_of_range se exceder o número de buffers disponíveis
+     * @return Buffer de output
+     */
+    Buffer<T>& get_output_buffer() {
+        if (nextOutputBuffer >= numOutputBuffers) {
+            std::cout << "ERROR: NUMBER OF USED BUFFERS EXCEEDED NUMBER OF CREATED BUFFERS!" << std::endl;
+            throw std::out_of_range("Número de buffers excedido!");
+        }
+        return output_buffers[nextOutputBuffer++];
+    }
+
+    /**
+     * Retorna o buffer de saída por índice (sem alterar o estado do Transformer)
+     * @param index - índice do buffer de saída desejado
+     */
+    Buffer<T>& get_output_buffer_by_index(int index) { 
+        return output_buffers[index]; 
+    }
+
+    /**
+     * Método principal que enfileira as tarefas na fila de execução.
+     * Realiza o controle de semáforos, histórico e empacotamento das entradas para processar.
+     */
+    void enqueue_tasks() {
+        while (true) {
+            // Verifica se ainda existem dados nos buffers de entrada
+            bool canContinue = false;
+            for (int i = 0; i < input_buffers.size(); i++) {
+                if (!input_buffers[i]->atomicGetInputDataFinished()) {
+                    canContinue = true;
                 }
             }
 
-        // Função para pegar o buffer de saída
-        Buffer<T>& get_output_buffer() { 
-            if (nextOutputBuffer >= numOutputBuffers)
-            {
-                cout << "ERROR: NUMBER OF USED BUFFERS EXCEEDED NUMBER OF CREATED BUFFERS!" << endl;
-                throw out_of_range("Número de buffers excedido!");
-            }
-            return output_buffers[nextOutputBuffer++];
-        }
-
-        Buffer<T>& get_output_buffer_by_index(int index) { return output_buffers[index]; }
-
-        // Método que enfileira as tarefas na fila de tarefas
-        void enqueue_tasks(){
-            // Enquanto o buffer de entrada não tiver terminado...
-            while (true) {
-                bool canContinue = false;
-                for (int i = 0; i < input_buffers.size(); i++)
-                {
-                    if (!input_buffers[i] -> atomicGetInputDataFinished())
-                    {
-                        canContinue = true;
+            if (canContinue) {
+                // Verifica se todos os buffers de saída possuem espaço disponível
+                bool canSendTask = true;
+                for (int i = 0; i < numOutputBuffers; i++) {
+                    if (get_output_buffer_by_index(i).get_semaphore().get_count() <= 0) {
+                        canSendTask = false;
+                        break;
                     }
                 }
-                if (canContinue)
-                {
-                    // Se tiver espaço no buffer de saída...
-                    bool canSendTask = true;
-                    for (int i = 0; i < numOutputBuffers; i++)
-                    {
-                        if (get_output_buffer_by_index(i).get_semaphore().get_count() <= 0)
-                        {
-                            canSendTask = false;
+
+                if (canSendTask) {
+                    std::optional<T> maybe_value;
+                    int currentInputBuffer = -1;
+
+                    // Tenta extrair dados de algum buffer de entrada
+                    for (int i = 0; i < numInputBuffers; i++) {
+                        maybe_value = input_buffers[i]->pop(numInputBuffers > 1);
+                        if (maybe_value.has_value()) {
+                            currentInputBuffer = i;
                             break;
                         }
                     }
-                    if (canSendTask)
-                    {
-                        // Tenta pegar um dataframe do buffer de entrada
-                        // (Redundante com a verificação do while, mas pode evitar problemas
-                        // como tentar tirar algo do buffer com ele vazio)
-                        std::optional<T> maybe_value;
-                        int currentInputBuffer;
 
-                        for (int i = 0; i < numInputBuffers; i++)
-                        {
-                            maybe_value = input_buffers[i] -> pop(numInputBuffers > 1);
-                            // Se não tiver retornado um dataframe, encerra o método
-                            if (maybe_value.has_value()) {
+                    // Caso não tenha encontrado, tenta novamente verificando se ainda há dados não finalizados
+                    if (!maybe_value.has_value()) {
+                        for (int i = 0; i < numInputBuffers; i++) {
+                            if (!input_buffers[i]->atomicGetInputDataFinished()) {
+                                maybe_value = input_buffers[i]->pop();
                                 currentInputBuffer = i;
                                 break;
                             }
-
-                            for (int i = 0; i < numInputBuffers; i++)
-                            {
-                                if (!input_buffers[i] -> atomicGetInputDataFinished())
-                                {
-                                    maybe_value = input_buffers[i] -> pop();
-                                    currentInputBuffer = i;
-                                    break;
-                                }
-                            }
                         }
+                    }
 
-                        
+                    // Se conseguiu extrair algo
+                    if (maybe_value.has_value()) {
                         T value = std::move(*maybe_value);
 
-                        if (numInputBuffers > 1)
-                        {
-                            historyDataframes[currentInputBuffer].vStack(value);
+                        // Armazena o histórico se houver múltiplas entradas
+                        if (numInputBuffers > 1) {
+                            historyDataframes[currentInputBuffer].hStack(value);
+                            cout << historyDataframes[currentInputBuffer] << endl;
                         }
 
+                        // Prepara argumentos para a transformação
                         std::vector<std::shared_ptr<T>> args(numInputBuffers);
-
-                        for (int i = 0; i < numInputBuffers; i++)
-                        {
-                            if (i == currentInputBuffer)
-                            {
+                        for (int i = 0; i < numInputBuffers; i++) {
+                            if (i == currentInputBuffer) {
                                 args[i] = std::make_shared<T>(std::move(value));
-                            }
-                            else
-                            {
-                                args[i] = std::make_shared<T>(historyDataframes[i]); // ou pegar referência
+                            } else {
+                                args[i] = std::make_shared<T>(historyDataframes[i]);
                             }
                         }
 
+                        // Enfileira tarefa na fila de execução
                         taskqueue->push_task([this, args = std::move(args)]() mutable {
                             std::vector<T*> raw_args;
                             for (auto& ptr : args) {
@@ -396,101 +415,132 @@ class Transformer {
                             }
                             this->create_task(std::move(raw_args));
                         });
-                    
                     }
                 }
-                else
-                {
-                    break;
-                }
-            }
-            // Depois de acabado, avisa o buffer de saída que acabou
-            finishBuffer();
-        }
-
-        
-        virtual T run(std::vector<T*> dataframe) = 0;
-
-        // Função que encapsula a tarefa e o salvamento no buffer
-        void create_task(std::vector<T*> value) {
-            // std::vector<T> dfs;
-            // for (int i = 0; i < value.size(); i++) {
-            //     std::cout << i << std::endl;
-            //     if (value[i] == nullptr) {
-            //         std::cerr << "[ERRO] Ponteiro nulo no índice " << i << std::endl;
-            //         throw std::runtime_error("Ponteiro nulo detectado!");
-            //     }
-            //     dfs.push_back(*value[i]);  // cria cópias dos objetos apontados
-            // }
-            
-            T data = run(value);
-            for (int i = 0; i < numOutputBuffers; i++)
-            {
-                // Diminui o semáforo do buffer de saída
-                get_output_buffer_by_index(i).get_semaphore().wait();
-                get_output_buffer_by_index(i).push(data);
+            } else {
+                // Nenhum dado restante nos buffers de entrada
+                break;
             }
         }
 
-        virtual ~Transformer() = default;
-        void set_taskqueue(TaskQueue* tq) { taskqueue = tq; }
-        TaskQueue* get_taskqueue() const { return taskqueue; }
+        // Finaliza os buffers de saída após o fim do processamento
+        finishBuffer();
+    }
 
-        // Método para avisar ao buffer de saída que os dados acabaram
-        void finishBuffer()
-        {
-            for (int i = 0; i < numOutputBuffers; i++)
-            {
-                get_output_buffer_by_index(i).finalizeInput();
-            }
+    /**
+     * @brief Método abstrato que será implementado por subclasses para aplicar a lógica de transformação.
+     * @param dataframe - vetor de ponteiros para os dados de entrada
+     * @return T - resultado da transformação
+     */
+    virtual T run(std::vector<T*> dataframe) = 0;
+
+    /**
+     * @brief Envolve a execução de `run` e o envio dos dados para os buffers de saída.
+     * @param value - vetor de ponteiros para os dados de entrada
+     */
+    void create_task(std::vector<T*> value) {
+        T data = run(value);
+        for (int i = 0; i < numOutputBuffers; i++) {
+            // Incrementa o semáforo e espera até que tenha vaga
+            get_output_buffer_by_index(i).get_semaphore().wait();
+            // Coloca no buffer
+            get_output_buffer_by_index(i).push(data);
         }
-};
+    }
 
-// Classe dos carregadores
-template <typename T>
-class Loader {
-    protected:
-        Buffer<T>& input_buffer;
-        TaskQueue* taskqueue = nullptr;
+    virtual ~Transformer() = default;
 
-    public:
-    explicit Loader(Buffer<T>& buffer) : input_buffer(buffer) {}
-    virtual ~Loader() = default;
+    // Setter da fila de tarefas
     void set_taskqueue(TaskQueue* tq) { taskqueue = tq; }
+
+    // Getter da fila de tarefas
     TaskQueue* get_taskqueue() const { return taskqueue; }
 
-    // Método que enfileira as tarefas na fila de tarefas
-    void enqueue_tasks(){
-        // Enquanto o buffer de entrada não tiver terminado...
+    /**
+     * @brief Finaliza todos os buffers de saída, indicando que não haverá mais dados.
+     */
+    void finishBuffer() {
+        for (int i = 0; i < numOutputBuffers; i++) {
+            get_output_buffer_by_index(i).finalizeInput();
+        }
+    }
+};
+
+
+// Classe base genérica para carregadores (última etapa do pipeline)
+// T: Tipo dos dados que serão consumidos (ex: DataFrame, estrutura customizada, etc.)
+template <typename T>
+class Loader {
+protected:
+    // Buffer de entrada do qual os dados serão consumidos
+    Buffer<T>& input_buffer;
+
+    // Ponteiro para a fila de tarefas responsável pela execução concorrente
+    TaskQueue* taskqueue = nullptr;
+
+public:
+    /**
+     * Construtor do Loader
+     * @param buffer - Referência ao buffer de entrada
+     */
+    explicit Loader(Buffer<T>& buffer) : input_buffer(buffer) {}
+
+    virtual ~Loader() = default;
+
+    // Define a fila de tarefas a ser usada
+    void set_taskqueue(TaskQueue* tq) { taskqueue = tq; }
+
+    // Retorna a fila de tarefas
+    TaskQueue* get_taskqueue() const { return taskqueue; }
+
+    /**
+     * Método responsável por enfileirar as tarefas de carregamento.
+     * Extrai dados do buffer de entrada e os envia para a fila de execução paralela.
+     */
+    void enqueue_tasks() {
+        // Enquanto o buffer de entrada ainda não indicou o fim dos dados
         while (!(input_buffer.atomicGetInputDataFinished())) {
-            // Tenta pegar um dataframe do buffer de entrada
-            // (Redundante com a verificação do while, mas pode evitar problemas
-            // como tentar tirar algo do buffer com ele vazio)
+            // Tenta extrair um dado do buffer
             std::optional<T> maybe_value = input_buffer.pop();
-            // Se não tiver retornado um dataframe, encerra o método
+
+            // Se não conseguir pegar nenhum dado (buffer vazio no momento), encerra o loop
             if (!maybe_value.has_value()) {
                 break;
             }
+
+            // Move o valor extraído
             T value = std::move(*maybe_value);
-            // Adiciona a tarefa do carregador com esse dataframe na fila
+
+            // Enfileira a tarefa na fila de execução, chamando o método `create_task`
             taskqueue->push_task([this, val = std::move(value)]() mutable {
                 this->create_task(std::move(val));
             });
         }
 
-        // Diminui o número de loaders trabalhando
-        taskqueue -> getNumberOfLoaders().wait();
-        // Avisa a fila que mais um loader terminou
-        taskqueue -> notifyAll();
+        // Quando termina de consumir todos os dados:
+        // Decrementa o número de loaders ativos
+        taskqueue->getNumberOfLoaders().wait();
+
+        // Notifica a fila de que este loader terminou
+        taskqueue->notifyAll();
     }
 
+    /**
+     * Método virtual puro que deve ser implementado pelas subclasses.
+     * Define a lógica de carregamento final dos dados (ex: salvar no disco, exibir, enviar para API, etc.)
+     * @param value - Dado a ser carregado
+     */
     virtual void run(T value) = 0;
 
-    // Função que encapsula a tarefa e o salvamento no buffer
-    // (redundante, mas para manter a consistência)
+    /**
+     * Método auxiliar que apenas chama `run`. 
+     * Mantido por consistência com as outras classes (como Transformer).
+     * @param value - Dado a ser carregado
+     */
     void create_task(T value) {
         run(std::move(value));
     }
 };
+
 
 #endif

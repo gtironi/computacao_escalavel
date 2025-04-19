@@ -11,8 +11,7 @@ class Filter : public Transformer<Dataframe> {
         using Transformer::Transformer; // Inherit constructor
 
         Dataframe run(std::vector<Dataframe*> input) override {
-            // std::cout << input[0] << std::endl;
-            Dataframe output = input[0]->filtroByValue("cidade_destino", "Rio de Janeiro");
+            Dataframe output = *input[0];
             return output;
         }
     };
@@ -26,12 +25,12 @@ class DataPrinter : public Loader<Dataframe> {
 
         void run(Dataframe df) override {
             if (!headerPrinted) {
-                df.printHeader(std::cout, df); // Print the dataframe head
+                // df.printHeader(std::cout, df); // Print the dataframe head
                 headerPrinted = true;
             }
 
             // Print the dataframe contents
-            std::cout << df;
+            // std::cout << df;
         }
     };
 

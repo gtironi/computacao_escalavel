@@ -11,113 +11,112 @@
 #include <atomic>
 #include "Semaphore.h"
 
-// Classe da fila de tarefas
+// Classe responsável por gerenciar a fila de tarefas que serão executadas por múltiplas threads
 class TaskQueue
 {
-    private:
-        // Fila de tarefas como uma fila de funções
-        std::queue<std::function<void()>> tasks;
-        std::mutex mtx;
-        std::condition_variable cond;
-        // Booleano para controlar quando o processo deve terminar
-        bool finishedWork = false;
-        Semaphore numberOfLoaders;
+private:
+    std::queue<std::function<void()>> tasks; // Fila de tarefas como funções sem argumentos
+    std::mutex mtx;                          // Mutex para proteger o acesso à fila
+    std::condition_variable cond;            // Variável de condição para controlar o bloqueio/espera
+    bool finishedWork = false;               // Indica se o sistema está encerrando as tarefas
+    Semaphore numberOfLoaders;               // Semáforo que representa quantos loaders ainda estão ativos
 
-    public:
-        // Método para adicionar uma nova tarefa à fila
-        void push_task(std::function<void()> task)
+public:
+    /**
+     * Adiciona uma nova tarefa à fila.
+     * A tarefa é uma função (lambda, função normal ou membro).
+     */
+    void push_task(std::function<void()> task)
+    {
         {
-            {
-                // Trava o mutex
-                std::lock_guard<std::mutex> lock(mtx);
-                // Adiciona a tarefa
-                tasks.push(task);
-                // std::cout << "here" << std::endl;
-            }
-            // Acorda as threads esperando por algo aparecer na fila
-            cond.notify_one();
+            std::lock_guard<std::mutex> lock(mtx); // Garante exclusão mútua ao acessar a fila
+            tasks.push(task);                      // Adiciona a tarefa à fila
+        }
+        cond.notify_one(); // Acorda uma thread que estiver esperando por uma tarefa
+    }
+
+    /**
+     * Retira e retorna uma tarefa da fila. 
+     * Bloqueia a thread se a fila estiver vazia e ainda houver trabalho a ser feito.
+     * Se o sistema estiver finalizando e a fila estiver vazia, retorna uma função vazia.
+     */
+    std::function<void()> pop_task()
+    {
+        std::unique_lock<std::mutex> lock(mtx);
+        cond.wait(lock, [this] {
+            return !tasks.empty() || finishedWork; // Espera enquanto a fila está vazia e o trabalho não terminou
+        });
+
+        // Se estiver finalizando e a fila estiver vazia, retorna uma função nula (shutdown)
+        if (finishedWork && tasks.empty())
+        {
+            return std::function<void()>(); // Indica que não há mais tarefas
         }
 
-        // Método para pegar uma tarefa da fila
-        std::function<void()> pop_task()
-        {
-            // Trava o mutex
-            std::unique_lock<std::mutex> lock(mtx);
-            // Se a fila estiver vazia, espera até ser acordado e
-            // ter aparecido algo ou o processo ter finalizado
-            cond.wait(lock, [this] 
-            {
-                return !tasks.empty() || finishedWork;
-            });
-            // Se o processo for parar e a fila tiver acabado, não retorna nada
-            if (finishedWork && tasks.empty())
-            {
-                // Retorna função vazia para indicar shutdown.
-                return std::function<void()>();
-            }
-            // Pega uma tarefa e a remove da fila
-            std::function<void()> task = tasks.front();
-            tasks.pop();
-            
-            return task;
-        }
+        // Retira a tarefa da fila
+        std::function<void()> task = tasks.front();
+        tasks.pop();
+        return task;
+    }
 
-        // Método para encerrar todo o processo
-        void shutdown()
+    /**
+     * Encerra o sistema, esvaziando a fila e notificando todas as threads.
+     */
+    void shutdown()
+    {
         {
-            {
-                // Trava o mutex
-                std::lock_guard<std::mutex> lock(mtx);
-                // Indica que o trabalho foi encerrado
-                finishedWork = true;
-                // Esvazia a fila
-                while (!is_empty())
-                {
-                    tasks.pop();
-                }
-            }
-            // Notifica todas as threads adormecidas
-            cond.notify_all();
-        }
-
-        // Método para checar se a fila está vazia
-        bool is_empty()
-        {
-            // Trava o mutex
-            // std::lock_guard<std::mutex> lock(mtx);
-            // Retorna o resultado
-            return tasks.empty();
-        }
-
-        // Método para verificar se o trabalho foi encerrado
-        bool isShutdown() { 
             std::lock_guard<std::mutex> lock(mtx);
-            return finishedWork;
+            finishedWork = true;          // Marca que o sistema está finalizando
+            while (!is_empty()) {
+                tasks.pop();              // Limpa as tarefas restantes
+            }
         }
+        cond.notify_all();                // Acorda todas as threads esperando
+    }
 
-        // Método para pegar o semáforo do buffer
-        Semaphore& getNumberOfLoaders() {
-            return numberOfLoaders;
-        }
+    /**
+     * Retorna se a fila está vazia.
+     * ATENÇÃO: falta de proteção por mutex aqui pode causar condições de corrida se for usada externamente.
+     */
+    bool is_empty()
+    {
+        return tasks.empty();
+    }
 
-        // Método para esperar todos os loaders terem acabado de colocar tasks na fila
-        void waitLoadersFinish()
-        {
-            // Trava o mutex
-            std::unique_lock<std::mutex> lock(mtx);
-            // Espera até todos os loaders terminarem
-            cond.wait(lock, [this] 
-            {
-                return numberOfLoaders.get_count() == 0;
-            });
-            return;
-        }
+    /**
+     * Verifica se o sistema está em modo de finalização.
+     */
+    bool isShutdown() { 
+        std::lock_guard<std::mutex> lock(mtx);
+        return finishedWork;
+    }
 
-        // Método para notificar o condition variable da fila
-        void notifyAll()
-        {
-            cond.notify_all();
-        }
+    /**
+     * Retorna uma referência ao semáforo que controla os loaders.
+     */
+    Semaphore& getNumberOfLoaders() {
+        return numberOfLoaders;
+    }
+
+    /**
+     * Espera até que todos os loaders tenham terminado de adicionar tarefas.
+     */
+    void waitLoadersFinish()
+    {
+        std::unique_lock<std::mutex> lock(mtx);
+        cond.wait(lock, [this] {
+            return numberOfLoaders.get_count() == 0;
+        });
+    }
+
+    /**
+     * Acorda todas as threads que estiverem esperando na fila.
+     * Pode ser usado para encerrar loops em outros componentes.
+     */
+    void notifyAll()
+    {
+        cond.notify_all();
+    }
 };
 
 #endif
