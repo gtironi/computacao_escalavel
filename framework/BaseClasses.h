@@ -301,6 +301,28 @@ protected:
 
     // Histórico de dataframes usados nas transformações, útil quando há múltiplas entradas
     std::vector<T> historyDataframes;
+    // Vetor das estatísticas internas do transformer
+    std::vector<float> stats;
+    // Mutexes para a atualização das estatísticas e dos dataframes de histórico
+    std::mutex statsMtx;
+    std::mutex dfsMtx;
+
+private:
+    // Método para fazer a atualização das estatísticas
+    void aggStats(std::vector<float> newStats)
+    {
+        std::lock_guard<std::mutex> lock(statsMtx);
+        // Se o vetor não estiver inicializado, inicializa-o
+        if (stats.size() == 0)
+        {
+            stats.resize(newStats.size());
+        }
+        // Incrementa os valores
+        for (int i = 0; i < stats.size(); i++)
+        {
+            stats[i] += newStats[i];
+        }
+    }
 
 public:
     /**
@@ -393,7 +415,10 @@ public:
 
                         // Armazena o histórico se houver múltiplas entradas
                         if (numInputBuffers > 1) {
-                            historyDataframes[currentInputBuffer].hStack(value);
+                            {
+                                std::lock_guard<std::mutex> lock(dfsMtx);
+                                historyDataframes[currentInputBuffer].hStack(value);
+                            }
                         }
 
                         // Prepara argumentos para a transformação
@@ -433,11 +458,28 @@ public:
      */
     virtual T run(std::vector<T*> dataframe) = 0;
 
+    // Método "abstrato" do cálculo das estatísticas
+    virtual std::vector<float> calculateStats(std::vector<T*> dataframe)
+    {
+        return std::vector<float>{};
+    };
+
+    // Getter das estatísticas
+    std::vector<float> getStats()
+    {
+        std::lock_guard<std::mutex> lock(statsMtx);
+        return stats;
+    }
+
     /**
      * @brief Envolve a execução de `run` e o envio dos dados para os buffers de saída.
      * @param value - vetor de ponteiros para os dados de entrada
      */
     void create_task(std::vector<T*> value) {
+        // Calcula e agrega as estatísticas
+        std::vector<float> currentStats = calculateStats(value);
+        aggStats(currentStats);
+        
         T data = run(value);
         for (int i = 0; i < numOutputBuffers; i++) {
             // Incrementa o semáforo e espera até que tenha vaga

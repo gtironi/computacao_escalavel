@@ -22,6 +22,17 @@ class Filter : public Transformer<Dataframe> {
             // Retorna o dataframe com menos linhas
             return (nrows1 < nrows2) ? *input[0] : *input[1];
         }
+
+        // Definição pelo usuário das estatísticas
+        // Neste exemplo, ele apenas calcula quantas linhas têm o Rio como destino
+        // e retorna um vetor com "duas" estatísticas iguais a esse valor
+        std::vector<float> calculateStats(std::vector<Dataframe*> input) {
+            Dataframe data = *input[0];
+            Dataframe filtered = data.filtroByValue("cidade_destino", "Rio de Janeiro");
+            float nrows = filtered.getShape().second;
+            std::vector<float> result = {nrows, nrows};
+            return result;
+        }
     };
 
 class DataPrinter : public Loader<Dataframe> {
@@ -84,6 +95,15 @@ int main() {
 
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
     std::cout << "Tempo de execução: " << duration << " ms" << std::endl;
+
+    // Pegando as estatísticas no final e printando
+    std::vector<float> stats = transformer.getStats();
+
+    for (int i = 0; i < stats.size(); i++)
+    {
+        std::cout << stats[i] << " ";
+    }
+    std::cout << std::endl;
 
     // The manager's destructor will clean up everything
     return 0;
