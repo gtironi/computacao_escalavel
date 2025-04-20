@@ -576,7 +576,103 @@ public:
         }
 
         return os;
-    }    
+    }
+
+    void dropCol(const string& strNomeColuna) {
+        auto it = find(vstrColumnsName.begin(), vstrColumnsName.end(), strNomeColuna);
+        if (it != vstrColumnsName.end()) {
+            int index = distance(vstrColumnsName.begin(), it);
+            vstrColumnsName.erase(it);
+            columns.erase(columns.begin() + index);
+        } else {
+            cout << "Coluna não encontrada: " << strNomeColuna << endl;
+        }
+    }
+    void dropCol(int iIndex) {
+        if (iIndex >= 0 && iIndex < vstrColumnsName.size()) {
+            vstrColumnsName.erase(vstrColumnsName.begin() + iIndex);
+            columns.erase(columns.begin() + iIndex);
+        } else {
+            cout << "Índice inválido: " << iIndex << endl;
+        }
+    }
+    void dropCol(const vector<string>& vstrColunas) {
+        for (const auto& col : vstrColunas) {
+            dropCol(col);
+        }
+    }
+    void dropCol(const vector<int>& viIndices) {
+        for (const auto& index : viIndices) {
+            dropCol(index);
+        }
+    }
+
+    void setColType(const string& strNomeColuna, const string& strTipo) {
+        auto it = find(vstrColumnsName.begin(), vstrColumnsName.end(), strNomeColuna);
+        if (it == vstrColumnsName.end()) {
+            cout << "Coluna não encontrada: " << strNomeColuna << endl;
+            return;
+        }
+    
+        int index = distance(vstrColumnsName.begin(), it);
+        const auto& data = columns[index].getData();
+        Series<any> newSeries(strNomeColuna, strTipo);
+    
+        auto convert = [&](const any& value) -> any {
+            try {
+                if (strTipo == "int") {
+                    if (value.type() == typeid(int)) return value;
+                    else if (value.type() == typeid(double)) return static_cast<int>(any_cast<double>(value));
+                    else if (value.type() == typeid(string)) return stoi(any_cast<string>(value));
+                    else throw invalid_argument("Cannot convert to int");
+                }
+                else if (strTipo == "double") {
+                    if (value.type() == typeid(double)) return value;
+                    else if (value.type() == typeid(int)) return static_cast<double>(any_cast<int>(value));
+                    else if (value.type() == typeid(string)) return stod(any_cast<string>(value));
+                    else throw invalid_argument("Cannot convert to double");
+                }
+                else if (strTipo == "string") {
+                    if (value.type() == typeid(string)) return value;
+                    else if (value.type() == typeid(int) || value.type() == typeid(double) || value.type() == typeid(bool))
+                        return anyToString(value);
+                    else throw invalid_argument("Cannot convert to string");
+                }
+                else if (strTipo == "bool") {
+                    if (value.type() == typeid(bool)) return value;
+                    else if (value.type() == typeid(int)) return any_cast<int>(value) != 0;
+                    else if (value.type() == typeid(string)) {
+                        string s = any_cast<string>(value);
+                        transform(s.begin(), s.end(), s.begin(), ::tolower);
+                        if (s == "true") return true;
+                        else if (s == "false") return false;
+                        else throw invalid_argument("Cannot convert to bool");
+                    }
+                    else throw invalid_argument("Cannot convert to bool");
+                }
+                else {
+                    throw invalid_argument("Tipo inválido: " + strTipo);
+                }
+            }
+            catch (const exception& e) {
+                throw invalid_argument("Erro ao converter valor '" + anyToString(value) + "' para " + strTipo + ": " + e.what());
+            }
+        };
+    
+        for (const auto& value : data) {
+            try {
+                any convertedValue = convert(value);
+                newSeries.bAdicionaElemento(convertedValue);
+            }
+            catch (const exception& e) {
+                cerr << e.what() << endl;
+                return;
+            }
+        }
+    
+        columns[index] = std::move(newSeries);
+    }
+
 };
 
 #endif
