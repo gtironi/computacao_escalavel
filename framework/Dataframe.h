@@ -400,39 +400,38 @@ public:
 
     /**
      * @brief Realiza uma operação entre duas colunas e adiciona o resultado como uma nova coluna.
-     * @param dfDataframe DataFrame no qual a nova coluna será adicionada.
      * @param strColumnName1 Nome da primeira coluna.
      * @param strColumnName2 Nome da segunda coluna.
      * @param funOperation Função que define a operação a ser realizada entre as colunas.
      * @param strNewColumnName Nome da nova coluna a ser adicionada.
      * @return true se a operação for bem-sucedida, false caso contrário.
      */
-    bool bColumnOperation(Dataframe& dfDataframe, const string& strColumnName1, const string& strColumnName2, function<string(string, string)> funOperation, const string& strNewColumnName) {
-        // Passo 1: crio a série que vai ser adicionada
-        Series <any> newColumn(strNewColumnName, "string");
+    bool bColumnOperation(const string& strColumnName1, const string& strColumnName2, function<string(string, string)> funOperation, const string& strNewColumnName) {
+        // Passo 1: criar a nova série
+        Series<any> newColumn(strNewColumnName, "string");
 
-        // Passo 2: verifico se as colunas existem e de quebra pego os indices     
+        // Passo 2: verificar se as colunas existem
         auto it1 = find(vstrColumnsName.begin(), vstrColumnsName.end(), strColumnName1);
-        auto it2 = find(dfDataframe.vstrColumnsName.begin(), dfDataframe.vstrColumnsName.end(), strColumnName2);
+        auto it2 = find(vstrColumnsName.begin(), vstrColumnsName.end(), strColumnName2);
 
-        if (it1 == vstrColumnsName.end() || it2 == dfDataframe.vstrColumnsName.end()) {
-            throw invalid_argument("Coluna-chave não encontrada.");
+        if (it1 == vstrColumnsName.end() || it2 == vstrColumnsName.end()) {
+            throw invalid_argument("Coluna não encontrada.");
             return false;
         }
 
         int iIndex1 = distance(vstrColumnsName.begin(), it1);
-        int iIndex2 = distance(dfDataframe.vstrColumnsName.begin(), it2);
+        int iIndex2 = distance(vstrColumnsName.begin(), it2);
 
-        // Passo 3: passo linha a linha, operando par a par e adicionando o elemento na nova série
+        // Passo 3: operar elemento a elemento
         int iNumLinhas = columns[iIndex1].iGetSize();
         for (int i = 0; i < iNumLinhas; ++i) {
             string strValue1 = anyToString(columns[iIndex1].retornaElemento(i));
-            string strValue2 = anyToString(dfDataframe.columns[iIndex2].retornaElemento(i));
+            string strValue2 = anyToString(columns[iIndex2].retornaElemento(i));
             newColumn.bAdicionaElemento(funOperation(strValue1, strValue2));
         }
 
-        // Passo 4: adiciono a nova série no dataframe
-        dfDataframe.adicionaColuna(newColumn);
+        // Passo 4: adicionar a nova coluna
+        adicionaColuna(newColumn);
 
         return true;
     }
