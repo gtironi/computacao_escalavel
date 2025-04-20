@@ -289,7 +289,14 @@ public:
             columns[i].hStack(other.columns[i]);
         }
     }
-
+    
+    /**
+     * @brief Agrupa o DataFrame por uma coluna específica e aplica uma função de agregação.
+     * @param strNomeColuna Nome da coluna pela qual o DataFrame será agrupado.
+     * @param strAggMethod Método de agregação a ser aplicado (ex: "sum", "mean").
+     * @param vstrColumnsToAggregate Colunas a serem agregadas (se vazio, todas as colunas serão consideradas).
+     * @return Um novo DataFrame contendo os dados agrupados e agregados.
+     */
     Dataframe dfGroupby(const string& strNomeColuna, const string& strAggMethod = "sum", vector<string> vstrColumnsToAggregate = {}) {
         Dataframe dfAgrupado;
         vector<int> viIndexColumnsToAggregate;
@@ -391,7 +398,15 @@ public:
         return dfAgrupado;
     }   
 
-
+    /**
+     * @brief Realiza uma operação entre duas colunas e adiciona o resultado como uma nova coluna.
+     * @param dfDataframe DataFrame no qual a nova coluna será adicionada.
+     * @param strColumnName1 Nome da primeira coluna.
+     * @param strColumnName2 Nome da segunda coluna.
+     * @param funOperation Função que define a operação a ser realizada entre as colunas.
+     * @param strNewColumnName Nome da nova coluna a ser adicionada.
+     * @return true se a operação for bem-sucedida, false caso contrário.
+     */
     bool bColumnOperation(Dataframe& dfDataframe, const string& strColumnName1, const string& strColumnName2, function<string(string, string)> funOperation, const string& strNewColumnName) {
         // Passo 1: crio a série que vai ser adicionada
         Series <any> newColumn(strNewColumnName, "string");
