@@ -297,7 +297,7 @@ public:
      * @param vstrColumnsToAggregate Colunas a serem agregadas (se vazio, todas as colunas serão consideradas).
      * @return Um novo DataFrame contendo os dados agrupados e agregados.
      */
-    Dataframe dfGroupby(const string& strNomeColuna, const string& strAggMethod = "sum", vector<string> vstrColumnsToAggregate = {}) {
+    Dataframe dfGroupby(const string& strNomeColuna, const string& strAggMethod = "sum", vector<string> vstrColumnsToAggregate = {}, bool bAdicionaContagem = false) {
         Dataframe dfAgrupado;
         vector<int> viIndexColumnsToAggregate;
         int iIndexMainColumn = -1;
@@ -338,9 +338,11 @@ public:
             dfAgrupado.columns.emplace_back(col, "string");
         }
 
-        // adicionando a coluna de contagem
-        dfAgrupado.columns.emplace_back("count", "int");
-        dfAgrupado.vstrColumnsName.push_back("count");
+        if (bAdicionaContagem) {
+            // Adiciona a coluna de contagem
+            dfAgrupado.columns.emplace_back("count", "int");
+            dfAgrupado.vstrColumnsName.push_back("count");
+        }
 
         // Quarto passo: criar a hash table com os dados agrupados
         unordered_map<string, vector<vector<string>>> umapGroupedData;
@@ -389,7 +391,10 @@ public:
                 row.push_back(to_string(sum)); 
             }
 
-            row.push_back(count);
+            if (bAdicionaContagem) {
+                // Adiciona a contagem
+                row.push_back(to_string(count));
+            }
 
             // Adiciona a linha ao DataFrame agrupado
             dfAgrupado.adicionaLinha(row);
