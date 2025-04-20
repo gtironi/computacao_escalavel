@@ -53,11 +53,11 @@ int main() {
         cout << col << endl;
     }
 
-    Dataframe dfAux = df.dfGroupby("nome_hotel", "sum", {"preco"});
+    Dataframe dfAux = df.dfGroupby("nome_hotel", "sum", {"preco"}, true);
     
-    dfAux.dfColumnOperation(dfAux, "preco", "count", division, "preco_dividido");
+    dfAux.bColumnOperation("preco", "count", division, "preco_dividido");
 
     cout << dfAux << endl;
-    
+
     return 0;
 }
