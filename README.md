@@ -43,4 +43,4 @@ O sistema utiliza um modelo baseado em filas e threads para maximizar a eficiên
    ```
 
 ## Autores
-Projeto desenvolvido por [Gustavo Tironi](https://github.com/gtironi), [Kauan](), [Matheus](), [Pedro](), [Sillas]()
+Projeto desenvolvido por [Gustavo Tironi](https://github.com/gtironi), [Kauan Mariani](https://github.com/kauanmaf), [Matheus Carvalho](https://github.com/MatCarvalho21), [Pedro Henrique Coterli](https://github.com/PedroPHC25), [Sillas Rocha](https://github.com/scrocha)
