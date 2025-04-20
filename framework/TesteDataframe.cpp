@@ -29,6 +29,15 @@ string lerCSVComoString(const string& caminhoArquivo) {
     return conteudo;
 }
 
+string division(string str1, string str2){
+    double num1 = stod(str1);
+    double num2 = stod(str2);
+    if (num2 == 0) {
+        return "Erro: Divisão por zero";
+    }
+    return to_string(num1 / num2);
+}
+
 int main() {
     string caminho = "/home/matheus-carvalho/Projetos/Faculdade/computacao_escalavel/mock/data/dados_hoteis_2025.csv";
     string conteudoCSV = lerCSVComoString(caminho);
@@ -45,6 +54,10 @@ int main() {
     }
 
     Dataframe dfAux = df.dfGroupby("nome_hotel", "sum", {"preco"});
+    
+    dfAux.dfColumnOperation(dfAux, "preco", "count", division, "preco_dividido");
+
     cout << dfAux << endl;
+    
     return 0;
 }

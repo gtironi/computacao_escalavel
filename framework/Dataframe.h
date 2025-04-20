@@ -8,6 +8,7 @@
 #include <map>
 #include <any>
 #include <unordered_map>
+#include <functional>
 #include "Series.h"
 
 using namespace std;
@@ -389,6 +390,37 @@ public:
         
         return dfAgrupado;
     }   
+
+
+    bool bColumnOperation(Dataframe& dfDataframe, const string& strColumnName1, const string& strColumnName2, function<string(string, string)> funOperation, const string& strNewColumnName) {
+        // Passo 1: crio a série que vai ser adicionada
+        Series <any> newColumn(strNewColumnName, "string");
+
+        // Passo 2: verifico se as colunas existem e de quebra pego os indices     
+        auto it1 = find(vstrColumnsName.begin(), vstrColumnsName.end(), strColumnName1);
+        auto it2 = find(dfDataframe.vstrColumnsName.begin(), dfDataframe.vstrColumnsName.end(), strColumnName2);
+
+        if (it1 == vstrColumnsName.end() || it2 == dfDataframe.vstrColumnsName.end()) {
+            throw invalid_argument("Coluna-chave não encontrada.");
+            return false;
+        }
+
+        int iIndex1 = distance(vstrColumnsName.begin(), it1);
+        int iIndex2 = distance(dfDataframe.vstrColumnsName.begin(), it2);
+
+        // Passo 3: passo linha a linha, operando par a par e adicionando o elemento na nova série
+        int iNumLinhas = columns[iIndex1].iGetSize();
+        for (int i = 0; i < iNumLinhas; ++i) {
+            string strValue1 = anyToString(columns[iIndex1].retornaElemento(i));
+            string strValue2 = anyToString(dfDataframe.columns[iIndex2].retornaElemento(i));
+            newColumn.bAdicionaElemento(funOperation(strValue1, strValue2));
+        }
+
+        // Passo 4: adiciono a nova série no dataframe
+        dfDataframe.adicionaColuna(newColumn);
+
+        return true;
+    }
 
     /**
      * @brief Realiza merge (inner join) entre este DataFrame e outro,
