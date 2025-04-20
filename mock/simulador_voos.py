@@ -42,7 +42,7 @@ def gerar_dados_voos_em_thread(datas, arquivo_saida, thread_id):
                     ])
 
 def main():
-    arquivo_saida = os.path.join(os.path.dirname(__file__), 'data/voos_2025.csv')
+    arquivo_saida = os.path.join(os.path.dirname(__file__), 'data/dados_voos_2025.csv')
     num_threads = 4
     datas_por_thread = len(todas_datas) // num_threads
 
