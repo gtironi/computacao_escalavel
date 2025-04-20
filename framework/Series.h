@@ -104,13 +104,19 @@ public:
      * @brief Construtor de cópia da classe Series
      * @param other Objeto Series a ser copiado
      */
-    Series(const Series& other) = default;
+    Series(const Series<T>& other)
+        : strColumnName(other.strColumnName), 
+          vecColumnData(other.vecColumnData), 
+          strColumnType(other.strColumnType) {}
 
     /**
      * @brief Construtor de movimento
      * @param other Objeto Series a ser movido
      */
-    Series(Series&& other) noexcept = default;
+    Series(Series<T>&& other)
+        : strColumnName(std::move(other.strColumnName)), 
+          vecColumnData(std::move(other.vecColumnData)), 
+          strColumnType(std::move(other.strColumnType)) {}
 
     /**
      * @brief Destrutor virtual padrão
@@ -204,7 +210,15 @@ public:
      * @param other Objeto Series a ser atribuído.
      * @return Referência para o objeto atribuído.
      */
-    Series& operator=(const Series& other) = default;
+    Series& operator=(const Series<T>& other)
+    {
+        if (this != &other) {
+            strColumnName = other.strColumnName;
+            vecColumnData = other.vecColumnData;
+            strColumnType = other.strColumnType;
+        }
+        return *this;
+    }
 
     /**
      * @brief Sobrecarga do operador de atribuição por movimento
@@ -309,6 +323,103 @@ public:
      */
     void clear() {
         vecColumnData.clear();
+    }
+
+    Series<T> getCopy() const {
+        return Series<T>(strColumnName, strColumnType, vecColumnData);
+    }
+
+    Series<int> toInt() const
+    {
+        static_assert(std::is_same_v<T, std::any>, "toInt() can only be called on Series<any>");
+
+        Series<int> intSeries(strColumnName, "int");
+        for (const auto& item : vecColumnData) { // item is const any&
+            try {
+                intSeries.bAdicionaElemento(item);
+            } catch (const std::invalid_argument& e) {
+                 throw invalid_argument("Erro ao converter para int: " + string(e.what()));
+            } catch (const std::bad_any_cast& e) {
+                 throw invalid_argument("Erro ao converter para int: tipo incompatível no elemento '" + anyToString(item) + "'.");
+            }
+        }
+        return intSeries;
+    }
+
+    Series<double> toDouble() const
+    {
+        static_assert(std::is_same_v<T, std::any>, "toDouble() can only be called on Series<any>");
+
+        Series<double> doubleSeries(strColumnName, "double");
+        for (const auto& item : vecColumnData) {
+            try {
+                 doubleSeries.bAdicionaElemento(item);
+            } catch (const std::invalid_argument& e) {
+                 throw invalid_argument("Erro ao converter para double: " + string(e.what()));
+            } catch (const std::bad_any_cast& e) {
+                 throw invalid_argument("Erro ao converter para double: tipo incompatível no elemento '" + anyToString(item) + "'.");
+            }
+        }
+        return doubleSeries;
+    }
+
+    Series<string> toString() const
+    {
+        static_assert(std::is_same_v<T, std::any>, "toString() can only be called on Series<any>");
+
+        Series<string> stringSeries(strColumnName, "string");
+        for (const auto& item : vecColumnData) {
+            stringSeries.addData(anyToString(item));
+        }
+        return stringSeries;
+    }
+
+    Series<bool> toBool() const
+    {
+        static_assert(std::is_same_v<T, std::any>, "toBool() can only be called on Series<any>");
+
+        Series<bool> boolSeries(strColumnName, "bool");
+        for (const auto& item : vecColumnData) {
+            try {
+                 boolSeries.bAdicionaElemento(item);
+            } catch (const std::invalid_argument& e) {
+                 throw invalid_argument("Erro ao converter para bool: " + string(e.what()));
+            } catch (const std::bad_any_cast& e) {
+                 throw invalid_argument("Erro ao converter para bool: tipo incompatível no elemento '" + anyToString(item) + "'.");
+            }
+        }
+        return boolSeries;
+    }
+
+    Series<any> toAny() const
+    {
+        static_assert(std::is_same_v<T, std::any>, "toAny() can only be called on Series<any>");
+
+        Series<any> anySeries(strColumnName, "any");
+        for (const auto& item : vecColumnData) {
+             anySeries.bAdicionaElemento(item);
+        }
+        return anySeries;
+    }
+
+    template <typename U>
+    Series<U> toType() const
+    {
+        static_assert(std::is_same_v<T, std::any>, "toType<U>() can only be called on Series<any>");
+
+        if constexpr (is_same_v<U, int>) {
+            return toInt();
+        } else if constexpr (is_same_v<U, double>) {
+            return toDouble();
+        } else if constexpr (is_same_v<U, string>) {
+            return toString();
+        } else if constexpr (is_same_v<U, bool>) {
+            return toBool();
+        } else if constexpr (is_same_v<U, any>) {
+            return toAny();
+        } else {
+            throw invalid_argument("Tipo inválido para conversão: " + string(typeid(U).name()));
+        }
     }
 };
 
