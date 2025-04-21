@@ -360,6 +360,113 @@ public:
     }
 
     /**
+     * @brief Empilha dois DataFrames agrupados horizontalmente, somando valores de soma e contagem
+     * @param other DataFrame agrupado a ser empilhado
+     */
+    void hStackGroup(const Dataframe &other)
+    {
+        if (this->columns.empty())
+        {
+            // Se este DataFrame estiver vazio, apenas copie o outro
+            this->vstrColumnsName = other.vstrColumnsName;
+            this->columns = other.columns;
+            return;
+        }
+
+        // Verifica se os DataFrames têm a mesma estrutura
+        if (this->vstrColumnsName.size() != other.vstrColumnsName.size())
+        {
+            throw invalid_argument("DataFrames têm números diferentes de colunas");
+        }
+
+        // Mapa para armazenar as linhas por chave de agrupamento
+        unordered_map<string, vector<int>> groupMap;
+
+        // Identifica colunas de grupo (não terminam com _sum, _mean ou count)
+        vector<bool> isGroupColumn;
+        for (const auto &colName : vstrColumnsName)
+        {
+            bool isGroup = !((colName.length() > 4 && colName.substr(colName.length() - 4) == "_sum") ||
+                             (colName.length() > 5 && colName.substr(colName.length() - 5) == "_mean") ||
+                             colName == "count");
+            isGroupColumn.push_back(isGroup);
+        }
+
+        // Criar chaves para as linhas existentes
+        for (int i = 0; i < getShape().first; ++i)
+        {
+            string key;
+            for (size_t j = 0; j < vstrColumnsName.size(); ++j)
+            {
+                if (isGroupColumn[j])
+                {
+                    key += anyToString(columns[j].retornaElemento(i)) + "|";
+                }
+            }
+            groupMap[key].push_back(i);
+        }
+
+        // Para cada linha do outro DataFrame
+        for (int i = 0; i < other.getShape().first; ++i)
+        {
+            string key;
+            vector<any> newRow;
+
+            // Constrói a chave para esta linha
+            for (size_t j = 0; j < other.vstrColumnsName.size(); ++j)
+            {
+                if (isGroupColumn[j])
+                {
+                    key += anyToString(other.columns[j].retornaElemento(i)) + "|";
+                }
+            }
+
+            auto existingGroup = groupMap.find(key);
+            if (existingGroup != groupMap.end())
+            {
+                // Grupo existente - somar valores
+                int existingIdx = existingGroup->second[0];
+                for (size_t j = 0; j < vstrColumnsName.size(); ++j)
+                {
+                    if (isGroupColumn[j])
+                    {
+                        // Mantém o valor original para colunas de grupo
+                        newRow.push_back(columns[j].retornaElemento(existingIdx));
+                    }
+                    else
+                    {
+                        // Soma valores para colunas de agregação
+                        double val1 = stod(anyToString(columns[j].retornaElemento(existingIdx)));
+                        double val2 = stod(anyToString(other.columns[j].retornaElemento(i)));
+
+                        if (columns[j].strGetType() == "int")
+                            newRow.push_back(static_cast<int>(val1 + val2));
+                        else
+                            newRow.push_back(val1 + val2);
+                    }
+                }
+
+                // Remove a linha antiga e adiciona a nova linha somada
+                removeLinha(existingIdx);
+                adicionaLinha(newRow);
+
+                // Atualiza o índice no mapa
+                existingGroup->second[0] = getShape().first - 1;
+            }
+            else
+            {
+                // Novo grupo - adiciona a linha diretamente
+                for (size_t j = 0; j < other.vstrColumnsName.size(); ++j)
+                {
+                    newRow.push_back(other.columns[j].retornaElemento(i));
+                }
+                adicionaLinha(newRow);
+                groupMap[key] = {getShape().first - 1};
+            }
+        }
+    }
+
+    /**
      * @brief Agrupa o DataFrame por uma coluna específica e aplica uma função de agregação.
      * @param groupCols Colunas a serem usadas para agrupamento.
      * @param vstrColumnsToAggregate Colunas a serem agregadas (se vazio, todas as colunas serão agregadas).
@@ -720,14 +827,15 @@ public:
                                      : name;
             os << left << setw(col_width) << header_name << "  ";
         }
-        os << "\n" << left << setw(index_width) << "" << "  ";
+        os << "\n"
+           << left << setw(index_width) << "" << "  ";
         for (size_t i = 0; i < num_cols; i++)
         {
             os << left << setw(col_width) << string(col_width, '-') << "  ";
         }
         os << "\n";
 
-        // Print rows 
+        // Print rows
         if (num_rows <= 10)
         {
             // Se o número de linhas for menor ou igual a 10, imprime todas as linhas.
