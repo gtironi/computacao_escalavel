@@ -294,7 +294,6 @@ public:
             }
         }
 
-        std::cout << "Linhas: " <<  << std::endl;
         Dataframe dataframe = *dataframes[0];
         Dataframe littleAggregated = dataframe.dfGroupby(keys, columns, sum, false, true);
         return littleAggregated;
@@ -371,7 +370,7 @@ public:
             // std::cout << tasksInTaskQueue.get_count() << std::endl;
         }
 
-        while (tasksInTaskQueue.get_count() > 1)
+        while (tasksInTaskQueue.get_count() > 0)
         {
             std::cout << "Final: " << tasksInTaskQueue.get_count() << std::endl;
             // std::cout << "Segundo" << std::endl;
