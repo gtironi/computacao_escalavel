@@ -14,7 +14,7 @@ protected:
 
     // Número de buffers de saída e índice do próximo a ser usado
     int numOutputBuffers;
-    int nextOutputBuffer = 0;
+    int nextOutputBuffer = -1;
 
     // Número de buffers de entrada
     int numInputBuffers;
@@ -72,7 +72,9 @@ public:
             std::cout << "ERROR: NUMBER OF USED BUFFERS EXCEEDED NUMBER OF CREATED BUFFERS!" << std::endl;
             throw std::out_of_range("Número de buffers excedido!");
         }
-        return output_buffers[nextOutputBuffer++];
+        
+        nextOutputBuffer++;
+        return output_buffers[nextOutputBuffer];
     }
 
     /**

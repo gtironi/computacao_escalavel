@@ -43,7 +43,8 @@ class groupby_hotel : public Transformer<Dataframe> {
 
             Dataframe df_grouped = input[0]-> dfGroupby(group, "sum", vstrColumnsToAggregate, true);
 
-            //std::cout << df_grouped << endl;
+            cout << "0" <<endl;
+            df_grouped.printColsName();
 
             return df_grouped;
         }
@@ -58,6 +59,9 @@ class groupby_pesquisa: public Transformer<Dataframe> {
             std::vector<string> group = {"nome_hotel"};
 
             Dataframe df_grouped = input[0]-> dfGroupby(group, "sum", vstrColumnsToAggregate, true);
+            
+            cout << "1" <<endl;
+            df_grouped.printColsName();
 
             return df_grouped;
 
@@ -73,8 +77,9 @@ class join: public Transformer<Dataframe> {
             std::cout << "--------------------- Troca ---------------------------------" << endl;
 
             input[0]->printColsName();
+            input[1]->printColsName();
 
-            cout << *input[1];
+            // cout << *input[0];
             
             // std::cout << *input[1] << endl;
 
@@ -93,12 +98,12 @@ class DataPrinter : public Loader<Dataframe> {
 
         void run(Dataframe df) override {
             if (!headerPrinted) {
-                // df.printHeader(std::cout, df); // Print the dataframe head
+                df.printHeader(std::cout, df); // Print the dataframe head
                 headerPrinted = true;
             }
 
             // Print the dataframe contents
-            // std::cout << df;
+            std::cout << df;
         }
     };
 
@@ -107,7 +112,7 @@ int main() {
     Manager<Dataframe> manager(7);
 
     // Cria os extratores
-    Extrator<Dataframe> extrator_pesquisa("./mock/data/dados_viagens_2025.csv", "csv", 5000);
+    Extrator<Dataframe> extrator_pesquisa("./mock/data/dados_viagens_2025.csv", "csv", 1000);
     manager.addExtractor(&extrator_pesquisa);
 
     Extrator<Dataframe> extrator_hoteis("./mock/data/dados_hoteis_2025.csv", "csv", 100000);
