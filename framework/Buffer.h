@@ -120,7 +120,7 @@ public:
 
     // Retorna se os dados de entrada acabaram (com locking - seguro em ambientes concorrentes)
     bool atomicGetInputDataFinished() {
-        std::lock_guard<std::mutex> lock(mtx);
+        // std::lock_guard<std::mutex> lock(mtx);
         return inputDataFinished;
     }
 
