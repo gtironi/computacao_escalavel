@@ -20,6 +20,7 @@ private:
     std::condition_variable cond;            // Variável de condição para controlar o bloqueio/espera
     bool finishedWork = false;               // Indica se o sistema está encerrando as tarefas
     Semaphore numberOfLoaders;               // Semáforo que representa quantos loaders ainda estão ativos
+    std::mutex nOfLoadersMtx;                          // Mutex para proteger o acesso à fila
 
 public:
     /**
@@ -95,6 +96,7 @@ public:
      * Retorna uma referência ao semáforo que controla os loaders.
      */
     Semaphore& getNumberOfLoaders() {
+        std::lock_guard<std::mutex> lock(nOfLoadersMtx);
         return numberOfLoaders;
     }
 
@@ -103,7 +105,7 @@ public:
      */
     void waitLoadersFinish()
     {
-        std::unique_lock<std::mutex> lock(mtx);
+        std::unique_lock<std::mutex> lock(nOfLoadersMtx);
         cond.wait(lock, [this] {
             return numberOfLoaders.get_count() == 0;
         });

@@ -248,6 +248,7 @@ public:
      */
     void finishBuffer() {
         for (int i = 0; i < numOutputBuffers; i++) {
+            get_output_buffer_by_index(i).prepareForShutdown();
             get_output_buffer_by_index(i).finalizeInput();
         }
     }
@@ -312,15 +313,13 @@ public:
         std::vector<std::string> columnsWithCount = columns;
         columnsWithCount.push_back("count");
         aggregated.hStack(littleAggregated);
-        std::cout << aggregated << std::endl;
         aggregated.dfGroupby(keys, columnsWithCount, true, false, false);
         tasksInTaskQueue.wait();
     }
 
     void createSendTask(int startRow, int endRow)
     {
-        // Dataframe slice = aggregated.slice(startRow, endRow);
-        Dataframe slice = aggregated;
+        Dataframe slice = aggregated.slice(startRow, endRow);
         for (int i = 0; i < numOutputBuffers; i++) {
             // Incrementa o semáforo e espera até que tenha vaga
             this->get_output_buffer_by_index(i).get_semaphore().wait();
@@ -331,6 +330,7 @@ public:
     void enqueue_tasks() override {
         while (!(input_buffer -> atomicGetInputDataFinished())) {
             // Tenta extrair um dado do buffer
+            // std::cout << "Teste" << std::endl;
             std::optional<T> maybe_value = input_buffer -> pop();
 
             // Se não conseguir pegar nenhum dado (buffer vazio no momento), encerra o loop
@@ -347,10 +347,14 @@ public:
             });
 
             tasksInTaskQueue.notify();
+            // std::cout << "Primeiro" << std::endl;
+            // std::cout << tasksInTaskQueue.get_count() << std::endl;
         }
 
         while (true)
         {
+            // std::cout << "Segundo" << std::endl;
+            // std::cout << tasksInTaskQueue.get_count() << std::endl;
             if (tasksInTaskQueue.get_count() <= 0)
             {
                 break;
@@ -358,7 +362,7 @@ public:
         }
 
         int nRows = aggregated.getShape().second;
-        int batchSize = nRows / 1;
+        int batchSize = nRows / 10;
         int endRow;
 
         for (int currentRow = 0; currentRow < nRows; currentRow += batchSize)
@@ -369,13 +373,12 @@ public:
 
         // Finaliza os buffers de saída após o fim do processamento
         this -> finishBuffer();
+        std::cout << "Transformer" << std::endl;
     }
 
     std::vector<float> calculateStats(std::vector<T*> dataframe) override {
         return {};
     }
-
-
 };
 
 #endif
