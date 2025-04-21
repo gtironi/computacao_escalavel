@@ -437,7 +437,7 @@ public:
         if (contagem)
         {
             dfAgrupado.vstrColumnsName.push_back("count");
-            dfAgrupado.columns.emplace_back("count", "int");
+            dfAgrupado.columns.emplace_back("count", "string");
         }
 
         // Tabela hash: chave -> par (vetor com vetores dos valores agregados, valores dos agrupamentos)
@@ -879,6 +879,30 @@ public:
         }
 
         columns[index] = std::move(newSeries);
+    }
+
+    /**
+     * @brief Obtém um slice do DataFrame entre as linhas 'start' (inclusivo) e 'end' (exclusivo) de forma eficiente.
+     * @param start Índice inicial do slice.
+     * @param end Índice final do slice.
+     * @return Um novo DataFrame contendo o slice solicitado.
+     */
+    Dataframe slice(int start, int end) const
+    {
+        int totalRows = this->getShape().first;
+        if (start < 0 || end > totalRows || start >= end)
+        {
+            throw std::invalid_argument("Intervalo de linhas inválido.");
+        }
+
+        Dataframe dfSlice;
+        // Inicializa as colunas copiando o slice dos vetores de dados de cada Series
+        for (size_t i = 0; i < vstrColumnsName.size(); i++)
+        {
+            dfSlice.vstrColumnsName.push_back(vstrColumnsName[i]);
+            dfSlice.columns.push_back(columns[i].slice(start, end));
+        }
+        return dfSlice;
     }
 };
 
