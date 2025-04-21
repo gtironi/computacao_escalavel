@@ -106,7 +106,7 @@ class DataPrinter : public Loader<Dataframe> {
 
 int main() {
     // Inicializa o Manager
-    Manager<Dataframe> manager(7);
+    Manager<Dataframe> manager(1);
 
     // Cria os extratores
     // Extrator<Dataframe> extrator_pesquisa("./mock/data/dados_viagens_2025.csv", "csv", 1000);

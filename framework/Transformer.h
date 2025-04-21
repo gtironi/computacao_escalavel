@@ -313,23 +313,6 @@ public:
 
         T littleAggregated = run({value});
         std::lock_guard<std::mutex> lock(mtx);
-        // if (aggregated.columns.empty()) {
-        //     // Copia os nomes das colunas e os dados do outro DataFrame
-        //     aggregated.vstrColumnsName = littleAggregated.vstrColumnsName;
-        //     aggregated.columns = littleAggregated.columns;
-        //     return;
-        // }
-        // std::vector<std::string> columnsWithCount;
-        // if (sum)
-        // {
-        //     for (int i = 0; i < columns.size(); i++)
-        //     {
-        //         columnsWithCount.push_back(columns[i] + "_sum");
-        //     }
-        // }
-        // columnsWithCount.push_back("count");
-        // aggregated.hStack(littleAggregated);
-        // aggregated.dfGroupby(keys, columnsWithCount, true, false, false);
         aggregated.hStackGroup(littleAggregated);
         tasksInTaskQueue.wait();
     }
@@ -340,7 +323,7 @@ public:
         for (int i = 0; i < numOutputBuffers; i++) {
             // Incrementa o semáforo e espera até que tenha vaga
             this->get_output_buffer_by_index(i).get_semaphore().wait();
-            this->get_output_buffer_by_index(i).push(slice, true);
+            this->get_output_buffer_by_index(i).push(slice);
         }
     }
 
@@ -370,17 +353,19 @@ public:
 
         int nRows = aggregated.getShape().first;
         int batchSize = nRows / 10 + 1;
-        int endRow;
+        int endRow = 0;
+        int currentRow = 0;
 
-        for (int currentRow = 0; currentRow < nRows; currentRow += batchSize)
+        while (true)
         {
+            if (currentRow >= nRows) break;
             endRow = currentRow + batchSize;
-            createSendTask(currentRow, std::min(endRow + 1, nRows));
+            createSendTask(currentRow, std::min(endRow, nRows));
+            currentRow = endRow;
         }
 
         // Finaliza os buffers de saída após o fim do processamento
         this -> finishBuffer();
-        std::cout << "Transformer" << std::endl;
     }
 
     std::vector<float> calculateStats(std::vector<T*> dataframe) override {

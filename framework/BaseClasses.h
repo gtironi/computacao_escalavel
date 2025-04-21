@@ -171,7 +171,7 @@ public:
                     strBlocoDeTexto += line + "\n"; // Adiciona a linha ao bloco
 
                     // Quando atinge o tamanho do batch, processa o bloco
-                    if (++iContador % this->iTamanhoBatch == 0) {
+                    if (iContador++ % this->iTamanhoBatch == 0) {
                         string value = strBlocoDeTexto;
                         taskqueue->push_task([this, val = value]() mutable {
                             this->create_task(val);
@@ -310,7 +310,7 @@ public:
         // Enquanto o buffer de entrada ainda não indicou o fim dos dados
         while (!(input_buffer.atomicGetInputDataFinished())) {
             // Tenta extrair um dado do buffer
-            std::optional<T> maybe_value = input_buffer.pop();
+            std::optional<T> maybe_value = input_buffer.pop(false, true);
 
             // Se não conseguir pegar nenhum dado (buffer vazio no momento), encerra o loop
             if (!maybe_value.has_value()) {
