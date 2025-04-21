@@ -361,20 +361,21 @@ public:
 
     /**
      * @brief Agrupa o DataFrame por uma coluna específica e aplica uma função de agregação.
-     * @param vstrColunasDeAgrupamento Colunas a serem usadas para agrupamento.
-     * @param strAggMethod Método de agregação (sum ou mean).
+     * @param groupCols Colunas a serem usadas para agrupamento.
      * @param vstrColumnsToAggregate Colunas a serem agregadas (se vazio, todas as colunas serão agregadas).
-     * @param bAdicionaContagem Se true, adiciona uma coluna de contagem.
+     * @param soma Se true, realiza a soma das colunas agregadas.
+     * @param media Se true, realiza a média das colunas agregadas.
+     * @param contagem Se true, adiciona uma coluna de contagem.
      * @return Um novo DataFrame com os dados agrupados e agregados.
      */
-    Dataframe dfGroupby(const vector<string> &vstrColunasDeAgrupamento, const string &strAggMethod = "sum", vector<string> vstrColumnsToAggregate = {}, bool bAdicionaContagem = false)
+    Dataframe dfGroupby(const vector<string> &groupCols, vector<string> vstrColumnsToAggregate = {}, bool soma = true, bool media = true, bool contagem = true)
     {
         Dataframe dfAgrupado;
         vector<int> viIndexColumnsToAggregate;
         vector<int> viIndexColunasDeAgrupamento;
 
-        // Verifica se as colunas de agrupamento existem e salva os índices
-        for (const auto &nomeCol : vstrColunasDeAgrupamento)
+        // Validação das colunas de agrupamento
+        for (const auto &nomeCol : groupCols)
         {
             auto it = find(vstrColumnsName.begin(), vstrColumnsName.end(), nomeCol);
             if (it == vstrColumnsName.end())
@@ -388,13 +389,14 @@ public:
         if (vstrColumnsToAggregate.empty())
         {
             vstrColumnsToAggregate = vstrColumnsName;
-            for (const auto &nomeCol : vstrColunasDeAgrupamento)
+            for (const auto &nomeCol : groupCols)
             {
                 vstrColumnsToAggregate.erase(remove(vstrColumnsToAggregate.begin(), vstrColumnsToAggregate.end(), nomeCol), vstrColumnsToAggregate.end());
             }
         }
 
-        // Salva os índices das colunas a serem agregadas
+        // Salva os índices e tipos das colunas agregadas
+        vector<string> aggTypes;
         for (const auto &col : vstrColumnsToAggregate)
         {
             auto it = find(vstrColumnsName.begin(), vstrColumnsName.end(), col);
@@ -402,17 +404,12 @@ public:
             {
                 throw std::invalid_argument("Coluna de agregação '" + col + "' não encontrada.");
             }
-            viIndexColumnsToAggregate.push_back(distance(vstrColumnsName.begin(), it));
-        }
-
-        // Armazenar tipos originais das colunas agregadas
-        vector<string> aggTypes;
-        for (int idx : viIndexColumnsToAggregate)
-        {
+            int idx = distance(vstrColumnsName.begin(), it);
+            viIndexColumnsToAggregate.push_back(idx);
             aggTypes.push_back(columns[idx].strGetType());
         }
 
-        // Criação das colunas no novo DataFrame utilizando tipos originais (com ajuste para média em colunas int)
+        // Monta o DataFrame de saída
         dfAgrupado.vstrColumnsName.clear();
         // Colunas de agrupamento
         for (int idx : viIndexColunasDeAgrupamento)
@@ -423,34 +420,40 @@ public:
         // Colunas agregadas
         for (size_t i = 0; i < vstrColumnsToAggregate.size(); i++)
         {
-            int idx = viIndexColumnsToAggregate[i];
-            string colType = columns[idx].strGetType();
-            // Se for média e o tipo original for int, alterar para double
-            if (strAggMethod == "mean" && colType == "int")
-                colType = "double";
-            dfAgrupado.vstrColumnsName.push_back(vstrColumnsToAggregate[i]);
-            dfAgrupado.columns.emplace_back(vstrColumnsToAggregate[i], colType);
+            if (soma)
+            {
+                dfAgrupado.vstrColumnsName.push_back(vstrColumnsToAggregate[i] + "_sum");
+                dfAgrupado.columns.emplace_back(vstrColumnsToAggregate[i] + "_sum", aggTypes[i]);
+            }
+            if (media)
+            {
+                string tipo = aggTypes[i];
+                if (tipo == "int")
+                    tipo = "double";
+                dfAgrupado.vstrColumnsName.push_back(vstrColumnsToAggregate[i] + "_mean");
+                dfAgrupado.columns.emplace_back(vstrColumnsToAggregate[i] + "_mean", tipo);
+            }
         }
-        if (bAdicionaContagem)
+        if (contagem)
         {
             dfAgrupado.vstrColumnsName.push_back("count");
             dfAgrupado.columns.emplace_back("count", "int");
         }
 
-        // Tabela hash: chave -> par (vetor de vetores com valores agregados, valores das colunas de agrupamento)
+        // Tabela hash: chave -> par (vetor com vetores dos valores agregados, valores dos agrupamentos)
         unordered_map<string, pair<vector<vector<string>>, vector<string>>> umapGroupedData;
         int numAggregateColumns = viIndexColumnsToAggregate.size();
         int numRows = columns.empty() ? 0 : columns[0].getData().size();
 
         for (int i = 0; i < numRows; ++i)
         {
-            // Cria chave composta com os valores das colunas de agrupamento
+            // Cria a chave composta
             string chave;
             vector<string> valoresChave;
             for (int idx : viIndexColunasDeAgrupamento)
             {
                 string valor = anyToString(columns[idx].getData()[i]);
-                chave += valor + "|"; // separador
+                chave += valor + "|";
                 valoresChave.push_back(valor);
             }
 
@@ -459,7 +462,7 @@ public:
                 umapGroupedData[chave] = {vector<vector<string>>(numAggregateColumns), valoresChave};
             }
 
-            // Adiciona os valores a serem agregados
+            // Registro dos valores para cada coluna a agregar
             for (size_t j = 0; j < viIndexColumnsToAggregate.size(); ++j)
             {
                 int colIndex = viIndexColumnsToAggregate[j];
@@ -481,46 +484,36 @@ public:
                 linha.push_back(val);
             }
 
-            // Agrega cada coluna conforme seu tipo original (com correção para média)
+            // Para cada coluna agregada, calcular soma e/ou média
             for (size_t j = 0; j < gruposDeValores.size(); ++j)
             {
-                const auto &valores = gruposDeValores[j];
-                if (aggTypes[j] == "int")
+                double soma_val = 0.0;
+                for (const auto &val : gruposDeValores[j])
                 {
-                    double soma = 0.0;
-                    for (const auto &val : valores)
-                        soma += stoi(val);
-                    if (strAggMethod == "mean" && !valores.empty())
-                        linha.push_back(soma / valores.size());
-                    else
-                        linha.push_back(static_cast<int>(soma));
+                    try
+                    {
+                        if (aggTypes[j] == "int")
+                            soma_val += stoi(val);
+                        else
+                            soma_val += stod(val);
+                    }
+                    catch (...)
+                    {
+                        soma_val += 0.0;
+                    }
                 }
-                else if (aggTypes[j] == "double")
+                if (soma)
+                    linha.push_back((aggTypes[j] == "int") ? static_cast<int>(soma_val) : soma_val);
+                if (media)
                 {
-                    double soma = 0.0;
-                    for (const auto &val : valores)
-                        soma += stod(val);
-                    if (strAggMethod == "mean" && !valores.empty())
-                        linha.push_back(soma / valores.size());
-                    else
-                        linha.push_back(soma);
-                }
-                else
-                {
-                    double soma = 0.0;
-                    for (const auto &val : valores)
-                        soma += stod(val);
-                    if (strAggMethod == "mean" && !valores.empty())
-                        linha.push_back(to_string(soma / valores.size()));
-                    else
-                        linha.push_back(to_string(soma));
+                    double mean_val = gruposDeValores[j].empty() ? 0 : soma_val / gruposDeValores[j].size();
+                    linha.push_back(mean_val);
                 }
             }
-
-            // Adiciona a contagem, se solicitado
-            if (bAdicionaContagem)
+            if (contagem)
             {
-                linha.push_back(static_cast<int>(gruposDeValores.empty() ? 0 : gruposDeValores[0].size()));
+                int count_val = gruposDeValores.empty() ? 0 : gruposDeValores[0].size();
+                linha.push_back(count_val);
             }
 
             dfAgrupado.adicionaLinha(linha);
