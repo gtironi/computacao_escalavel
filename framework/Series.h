@@ -167,7 +167,7 @@ public:
      * @brief Retorna o vetor de dados da coluna.
      * @return Vetor contendo os dados.
      */
-    const vector<any>& getData() const {
+    const vector<T>& getData() const {
         return vecColumnData;
     }
 
@@ -175,7 +175,7 @@ public:
      * @brief Obtém referência não-const ao vetor de dados
      * @return Referência ao vetor de dados
      */
-    vector<any>& getDataRef() {
+    vector<T>& getDataRef() {
         return vecColumnData;
     }
 
@@ -232,7 +232,7 @@ public:
      * @param elemento Elemento a ser adicionado
      * @return true se a operação for bem-sucedida, false caso contrário
      */
-    bool bAdicionaElemento(const any& elemento) {
+    bool bAdicionaElemento(const T& elemento) {
         vecColumnData.push_back(elemento);
         return true;
     }
@@ -242,7 +242,7 @@ public:
      * @param elemento Elemento a ser adicionado
      * @return true se a operação for bem-sucedida, false caso contrário
      */
-    bool bAdicionaElemento(any&& elemento) {
+    bool bAdicionaElemento(T&& elemento) {
         vecColumnData.push_back(std::move(elemento));
         return true;
     }
