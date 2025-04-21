@@ -358,7 +358,7 @@ public:
      */
     void clear()
     {
-        vecColumnData.clear();
+        this->vecColumnData.clear();
     }
 
     Series<T> getCopy() const

@@ -383,7 +383,7 @@ public:
         for (int currentRow = 0; currentRow < nRows; currentRow += batchSize)
         {
             endRow = currentRow + batchSize;
-            createSendTask(currentRow, min(endRow + 1, nRows));
+            createSendTask(currentRow, std::min(endRow + 1, nRows));
         }
 
         // Finaliza os buffers de saída após o fim do processamento

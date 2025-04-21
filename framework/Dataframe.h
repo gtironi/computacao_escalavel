@@ -360,6 +360,113 @@ public:
     }
 
     /**
+     * @brief Empilha dois DataFrames agrupados horizontalmente, somando valores de soma e contagem
+     * @param other DataFrame agrupado a ser empilhado
+     */
+    void hStackGroup(const Dataframe &other)
+    {
+        if (this->columns.empty())
+        {
+            // Se este DataFrame estiver vazio, apenas copie o outro
+            this->vstrColumnsName = other.vstrColumnsName;
+            this->columns = other.columns;
+            return;
+        }
+
+        // Verifica se os DataFrames têm a mesma estrutura
+        if (this->vstrColumnsName.size() != other.vstrColumnsName.size())
+        {
+            throw invalid_argument("DataFrames têm números diferentes de colunas");
+        }
+
+        // Mapa para armazenar as linhas por chave de agrupamento
+        unordered_map<string, vector<int>> groupMap;
+
+        // Identifica colunas de grupo (não terminam com _sum, _mean ou count)
+        vector<bool> isGroupColumn;
+        for (const auto &colName : vstrColumnsName)
+        {
+            bool isGroup = !((colName.length() > 4 && colName.substr(colName.length() - 4) == "_sum") ||
+                             (colName.length() > 5 && colName.substr(colName.length() - 5) == "_mean") ||
+                             colName == "count");
+            isGroupColumn.push_back(isGroup);
+        }
+
+        // Criar chaves para as linhas existentes
+        for (int i = 0; i < getShape().first; ++i)
+        {
+            string key;
+            for (size_t j = 0; j < vstrColumnsName.size(); ++j)
+            {
+                if (isGroupColumn[j])
+                {
+                    key += anyToString(columns[j].retornaElemento(i)) + "|";
+                }
+            }
+            groupMap[key].push_back(i);
+        }
+
+        // Para cada linha do outro DataFrame
+        for (int i = 0; i < other.getShape().first; ++i)
+        {
+            string key;
+            vector<any> newRow;
+
+            // Constrói a chave para esta linha
+            for (size_t j = 0; j < other.vstrColumnsName.size(); ++j)
+            {
+                if (isGroupColumn[j])
+                {
+                    key += anyToString(other.columns[j].retornaElemento(i)) + "|";
+                }
+            }
+
+            auto existingGroup = groupMap.find(key);
+            if (existingGroup != groupMap.end())
+            {
+                // Grupo existente - somar valores
+                int existingIdx = existingGroup->second[0];
+                for (size_t j = 0; j < vstrColumnsName.size(); ++j)
+                {
+                    if (isGroupColumn[j])
+                    {
+                        // Mantém o valor original para colunas de grupo
+                        newRow.push_back(columns[j].retornaElemento(existingIdx));
+                    }
+                    else
+                    {
+                        // Soma valores para colunas de agregação
+                        double val1 = stod(anyToString(columns[j].retornaElemento(existingIdx)));
+                        double val2 = stod(anyToString(other.columns[j].retornaElemento(i)));
+
+                        if (columns[j].strGetType() == "int")
+                            newRow.push_back(static_cast<int>(val1 + val2));
+                        else
+                            newRow.push_back(val1 + val2);
+                    }
+                }
+
+                // Remove a linha antiga e adiciona a nova linha somada
+                removeLinha(existingIdx);
+                adicionaLinha(newRow);
+
+                // Atualiza o índice no mapa
+                existingGroup->second[0] = getShape().first - 1;
+            }
+            else
+            {
+                // Novo grupo - adiciona a linha diretamente
+                for (size_t j = 0; j < other.vstrColumnsName.size(); ++j)
+                {
+                    newRow.push_back(other.columns[j].retornaElemento(i));
+                }
+                adicionaLinha(newRow);
+                groupMap[key] = {getShape().first - 1};
+            }
+        }
+    }
+
+    /**
      * @brief Agrupa o DataFrame por uma coluna específica e aplica uma função de agregação.
      * @param groupCols Colunas a serem usadas para agrupamento.
      * @param vstrColumnsToAggregate Colunas a serem agregadas (se vazio, todas as colunas serão agregadas).
@@ -708,13 +815,13 @@ public:
         int col_width = 15; // Largura fixa das colunas
         int index_width = 5;
 
+        // Print header
         os << left << setw(index_width) << "" << "  ";
         for (auto &col : dfInput.columns)
         {
             string name = col.strGetName();
             string type = col.strGetType();
             name += " <" + type + ">";
-
             string header_name = (name.size() > size_t(col_width))
                                      ? (name.substr(0, col_width - 3) + "...")
                                      : name;
@@ -728,15 +835,54 @@ public:
         }
         os << "\n";
 
-        for (size_t i = 0; i < num_rows; ++i)
+        // Print rows
+        if (num_rows <= 10)
         {
-            os << left << setw(index_width) << i << "  ";
+            // Se o número de linhas for menor ou igual a 10, imprime todas as linhas.
+            for (size_t i = 0; i < num_rows; ++i)
+            {
+                os << left << setw(index_width) << i << "  ";
+                for (size_t j = 0; j < num_cols; ++j)
+                {
+                    string val_str = anyToString(df.columns[j].retornaElemento(i));
+                    if (val_str.length() > size_t(col_width))
+                        val_str = val_str.substr(0, col_width - 3) + "...";
+                    os << left << setw(col_width) << val_str << "  ";
+                }
+                os << "\n";
+            }
+        }
+        else
+        {
+            // Imprime as 5 primeiras linhas
+            for (size_t i = 0; i < 5; ++i)
+            {
+                os << left << setw(index_width) << i << "  ";
+                for (size_t j = 0; j < num_cols; ++j)
+                {
+                    string val_str = anyToString(df.columns[j].retornaElemento(i));
+                    if (val_str.length() > size_t(col_width))
+                        val_str = val_str.substr(0, col_width - 3) + "...";
+                    os << left << setw(col_width) << val_str << "  ";
+                }
+                os << "\n";
+            }
+            // Linha de reticências
+            os << left << setw(index_width) << "..." << "  ";
             for (size_t j = 0; j < num_cols; ++j)
             {
-                string val_str = anyToString(df.columns[j].retornaElemento(i));
-                if (val_str.length() > col_width)
-                    val_str[col_width - 3] = val_str[col_width - 2] = val_str[col_width - 1] = '.';
-                os << left << setw(col_width) << val_str.substr(0, col_width) << "  ";
+                os << left << setw(col_width) << "..." << "  ";
+            }
+            os << "\n";
+            // Imprime a última linha
+            size_t last_index = num_rows - 1;
+            os << left << setw(index_width) << last_index << "  ";
+            for (size_t j = 0; j < num_cols; ++j)
+            {
+                string val_str = anyToString(df.columns[j].retornaElemento(last_index));
+                if (val_str.length() > size_t(col_width))
+                    val_str = val_str.substr(0, col_width - 3) + "...";
+                os << left << setw(col_width) << val_str << "  ";
             }
             os << "\n";
         }
