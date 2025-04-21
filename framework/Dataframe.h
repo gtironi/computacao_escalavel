@@ -150,6 +150,16 @@ public:
         }
     }
 
+    void printColsName()
+    {
+        cout << "Colunas: ";
+        for (const auto &col : vstrColumnsName)
+        {
+            cout << col << " ";
+        }
+        cout << endl;
+    }
+
     /**
      * @brief Adiciona uma nova coluna genérica ao DataFrame.
      * @tparam T Tipo dos dados na Series
