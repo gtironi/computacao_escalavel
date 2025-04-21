@@ -477,6 +477,22 @@ public:
         else
             throw invalid_argument("Tipo inválido para conversão: " + string(typeid(U).name()));
     }
+
+    /**
+     * @brief Retorna um slice da Series entre os índices 'start' (inclusivo) e 'end' (exclusivo).
+     * @param start Índice inicial do slice.
+     * @param end Índice final do slice.
+     * @return Uma nova Series contendo o slice dos dados.
+     */
+    Series<T> slice(int start, int end) const
+    {
+        if (start < 0 || end > static_cast<int>(vecColumnData.size()) || start >= end)
+        {
+            throw std::invalid_argument("Intervalo inválido para slice na Series.");
+        }
+        vector<T> newData(vecColumnData.begin() + start, vecColumnData.begin() + end);
+        return Series<T>(strColumnName, strColumnType, newData);
+    }
 };
 
 // Especialização para strings, otimizada para ETL
