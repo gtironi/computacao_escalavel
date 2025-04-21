@@ -292,116 +292,120 @@ public:
     
     /**
      * @brief Agrupa o DataFrame por uma coluna específica e aplica uma função de agregação.
-     * @param strNomeColuna Nome da coluna pela qual o DataFrame será agrupado.
-     * @param strAggMethod Método de agregação a ser aplicado (ex: "sum", "mean").
-     * @param vstrColumnsToAggregate Colunas a serem agregadas (se vazio, todas as colunas serão consideradas).
-     * @return Um novo DataFrame contendo os dados agrupados e agregados.
+     * @param vstrColunasDeAgrupamento Colunas a serem usadas para agrupamento.
+     * @param strAggMethod Método de agregação (sum ou mean).
+     * @param vstrColumnsToAggregate Colunas a serem agregadas (se vazio, todas as colunas serão agregadas).
+     * @param bAdicionaContagem Se true, adiciona uma coluna de contagem.
+     * @return Um novo DataFrame com os dados agrupados e agregados.
      */
-    Dataframe dfGroupby(const string& strNomeColuna, const string& strAggMethod = "sum", vector<string> vstrColumnsToAggregate = {}, bool bAdicionaContagem = false) {
+    Dataframe dfGroupby(const vector<string>& vstrColunasDeAgrupamento, const string& strAggMethod = "sum", vector<string> vstrColumnsToAggregate = {}, bool bAdicionaContagem = false) {
         Dataframe dfAgrupado;
         vector<int> viIndexColumnsToAggregate;
-        int iIndexMainColumn = -1;
-
-        // Primeiro passo: verificar se a coluna de agrupamento existe e atualizar o indice
-        auto it = find(vstrColumnsName.begin(), vstrColumnsName.end(), strNomeColuna);
-        if (it == vstrColumnsName.end()) {
-            throw std::invalid_argument("Coluna '" + strNomeColuna + "' não encontrada.");
+        vector<int> viIndexColunasDeAgrupamento;
+    
+        // Verifica se as colunas de agrupamento existem e salva os índices
+        for (const auto& nomeCol : vstrColunasDeAgrupamento) {
+            auto it = find(vstrColumnsName.begin(), vstrColumnsName.end(), nomeCol);
+            if (it == vstrColumnsName.end()) {
+                throw std::invalid_argument("Coluna de agrupamento '" + nomeCol + "' não encontrada.");
+            }
+            viIndexColunasDeAgrupamento.push_back(distance(vstrColumnsName.begin(), it));
         }
-        iIndexMainColumn = distance(vstrColumnsName.begin(), it);
-
-
-        // Segundo passo: salvar o indice de todas as colunas a serem aggregadas
+    
+        // Define as colunas a serem agregadas (se não especificadas)
         if (vstrColumnsToAggregate.empty()) {
             vstrColumnsToAggregate = vstrColumnsName;
-            vstrColumnsToAggregate.erase(vstrColumnsToAggregate.begin() + iIndexMainColumn);
+            for (const auto& nomeCol : vstrColunasDeAgrupamento) {
+                vstrColumnsToAggregate.erase(remove(vstrColumnsToAggregate.begin(), vstrColumnsToAggregate.end(), nomeCol), vstrColumnsToAggregate.end());
+            }
         }
-
+    
+        // Salva os índices das colunas a serem agregadas
         for (const auto& col : vstrColumnsToAggregate) {
             auto it = find(vstrColumnsName.begin(), vstrColumnsName.end(), col);
             if (it == vstrColumnsName.end()) {
-                throw std::invalid_argument("Coluna '" + col + "' não encontrada.");
+                throw std::invalid_argument("Coluna de agregação '" + col + "' não encontrada.");
             }
             viIndexColumnsToAggregate.push_back(distance(vstrColumnsName.begin(), it));
         }
-
-        // Terceiro passo: criar o dataframe com as colunas que serão agregadas
-        vector<string> vstrColumnsNameAux;
-        vstrColumnsNameAux.push_back(strNomeColuna);
-        for (string col : vstrColumnsToAggregate) {
-            vstrColumnsNameAux.push_back(col);
+    
+        // Criação das colunas no novo DataFrame
+        dfAgrupado.vstrColumnsName = vstrColunasDeAgrupamento;
+        for (const auto& nomeCol : vstrColunasDeAgrupamento) {
+            dfAgrupado.columns.emplace_back(nomeCol, "string");
         }
-
-        dfAgrupado.vstrColumnsName = vstrColumnsNameAux;
-
-        // Criar as colunas no novo dataframe
-        for (const auto& col : vstrColumnsNameAux) {
-            dfAgrupado.columns.emplace_back(col, "string");
+        for (const auto& nomeCol : vstrColumnsToAggregate) {
+            dfAgrupado.vstrColumnsName.push_back(nomeCol);
+            dfAgrupado.columns.emplace_back(nomeCol, "string");
         }
-
         if (bAdicionaContagem) {
-            // Adiciona a coluna de contagem
             dfAgrupado.columns.emplace_back("count", "int");
             dfAgrupado.vstrColumnsName.push_back("count");
         }
-
-        // Quarto passo: criar a hash table com os dados agrupados
-        unordered_map<string, vector<vector<string>>> umapGroupedData;
-
+    
+        // Tabela hash: chave -> vetor com valores das colunas agregadas
+        unordered_map<string, pair<vector<vector<string>>, vector<string>>> umapGroupedData;
         int numAggregateColumns = viIndexColumnsToAggregate.size();
-        int numRows = columns[iIndexMainColumn].getData().size();
-        
+        int numRows = columns[0].getData().size();
+    
         for (int i = 0; i < numRows; ++i) {
-            // Chave da linha atual (valor da coluna principal)
-            string key = anyToString(columns[iIndexMainColumn].getData()[i]);
-        
-            // Se a chave ainda não existe, inicializa os vetores internos
-            if (umapGroupedData.find(key) == umapGroupedData.end()) {
-                umapGroupedData[key] = vector<vector<string>>(numAggregateColumns);
+            // Cria chave composta com os valores das colunas de agrupamento
+            string chave;
+            vector<string> valoresChave;
+            for (int idx : viIndexColunasDeAgrupamento) {
+                string valor = anyToString(columns[idx].getData()[i]);
+                chave += valor + "|"; // separador
+                valoresChave.push_back(valor);
             }
-        
-            // Para cada coluna que queremos agregar
+    
+            if (umapGroupedData.find(chave) == umapGroupedData.end()) {
+                umapGroupedData[chave] = {vector<vector<string>>(numAggregateColumns), valoresChave};
+            }
+    
+            // Adiciona os valores a serem agregados
             for (size_t j = 0; j < viIndexColumnsToAggregate.size(); ++j) {
                 int colIndex = viIndexColumnsToAggregate[j];
-                string value = anyToString(columns[colIndex].getData()[i]);
-                umapGroupedData[key][j].push_back(value);
+                string valor = anyToString(columns[colIndex].getData()[i]);
+                umapGroupedData[chave].first[j].push_back(valor);
             }
         }
-
-        // Quinto passo: criar o dataframe com os dados agregados (SUM)
+    
+        // Montagem final das linhas agregadas
         for (const auto& pair : umapGroupedData) {
-            vector<any> row;
-            row.push_back(pair.first); // adiciona a chave 
+            const auto& valoresChave = pair.second.second;
+            const auto& gruposDeValores = pair.second.first;
+            vector<any> linha;
             int count = 0;
-
-            // Para cada coluna que queremos agregar
-            for (size_t j = 0; j < numAggregateColumns; ++j) {
-                const auto& values = pair.second[j];
-                double sum = 0.0;
-
-                // Calcula a soma dos valores 
-                for (const auto& value : values) {
-                    sum += stod(value);
+    
+            // Adiciona os valores das colunas de agrupamento
+            for (const auto& val : valoresChave) {
+                linha.push_back(val);
+            }
+    
+            // Aplica agregação (sum ou mean)
+            for (const auto& valores : gruposDeValores) {
+                double soma = 0.0;
+                for (const auto& val : valores) {
+                    soma += stod(val);
                     count++;
                 }
-                
-                if (strAggMethod == "mean") {
-                    sum /= values.size();
+                if (strAggMethod == "mean" && !valores.empty()) {
+                    soma /= valores.size();
                 }
-
-                row.push_back(to_string(sum)); 
+                linha.push_back(to_string(soma));
             }
-
+    
+            // Adiciona a contagem, se solicitado
             if (bAdicionaContagem) {
-                // Adiciona a contagem
-                row.push_back(to_string(count));
+                linha.push_back(to_string(gruposDeValores[0].size())); // todos têm mesmo tamanho
             }
-
-            // Adiciona a linha ao DataFrame agrupado
-            dfAgrupado.adicionaLinha(row);
+    
+            dfAgrupado.adicionaLinha(linha);
         }
-        
+    
         return dfAgrupado;
-    }   
+    }
+    
 
     /**
      * @brief Realiza uma operação entre duas colunas e adiciona o resultado como uma nova coluna.
