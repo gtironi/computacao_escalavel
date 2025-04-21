@@ -17,6 +17,7 @@ private:
     std::queue<T> queue;             // Fila que armazena os dados
     std::mutex mtx;                  // Mutex para garantir acesso exclusivo à fila
     std::mutex mtx_2;                  // Mutex para garantir acesso exclusivo à fila
+    // std::mutex mtx_3;                  // Mutex para garantir acesso exclusivo à fila
     std::condition_variable cond;    // Variável de condição para controle de espera/notificação
     int max_size;                    // Capacidade máxima do buffer
     Semaphore semaphore;             // Semáforo para controlar o número de elementos permitidos
@@ -38,10 +39,14 @@ public:
      * Insere um valor no buffer.
      * Deve ser chamado somente após adquirir o semáforo externamente (em geral).
      */
-    void push(T value) {
+    void push(T value, bool test = false) {
         std::lock_guard<std::mutex> lock(mtx);
         queue.push(std::move(value));
         cond.notify_one(); // Acorda uma thread consumidora que esteja esperando
+        if (test)
+        {
+            // std::cout << get_semaphore().get_count() << std::endl;
+        }
     }
 
     /**
@@ -121,7 +126,7 @@ public:
 
     // Retorna se os dados de entrada acabaram (com locking - seguro em ambientes concorrentes)
     bool atomicGetInputDataFinished() {
-        // std::lock_guard<std::mutex> lock(mtx);
+        // std::lock_guard<std::mutex> lock(mtx_3);
         return inputDataFinished;
     }
 

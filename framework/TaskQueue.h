@@ -43,6 +43,7 @@ public:
      */
     std::function<void()> pop_task()
     {
+        std::cout << "Teste" << std::endl;
         std::unique_lock<std::mutex> lock(mtx);
         cond.wait(lock, [this] {
             return !tasks.empty() || finishedWork; // Espera enquanto a fila está vazia e o trabalho não terminou

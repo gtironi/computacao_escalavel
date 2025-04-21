@@ -124,13 +124,13 @@ public:
 
      void enqueue_tasks(){
         string strBlocoDeTexto;
-        int iContador = 0;
+        int iContador = 1;
 
         if (this->strFilesFlag == "csv")
         {
             string line;
             while (getline(file, line)) {
-                ++iContador;
+                iContador++;
                 strBlocoDeTexto += line + "\n";
                 if (iContador % this->iTamanhoBatch == 0) {
                     string value = strBlocoDeTexto;
@@ -176,6 +176,7 @@ public:
                         taskqueue->push_task([this, val = value]() mutable {
                             this->create_task(val);
                         });
+                        strBlocoDeTexto.clear();
                     }
                 }
 

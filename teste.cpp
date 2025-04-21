@@ -112,7 +112,7 @@ int main() {
     // Extrator<Dataframe> extrator_pesquisa("./mock/data/dados_viagens_2025.csv", "csv", 1000);
     // manager.addExtractor(&extrator_pesquisa);
 
-    Extrator<Dataframe> extrator_hoteis("./mock/data/dados_hoteis2_2025.csv", "csv", 1000);
+    Extrator<Dataframe> extrator_hoteis("./mock/data/dados_hoteis3_2025.csv", "csv", 50);
     manager.addExtractor(&extrator_hoteis);
 
     // filter_hotel filtroocupacao(make_input_vector(extrator_hoteis.get_output_buffer()));

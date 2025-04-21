@@ -293,6 +293,8 @@ public:
                 break;
             }
         }
+
+        std::cout << "Linhas: " <<  << std::endl;
         Dataframe dataframe = *dataframes[0];
         Dataframe littleAggregated = dataframe.dfGroupby(keys, columns, sum, false, true);
         return littleAggregated;
@@ -312,24 +314,26 @@ public:
 
         T littleAggregated = run({value});
         std::lock_guard<std::mutex> lock(mtx);
-        if (aggregated.columns.empty()) {
-            // Copia os nomes das colunas e os dados do outro DataFrame
-            aggregated.vstrColumnsName = littleAggregated.vstrColumnsName;
-            aggregated.columns = littleAggregated.columns;
-            return;
-        }
-        std::vector<std::string> columnsWithCount;
-        if (sum)
-        {
-            for (int i = 0; i < columns.size(); i++)
-            {
-                columnsWithCount.push_back(columns[i] + "_sum");
-            }
-        }
-        columnsWithCount.push_back("count");
-        aggregated.hStack(littleAggregated);
-        aggregated.dfGroupby(keys, columnsWithCount, true, false, false);
+        // if (aggregated.columns.empty()) {
+        //     // Copia os nomes das colunas e os dados do outro DataFrame
+        //     aggregated.vstrColumnsName = littleAggregated.vstrColumnsName;
+        //     aggregated.columns = littleAggregated.columns;
+        //     return;
+        // }
+        // std::vector<std::string> columnsWithCount;
+        // if (sum)
+        // {
+        //     for (int i = 0; i < columns.size(); i++)
+        //     {
+        //         columnsWithCount.push_back(columns[i] + "_sum");
+        //     }
+        // }
+        // columnsWithCount.push_back("count");
+        // aggregated.hStack(littleAggregated);
+        // aggregated.dfGroupby(keys, columnsWithCount, true, false, false);
+        aggregated.hStackGroup(littleAggregated);
         tasksInTaskQueue.wait();
+        std::cout << "Wait: " << tasksInTaskQueue.get_count() << std::endl;
     }
 
     void createSendTask(int startRow, int endRow)
@@ -338,7 +342,7 @@ public:
         for (int i = 0; i < numOutputBuffers; i++) {
             // Incrementa o semáforo e espera até que tenha vaga
             this->get_output_buffer_by_index(i).get_semaphore().wait();
-            this->get_output_buffer_by_index(i).push(slice);
+            this->get_output_buffer_by_index(i).push(slice, true);
         }
     }
 
@@ -362,22 +366,21 @@ public:
             });
 
             tasksInTaskQueue.notify();
+            std::cout << "Notify: " << tasksInTaskQueue.get_count() << std::endl;
             // std::cout << "Primeiro" << std::endl;
             // std::cout << tasksInTaskQueue.get_count() << std::endl;
         }
 
-        while (true)
+        while (tasksInTaskQueue.get_count() > 1)
         {
+            std::cout << "Final: " << tasksInTaskQueue.get_count() << std::endl;
             // std::cout << "Segundo" << std::endl;
             // std::cout << tasksInTaskQueue.get_count() << std::endl;
-            if (tasksInTaskQueue.get_count() <= 0)
-            {
-                break;
-            }
         }
 
-        int nRows = aggregated.getShape().second;
-        int batchSize = nRows / 10;
+        int nRows = aggregated.getShape().first;
+        int batchSize = nRows / 10 + 1;
+        std::cout << aggregated << std::endl;
         int endRow;
 
         for (int currentRow = 0; currentRow < nRows; currentRow += batchSize)
