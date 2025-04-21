@@ -74,7 +74,7 @@ class join: public Transformer<Dataframe> {
 
         Dataframe run(std::vector<Dataframe*> input) override {
 
-            std::cout << "--------------------- Troca ---------------------------------" << endl;
+            // std::cout << "--------------------- Troca ---------------------------------" << endl;
 
             // cout << *input[0];
             
@@ -109,17 +109,17 @@ int main() {
     Manager<Dataframe> manager(7);
 
     // Cria os extratores
-    Extrator<Dataframe> extrator_pesquisa("./mock/data/dados_viagens_2025.csv", "csv", 1000);
-    manager.addExtractor(&extrator_pesquisa);
+    // Extrator<Dataframe> extrator_pesquisa("./mock/data/dados_viagens_2025.csv", "csv", 1000);
+    // manager.addExtractor(&extrator_pesquisa);
 
-    Extrator<Dataframe> extrator_hoteis("./mock/data/dados_hoteis_2025.csv", "csv", 100000);
+    Extrator<Dataframe> extrator_hoteis("./mock/data/dados_hoteis2_2025.csv", "csv", 1000);
     manager.addExtractor(&extrator_hoteis);
 
-    filter_hotel filtroocupacao(make_input_vector(extrator_hoteis.get_output_buffer()));
-    manager.addTransformer(&filtroocupacao);
+    // filter_hotel filtroocupacao(make_input_vector(extrator_hoteis.get_output_buffer()));
+    // manager.addTransformer(&filtroocupacao);
 
     std::vector<std::string> vstrColumnsToAggregate = {"quantidade_pessoas", "preco"};
-    std::vector<string> group = {"nome_hotel", "dia", "mes"};
+    std::vector<string> group = {"cidade"};
     std::vector<string> ops = {"sum"};
 
     GroupByTransformer<Dataframe> groupby_hotel(make_input_vector(extrator_hoteis.get_output_buffer()),
@@ -132,24 +132,24 @@ int main() {
     group = {"nome_hotel"};
     ops = {"sum"};
 
-    GroupByTransformer<Dataframe> groupby_pesquisa(make_input_vector(extrator_pesquisa.get_output_buffer()),
-                                                   group,
-                                                   vstrColumnsToAggregate,
-                                                   ops);
-    manager.addTransformer(&groupby_pesquisa);
+    // GroupByTransformer<Dataframe> groupby_pesquisa(make_input_vector(extrator_pesquisa.get_output_buffer()),
+    //                                                group,
+    //                                                vstrColumnsToAggregate,
+    //                                                ops);
+    // manager.addTransformer(&groupby_pesquisa);
 
     std::vector<Buffer<Dataframe>*> inputs_buffers;
     inputs_buffers.push_back(&groupby_hotel.get_output_buffer());
-    inputs_buffers.push_back(&groupby_pesquisa.get_output_buffer());
+    // inputs_buffers.push_back(&groupby_pesquisa.get_output_buffer());
 
-    join join_transformer(inputs_buffers, 2);
+    join join_transformer(inputs_buffers);
     manager.addTransformer(&join_transformer);
 
     DataPrinter loader1(join_transformer.get_output_buffer());
     manager.addLoader(&loader1);
 
-    DataPrinter loader2(join_transformer.get_output_buffer());
-    manager.addLoader(&loader2);
+    // DataPrinter loader2(join_transformer.get_output_buffer());
+    // manager.addLoader(&loader2);
 
     // Extrator<Dataframe> extrator_voos("./mock/data/dados_voos_2025.csv", "csv", 1000);
     // manager.addExtractor(&extrator_voos);

@@ -312,6 +312,7 @@ public:
         std::vector<std::string> columnsWithCount = columns;
         columnsWithCount.push_back("count");
         aggregated.hStack(&littleAggregated);
+        std::cout << aggregated << std::endl;
         aggregated.dfGroupby(keys, columnsWithCount, true, false, false);
         tasksInTaskQueue.wait();
     }
