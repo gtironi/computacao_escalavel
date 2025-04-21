@@ -27,9 +27,7 @@ class filter_hotel : public Transformer<Dataframe> {
         using Transformer::Transformer; // Herda o construtor
 
         Dataframe run(std::vector<Dataframe*> input) override {
-
             Dataframe df_filtred = (*input[0]).filtroByValue("ocupado", 0);
-
             return df_filtred;
         }
 };
@@ -43,11 +41,10 @@ class groupby_hotel : public Transformer<Dataframe> {
             std::vector<std::string> vstrColumnsToAggregate = {"quantidade_pessoas", "preco"};
             std::vector<string> group = {"nome_hotel"};
 
-            input[0]->printHeader(std::cout, *input[0]);
-
             Dataframe df_grouped = input[0]-> dfGroupby(group, "sum", vstrColumnsToAggregate, true);
 
-            //std::cout << df_grouped << endl;
+            cout << "0" <<endl;
+            df_grouped.printColsName();
 
             return df_grouped;
         }
@@ -60,14 +57,11 @@ class groupby_pesquisa: public Transformer<Dataframe> {
         Dataframe run(std::vector<Dataframe*> input) override {
             std::vector<std::string> vstrColumnsToAggregate = {"data_ida_dia"}; //Qualquer coisa só para funcionar
             std::vector<string> group = {"nome_hotel"};
+
             Dataframe df_grouped = input[0]-> dfGroupby(group, "sum", vstrColumnsToAggregate, true);
-
-            // for (auto nome_coluna : input[0]->vstrColumnsName)
-            // {
-            //     cout << nome_coluna << endl;
-            // }
-
-            //std::cout << df_grouped << endl;
+            
+            cout << "1" <<endl;
+            df_grouped.printColsName();
 
             return df_grouped;
 
@@ -80,21 +74,18 @@ class join: public Transformer<Dataframe> {
 
         Dataframe run(std::vector<Dataframe*> input) override {
 
-            std::cout << *input[0] << endl;
-
             std::cout << "--------------------- Troca ---------------------------------" << endl;
 
-            for (auto nome_coluna : input[0]->vstrColumnsName)
-            {
-                cout << nome_coluna << endl;
-            }
+            input[0]->printColsName();
+            input[1]->printColsName();
+
+            // cout << *input[0];
             
             // std::cout << *input[1] << endl;
 
-            Dataframe df_merged = input[0]->merge(*input[1], {"nome_hotel"});
+            // Dataframe df_merged = input[0]->merge(*input[1], {"nome_hotel"});
 
-            return df_merged;
-
+            return *input[0];
         }
 };
 
@@ -107,7 +98,7 @@ class DataPrinter : public Loader<Dataframe> {
 
         void run(Dataframe df) override {
             if (!headerPrinted) {
-                // df.printHeader(std::cout, df); // Print the dataframe head
+                df.printHeader(std::cout, df); // Print the dataframe head
                 headerPrinted = true;
             }
 
@@ -124,7 +115,7 @@ int main() {
     Extrator<Dataframe> extrator_pesquisa("./mock/data/dados_viagens_2025.csv", "csv", 1000);
     manager.addExtractor(&extrator_pesquisa);
 
-    Extrator<Dataframe> extrator_hoteis("./mock/data/dados_hoteis_2025.csv", "csv", 1000);
+    Extrator<Dataframe> extrator_hoteis("./mock/data/dados_hoteis_2025.csv", "csv", 100000);
     manager.addExtractor(&extrator_hoteis);
 
     filter_hotel filtroocupacao(make_input_vector(extrator_hoteis.get_output_buffer()));
