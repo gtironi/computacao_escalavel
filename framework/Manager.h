@@ -130,7 +130,6 @@ class Manager
         {
             // Espera até todos os loaders terminarem de colocar tarefa na fila
             task_queue.waitLoadersFinish();
-            std::cout << "Teste" << std::endl;
 
             // Depois disso, fica checando quando a fila acabar
             while (true)

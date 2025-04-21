@@ -57,7 +57,7 @@ public:
      */
     std::optional<T> pop(bool multiInput = false, bool test = false) {
         std::unique_lock<std::mutex> lock(mtx);
-
+        
         // Se for multi-input e estiver vazio, retorna imediatamente
         if (multiInput && queue.empty()) {
             return std::nullopt;
@@ -140,7 +140,7 @@ public:
      * Importante para liberar consumidores que estão esperando indefinidamente.
      */
     void finalizeInput() {
-        std::lock_guard<std::mutex> lock(mtx);
+        std::lock_guard<std::mutex> lock(mtx_2);
         inputTasksCreated = true;
 
         // Se o buffer está vazio, os dados realmente acabaram
