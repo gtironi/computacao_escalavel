@@ -230,7 +230,113 @@ public:
 };
 
 
-// class GroupbyTransformer : public Transformer
-// {
+template <typename T>
+class GroupByTransformer : public Transformer<T> {
+public:
+    using Transformer<T>::input_buffers;
+    using Transformer<T>::output_buffers;
+    using Transformer<T>::taskqueue;
+    using Transformer<T>::numOutputBuffers;
 
-// }
+    GroupByTransformer(
+        std::vector<Buffer<T>*> input_buffers,
+        const std::vector<std::string>& group_keys,
+        const std::vector<std::string>& agg_columns,
+        const std::vector<std::string>& agg_ops,
+        int num_outputs = 1
+    ) : Transformer<T>(input_buffers, num_outputs),
+        keys(group_keys),
+        columns(agg_columns),
+        operations(agg_ops),
+        input_buffer(*input_buffers[0]) {}
+
+    T run(std::vector<T*> dataframes) override {
+        Dataframe dataframe = *dataframes[0];
+        Dataframe littleAggregated = dataframe.dfGroupby(&keys, "sum", columns, true);
+        return littleAggregated;
+    }
+
+    void createAggTask(T* value)
+    {
+        T littleAggregated = run(dataframes);
+        std::lock_guard<std::mutex> lock(dfsMtx);
+        if (aggregated.columns.empty()) {
+            // Copia os nomes das colunas e os dados do outro DataFrame
+            aggegated.vstrColumnsName = littleAggregated.vstrColumnsName;
+            aggegated.columns = littleAggregated.columns;
+            return;
+        }
+        std::vector<std::string> columnsWithCount = columns;
+        columnsWithCount.push_back("count");
+        aggregated.dfGroupby(&keys, "sum", columnsWithCount);
+        tasksInTaskQueue.wait();
+    }
+
+    void createSendTask(int startRow, int endRow)
+    {
+        // Dataframe slice = aggregated.slice(startRow, endRow);
+        Dataframe slice = aggregated;
+        for (int i = 0; i < numOutputBuffers; i++) {
+            // Incrementa o semáforo e espera até que tenha vaga
+            get_output_buffer_by_index(i).get_semaphore().wait();
+            // Coloca no buffer
+            get_output_buffer_by_index(i).push(slice);
+        }
+    }
+
+    void enqueue_tasks() {
+        while (!(input_buffer.atomicGetInputDataFinished())) {
+            // Tenta extrair um dado do buffer
+            std::optional<T> maybe_value = input_buffer.pop();
+
+            // Se não conseguir pegar nenhum dado (buffer vazio no momento), encerra o loop
+            if (!maybe_value.has_value()) {
+                break;
+            }
+
+            // Move o valor extraído
+            T value = std::move(*maybe_value);
+
+            // Enfileira a tarefa na fila de execução, chamando o método `create_task`
+            taskqueue->push_task([this, val = std::move(value)]() mutable {
+                this->createAggTask(std::move(val));
+            });
+
+            tasksInTaskQueue.notify();
+        }
+
+        while (true)
+        {
+            if (tasksInTaskQueue.get_count() <= 0)
+            {
+                break;
+            }
+        }
+
+        int nRows = aggregated.getShape().second;
+        int batchSize = nRows / 1;
+        int endRow;
+
+        for (int currentRow = 0; currentRow < nRows; currentRow += batchSize)
+        {
+            endRow = currentRow + batchSize;
+            createSendTask(currentRow, min(endRow, nRows - 1));
+        }
+
+        // Finaliza os buffers de saída após o fim do processamento
+        finishBuffer();
+    }
+
+    std::vector<float> calculateStats(std::vector<T*> dataframe) override {
+        return {};
+    }
+
+private:
+    std::vector<std::string> keys;
+    std::vector<std::string> columns;
+    std::vector<std::string> operations;
+    Dataframe aggregated;
+    std::mutex mtx;
+    Buffer<T> input_buffer;
+    Semaphore tasksInTaskQueue;
+};
