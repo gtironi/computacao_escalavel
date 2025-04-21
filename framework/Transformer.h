@@ -332,7 +332,6 @@ public:
         // aggregated.dfGroupby(keys, columnsWithCount, true, false, false);
         aggregated.hStackGroup(littleAggregated);
         tasksInTaskQueue.wait();
-        std::cout << "Wait: " << tasksInTaskQueue.get_count() << std::endl;
     }
 
     void createSendTask(int startRow, int endRow)
@@ -365,21 +364,12 @@ public:
             });
 
             tasksInTaskQueue.notify();
-            std::cout << "Notify: " << tasksInTaskQueue.get_count() << std::endl;
-            // std::cout << "Primeiro" << std::endl;
-            // std::cout << tasksInTaskQueue.get_count() << std::endl;
         }
 
-        while (tasksInTaskQueue.get_count() > 0)
-        {
-            std::cout << "Final: " << tasksInTaskQueue.get_count() << std::endl;
-            // std::cout << "Segundo" << std::endl;
-            // std::cout << tasksInTaskQueue.get_count() << std::endl;
-        }
+        while (tasksInTaskQueue.get_count() > 0) {}
 
         int nRows = aggregated.getShape().first;
         int batchSize = nRows / 10 + 1;
-        std::cout << aggregated << std::endl;
         int endRow;
 
         for (int currentRow = 0; currentRow < nRows; currentRow += batchSize)
