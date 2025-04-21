@@ -1,6 +1,25 @@
 #ifndef TRANSFORMER_H
 #define TRANSFORMER_H
 
+#include "Buffer.h"
+#include "Dataframe.h"
+#include "TaskQueue.h"
+#include <utility>  // Para std::forward
+#include <tuple>
+#include <optional>
+#include <iostream>
+#include <sqlite3.h>
+#include <string>
+#include <vector>
+#include <fstream>
+#include <map>
+#include <regex>
+#include <sstream>
+#include <any>
+#include "Series.h"
+#include <any>
+
+
 // Classe base genérica para transformação de dados em um pipeline paralelo
 // T: Tipo dos dados processados (ex: Dataframe, estrutura customizada, etc.)
 template <typename T>
@@ -237,6 +256,14 @@ public:
 
 template <typename T>
 class GroupByTransformer : public Transformer<T> {
+private:
+    std::vector<std::string> keys;
+    std::vector<std::string> columns;
+    std::vector<std::string> operations;
+    Dataframe aggregated;
+    std::mutex mtx;
+    Buffer<T>* input_buffer;
+    Semaphore tasksInTaskQueue;
 public:
     using Transformer<T>::input_buffers;
     using Transformer<T>::output_buffers;
@@ -253,7 +280,7 @@ public:
         keys(group_keys),
         columns(agg_columns),
         operations(agg_ops),
-        input_buffer(*input_buffers[0]) {}
+        input_buffer(input_buffers[0]) {}
 
     T run(std::vector<T*> dataframes) override {
         bool sum = false;
@@ -347,14 +374,7 @@ public:
         return {};
     }
 
-private:
-    std::vector<std::string> keys;
-    std::vector<std::string> columns;
-    std::vector<std::string> operations;
-    Dataframe aggregated;
-    std::mutex mtx;
-    Buffer<T> input_buffer;
-    Semaphore tasksInTaskQueue;
+
 };
 
 #endif

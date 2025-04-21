@@ -76,9 +76,6 @@ class join: public Transformer<Dataframe> {
 
             std::cout << "--------------------- Troca ---------------------------------" << endl;
 
-            input[0]->printColsName();
-            input[1]->printColsName();
-
             // cout << *input[0];
             
             // std::cout << *input[1] << endl;
@@ -122,7 +119,7 @@ int main() {
     manager.addTransformer(&filtroocupacao);
 
     std::vector<std::string> vstrColumnsToAggregate = {"quantidade_pessoas", "preco"};
-    std::vector<string> group = {"nome_hotel", "dia", "mes", "ano"};
+    std::vector<string> group = {"nome_hotel", "dia", "mes"};
     std::vector<string> ops = {"sum"};
 
     GroupByTransformer<Dataframe> groupby_hotel(make_input_vector(extrator_hoteis.get_output_buffer()),
@@ -131,7 +128,7 @@ int main() {
                                                 ops);
     manager.addTransformer(&groupby_hotel);
 
-    vstrColumnsToAggregate = {"data_ida_dia", "data_ida_mes", "data_ida_ano", "cidade_destino"};
+    vstrColumnsToAggregate = {"data_ida_dia", "data_ida_mes", "data_ida_ano"};
     group = {"nome_hotel"};
     ops = {"sum"};
 
