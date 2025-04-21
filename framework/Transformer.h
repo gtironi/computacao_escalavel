@@ -293,6 +293,8 @@ public:
                 break;
             }
         }
+
+        std::cout << "Linhas: " <<  << std::endl;
         Dataframe dataframe = *dataframes[0];
         Dataframe littleAggregated = dataframe.dfGroupby(keys, columns, sum, false, true);
         return littleAggregated;
@@ -312,23 +314,24 @@ public:
 
         T littleAggregated = run({value});
         std::lock_guard<std::mutex> lock(mtx);
-        if (aggregated.columns.empty()) {
-            // Copia os nomes das colunas e os dados do outro DataFrame
-            aggregated.vstrColumnsName = littleAggregated.vstrColumnsName;
-            aggregated.columns = littleAggregated.columns;
-            return;
-        }
-        std::vector<std::string> columnsWithCount;
-        if (sum)
-        {
-            for (int i = 0; i < columns.size(); i++)
-            {
-                columnsWithCount.push_back(columns[i] + "_sum");
-            }
-        }
-        columnsWithCount.push_back("count");
-        aggregated.hStack(littleAggregated);
-        aggregated.dfGroupby(keys, columnsWithCount, true, false, false);
+        // if (aggregated.columns.empty()) {
+        //     // Copia os nomes das colunas e os dados do outro DataFrame
+        //     aggregated.vstrColumnsName = littleAggregated.vstrColumnsName;
+        //     aggregated.columns = littleAggregated.columns;
+        //     return;
+        // }
+        // std::vector<std::string> columnsWithCount;
+        // if (sum)
+        // {
+        //     for (int i = 0; i < columns.size(); i++)
+        //     {
+        //         columnsWithCount.push_back(columns[i] + "_sum");
+        //     }
+        // }
+        // columnsWithCount.push_back("count");
+        // aggregated.hStack(littleAggregated);
+        // aggregated.dfGroupby(keys, columnsWithCount, true, false, false);
+        aggregated.hStackGroup(littleAggregated);
         tasksInTaskQueue.wait();
         std::cout << "Wait: " << tasksInTaskQueue.get_count() << std::endl;
     }
@@ -375,9 +378,9 @@ public:
             // std::cout << tasksInTaskQueue.get_count() << std::endl;
         }
 
-        int nRows = aggregated.getShape().second;
+        int nRows = aggregated.getShape().first;
         int batchSize = nRows / 10 + 1;
-        std::cout << nRows << std::endl;
+        std::cout << aggregated << std::endl;
         int endRow;
 
         for (int currentRow = 0; currentRow < nRows; currentRow += batchSize)
