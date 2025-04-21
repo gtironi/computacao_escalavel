@@ -138,8 +138,8 @@ int main() {
     //                                                ops);
     // manager.addTransformer(&groupby_pesquisa);
 
-    std::vector<Buffer<Dataframe>*> inputs_buffers;
-    inputs_buffers.push_back(&groupby_hotel.get_output_buffer());
+    // std::vector<Buffer<Dataframe>*> inputs_buffers;
+    // inputs_buffers.push_back(&groupby_hotel.get_output_buffer());
     // inputs_buffers.push_back(&groupby_pesquisa.get_output_buffer());
 
     // join join_transformer(inputs_buffers);
