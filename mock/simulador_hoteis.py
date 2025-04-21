@@ -117,9 +117,9 @@ def gerar_dados_em_thread(hoteis_por_cidade_thread, fator_preco_cidade, arquivo_
         print(f"[Thread-{id_thread}] Gerou {len(registros)} registros.")
 
 def main():
-    arquivo_saida = os.path.join(os.path.dirname(__file__), 'data/dados_hoteis_2025.csv')
-    num_threads = 6  ## Mudar aqui para aumentar a base -------------------------------------------
-    hoteis_por_thread = 30   ## Mudar aqui para aumentar a base ------------------------------------------- Total de hotéis = threads * hoteis_por_thread
+    arquivo_saida = os.path.join(os.path.dirname(__file__), 'data/dados_hoteis2_2025.csv')
+    num_threads = 1  ## Mudar aqui para aumentar a base -------------------------------------------
+    hoteis_por_thread = 5   ## Mudar aqui para aumentar a base ------------------------------------------- Total de hotéis = threads * hoteis_por_thread
     total_hoteis = num_threads * hoteis_por_thread
     os.makedirs(os.path.dirname(arquivo_saida), exist_ok=True)
 
