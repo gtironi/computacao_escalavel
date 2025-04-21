@@ -6,6 +6,7 @@
 #include <thread>
 #include <chrono>
 #include <iostream>
+#include <numeric>
 
 std::vector<Buffer<Dataframe>*> make_input_vector(Buffer<Dataframe>& buffer) {
     return { &buffer };
@@ -36,7 +37,9 @@ class groupby_voo : public Transformer<Dataframe> {
 
             std::vector<std::string> vstrColumnsToGroup = {"cidade_destino"};
 
-            Dataframe df_gruped = input[0]-> dfGroupby(vstrColumnsToGroup, "sum", vstrColumnsToAggregate);
+            Dataframe df_gruped = input[0]-> dfGroupby(vstrColumnsToGroup, vstrColumnsToAggregate, true, false, false);
+
+            //std::cout << df_gruped;
 
             return df_gruped;
         }
@@ -47,22 +50,20 @@ class taxa_ocup_voo: public Transformer<Dataframe> {
         using Transformer::Transformer; // Herda o construtor
 
         Dataframe run(std::vector<Dataframe*> input) override {
-            Dataframe* df = input[0];
+            Dataframe df = *input[0];
 
             // Chama o método da própria instância Dataframe
-            df->bColumnOperation(
-                "assentos_ocupados",           // Nome da coluna 1 (numerador)
-                "assentos_totais",             // Nome da coluna 2 (denominador)
+            df.bColumnOperation(
+                "assentos_ocupados_sum",           // Nome da coluna 1 (numerador)
+                "assentos_totais_sum",             // Nome da coluna 2 (denominador)
                 division,
                 "ocupacao_relativa"            // Nome da nova coluna a ser criada
             );
 
-            return *df;
+            return df;
 
         }
 };
-
-
 
 class DataPrinter : public Loader<Dataframe> {
     public:
@@ -78,46 +79,42 @@ class DataPrinter : public Loader<Dataframe> {
             }
 
             // Print the dataframe contents
-            std::cout << df;
+            //std::cout << df;
         }
     };
 
 int main() {
-    // Inicializa o Manager
-    Manager<Dataframe> manager(7);
+    std::vector<int> paralelismos = {1, 3, 5, 7, 9, 11};
 
-    // Cria os extratores
-    // Extrator<Dataframe> extrator_pesquisa("./mock/data/dados_viagens_2025.csv", "db", 1000);
-    // manager.addExtractor(&extrator_pesquisa);
+    for (int p : paralelismos) {
+        std::vector<long long> tempos_execucao;
 
-    // Extrator<Dataframe> extrator_hoteis("./mock/data/dados_hoteis_2025.csv", "csv", 1000);
-    // manager.addExtractor(&extrator_hoteis);
+        for (int i = 0; i < 10; ++i) {
+            Manager<Dataframe> manager(p);
 
-    Extrator<Dataframe> extrator_voos("./mock/data/dados_voos_2025.csv", "csv", 1000);
-    manager.addExtractor(&extrator_voos);
+            Extrator<Dataframe> extrator_voos("./mock/data/dados_voos_2025.csv", "csv", 1000);
+            manager.addExtractor(&extrator_voos);
 
-    groupby_voo groupbyvoo(make_input_vector(extrator_voos.get_output_buffer()));
-    manager.addTransformer(&groupbyvoo);
+            groupby_voo groupbyvoo(make_input_vector(extrator_voos.get_output_buffer()));
+            manager.addTransformer(&groupbyvoo);
 
-    taxa_ocup_voo taxaocupvoo(make_input_vector(groupbyvoo.get_output_buffer()));
-    manager.addTransformer(&taxaocupvoo);
+            taxa_ocup_voo taxaocupvoo(make_input_vector(groupbyvoo.get_output_buffer()));
+            manager.addTransformer(&taxaocupvoo);
 
-    // Para criar um próximo bloco que recebe como input um dos blocos de output,
-    // basta passar como buffer de input o get_output_buffer() do bloco anterior
-    // A atribuição do buffer de saída seguinte é automática
-    DataPrinter loader1(taxaocupvoo.get_output_buffer());
-    manager.addLoader(&loader1);
+            DataPrinter loader1(taxaocupvoo.get_output_buffer());
+            manager.addLoader(&loader1);
 
-    auto start_time = std::chrono::high_resolution_clock::now();
+            auto start_time = std::chrono::high_resolution_clock::now();
+            manager.run();
+            auto end_time = std::chrono::high_resolution_clock::now();
 
-    // Start the pipeline
-    manager.run();
+            long long duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
+            tempos_execucao.push_back(duration);
+        }
 
-    auto end_time = std::chrono::high_resolution_clock::now();
+        double media = std::accumulate(tempos_execucao.begin(), tempos_execucao.end(), 0.0) / tempos_execucao.size();
+        std::cout << "Paralelismo: " << p << " -> Tempo médio: " << media << " ms" << std::endl;
+    }
 
-    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
-    std::cout << "Tempo de execução: " << duration << " ms" << std::endl;
-
-    // The manager's destructor will clean up everything
     return 0;
 }
