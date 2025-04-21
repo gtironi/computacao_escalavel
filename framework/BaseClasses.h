@@ -130,22 +130,16 @@ public:
         {
             string line;
             while (getline(file, line)) {
-                // Ignora a primeira linha (cabeçalho)
-                if (iContador == 0) {
-                    iContador++;
-                    continue;
-                }
-
+                ++iContador;
                 strBlocoDeTexto += line + "\n";
-
                 if (iContador % this->iTamanhoBatch == 0) {
                     string value = strBlocoDeTexto;
                     taskqueue->push_task([this, val = value]() mutable {
                         this->create_task(val);
                     });
                     this->outputBuffer.get_semaphore().wait();
+                    strBlocoDeTexto.clear();
                 }
-                iContador++;
             }
 
             // Adiciona o último bloco, se houver
