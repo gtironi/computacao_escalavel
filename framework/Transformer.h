@@ -329,7 +329,6 @@ public:
     }
 
     void enqueue_tasks() override {
-        cout << "teste" << endl;
         while (!(input_buffer -> atomicGetInputDataFinished())) {
             // Tenta extrair um dado do buffer
             std::optional<T> maybe_value = input_buffer -> pop();

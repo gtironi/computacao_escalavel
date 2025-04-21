@@ -68,23 +68,23 @@ class filter_hotel : public Transformer<Dataframe> {
 //         }
 // };
 
-class join: public Transformer<Dataframe> {
-    public:
-        using Transformer::Transformer; // Herda o construtor
+// class join: public Transformer<Dataframe> {
+//     public:
+//         using Transformer::Transformer; // Herda o construtor
 
-        Dataframe run(std::vector<Dataframe*> input) override {
+//         Dataframe run(std::vector<Dataframe*> input) override {
 
-            // std::cout << "--------------------- Troca ---------------------------------" << endl;
+//             // std::cout << "--------------------- Troca ---------------------------------" << endl;
 
-            // cout << *input[0];
+//             // cout << *input[0];
             
-            // std::cout << *input[1] << endl;
+//             // std::cout << *input[1] << endl;
 
-            // Dataframe df_merged = input[0]->merge(*input[1], {"nome_hotel"});
+//             // Dataframe df_merged = input[0]->merge(*input[1], {"nome_hotel"});
 
-            return *input[0];
-        }
-};
+//             return *input[0];
+//         }
+// };
 
 class DataPrinter : public Loader<Dataframe> {
     public:
@@ -142,10 +142,10 @@ int main() {
     inputs_buffers.push_back(&groupby_hotel.get_output_buffer());
     // inputs_buffers.push_back(&groupby_pesquisa.get_output_buffer());
 
-    join join_transformer(inputs_buffers);
-    manager.addTransformer(&join_transformer);
+    // join join_transformer(inputs_buffers);
+    // manager.addTransformer(&join_transformer);
 
-    DataPrinter loader1(join_transformer.get_output_buffer());
+    DataPrinter loader1(groupby_hotel.get_output_buffer());
     manager.addLoader(&loader1);
 
     // DataPrinter loader2(join_transformer.get_output_buffer());
