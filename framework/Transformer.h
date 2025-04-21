@@ -248,7 +248,6 @@ public:
      */
     void finishBuffer() {
         for (int i = 0; i < numOutputBuffers; i++) {
-            get_output_buffer_by_index(i).prepareForShutdown();
             get_output_buffer_by_index(i).finalizeInput();
         }
     }
