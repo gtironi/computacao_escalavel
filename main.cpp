@@ -48,7 +48,6 @@ class taxa_ocup_voo: public Transformer<Dataframe> {
 
             // Chama o método da própria instância Dataframe
             df->bColumnOperation(
-                *df,
                 "assentos_ocupados",           // Nome da coluna 1 (numerador)
                 "assentos_totais",             // Nome da coluna 2 (denominador)
                 division,

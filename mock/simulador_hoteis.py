@@ -98,16 +98,16 @@ def gerar_dados_em_thread(hoteis_por_cidade_thread, fator_preco_cidade, arquivo_
                     ano = data.year
                     ocupado = random.random() < 0.6
                     registros.append([
+                        tipo_quarto,
                         nome_hotel,
                         cidade,
-                        tipo_quarto,
                         numero_quarto,
                         capacidade,
                         preco,
+                        1 if ocupado else 0,
                         dia,
                         mes,
-                        ano,
-                        1 if ocupado else 0
+                        ano
                     ])
 
     with lock:
@@ -129,8 +129,8 @@ def main():
     with open(arquivo_saida, 'w', newline='', encoding='utf-8') as f:
         writer = csv.writer(f)
         writer.writerow([
-            'nome_hotel', 'cidade', 'tipo_quarto', 'numero_quarto',
-            'quantidade_pessoas', 'preco', 'dia', 'mes', 'ano', 'ocupado'
+            'tipo_quarto', 'nome_hotel', 'cidade',  'numero_quarto',
+            'quantidade_pessoas', 'preco', 'ocupado', 'dia', 'mes', 'ano'
         ])
 
     print(f"Gerando dados com {total_hoteis} hotéis entre 07/04 e 31/12/2025 usando {num_threads} threads...\n")

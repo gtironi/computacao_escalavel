@@ -51,10 +51,9 @@ def gerar_registro_viagem(hoteis_por_cidade):
     hotel_escolhido = random.choice(hoteis)
 
     return [
-        origem, destino,
+        origem, destino, hotel_escolhido,
         data_ida.day, data_ida.month, data_ida.year,
-        data_volta.day, data_volta.month, data_volta.year,
-        hotel_escolhido
+        data_volta.day, data_volta.month, data_volta.year
     ]
 
 # Função que cada thread executará
@@ -86,10 +85,9 @@ def main():
     with open(arquivo_saida, 'w', newline='', encoding='utf-8') as arquivo_csv:
         escritor = csv.writer(arquivo_csv)
         escritor.writerow([
-            'cidade_origem', 'cidade_destino',
+            'cidade_origem', 'cidade_destino', 'nome_hotel',
             'data_ida_dia', 'data_ida_mes', 'data_ida_ano',
-            'data_volta_dia', 'data_volta_mes', 'data_volta_ano',
-            'hotel_destino'
+            'data_volta_dia', 'data_volta_mes', 'data_volta_ano'
         ])
 
     print(f"Gerando {total_registros} registros de viagens utilizando {num_threads} threads...")
