@@ -1,5 +1,6 @@
 // ConcreteExtractor.h
 #include "framework/BaseClasses.h"
+#include "framework/Transformer.h"
 #include "framework/Dataframe.h"
 #include "framework/Manager.h"
 #include <thread>
@@ -40,8 +41,11 @@ class groupby_hotel : public Transformer<Dataframe> {
         Dataframe run(std::vector<Dataframe*> input) override {
 
             std::vector<std::string> vstrColumnsToAggregate = {"quantidade_pessoas", "preco"};
+            std::vector<string> group = {"nome_hotel"};
 
-            Dataframe df_grouped = input[0]-> dfGroupby("nome_hotel", "sum", vstrColumnsToAggregate, true);
+            input[0]->printHeader(std::cout, *input[0]);
+
+            Dataframe df_grouped = input[0]-> dfGroupby(group, "sum", vstrColumnsToAggregate, true);
 
             //std::cout << df_grouped << endl;
 
@@ -55,8 +59,13 @@ class groupby_pesquisa: public Transformer<Dataframe> {
 
         Dataframe run(std::vector<Dataframe*> input) override {
             std::vector<std::string> vstrColumnsToAggregate = {"data_ida_dia"}; //Qualquer coisa só para funcionar
+            std::vector<string> group = {"nome_hotel"};
+            Dataframe df_grouped = input[0]-> dfGroupby(group, "sum", vstrColumnsToAggregate, true);
 
-            Dataframe df_grouped = input[0]-> dfGroupby("nome_hotel", "sum", vstrColumnsToAggregate, true);
+            // for (auto nome_coluna : input[0]->vstrColumnsName)
+            // {
+            //     cout << nome_coluna << endl;
+            // }
 
             //std::cout << df_grouped << endl;
 
@@ -75,7 +84,12 @@ class join: public Transformer<Dataframe> {
 
             std::cout << "--------------------- Troca ---------------------------------" << endl;
 
-            std::cout << *input[1] << endl;
+            for (auto nome_coluna : input[0]->vstrColumnsName)
+            {
+                cout << nome_coluna << endl;
+            }
+            
+            // std::cout << *input[1] << endl;
 
             Dataframe df_merged = input[0]->merge(*input[1], {"nome_hotel"});
 
