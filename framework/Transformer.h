@@ -284,7 +284,6 @@ public:
 
     T run(std::vector<T*> dataframes) override {
         bool sum = false;
-        bool mean = false;
 
         for (int i = 0; i < operations.size(); i++)
         {
@@ -301,6 +300,16 @@ public:
 
     void createAggTask(T* value)
     {
+        bool sum = false;
+        for (int i = 0; i < operations.size(); i++)
+        {
+            if (operations[i] == "sum")
+            {
+                sum = true;
+                break;
+            }
+        }
+
         T littleAggregated = run({value});
         std::lock_guard<std::mutex> lock(mtx);
         if (aggregated.columns.empty()) {
@@ -309,7 +318,14 @@ public:
             aggregated.columns = littleAggregated.columns;
             return;
         }
-        std::vector<std::string> columnsWithCount = columns;
+        std::vector<std::string> columnsWithCount;
+        if (sum)
+        {
+            for (int i = 0; i < columns.size(); i++)
+            {
+                columnsWithCount.push_back(columns[i] + "_sum");
+            }
+        }
         columnsWithCount.push_back("count");
         aggregated.hStack(littleAggregated);
         aggregated.dfGroupby(keys, columnsWithCount, true, false, false);
