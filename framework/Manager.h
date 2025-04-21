@@ -11,6 +11,7 @@
 #include <atomic>
 #include "BaseClasses.h"
 #include "TaskQueue.h"
+#include "Transformer.h"
 
 // Classe do gerenciador das threads
 template <typename T>

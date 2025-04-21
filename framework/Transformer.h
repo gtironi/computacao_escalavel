@@ -1,3 +1,6 @@
+#ifndef TRANSFORMER_H
+#define TRANSFORMER_H
+
 // Classe base genérica para transformação de dados em um pipeline paralelo
 // T: Tipo dos dados processados (ex: Dataframe, estrutura customizada, etc.)
 template <typename T>
@@ -253,24 +256,36 @@ public:
         input_buffer(*input_buffers[0]) {}
 
     T run(std::vector<T*> dataframes) override {
+        bool sum = false;
+        bool mean = false;
+
+        for (int i = 0; i < operations.size(); i++)
+        {
+            if (operations[i] == "sum")
+            {
+                sum = true;
+                break;
+            }
+        }
         Dataframe dataframe = *dataframes[0];
-        Dataframe littleAggregated = dataframe.dfGroupby(&keys, "sum", columns, true);
+        Dataframe littleAggregated = dataframe.dfGroupby(keys, columns, sum, false, true);
         return littleAggregated;
     }
 
     void createAggTask(T* value)
     {
-        T littleAggregated = run(dataframes);
-        std::lock_guard<std::mutex> lock(dfsMtx);
+        T littleAggregated = run(value);
+        std::lock_guard<std::mutex> lock(mtx);
         if (aggregated.columns.empty()) {
             // Copia os nomes das colunas e os dados do outro DataFrame
-            aggegated.vstrColumnsName = littleAggregated.vstrColumnsName;
-            aggegated.columns = littleAggregated.columns;
+            aggregated.vstrColumnsName = littleAggregated.vstrColumnsName;
+            aggregated.columns = littleAggregated.columns;
             return;
         }
         std::vector<std::string> columnsWithCount = columns;
         columnsWithCount.push_back("count");
-        aggregated.dfGroupby(&keys, "sum", columnsWithCount);
+        aggregated.hStack(&littleAggregated);
+        aggregated.dfGroupby(keys, columnsWithCount, true, false, false);
         tasksInTaskQueue.wait();
     }
 
@@ -280,9 +295,8 @@ public:
         Dataframe slice = aggregated;
         for (int i = 0; i < numOutputBuffers; i++) {
             // Incrementa o semáforo e espera até que tenha vaga
-            get_output_buffer_by_index(i).get_semaphore().wait();
-            // Coloca no buffer
-            get_output_buffer_by_index(i).push(slice);
+            this->get_output_buffer_by_index(i).get_semaphore().wait();
+            this->get_output_buffer_by_index(i).push(slice);
         }
     }
 
@@ -322,11 +336,11 @@ public:
         for (int currentRow = 0; currentRow < nRows; currentRow += batchSize)
         {
             endRow = currentRow + batchSize;
-            createSendTask(currentRow, min(endRow, nRows - 1));
+            createSendTask(currentRow, min(endRow + 1, nRows));
         }
 
         // Finaliza os buffers de saída após o fim do processamento
-        finishBuffer();
+        this -> finishBuffer();
     }
 
     std::vector<float> calculateStats(std::vector<T*> dataframe) override {
@@ -342,3 +356,5 @@ private:
     Buffer<T> input_buffer;
     Semaphore tasksInTaskQueue;
 };
+
+#endif

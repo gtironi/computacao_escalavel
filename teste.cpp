@@ -32,41 +32,41 @@ class filter_hotel : public Transformer<Dataframe> {
         }
 };
 
-class groupby_hotel : public Transformer<Dataframe> {
-    public:
-        using Transformer::Transformer; // Herda o construtor
+// class groupby_hotel : public Transformer<Dataframe> {
+//     public:
+//         using Transformer::Transformer; // Herda o construtor
 
-        Dataframe run(std::vector<Dataframe*> input) override {
+//         Dataframe run(std::vector<Dataframe*> input) override {
 
-            std::vector<std::string> vstrColumnsToAggregate = {"quantidade_pessoas", "preco"};
-            std::vector<string> group = {"nome_hotel"};
+//             std::vector<std::string> vstrColumnsToAggregate = {"quantidade_pessoas", "preco"};
+//             std::vector<string> group = {"nome_hotel"};
 
-            Dataframe df_grouped = input[0]-> dfGroupby(group, "sum", vstrColumnsToAggregate, true);
+//             Dataframe df_grouped = input[0]-> dfGroupby(group, "sum", vstrColumnsToAggregate, true);
 
-            cout << "0" <<endl;
-            df_grouped.printColsName();
+//             cout << "0" <<endl;
+//             df_grouped.printColsName();
 
-            return df_grouped;
-        }
-};
+//             return df_grouped;
+//         }
+// };
 
-class groupby_pesquisa: public Transformer<Dataframe> {
-    public:
-        using Transformer::Transformer; // Herda o construtor
+// class groupby_pesquisa: public Transformer<Dataframe> {
+//     public:
+//         using Transformer::Transformer; // Herda o construtor
 
-        Dataframe run(std::vector<Dataframe*> input) override {
-            std::vector<std::string> vstrColumnsToAggregate = {"data_ida_dia"}; //Qualquer coisa só para funcionar
-            std::vector<string> group = {"nome_hotel"};
+//         Dataframe run(std::vector<Dataframe*> input) override {
+//             std::vector<std::string> vstrColumnsToAggregate = {"data_ida_dia"}; //Qualquer coisa só para funcionar
+//             std::vector<string> group = {"nome_hotel"};
 
-            Dataframe df_grouped = input[0]-> dfGroupby(group, "sum", vstrColumnsToAggregate, true);
+//             Dataframe df_grouped = input[0]-> dfGroupby(group, "sum", vstrColumnsToAggregate, true);
             
-            cout << "1" <<endl;
-            df_grouped.printColsName();
+//             cout << "1" <<endl;
+//             df_grouped.printColsName();
 
-            return df_grouped;
+//             return df_grouped;
 
-        }
-};
+//         }
+// };
 
 class join: public Transformer<Dataframe> {
     public:
@@ -121,15 +121,29 @@ int main() {
     filter_hotel filtroocupacao(make_input_vector(extrator_hoteis.get_output_buffer()));
     manager.addTransformer(&filtroocupacao);
 
-    groupby_hotel groupbyhotel(make_input_vector(filtroocupacao.get_output_buffer()));
-    manager.addTransformer(&groupbyhotel);
+    std::vector<std::string> vstrColumnsToAggregate = {"quantidade_pessoas", "preco"};
+    std::vector<string> group = {"nome_hotel", "dia", "mes", "ano"};
+    std::vector<string> ops = {"sum"};
 
-    groupby_pesquisa groupbypesquisa(make_input_vector(extrator_pesquisa.get_output_buffer()));
-    manager.addTransformer(&groupbypesquisa);
+    GroupByTransformer<Dataframe> groupby_hotel(make_input_vector(extrator_hoteis.get_output_buffer()),
+                                                group,
+                                                vstrColumnsToAggregate,
+                                                ops);
+    manager.addTransformer(&groupby_hotel);
+
+    vstrColumnsToAggregate = {"data_ida_dia", "data_ida_mes", "data_ida_ano", "cidade_destino"};
+    group = {"nome_hotel"};
+    ops = {"sum"};
+
+    GroupByTransformer<Dataframe> groupby_pesquisa(make_input_vector(extrator_pesquisa.get_output_buffer()),
+                                                   group,
+                                                   vstrColumnsToAggregate,
+                                                   ops);
+    manager.addTransformer(&groupby_pesquisa);
 
     std::vector<Buffer<Dataframe>*> inputs_buffers;
-    inputs_buffers.push_back(&groupbyhotel.get_output_buffer());
-    inputs_buffers.push_back(&groupbypesquisa.get_output_buffer());
+    inputs_buffers.push_back(&groupby_hotel.get_output_buffer());
+    inputs_buffers.push_back(&groupby_pesquisa.get_output_buffer());
 
     join join_transformer(inputs_buffers, 2);
     manager.addTransformer(&join_transformer);
