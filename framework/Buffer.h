@@ -17,7 +17,7 @@ private:
     std::queue<T> queue;             // Fila que armazena os dados
     std::mutex mtx;                  // Mutex para garantir acesso exclusivo à fila
     std::mutex mtx_2;                  // Mutex para garantir acesso exclusivo à fila
-    std::mutex mtx_3;                  // Mutex para garantir acesso exclusivo à fila
+    // std::mutex mtx_3;                  // Mutex para garantir acesso exclusivo à fila
     std::condition_variable cond;    // Variável de condição para controle de espera/notificação
     int max_size;                    // Capacidade máxima do buffer
     Semaphore semaphore;             // Semáforo para controlar o número de elementos permitidos
@@ -140,7 +140,7 @@ public:
      * Importante para liberar consumidores que estão esperando indefinidamente.
      */
     void finalizeInput() {
-        std::lock_guard<std::mutex> lock(mtx_3);
+        std::lock_guard<std::mutex> lock(mtx);
         inputTasksCreated = true;
 
         // Se o buffer está vazio, os dados realmente acabaram
