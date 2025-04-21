@@ -2,6 +2,7 @@
 #include "framework/BaseClasses.h"
 #include "framework/Dataframe.h"
 #include "framework/Manager.h"
+#include "framework/Transformer.h"
 #include <thread>
 #include <chrono>
 #include <iostream>
@@ -33,7 +34,9 @@ class groupby_voo : public Transformer<Dataframe> {
 
             std::vector<std::string> vstrColumnsToAggregate = {"assentos_ocupados", "assentos_totais"};
 
-            Dataframe df_gruped = input[0]-> dfGroupby("cidade_destino", "sum", vstrColumnsToAggregate);
+            std::vector<std::string> vstrColumnsToGroup = {"cidade_destino"};
+
+            Dataframe df_gruped = input[0]-> dfGroupby(vstrColumnsToGroup, "sum", vstrColumnsToAggregate);
 
             return df_gruped;
         }
