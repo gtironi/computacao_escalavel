@@ -708,35 +708,73 @@ public:
         int col_width = 15; // Largura fixa das colunas
         int index_width = 5;
 
+        // Print header
         os << left << setw(index_width) << "" << "  ";
         for (auto &col : dfInput.columns)
         {
             string name = col.strGetName();
             string type = col.strGetType();
             name += " <" + type + ">";
-
             string header_name = (name.size() > size_t(col_width))
                                      ? (name.substr(0, col_width - 3) + "...")
                                      : name;
             os << left << setw(col_width) << header_name << "  ";
         }
-        os << "\n"
-           << left << setw(index_width) << "" << "  ";
+        os << "\n" << left << setw(index_width) << "" << "  ";
         for (size_t i = 0; i < num_cols; i++)
         {
             os << left << setw(col_width) << string(col_width, '-') << "  ";
         }
         os << "\n";
 
-        for (size_t i = 0; i < num_rows; ++i)
+        // Print rows 
+        if (num_rows <= 10)
         {
-            os << left << setw(index_width) << i << "  ";
+            // Se o número de linhas for menor ou igual a 10, imprime todas as linhas.
+            for (size_t i = 0; i < num_rows; ++i)
+            {
+                os << left << setw(index_width) << i << "  ";
+                for (size_t j = 0; j < num_cols; ++j)
+                {
+                    string val_str = anyToString(df.columns[j].retornaElemento(i));
+                    if (val_str.length() > size_t(col_width))
+                        val_str = val_str.substr(0, col_width - 3) + "...";
+                    os << left << setw(col_width) << val_str << "  ";
+                }
+                os << "\n";
+            }
+        }
+        else
+        {
+            // Imprime as 5 primeiras linhas
+            for (size_t i = 0; i < 5; ++i)
+            {
+                os << left << setw(index_width) << i << "  ";
+                for (size_t j = 0; j < num_cols; ++j)
+                {
+                    string val_str = anyToString(df.columns[j].retornaElemento(i));
+                    if (val_str.length() > size_t(col_width))
+                        val_str = val_str.substr(0, col_width - 3) + "...";
+                    os << left << setw(col_width) << val_str << "  ";
+                }
+                os << "\n";
+            }
+            // Linha de reticências
+            os << left << setw(index_width) << "..." << "  ";
             for (size_t j = 0; j < num_cols; ++j)
             {
-                string val_str = anyToString(df.columns[j].retornaElemento(i));
-                if (val_str.length() > col_width)
-                    val_str[col_width - 3] = val_str[col_width - 2] = val_str[col_width - 1] = '.';
-                os << left << setw(col_width) << val_str.substr(0, col_width) << "  ";
+                os << left << setw(col_width) << "..." << "  ";
+            }
+            os << "\n";
+            // Imprime a última linha
+            size_t last_index = num_rows - 1;
+            os << left << setw(index_width) << last_index << "  ";
+            for (size_t j = 0; j < num_cols; ++j)
+            {
+                string val_str = anyToString(df.columns[j].retornaElemento(last_index));
+                if (val_str.length() > size_t(col_width))
+                    val_str = val_str.substr(0, col_width - 3) + "...";
+                os << left << setw(col_width) << val_str << "  ";
             }
             os << "\n";
         }
