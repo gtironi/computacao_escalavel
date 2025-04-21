@@ -111,7 +111,7 @@ public:
      * Método principal que enfileira as tarefas na fila de execução.
      * Realiza o controle de semáforos, histórico e empacotamento das entradas para processar.
      */
-    void enqueue_tasks() {
+    virtual void enqueue_tasks() {
         while (true) {
             // Verifica se ainda existem dados nos buffers de entrada
             bool canContinue = false;
@@ -301,7 +301,7 @@ public:
 
     void createAggTask(T* value)
     {
-        T littleAggregated = run(value);
+        T littleAggregated = run({value});
         std::lock_guard<std::mutex> lock(mtx);
         if (aggregated.columns.empty()) {
             // Copia os nomes das colunas e os dados do outro DataFrame
@@ -311,7 +311,7 @@ public:
         }
         std::vector<std::string> columnsWithCount = columns;
         columnsWithCount.push_back("count");
-        aggregated.hStack(&littleAggregated);
+        aggregated.hStack(littleAggregated);
         std::cout << aggregated << std::endl;
         aggregated.dfGroupby(keys, columnsWithCount, true, false, false);
         tasksInTaskQueue.wait();
@@ -328,10 +328,11 @@ public:
         }
     }
 
-    void enqueue_tasks() {
-        while (!(input_buffer.atomicGetInputDataFinished())) {
+    void enqueue_tasks() override {
+        cout << "teste" << endl;
+        while (!(input_buffer -> atomicGetInputDataFinished())) {
             // Tenta extrair um dado do buffer
-            std::optional<T> maybe_value = input_buffer.pop();
+            std::optional<T> maybe_value = input_buffer -> pop();
 
             // Se não conseguir pegar nenhum dado (buffer vazio no momento), encerra o loop
             if (!maybe_value.has_value()) {
@@ -343,7 +344,7 @@ public:
 
             // Enfileira a tarefa na fila de execução, chamando o método `create_task`
             taskqueue->push_task([this, val = std::move(value)]() mutable {
-                this->createAggTask(std::move(val));
+                this->createAggTask(&val);
             });
 
             tasksInTaskQueue.notify();
