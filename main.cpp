@@ -104,9 +104,9 @@ class TaxaOcupacao: public Transformer<Dataframe> {
         using Transformer::Transformer; // Herda o construtor
 
         Dataframe run(std::vector<Dataframe*> input) override {
-            std::cout << "Taxa 1" << std::endl;
+            // std::cout << "Taxa 1" << std::endl;
             input[0]->bColumnOperation("count_pesquisas", "quantidade_pessoas_sum", division, "taxa_ocupacao");
-            std::cout << "Taxa 2" << std::endl;
+            // std::cout << "Taxa 2" << std::endl;
             return *input[0];
         }
 };
@@ -118,11 +118,11 @@ class faturamento: public Transformer<Dataframe> {
 
         Dataframe run(std::vector<Dataframe*> input) override {
 
-            std::cout << "Fat 1" << std::endl;
+            // std::cout << "Fat 1" << std::endl;
             input[0]->bColumnOperation("count_reservas", "quantidade_pessoas_sum", minimun, "demanda");
-            std::cout << "Fat 2" << std::endl;
+            // std::cout << "Fat 2" << std::endl;
             input[0]->bColumnOperation("preco_medio", "demanda", multiplication, "faturamento_esperado");
-            std::cout << "Fat 3" << std::endl;
+            // std::cout << "Fat 3" << std::endl;
 
             return *input[0];
         }
@@ -170,12 +170,12 @@ class DataPrinter : public Loader<Dataframe> {
 
         void run(Dataframe df) override {
             if (!headerPrinted) {
-                // df.printHeader(std::cout, df); // Print the dataframe head
+                df.printHeader(std::cout, df); // Print the dataframe head
                 headerPrinted = true;
             }
 
             // Print the dataframe contents
-            // std::cout << df;
+            std::cout << df;
         }
     };
 
@@ -183,10 +183,10 @@ class DataPrinter : public Loader<Dataframe> {
 
 void pipeline() {
     // Inicializa o Manager
-    Manager<Dataframe> manager(7);
+    Manager<Dataframe> manager(1);
 
     // Pipeline Hoteis e Pesquisas ------------------------------------------------------------------------
-    Extrator<Dataframe> extrator_pesquisa("./mock/data/dados_pesquisas_2025.db", "sql", 1000, "Viagens");
+    Extrator<Dataframe> extrator_pesquisa("./mock/data/dados_pesquisas_2025.csv", "csv", 1000);
     manager.addExtractor(&extrator_pesquisa);
 
     Extrator<Dataframe> extrator_reservas("./mock/data/dados_reservas_2025.csv", "csv", 25000);
@@ -239,27 +239,28 @@ void pipeline() {
     manager.addLoader(&loader2);
 
     //Pipeline Voos ------------------------------------------------------------------------
-    // Extrator<Dataframe> extrator_voos("./mock/data/dados_voos_2025.csv", "csv", 15000);
-    // manager.addExtractor(&extrator_voos);
+    Extrator<Dataframe> extrator_voos("./mock/data/dados_voos_2025.csv", "csv", 15000);
+    manager.addExtractor(&extrator_voos);
 
-    // vstrColumnsToAggregate = {"assentos_ocupados", "assentos_totais"};
-    // group = {"cidade_destino"};
-    // ops = {"sum"};
+    vstrColumnsToAggregate = {"assentos_ocupados", "assentos_totais"};
+    group = {"cidade_destino"};
+    ops = {"sum"};
 
-    // GroupByTransformer<Dataframe> groupbyvoo(
-    //     make_input_vector(extrator_voos.get_output_buffer()),
-    //     group,
-    //     vstrColumnsToAggregate,
-    //     ops
-    // );
+    GroupByTransformer<Dataframe> groupbyvoo(
+        make_input_vector(extrator_voos.get_output_buffer()),
+        group,
+        vstrColumnsToAggregate,
+        ops,
+        "count_voos"
+    );
 
-    // manager.addTransformer(&groupbyvoo);
+    manager.addTransformer(&groupbyvoo);
 
-    // taxa_ocup_voo taxaocupvoo(make_input_vector(groupbyvoo.get_output_buffer()));
-    // manager.addTransformer(&taxaocupvoo);
+    taxa_ocup_voo taxaocupvoo(make_input_vector(groupbyvoo.get_output_buffer()));
+    manager.addTransformer(&taxaocupvoo);
 
-    // DataPrinter loader3(taxaocupvoo.get_output_buffer());
-    // manager.addLoader(&loader3);
+    DataPrinter loader3(taxaocupvoo.get_output_buffer());
+    manager.addLoader(&loader3);
 
     auto start_time = std::chrono::high_resolution_clock::now();
 
@@ -283,7 +284,7 @@ void pipeline() {
 }
 
 int main() {
-    string strCsvPath1 = "./mock/data/dados_pesquisas_2025.db";
+    string strCsvPath1 = "./mock/data/dados_pesquisas_2025.csv";
     string strCsvPath2 = "./mock/data/dados_reservas_2025.csv";
     string strCsvPath3 = "./mock/data/dados_voos_2025.csv";
 

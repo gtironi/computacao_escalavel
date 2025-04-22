@@ -265,7 +265,7 @@ public:
     /**
      * @brief Finaliza todos os buffers de saída, indicando que não haverá mais dados.
      */
-    void finishBuffer() {
+    virtual void finishBuffer() {
         for (int i = 0; i < numOutputBuffers; i++) {
             get_output_buffer_by_index(i).finalizeInput();
         }
@@ -318,6 +318,10 @@ public:
 
         Dataframe dataframe = *dataframes[0];
         Dataframe littleAggregated = dataframe.dfGroupby(keys, columns, sum, false, true);
+        // if (nameCountColumn == "count_pesquisas")
+        // {
+        //     cout << littleAggregated << endl;
+        // }   
         return littleAggregated;
     }
 
@@ -354,7 +358,10 @@ public:
 
     void enqueue_tasks() override {
         while (!(input_buffer -> atomicGetInputDataFinished())) {
-            cout << "mandando" << endl;
+            // if (nameCountColumn == "count_pesquisas")
+            // {
+            //     cout << "mandando1" << endl;
+            // }   
             // Tenta extrair um dado do buffer
             // std::cout << "Teste" << std::endl;
             std::optional<T> maybe_value = input_buffer -> pop();
@@ -375,7 +382,12 @@ public:
             tasksInTaskQueue.notify();
         }
 
-        while (tasksInTaskQueue.get_count() > 0) {cout << "esperando" << endl;}
+        while (tasksInTaskQueue.get_count() > 0) {
+            // if (nameCountColumn == "count_pesquisas")
+            // {
+            //     cout << "esperando" << endl;
+            // }   
+        }
 
         aggregated.bColumnOperation("count", "count", rename_column, nameCountColumn);
         aggregated.dropCol("count");
@@ -386,22 +398,39 @@ public:
         int endRow = 0;
         int currentRow = 0;
 
+        // cout << aggregated << endl;
+
         while (true)
         {
             if (currentRow >= nRows) break;
             endRow = currentRow + batchSize;
             createSendTask(currentRow, std::min(endRow, nRows));
             currentRow = endRow;
-            cout << "dados" << endl;
+            // if (nameCountColumn == "count_pesquisas")
+            // {
+            //     cout << "dados" << endl;
+            // }
         }
 
         // Finaliza os buffers de saída após o fim do processamento
         this -> finishBuffer();
-        cout << "terminou" << endl;
+        // if (nameCountColumn == "count_pesquisas")
+        // {
+        //     cout << "terminou" << endl;
+        // }
     }
 
     std::vector<float> calculateStats(std::vector<T*> dataframe) override {
         return {};
+    }
+
+    void finishBuffer() override {
+        for (int i = 0; i < numOutputBuffers; i++) {
+            // cout << "Teste 1" << endl;
+            this -> get_output_buffer_by_index(i).finalizeInput();
+            // cout << "Teste 2" << endl;
+            // cout << nameCountColumn << endl;
+        }
     }
 };
 
