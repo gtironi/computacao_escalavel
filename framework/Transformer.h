@@ -18,6 +18,7 @@
 #include <any>
 #include "Series.h"
 
+// Função para renomear uma coluna
 string rename_column(string str1, string str2){
     return str1;
 }
@@ -51,6 +52,7 @@ protected:
     std::mutex statsMtx;
     std::mutex dfsMtx;
 
+    // Número de tasks que ainda estão na fila de tarefas
     Semaphore tasksInTaskQueue;
 
 private:
@@ -69,8 +71,6 @@ private:
             stats[i] += newStats[i];
         }
     }
-
-    // void group_by()
 
 public:
     /**
@@ -126,7 +126,7 @@ public:
                 }
             }
 
-
+            // Se ainda tiver dados...
             if (canContinue) {
                 // Verifica se todos os buffers de saída possuem espaço disponível
                 bool canSendTask = true;
@@ -137,6 +137,7 @@ public:
                     }
                 }
 
+                // Se todos tiverem...
                 if (canSendTask) {
                     std::optional<T> maybe_value;
                     int currentInputBuffer = -1;
@@ -150,8 +151,8 @@ public:
                         }
                     }
 
-                    // Caso não tenha encontrado, tenta novamente verificando se ainda há dados não finalizados
-                    if (!maybe_value.has_value()) {
+                    // Caso não tenha encontrado,fica esperando no primeiro buffer não finalizado
+                    if (!maybe_value.has_value() && numInputBuffers > 1) {
                         for (int i = 0; i < numInputBuffers; i++) {
                             if (!input_buffers[i]->atomicGetInputDataFinished()) {
                                 maybe_value = input_buffers[i]->pop();
@@ -192,6 +193,7 @@ public:
                             this->create_task(std::move(raw_args));
                         });
 
+                        // Incrementa o número de tarefas na task queue
                         tasksInTaskQueue.notify();
                     }
                 }
@@ -201,6 +203,7 @@ public:
             }
         }
 
+        // Espera todas as tarefas serem processadas
         while (tasksInTaskQueue.get_count() > 0) {}
 
         // Finaliza os buffers de saída após o fim do processamento
@@ -250,6 +253,7 @@ public:
             }
         }
 
+        // Incrementa o número de tarefas na fila
         tasksInTaskQueue.wait();
        
     }
@@ -272,17 +276,22 @@ public:
     }
 };
 
-
+// Classe específica do transformador de agrupamento
 template <typename T>
 class GroupByTransformer : public Transformer<T> {
 private:
+    // Vetores das colunas base de agregação e a serem agregadas
     std::vector<std::string> keys;
     std::vector<std::string> columns;
+    // Vetor das operações de agregação a serem executadas
     std::vector<std::string> operations;
+    // Dataframe agregado completo
     Dataframe aggregated;
     std::mutex mtx;
     Buffer<T>* input_buffer;
+    // Número de tarefas na fila de tarefas
     Semaphore tasksInTaskQueue;
+    // Nome da coluna de count (deve ser passado pelo usuário)
     std::string nameCountColumn;
 public:
     using Transformer<T>::input_buffers;
@@ -296,6 +305,7 @@ public:
         const std::vector<std::string>& agg_columns,
         const std::vector<std::string>& agg_ops,
         std::string nameCountColumn,
+        // Número de buffers de saída
         int num_outputs = 1
     ) : Transformer<T>(input_buffers, num_outputs),
         keys(group_keys),
@@ -304,9 +314,10 @@ public:
         input_buffer(input_buffers[0]),
         nameCountColumn(nameCountColumn) {}
 
+    // Método do processamento da agregação
     T run(std::vector<T*> dataframes) override {
+        // Checa se tem sum entre as agregações
         bool sum = false;
-
         for (int i = 0; i < operations.size(); i++)
         {
             if (operations[i] == "sum")
@@ -316,17 +327,17 @@ public:
             }
         }
 
+        // Agrega o batch do dataframe recebido
         Dataframe dataframe = *dataframes[0];
         Dataframe littleAggregated = dataframe.dfGroupby(keys, columns, sum, false, true);
-        // if (nameCountColumn == "count_pesquisas")
-        // {
-        //     cout << littleAggregated << endl;
-        // }   
+
         return littleAggregated;
     }
 
+    // Método para criar tasks de agregação de cada batch e união com os anteriores
     void createAggTask(T* value)
     {
+        // Checa se tem sum entre as agregações
         bool sum = false;
         for (int i = 0; i < operations.size(); i++)
         {
@@ -337,18 +348,21 @@ public:
             }
         }
 
+        // Agrega o batch
         T littleAggregated = run({value});
+        // Junta com o histórico e agrega novamente
         std::lock_guard<std::mutex> lock(mtx);
         aggregated.hStackGroup(littleAggregated);
         tasksInTaskQueue.wait();
     }
 
+    // Método para criar as tarefas que enviam o dataframe para o buffer de saída
     void createSendTask(int startRow, int endRow)
     {
+        // Pega um slice do dataframe
         Dataframe slice = aggregated.slice(startRow, endRow);
-
-        // cout << slice << endl;
         
+        // Manda para os buffers de saída
         for (int i = 0; i < numOutputBuffers; i++) {
             // Incrementa o semáforo e espera até que tenha vaga
             this->get_output_buffer_by_index(i).get_semaphore().wait();
@@ -356,14 +370,10 @@ public:
         }
     }
 
+    // Método para criar as tasks
     void enqueue_tasks() override {
         while (!(input_buffer -> atomicGetInputDataFinished())) {
-            // if (nameCountColumn == "count_pesquisas")
-            // {
-            //     cout << "mandando1" << endl;
-            // }   
             // Tenta extrair um dado do buffer
-            // std::cout << "Teste" << std::endl;
             std::optional<T> maybe_value = input_buffer -> pop();
 
             // Se não conseguir pegar nenhum dado (buffer vazio no momento), encerra o loop
@@ -374,31 +384,27 @@ public:
             // Move o valor extraído
             T value = std::move(*maybe_value);
 
-            // Enfileira a tarefa na fila de execução, chamando o método `create_task`
+            // Enfileira a tarefa na fila de execução, chamando o método `createAggTask`
             taskqueue->push_task([this, val = std::move(value)]() mutable {
                 this->createAggTask(&val);
             });
 
+            // Incrementa o número de 
             tasksInTaskQueue.notify();
         }
 
-        while (tasksInTaskQueue.get_count() > 0) {
-            // if (nameCountColumn == "count_pesquisas")
-            // {
-            //     cout << "esperando" << endl;
-            // }   
-        }
+        // Espera até todas as tarefas serem processadas
+        while (tasksInTaskQueue.get_count() > 0) {}
 
+        // Renomeia a coluna de count (para não ficar igual à de outras tabelas)
         aggregated.bColumnOperation("count", "count", rename_column, nameCountColumn);
         aggregated.dropCol("count");
 
-        // cout << aggregated << endl;
+        // Manda o dataframe pra frente em batches
         int nRows = aggregated.getShape().first;
         int batchSize = nRows / 10 + 1;
         int endRow = 0;
         int currentRow = 0;
-
-        // cout << aggregated << endl;
 
         while (true)
         {
@@ -406,30 +412,21 @@ public:
             endRow = currentRow + batchSize;
             createSendTask(currentRow, std::min(endRow, nRows));
             currentRow = endRow;
-            // if (nameCountColumn == "count_pesquisas")
-            // {
-            //     cout << "dados" << endl;
-            // }
         }
 
         // Finaliza os buffers de saída após o fim do processamento
         this -> finishBuffer();
-        // if (nameCountColumn == "count_pesquisas")
-        // {
-        //     cout << "terminou" << endl;
-        // }
     }
 
+    // Método abstrato de cálculo das estatísticas
     std::vector<float> calculateStats(std::vector<T*> dataframe) override {
         return {};
     }
 
+    // Método para finalizar os buffers de saída
     void finishBuffer() override {
         for (int i = 0; i < numOutputBuffers; i++) {
-            // cout << "Teste 1" << endl;
             this -> get_output_buffer_by_index(i).finalizeInput();
-            // cout << "Teste 2" << endl;
-            // cout << nameCountColumn << endl;
         }
     }
 };

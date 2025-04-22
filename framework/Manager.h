@@ -102,8 +102,9 @@ class Manager
             // Cria uma thread para cada bloco de processo e começa a mandar tarefas pra fila
             for (int i = 0; i < extractors.size(); i++)
             {
-                threads.emplace_back([this, i]() {
-                    extractors[i]->enqueue_tasks();
+                threads.emplace_back([this, i]()
+                {
+                    extractors[i] -> enqueue_tasks();
                 });
             }
             for (int i = 0; i < transformers.size(); i++)

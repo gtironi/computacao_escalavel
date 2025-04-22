@@ -16,8 +16,7 @@ class Buffer {
 private:
     std::queue<T> queue;             // Fila que armazena os dados
     std::mutex mtx;                  // Mutex para garantir acesso exclusivo à fila
-    std::mutex mtx_2;                  // Mutex para garantir acesso exclusivo à fila
-    // std::mutex mtx_3;                  // Mutex para garantir acesso exclusivo à fila
+    std::mutex mtx_2;
     std::condition_variable cond;    // Variável de condição para controle de espera/notificação
     int max_size;                    // Capacidade máxima do buffer
     Semaphore semaphore;             // Semáforo para controlar o número de elementos permitidos
@@ -39,15 +38,10 @@ public:
      * Insere um valor no buffer.
      * Deve ser chamado somente após adquirir o semáforo externamente (em geral).
      */
-    void push(T value, bool test = false) {
+    void push(T value) {
         std::lock_guard<std::mutex> lock(mtx);
-        if (test)
-        {
-            std::cout << value << std::endl;
-        }
         queue.push(std::move(value));
         cond.notify_one(); // Acorda uma thread consumidora que esteja esperando
-        
     }
 
     /**
@@ -136,10 +130,7 @@ public:
         inputDataFinished = true;
     }
 
-    /**
-     * Método chamado pelas etapas finais do pipeline para avisar que não haverá mais dados.
-     * Importante para liberar consumidores que estão esperando indefinidamente.
-     */
+    // Método chamado pelas etapas finais do pipeline para avisar que não haverá mais dados
     void finalizeInput() {
         std::lock_guard<std::mutex> lock(mtx_2);
         inputTasksCreated = true;
@@ -149,7 +140,8 @@ public:
             inputDataFinished = true;
         }
 
-        cond.notify_all(); // Acorda quem estiver esperando
+        // Acorda quem estiver esperando
+        cond.notify_all();
     }
 };
 
