@@ -551,8 +551,8 @@ public:
         }
         if (contagem)
         {
-            dfAgrupado.vstrColumnsName.push_back(vstrColumnsToAggregate[0] + "_count");
-            dfAgrupado.columns.emplace_back(vstrColumnsToAggregate[0] + "_count", "string");
+            dfAgrupado.vstrColumnsName.push_back("count");
+            dfAgrupado.columns.emplace_back("count", "string");
         }
 
         // Tabela hash: chave -> par (vetor com vetores dos valores agregados, valores dos agrupamentos)

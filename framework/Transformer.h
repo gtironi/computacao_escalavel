@@ -17,8 +17,10 @@
 #include <sstream>
 #include <any>
 #include "Series.h"
-#include <any>
 
+string rename_column(string str1, string str2){
+    return str1;
+}
 
 // Classe base genérica para transformação de dados em um pipeline paralelo
 // T: Tipo dos dados processados (ex: Dataframe, estrutura customizada, etc.)
@@ -281,6 +283,7 @@ private:
     std::mutex mtx;
     Buffer<T>* input_buffer;
     Semaphore tasksInTaskQueue;
+    std::string nameCountColumn;
 public:
     using Transformer<T>::input_buffers;
     using Transformer<T>::output_buffers;
@@ -292,12 +295,14 @@ public:
         const std::vector<std::string>& group_keys,
         const std::vector<std::string>& agg_columns,
         const std::vector<std::string>& agg_ops,
+        std::string nameCountColumn,
         int num_outputs = 1
     ) : Transformer<T>(input_buffers, num_outputs),
         keys(group_keys),
         columns(agg_columns),
         operations(agg_ops),
-        input_buffer(input_buffers[0]) {}
+        input_buffer(input_buffers[0]),
+        nameCountColumn(nameCountColumn) {}
 
     T run(std::vector<T*> dataframes) override {
         bool sum = false;
@@ -349,6 +354,7 @@ public:
 
     void enqueue_tasks() override {
         while (!(input_buffer -> atomicGetInputDataFinished())) {
+            cout << "mandando" << endl;
             // Tenta extrair um dado do buffer
             // std::cout << "Teste" << std::endl;
             std::optional<T> maybe_value = input_buffer -> pop();
@@ -369,7 +375,10 @@ public:
             tasksInTaskQueue.notify();
         }
 
-        while (tasksInTaskQueue.get_count() > 0) {}
+        while (tasksInTaskQueue.get_count() > 0) {cout << "esperando" << endl;}
+
+        aggregated.bColumnOperation("count", "count", rename_column, nameCountColumn);
+        aggregated.dropCol("count");
 
         // cout << aggregated << endl;
         int nRows = aggregated.getShape().first;
@@ -383,10 +392,12 @@ public:
             endRow = currentRow + batchSize;
             createSendTask(currentRow, std::min(endRow, nRows));
             currentRow = endRow;
+            cout << "dados" << endl;
         }
 
         // Finaliza os buffers de saída após o fim do processamento
         this -> finishBuffer();
+        cout << "terminou" << endl;
     }
 
     std::vector<float> calculateStats(std::vector<T*> dataframe) override {
