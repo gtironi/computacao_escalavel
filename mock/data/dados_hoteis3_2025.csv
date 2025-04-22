@@ -1,4 +1,4 @@
-nome_hotel,cidade,tipo_quarto,numero_quarto,quantidade_pessoas,preco,dia,mes,ano,ocupado
+nome_hotel,cidade_destino,tipo_quarto,numero_quarto,quantidade_pessoas,preco,dia,mes,ano,ocupado
 Hotel Barbosa Plaza,Los Angeles,Deluxe,1,4,1564.86,7,4,2025,0
 Hotel Barbosa Plaza,Los Angeles,Deluxe,1,4,1564.86,8,4,2025,1
 Hotel Barbosa Plaza,Los Angeles,Deluxe,1,4,1564.86,9,4,2025,1

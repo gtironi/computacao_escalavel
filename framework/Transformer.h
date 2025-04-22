@@ -118,8 +118,10 @@ public:
             for (int i = 0; i < input_buffers.size(); i++) {
                 if (!input_buffers[i]->atomicGetInputDataFinished()) {
                     canContinue = true;
+
                 }
             }
+
 
             if (canContinue) {
                 // Verifica se todos os buffers de saída possuem espaço disponível
@@ -195,6 +197,7 @@ public:
 
         // Finaliza os buffers de saída após o fim do processamento
         finishBuffer();
+
     }
 
     /**
@@ -227,12 +230,18 @@ public:
         aggStats(currentStats);
         
         T data = run(value);
-        for (int i = 0; i < numOutputBuffers; i++) {
-            // Incrementa o semáforo e espera até que tenha vaga
-            get_output_buffer_by_index(i).get_semaphore().wait();
-            // Coloca no buffer
-            get_output_buffer_by_index(i).push(data);
+        
+        if (data.getShape().first > 0)
+        {
+            // cout << data << endl;
+            for (int i = 0; i < numOutputBuffers; i++) {
+                // Incrementa o semáforo e espera até que tenha vaga
+                get_output_buffer_by_index(i).get_semaphore().wait();
+                // Coloca no buffer
+                get_output_buffer_by_index(i).push(data);
+            }
         }
+       
     }
 
     virtual ~Transformer() = default;
@@ -320,6 +329,9 @@ public:
     void createSendTask(int startRow, int endRow)
     {
         Dataframe slice = aggregated.slice(startRow, endRow);
+
+        // cout << slice << endl;
+        
         for (int i = 0; i < numOutputBuffers; i++) {
             // Incrementa o semáforo e espera até que tenha vaga
             this->get_output_buffer_by_index(i).get_semaphore().wait();
@@ -351,6 +363,7 @@ public:
 
         while (tasksInTaskQueue.get_count() > 0) {}
 
+        // cout << aggregated << endl;
         int nRows = aggregated.getShape().first;
         int batchSize = nRows / 10 + 1;
         int endRow = 0;

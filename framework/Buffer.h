@@ -41,12 +41,13 @@ public:
      */
     void push(T value, bool test = false) {
         std::lock_guard<std::mutex> lock(mtx);
-        queue.push(std::move(value));
-        cond.notify_one(); // Acorda uma thread consumidora que esteja esperando
         if (test)
         {
-            // std::cout << get_semaphore().get_count() << std::endl;
+            std::cout << value << std::endl;
         }
+        queue.push(std::move(value));
+        cond.notify_one(); // Acorda uma thread consumidora que esteja esperando
+        
     }
 
     /**
