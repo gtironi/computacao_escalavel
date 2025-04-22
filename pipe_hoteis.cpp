@@ -9,11 +9,6 @@
 #include <iostream>
 #include <numeric>
 
-template<typename... Buffers>
-std::vector<Buffer<Dataframe>*> make_input_vector(Buffers&... buffers) {
-    return { &buffers... };
-}
-
 string division(string str1, string str2){
     double num1 = stod(str1);
     double num2 = stod(str2);
@@ -35,9 +30,11 @@ string minimun(string str1, string str2){
     return to_string(num1 < num2 ? num1 : num2);
 }
 
-class filter_hotel : public Transformer<Dataframe> {
+// Classe de filtro do hotel, que filtra os hotéis ocupados
+class FiltroHotel : public Transformer<Dataframe> {
     public:
         using Transformer::Transformer; // Herda o construtor
+        // Definição do método de cálculo das estatísticas
         vector<float> calculateStats(std::vector<Dataframe*> input) override {
             vector<float> calculateStats;
             Dataframe df_filtred = (*input[0]).filtroByValue("ocupado", 0);
@@ -45,7 +42,7 @@ class filter_hotel : public Transformer<Dataframe> {
             float n_reservados = (*input[0]).getShape().first - n_vagos;
             calculateStats.push_back(n_vagos);
             calculateStats.push_back(n_reservados);
-
+            
             Dataframe df_filtred_2 = (*input[0]).filtroByValue("cidade_destino", std::string("Rio de Janeiro"));
             Dataframe df_filtred_3 = (*input[0]).filtroByValue("cidade_destino", std::string("Campo Grande"));
             float n_rio_janeiro = df_filtred_2.getShape().first;
@@ -57,20 +54,33 @@ class filter_hotel : public Transformer<Dataframe> {
             return calculateStats;
         }
 
+        // Definição do método do processamento
         Dataframe run(std::vector<Dataframe*> input) override {
             Dataframe df_filtred = (*input[0]).filtroByValue("ocupado", 0);
             return df_filtred;
         }
 };
 
-class join: public Transformer<Dataframe> {
+// Classe do transformador que calcula o preço médio das reservas
+class PrecoMedio: public Transformer<Dataframe> {
     public:
         using Transformer::Transformer; // Herda o construtor
 
+        // Definição do método do processamento
+        Dataframe run(std::vector<Dataframe*> input) override {
+            input[0]->bColumnOperation("preco_sum", "count_reservas", division, "preco_medio");
+            return *input[0];
+        }
+};
+
+// Classe do bloco de Join das bases de reservas e pesquisas
+class Join: public Transformer<Dataframe> {
+    public:
+        using Transformer::Transformer; // Herda o construtor
+
+        // Definição do método do processamento
         Dataframe run(std::vector<Dataframe*> input) override {
             Dataframe df_merged ;
-
-            // input[0] -> printColsName();
 
             if ((input[0] -> columns.empty()))
             {
@@ -81,7 +91,7 @@ class join: public Transformer<Dataframe> {
                 df_merged = *input[1];
             }
             else{
-
+                
                 df_merged = input[0]->merge(*input[1], {"cidade_destino", "data_ida_dia", "data_ida_mes"});
             }
 
@@ -89,40 +99,28 @@ class join: public Transformer<Dataframe> {
         }
 };
 
-class PrecoMedio: public Transformer<Dataframe> {
+// Classe do transformador que calcula a taxa de ocupação dos hotéis
+class TaxaOcupacaoHoteis: public Transformer<Dataframe> {
     public:
         using Transformer::Transformer; // Herda o construtor
 
+        // Definição do método do processamento
         Dataframe run(std::vector<Dataframe*> input) override {
-            input[0]->bColumnOperation("preco_sum", "count_reservas", division, "preco_medio");
+            input[0]->bColumnOperation("count_pesquisas", "quantidade_pessoas_sum", division, "taxa_ocupacao_hoteis");
             return *input[0];
         }
 };
 
-class TaxaOcupacao: public Transformer<Dataframe> {
+// Classe do transformador que calcula o faturamento esperado em cada cidade e dia
+class Faturamento: public Transformer<Dataframe> {
     public:
         using Transformer::Transformer; // Herda o construtor
 
-        Dataframe run(std::vector<Dataframe*> input) override {
-            // std::cout << "Taxa 1" << std::endl;
-            input[0]->bColumnOperation("count_pesquisas", "quantidade_pessoas_sum", division, "taxa_ocupacao");
-            // std::cout << "Taxa 2" << std::endl;
-            return *input[0];
-        }
-};
-
-
-class faturamento: public Transformer<Dataframe> {
-    public:
-        using Transformer::Transformer; // Herda o construtor
-
+        // Definição do método do processamento
         Dataframe run(std::vector<Dataframe*> input) override {
 
-            // std::cout << "Fat 1" << std::endl;
             input[0]->bColumnOperation("count_reservas", "quantidade_pessoas_sum", minimun, "demanda");
-            // std::cout << "Fat 2" << std::endl;
             input[0]->bColumnOperation("preco_medio", "demanda", multiplication, "faturamento_esperado");
-            // std::cout << "Fat 3" << std::endl;
 
             return *input[0];
         }
@@ -158,59 +156,72 @@ int main() {
             Manager<Dataframe> manager(p);
 
 
-        // Pipeline Hoteis e Pesquisas ------------------------------------------------------------------------
-        // Extrator<Dataframe> extrator_pesquisa("./mock/data/dados_pesquisas_2025.db", "sql", 1000, "Viagens");
-        Extrator<Dataframe> extrator_pesquisa("./mock/data/dados_pesquisas_2025.csv", "csv", 1000);
-        manager.addExtractor(&extrator_pesquisa);
+          // Pipeline Hoteis e Pesquisas ------------------------------------------------------------------------
+    
+            // Inicializa o extrator dos dados de pesquisa e o adiciona ao manager
+            Extrator<Dataframe> extrator_pesquisa("./mock/data/dados_pesquisas_2025.db", "sql", 1000, "Viagens");
+            manager.addExtractor(&extrator_pesquisa);
 
-        Extrator<Dataframe> extrator_reservas("./mock/data/dados_reservas_2025.csv", "csv", 25000);
-        manager.addExtractor(&extrator_reservas);
+            // Inicializa o extrator dos dados de reserva e o adiciona ao manager
+            Extrator<Dataframe> extrator_reservas("./mock/data/dados_reservas_2025.csv", "csv", 25000);
+            manager.addExtractor(&extrator_reservas);
 
-        filter_hotel filtroocupacao(make_input_vector(extrator_reservas.get_output_buffer()));
-        manager.addTransformer(&filtroocupacao);
+            // Inicializa o filtro dos hotéis e o adiciona ao manager
+            FiltroHotel filtro_hotel;
+            filtro_hotel.addInputBuffer(&extrator_reservas.get_output_buffer());
+            manager.addTransformer(&filtro_hotel);
 
-        std::vector<std::string> vstrColumnsToAggregate = {"quantidade_pessoas", "preco"};
-        std::vector<string> group = {"cidade_destino", "data_ida_dia", "data_ida_mes"};
-        std::vector<string> ops = {"sum"};
+            // Setando os parâmetros do agrupador de reservas
+            std::vector<std::string> vstrColumnsToAggregate = {"quantidade_pessoas", "preco"};
+            std::vector<string> group = {"cidade_destino", "data_ida_dia", "data_ida_mes"};
+            std::vector<string> ops = {"sum"};
 
-        GroupByTransformer<Dataframe> groupby_reservas(make_input_vector(filtroocupacao.get_output_buffer()),
-                                                    group,
-                                                    vstrColumnsToAggregate,
-                                                    ops, "count_reservas");
-        manager.addTransformer(&groupby_reservas);
-
-        PrecoMedio preco_medio(make_input_vector(groupby_reservas.get_output_buffer()));
-        manager.addTransformer(&preco_medio);
-
-        vstrColumnsToAggregate = {};
-        group = {"cidade_destino", "data_ida_dia", "data_ida_mes"};
-        ops = {"count"};
-
-        GroupByTransformer<Dataframe> groupby_pesquisa(make_input_vector(extrator_pesquisa.get_output_buffer()),
+            // Inicializa o agrupador das reservas e o adiciona ao manager
+            GroupByTransformer<Dataframe> groupby_reservas(&filtro_hotel.get_output_buffer(),
                                                         group,
                                                         vstrColumnsToAggregate,
-                                                        ops, "count_pesquisas");
-        manager.addTransformer(&groupby_pesquisa);
+                                                        ops, "count_reservas");
+            manager.addTransformer(&groupby_reservas);
 
+            // Inicializa o calculador do preço médio das reservas e o adiciona ao manager
+            PrecoMedio preco_medio;
+            preco_medio.addInputBuffer(&groupby_reservas.get_output_buffer());
+            manager.addTransformer(&preco_medio);
 
-        std::vector<Buffer<Dataframe>*> inputs_buffers;
-        inputs_buffers.push_back(&preco_medio.get_output_buffer());
-        inputs_buffers.push_back(&groupby_pesquisa.get_output_buffer());
+            // Setando os parâmetros do agrupador de pesquisas
+            vstrColumnsToAggregate = {};
+            group = {"cidade_destino", "data_ida_dia", "data_ida_mes"};
+            ops = {"count"};
 
-        join join_transformer(inputs_buffers, 2);
-        manager.addTransformer(&join_transformer);
+            // Inicializa o agrupador das pesquisas e o adiciona ao manager
+            GroupByTransformer<Dataframe> groupby_pesquisas(&extrator_pesquisa.get_output_buffer(),
+                                                            group,
+                                                            vstrColumnsToAggregate,
+                                                            ops, "count_pesquisas");
+            manager.addTransformer(&groupby_pesquisas);
+            
+            // Inicializa o bloco de Join e o adiciona ao manager
+            Join join(2);
+            join.addInputBuffer(&preco_medio.get_output_buffer());
+            join.addInputBuffer(&groupby_pesquisas.get_output_buffer());
+            manager.addTransformer(&join);
 
-        TaxaOcupacao taxa_ocupacao(make_input_vector(join_transformer.get_output_buffer()));
-        manager.addTransformer(&taxa_ocupacao);
+            // Inicializa o calculador da taxa de ocupação dos hotéis e o adiciona ao manager
+            TaxaOcupacaoHoteis taxa_ocupacao_hoteis;
+            taxa_ocupacao_hoteis.addInputBuffer(&join.get_output_buffer());
+            manager.addTransformer(&taxa_ocupacao_hoteis);
 
-        faturamento fatur(make_input_vector(join_transformer.get_output_buffer()));
-        manager.addTransformer(&fatur);
+            // Inicializa o calculador do faturamento esperado das cidades e o adiciona ao manager
+            Faturamento faturamento;
+            faturamento.addInputBuffer(&join.get_output_buffer());
+            manager.addTransformer(&faturamento);
 
-        DataPrinter loader1(taxa_ocupacao.get_output_buffer());
-        manager.addLoader(&loader1);
+            // Inicializa os loaders e os adiciona ao manager
+            DataPrinter loader_ocupacao_hoteis(taxa_ocupacao_hoteis.get_output_buffer());
+            manager.addLoader(&loader_ocupacao_hoteis);
 
-        DataPrinter loader2(fatur.get_output_buffer());
-        manager.addLoader(&loader2);
+            DataPrinter loader_faturamento(faturamento.get_output_buffer());
+            manager.addLoader(&loader_faturamento);
 
 
         auto start_time = std::chrono::high_resolution_clock::now();

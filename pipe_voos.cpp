@@ -112,26 +112,29 @@ class TaxaOcupacao: public Transformer<Dataframe> {
 };
 
 
-class faturamento: public Transformer<Dataframe> {
+
+// Classe do transformador que calcula o faturamento esperado em cada cidade e dia
+class Faturamento: public Transformer<Dataframe> {
     public:
         using Transformer::Transformer; // Herda o construtor
 
+        // Definição do método do processamento
         Dataframe run(std::vector<Dataframe*> input) override {
 
-            // std::cout << "Fat 1" << std::endl;
             input[0]->bColumnOperation("count_reservas", "quantidade_pessoas_sum", minimun, "demanda");
-            // std::cout << "Fat 2" << std::endl;
             input[0]->bColumnOperation("preco_medio", "demanda", multiplication, "faturamento_esperado");
-            // std::cout << "Fat 3" << std::endl;
 
             return *input[0];
         }
 };
 
-class taxa_ocup_voo: public Transformer<Dataframe> {
+
+// Classe do transformador que calcula a taxa de ocupação dos voos
+class TaxaOcupacaoVoos: public Transformer<Dataframe> {
     public:
         using Transformer::Transformer; // Herda o construtor
 
+        // Definição do método de cálculo das estatísticas
         vector<float> calculateStats(std::vector<Dataframe*> input) override {
             vector<float> calculateStats;
             float n_cidades_diferente = (*input[0]).getShape().first;
@@ -139,8 +142,8 @@ class taxa_ocup_voo: public Transformer<Dataframe> {
 
             return calculateStats;
         }
-
-
+        
+        // Definição do método do processamento
         Dataframe run(std::vector<Dataframe*> input) override {
             Dataframe df = *input[0];
 
@@ -156,7 +159,6 @@ class taxa_ocup_voo: public Transformer<Dataframe> {
 
         }
 };
-
 
 class DataPrinter : public Loader<Dataframe> {
     public:
@@ -186,41 +188,46 @@ int main() {
 
         for (int i = 0; i < 10; ++i) {
             Manager<Dataframe> manager(p);
-        //Pipeline Voos ------------------------------------------------------------------------
-        Extrator<Dataframe> extrator_voos("./mock/data/dados_voos_2025.csv", "csv", 15000);
-        manager.addExtractor(&extrator_voos);
+            // Pipeline Voos ------------------------------------------------------------------------
 
-        std::vector<std::string> vstrColumnsToAggregate = {"assentos_ocupados", "assentos_totais"};
-        std::vector<string> group = {"cidade_destino"};
-        std::vector<string> ops = {"sum"};
+            // Inicializa o extrator dos dados de voo e o adiciona ao manager
+            Extrator<Dataframe> extrator_voos("./mock/data/dados_voos_2025.csv", "csv", 15000);
+            manager.addExtractor(&extrator_voos);
 
-        GroupByTransformer<Dataframe> groupbyvoo(
-            make_input_vector(extrator_voos.get_output_buffer()),
-            group,
-            vstrColumnsToAggregate,
-            ops,
-            "count_voos"
-        );
+            std::vector<std::string> vstrColumnsToAggregate = {"assentos_ocupados", "assentos_totais"};
+            std::vector<string> group = {"cidade_destino"};
+            std::vector<string> ops = {"sum"};
 
-        manager.addTransformer(&groupbyvoo);
+            // Inicializa o agrupador dos voos e o adiciona ao manager
+            GroupByTransformer<Dataframe> groupby_voo(
+                &extrator_voos.get_output_buffer(),
+                group,
+                vstrColumnsToAggregate,
+                ops,
+                "count_voos"
+            );
+            manager.addTransformer(&groupby_voo);
 
-        taxa_ocup_voo taxaocupvoo(make_input_vector(groupbyvoo.get_output_buffer()));
-        manager.addTransformer(&taxaocupvoo);
+            // Inicializa o calculador da taxa de ocupação dos voos e o adiciona ao manager
+            TaxaOcupacaoVoos taxa_ocupacao_voos;
+            taxa_ocupacao_voos.addInputBuffer(&groupby_voo.get_output_buffer());
+            manager.addTransformer(&taxa_ocupacao_voos);
 
-        DataPrinter loader3(taxaocupvoo.get_output_buffer());
-        manager.addLoader(&loader3);
+            // Inicializa o loader e o adiciona ao manager
+            DataPrinter loader_ocupacao_voos(taxa_ocupacao_voos.get_output_buffer());
+            manager.addLoader(&loader_ocupacao_voos);
 
-        auto start_time = std::chrono::high_resolution_clock::now();
+            auto start_time = std::chrono::high_resolution_clock::now();
 
-        // Start the pipeline
-        manager.run();
+            // Start the pipeline
+            manager.run();
 
-        auto end_time = std::chrono::high_resolution_clock::now();
+            auto end_time = std::chrono::high_resolution_clock::now();
 
-        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
-        //std::cout << "Tempo de execução: " << duration << " ms" << std::endl;
-        //cout << "Número de Cidades Destino Diferente em toda a base " << taxaocupvoo.getStats()[0] << endl;
-        tempos_execucao.push_back(duration);
+            auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
+            //std::cout << "Tempo de execução: " << duration << " ms" << std::endl;
+            //cout << "Número de Cidades Destino Diferente em toda a base " << taxaocupvoo.getStats()[0] << endl;
+            tempos_execucao.push_back(duration);
         }
 
         double media = std::accumulate(tempos_execucao.begin(), tempos_execucao.end(), 0.0) / tempos_execucao.size();
