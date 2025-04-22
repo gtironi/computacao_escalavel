@@ -9,6 +9,9 @@
 #include <iostream>
 #include <numeric>
 
+bool PRINT_OUTPUT_DFS = false;
+bool TRIGGERS = false;
+
 // Função auxiliar para fazer a divisão entre dois valores
 string division(string str1, string str2){
     double num1 = stod(str1);
@@ -309,32 +312,37 @@ void pipeline() {
 }
 
 int main() {
-    string strCsvPath1 = "./mock/data/dados_pesquisas_2025.db";
-    string strCsvPath2 = "./mock/data/dados_reservas_2025.csv";
-    string strCsvPath3 = "./mock/data/dados_voos_2025.csv";
-
-    // Execução programada a cada 10 minutos
-    // TimeTrigger timeTrigger(pipeline, 600);
+    if (TRIGGERS){
+        string strCsvPath1 = "./mock/data/dados_pesquisas_2025.db";
+        string strCsvPath2 = "./mock/data/dados_reservas_2025.csv";
+        string strCsvPath3 = "./mock/data/dados_voos_2025.csv";
     
-    // // Verificação dos arquivos a cada 1 minuto
-    // EventTrigger trigger(strCsvPath1, pipeline, 60);
-    // EventTrigger trigger2(strCsvPath2, pipeline, 60);
-    // EventTrigger trigger3(strCsvPath3, pipeline, 60);
+        // Execução programada a cada 1 minutos
+        TimeTrigger timeTrigger(pipeline, 60);
+        
+        // Verificação dos arquivos a cada 30 segundos
+        EventTrigger trigger(strCsvPath1, pipeline, 30);
+        EventTrigger trigger2(strCsvPath2, pipeline, 30);
+        EventTrigger trigger3(strCsvPath3, pipeline, 30);
+    
+        // Inicializando a execução dos triggers
+        timeTrigger.start();
+        trigger.start();
+        trigger2.start();
+        trigger3.start();
+    
+        // Rodando o teste por 1 hora
+        this_thread::sleep_for(std::chrono::minutes(60));
+    
+        // Parando os triggers
+        timeTrigger.stop();
+        trigger.stop();
+        trigger2.stop();
+        trigger3.stop();
 
-    // // Inicializando a execução dos triggers
-    // timeTrigger.start();
-    // trigger.start();
-    // trigger2.start();
-    // trigger3.start();
+    }
+    else {
+        pipeline();
+    }
 
-    // // Rodando o teste por 1 hora
-    // this_thread::sleep_for(std::chrono::minutes(60));
-
-    // // Parando os triggers
-    // timeTrigger.stop();
-    // trigger.stop();
-    // trigger2.stop();
-    // trigger3.stop();
-
-    pipeline();
 }

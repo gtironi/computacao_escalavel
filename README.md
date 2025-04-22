@@ -74,9 +74,14 @@ g++ -o programa main.cpp framework/*.h -std=c++20 -lsqlite3
 
 Caso deseje que os DataFrames sejam exibidos pelo Loader, ative a flag global PRINT_OUTPUT_DFS:
 ```sh
-bool PRINT_OUTPUT_DFS = false;
+bool PRINT_OUTPUT_DFS = true;
 ```
 Essa flag está definida como false por padrão, mas pode ser facilmente alterada para visualizar os resultados durante a execução.
+Caso deseje que o TRIGGER seja ativado, ative a flag global TRIGGER:
+```sh
+bool TRIGGER = true;
+```
+Essa flag está definida como false por padrão, mas pode ser facilmente alterada para ativar o funcionamento dos triggers na pipeline.
 #### 5. Execute o programa:
 ```sh
 ./programa
