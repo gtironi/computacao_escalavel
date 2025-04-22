@@ -345,15 +345,6 @@ public:
     }
 
     /**
-     * @brief Adiciona múltiplos elementos à Series.
-     * @param elements Vetor de elementos a serem adicionados.
-     */
-    void addDataBatch(const vector<T> &elements)
-    {
-        vecColumnData.insert(vecColumnData.end(), elements.begin(), elements.end());
-    }
-
-    /**
      * @brief Limpa todos os dados da Series.
      */
     void clear()
@@ -370,13 +361,6 @@ public:
         vecColumnData.insert(vecColumnData.end(), elements.begin(), elements.end());
     }
 
-    /**
-     * @brief Limpa todos os dados da série
-     */
-    void clear()
-    {
-        this->vecColumnData.clear();
-    }
 
     /**
      * @brief Obtém uma cópia da Series.
