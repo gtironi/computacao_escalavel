@@ -6,6 +6,7 @@
 #include <thread>
 #include <chrono>
 #include <iostream>
+#include <numeric>
 
 // Função utilitária no topo do arquivo
 template<typename... Buffers>
@@ -20,6 +21,12 @@ string division(string str1, string str2){
         return "Erro: Divisão por zero";
     }
     return to_string(num1 / num2);
+}
+
+string multiplication(string str1, string str2){
+    double num1 = stod(str1);
+    double num2 = stod(str2);
+    return to_string(num1 * num2);
 }
 
 class filter_hotel : public Transformer<Dataframe> {
@@ -58,18 +65,32 @@ class join: public Transformer<Dataframe> {
         }
 };
 
-class ocupacao_pesquisa: public Transformer<Dataframe> {
+class disponibilidade: public Transformer<Dataframe> {
     public:
         using Transformer::Transformer; // Herda o construtor
 
         Dataframe run(std::vector<Dataframe*> input) override {
 
-            input[0]->bColumnOperation("preco_sum", "count", division, "preco_dividido");
-            // cout << *input[0] << endl;
+            input[0]->bColumnOperation("data_ida_dia_count", "quantidade_pessoas_count", division, "disponibilidade");
             return *input[0];
-        }        
+        }
 };
 
+
+class faturamento: public Transformer<Dataframe> {
+    public:
+        using Transformer::Transformer; // Herda o construtor
+
+        Dataframe run(std::vector<Dataframe*> input) override {
+
+            input[0]->bColumnOperation("preco_sum", "quantidade_pessoas_count", division, "preco_medio");
+
+            input[0]->bColumnOperation("preco_medio", "data_ida_dia_count", multiplication, "faturamento_esperado");
+
+            std::cout << *input[0];
+            return *input[0];
+        }
+};
 
 class DataPrinter : public Loader<Dataframe> {
     public:
@@ -80,35 +101,36 @@ class DataPrinter : public Loader<Dataframe> {
 
         void run(Dataframe df) override {
             if (!headerPrinted) {
-                df.printHeader(std::cout, df); // Print the dataframe head
+                //df.printHeader(std::cout, df); // Print the dataframe head
                 headerPrinted = true;
             }
 
             // Print the dataframe contents
-            std::cout << df;
+            //std::cout << df;
         }
     };
 
 
+
 int main() {
     // Inicializa o Manager
-    Manager<Dataframe> manager(1);
+    Manager<Dataframe> manager(7);
 
     // Cria os extratores
-    Extrator<Dataframe> extrator_pesquisa("./mock/data/dados_viagens_2025.csv", "csv", 1000);
+    Extrator<Dataframe> extrator_pesquisa("./mock/data/dados_viagens_2025.csv", "csv", 100);
     manager.addExtractor(&extrator_pesquisa);
 
-    Extrator<Dataframe> extrator_hoteis("./mock/data/dados_hoteis2_2025.csv", "csv", 50);
+    Extrator<Dataframe> extrator_hoteis("./mock/data/dados_hoteis_2025.csv", "csv", 1000);
     manager.addExtractor(&extrator_hoteis);
 
-    // filter_hotel filtroocupacao(make_input_vector(extrator_hoteis.get_output_buffer()));
-    // manager.addTransformer(&filtroocupacao);
+    filter_hotel filtroocupacao(make_input_vector(extrator_hoteis.get_output_buffer()));
+    manager.addTransformer(&filtroocupacao);
 
     std::vector<std::string> vstrColumnsToAggregate = {"quantidade_pessoas", "preco"};
     std::vector<string> group = {"cidade_destino"};
     std::vector<string> ops = {"sum"};
 
-    GroupByTransformer<Dataframe> groupby_hotel(make_input_vector(extrator_hoteis.get_output_buffer()),
+    GroupByTransformer<Dataframe> groupby_hotel(make_input_vector(filtroocupacao.get_output_buffer()),
                                                 group,
                                                 vstrColumnsToAggregate,
                                                 ops);
@@ -119,38 +141,29 @@ int main() {
     ops = {"sum"};
 
     GroupByTransformer<Dataframe> groupby_pesquisa(make_input_vector(extrator_pesquisa.get_output_buffer()),
-                                                   group,
-                                                   vstrColumnsToAggregate,
-                                                   ops);
+                                                    group,
+                                                    vstrColumnsToAggregate,
+                                                    ops);
     manager.addTransformer(&groupby_pesquisa);
 
     std::vector<Buffer<Dataframe>*> inputs_buffers;
     inputs_buffers.push_back(&groupby_hotel.get_output_buffer());
     inputs_buffers.push_back(&groupby_pesquisa.get_output_buffer());
 
-    join join_transformer(inputs_buffers, 1);
+    join join_transformer(inputs_buffers, 2);
     manager.addTransformer(&join_transformer);
 
-    ocupacao_pesquisa ocup_1(make_input_vector(join_transformer.get_output_buffer()));
-    manager.addTransformer(&ocup_1);
+    disponibilidade disp(make_input_vector(join_transformer.get_output_buffer()));
+    manager.addTransformer(&disp);
 
-    // ocupacao_pesquisa ocup_2(make_input_vector(join_transformer.get_output_buffer()));
-    // manager.addTransformer(&ocup_2);
+    faturamento fatur(make_input_vector(join_transformer.get_output_buffer()));
+    manager.addTransformer(&fatur);
 
-    DataPrinter loader1(ocup_1.get_output_buffer());
+    DataPrinter loader1(disp.get_output_buffer());
     manager.addLoader(&loader1);
 
-    // DataPrinter loader2(ocup_2.get_output_buffer());
-    // manager.addLoader(&loader2);
-
-    // Extrator<Dataframe> extrator_voos("./mock/data/dados_voos_2025.csv", "csv", 1000);
-    // manager.addExtractor(&extrator_voos);
-
-    // groupby_voo groupbyvoo(make_input_vector(extrator_voos.get_output_buffer()));
-    // manager.addTransformer(&groupbyvoo);
-
-    // taxa_ocup_voo taxaocupvoo(make_input_vector(groupbyvoo.get_output_buffer()));
-    // manager.addTransformer(&taxaocupvoo);
+    DataPrinter loader2(fatur.get_output_buffer());
+    manager.addLoader(&loader2);
 
     auto start_time = std::chrono::high_resolution_clock::now();
 

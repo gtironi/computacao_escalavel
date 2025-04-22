@@ -13,7 +13,7 @@
 
 using namespace std;
 
-/** 
+/**
  * @brief Converte um valor do tipo std::any para string.
  * @param value Valor a ser convertido.
  * @return String representando o valor ou mensagem de erro se falhar.
@@ -551,8 +551,8 @@ public:
         }
         if (contagem)
         {
-            dfAgrupado.vstrColumnsName.push_back("count");
-            dfAgrupado.columns.emplace_back("count", "string");
+            dfAgrupado.vstrColumnsName.push_back(vstrColumnsToAggregate[0] + "_count");
+            dfAgrupado.columns.emplace_back(vstrColumnsToAggregate[0] + "_count", "string");
         }
 
         // Tabela hash: chave -> par (vetor com vetores dos valores agregados, valores dos agrupamentos)
