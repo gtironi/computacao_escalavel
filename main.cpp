@@ -8,7 +8,6 @@
 #include <iostream>
 #include <numeric>
 
-// Função utilitária no topo do arquivo
 template<typename... Buffers>
 std::vector<Buffer<Dataframe>*> make_input_vector(Buffers&... buffers) {
     return { &buffers... };

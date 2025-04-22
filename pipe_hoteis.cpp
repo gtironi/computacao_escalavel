@@ -8,7 +8,6 @@
 #include <iostream>
 #include <numeric>
 
-// Função utilitária no topo do arquivo
 template<typename... Buffers>
 std::vector<Buffer<Dataframe>*> make_input_vector(Buffers&... buffers) {
     return { &buffers... };
@@ -87,7 +86,6 @@ class faturamento: public Transformer<Dataframe> {
 
             input[0]->bColumnOperation("preco_medio", "data_ida_dia_count", multiplication, "faturamento_esperado");
 
-            std::cout << *input[0];
             return *input[0];
         }
 };
@@ -116,7 +114,7 @@ int main() {
     // Inicializa o Manager
     Manager<Dataframe> manager(7);
 
-    // Cria os extratores
+    // Pipeline Hoteis e Pesquisas ------------------------------------------------------------------------
     Extrator<Dataframe> extrator_pesquisa("./mock/data/dados_viagens_2025.csv", "csv", 100);
     manager.addExtractor(&extrator_pesquisa);
 
