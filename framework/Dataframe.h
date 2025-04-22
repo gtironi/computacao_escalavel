@@ -13,6 +13,11 @@
 
 using namespace std;
 
+/** 
+ * @brief Converte um valor do tipo std::any para string.
+ * @param value Valor a ser convertido.
+ * @return String representando o valor ou mensagem de erro se falhar.
+ */
 static inline string anyToString(const any &value)
 {
     try
@@ -804,7 +809,10 @@ public:
     }
 
     /**
-     * @brief Sobrecarga do operador de saída para imprimir o DataFrame./framework/TesteTrigger.cpp
+     * @brief Sobrecarga do operador de saída para imprimir o DataFrame.
+     * @param os Fluxo de saída.
+     * @param dfInput DataFrame a ser impresso.
+     * @return Referência para o fluxo de saída com o DataFrame formatado.
      */
     friend ostream &operator<<(ostream &os, const Dataframe &dfInput)
     {
