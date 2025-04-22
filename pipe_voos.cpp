@@ -3,6 +3,7 @@
 #include "framework/Transformer.h"
 #include "framework/Dataframe.h"
 #include "framework/Manager.h"
+#include "framework/Triggers.h"
 #include <thread>
 #include <chrono>
 #include <iostream>
@@ -60,7 +61,7 @@ class DataPrinter : public Loader<Dataframe> {
         }
     };
 
-int main() {
+void pipeline(){
     // Inicializa o Manager
     Manager<Dataframe> manager(7);
 
@@ -96,7 +97,20 @@ int main() {
 
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
     std::cout << "Tempo de execução: " << duration << " ms" << std::endl;
+}
 
-    // The manager's destructor will clean up everything
+int main() {
+    string strFilePath = "./mock/data/dados_voos_2025.csv";
+
+    TimeTrigger trigger(pipeline, 600);
+    EventTrigger eventTrigger(strFilePath, pipeline, 60);
+
+    trigger.start();
+    eventTrigger.start();
+
+    std::this_thread::sleep_for(std::chrono::minutes(60));
+
+    trigger.stop();
+    eventTrigger.stop();
     return 0;
 }
