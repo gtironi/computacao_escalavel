@@ -357,7 +357,7 @@ public:
     }
 
     // Método para criar as tarefas que enviam o dataframe para o buffer de saída
-    void createSendTask(int startRow, int endRow)
+    void sendData(int startRow, int endRow)
     {
         // Pega um slice do dataframe
         Dataframe slice = aggregated.slice(startRow, endRow);
@@ -410,7 +410,7 @@ public:
         {
             if (currentRow >= nRows) break;
             endRow = currentRow + batchSize;
-            createSendTask(currentRow, std::min(endRow, nRows));
+            sendData(currentRow, std::min(endRow, nRows));
             currentRow = endRow;
         }
 
