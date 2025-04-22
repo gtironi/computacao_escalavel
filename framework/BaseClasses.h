@@ -274,7 +274,6 @@ public:
 
         // Avisa ao buffer de saída que os dados acabaram
         finishBuffer();
-        std::cout << "Acabou Buffer" << std::endl;
     }
 
     /**
@@ -416,11 +415,9 @@ public:
         // Enquanto o buffer de entrada ainda não indicou o fim dos dados
         while (!(input_buffer.atomicGetInputDataFinished()))
         {
-            cout << "entrou" << endl;
 
             // Tenta extrair um dado do buffer
             std::optional<T> maybe_value = input_buffer.pop(false, true);
-            cout << "saiu" << endl;
 
 
             // Se não conseguir pegar nenhum dado (buffer vazio no momento), encerra o loop

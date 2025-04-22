@@ -41,7 +41,6 @@ class filter_hotel : public Transformer<Dataframe> {
             calculateStats.push_back(n_reservados);
             
             Dataframe df_filtred_2 = (*input[0]).filtroByValue("cidade_destino", std::string("Rio de Janeiro"));
-            cout <<(df_filtred_2) << endl;
             Dataframe df_filtred_3 = (*input[0]).filtroByValue("cidade_destino", std::string("Campo Grande"));
             float n_rio_janeiro = df_filtred_2.getShape().first;
             float n_campo_grande = df_filtred_3.getShape().first;
