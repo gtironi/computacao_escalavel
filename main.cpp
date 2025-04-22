@@ -136,9 +136,6 @@ class taxa_ocup_voo: public Transformer<Dataframe> {
             vector<float> calculateStats;
             float n_cidades_diferente = (*input[0]).getShape().first;
             calculateStats.push_back(n_cidades_diferente);
-            // Dataframe novo = (*input[0]).filtroByValue("");
-            // cout << "O número de assentos ocupados " << novo.columns[0] << endl;
-            // calculateStats.push_back(n_assentos_ocup);
 
             return calculateStats;
         }
@@ -183,10 +180,11 @@ class DataPrinter : public Loader<Dataframe> {
 
 void pipeline() {
     // Inicializa o Manager
-    Manager<Dataframe> manager(1);
+    Manager<Dataframe> manager(7);
 
     // Pipeline Hoteis e Pesquisas ------------------------------------------------------------------------
-    Extrator<Dataframe> extrator_pesquisa("./mock/data/dados_pesquisas_2025.db", "sql", 1000, "Viagens");
+    // Extrator<Dataframe> extrator_pesquisa("./mock/data/dados_pesquisas_2025.db", "sql", 1000, "Viagens");
+    Extrator<Dataframe> extrator_pesquisa("./mock/data/dados_pesquisas_2025.csv", "csv", 1000);
     manager.addExtractor(&extrator_pesquisa);
 
     Extrator<Dataframe> extrator_reservas("./mock/data/dados_reservas_2025.csv", "csv", 25000);
@@ -275,7 +273,7 @@ void pipeline() {
     cout << "Número de quartos não ocupados em toda a base " << filtroocupacao.getStats()[1] << endl;
     cout << "Número de quartos no Rio de Janeiro " << filtroocupacao.getStats()[2] << endl;
     cout << "Número de quartos em Campo Grande " << filtroocupacao.getStats()[3] << endl;
-    // cout << "Número de Cidades Destino Diferente em toda a base " << taxaocupvoo.getStats()[0] << endl;
+    cout << "Número de Cidades Destino Diferente em toda a base " << taxaocupvoo.getStats()[0] << endl;
 
     // The manager's destructor will clean up everything
     
