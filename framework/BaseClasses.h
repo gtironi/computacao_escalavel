@@ -274,6 +274,7 @@ public:
 
         // Avisa ao buffer de saída que os dados acabaram
         finishBuffer();
+        std::cout << "Acabou Buffer" << std::endl;
     }
 
     /**
@@ -365,8 +366,9 @@ public:
      */
     void finishBuffer()
     {
-        outputBuffer.setInputTasksCreated();
+        outputBuffer.finalizeInput();
     }
+
 };
 
 // Classe base genérica para carregadores (última etapa do pipeline)
@@ -414,8 +416,12 @@ public:
         // Enquanto o buffer de entrada ainda não indicou o fim dos dados
         while (!(input_buffer.atomicGetInputDataFinished()))
         {
+            cout << "entrou" << endl;
+
             // Tenta extrair um dado do buffer
             std::optional<T> maybe_value = input_buffer.pop(false, true);
+            cout << "saiu" << endl;
+
 
             // Se não conseguir pegar nenhum dado (buffer vazio no momento), encerra o loop
             if (!maybe_value.has_value())
@@ -426,6 +432,7 @@ public:
             // Move o valor extraído
             T value = std::move(*maybe_value);
 
+
             // Enfileira a tarefa na fila de execução, chamando o método `create_task`
             taskqueue->push_task([this, val = std::move(value)]() mutable
                                  { this->create_task(std::move(val)); });
@@ -433,6 +440,8 @@ public:
 
         // Quando termina de consumir todos os dados:
         // Decrementa o número de loaders ativos
+        
+
         taskqueue->getNumberOfLoaders().wait();
 
         // Notifica a fila de que este loader terminou

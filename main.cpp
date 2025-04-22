@@ -39,13 +39,14 @@ class filter_hotel : public Transformer<Dataframe> {
             float n_reservados = (*input[0]).getShape().first - n_vagos;
             calculateStats.push_back(n_vagos);
             calculateStats.push_back(n_reservados);
-
-            Dataframe df_filtred_2 = (*input[0]).filtroByValue("cidade_destino", "Rio de Janeiro");
-            Dataframe df_filtred_3 = (*input[0]).filtroByValue("cidade_destino", "Campo Grande");
+            
+            Dataframe df_filtred_2 = (*input[0]).filtroByValue("cidade_destino", std::string("Rio de Janeiro"));
+            cout <<(df_filtred_2) << endl;
+            Dataframe df_filtred_3 = (*input[0]).filtroByValue("cidade_destino", std::string("Campo Grande"));
             float n_rio_janeiro = df_filtred_2.getShape().first;
-            float n_sp = df_filtred_3.getShape().first;
+            float n_campo_grande = df_filtred_3.getShape().first;
             calculateStats.push_back(n_rio_janeiro);
-            calculateStats.push_back(n_sp);
+            calculateStats.push_back(n_campo_grande);
 
 
             return calculateStats;
@@ -65,6 +66,7 @@ class join: public Transformer<Dataframe> {
 
             Dataframe df_merged ;
 
+            cout << *input[0] << endl;
 
             if ((input[0] -> columns.empty()))
             {
@@ -152,12 +154,12 @@ class DataPrinter : public Loader<Dataframe> {
 
         void run(Dataframe df) override {
             if (!headerPrinted) {
-                //df.printHeader(std::cout, df); // Print the dataframe head
+                df.printHeader(std::cout, df); // Print the dataframe head
                 headerPrinted = true;
             }
 
             // Print the dataframe contents
-            //std::cout << df;
+            std::cout << df;
         }
     };
 
@@ -168,7 +170,7 @@ void pipeline() {
     Manager<Dataframe> manager(7);
 
     // Pipeline Hoteis e Pesquisas ------------------------------------------------------------------------
-    Extrator<Dataframe> extrator_pesquisa("./mock/data/dados_viagens_2025.csv", "csv", 1000);
+    Extrator<Dataframe> extrator_pesquisa("./mock/data/dados_viagens_2025.db", "sql", 1000, "Viagens");
     manager.addExtractor(&extrator_pesquisa);
 
     Extrator<Dataframe> extrator_hoteis("./mock/data/dados_hoteis_2025.csv", "csv", 25000);
@@ -251,7 +253,7 @@ void pipeline() {
     cout << "Número de quartos ocupados em toda a base " << filtroocupacao.getStats()[0] << endl;
     cout << "Número de quartos não ocupados em toda a base " << filtroocupacao.getStats()[1] << endl;
     cout << "Número de quartos no Rio de Janeiro " << filtroocupacao.getStats()[2] << endl;
-    cout << "Número de quartos em São Paulo " << filtroocupacao.getStats()[3] << endl;
+    cout << "Número de quartos em Campo Grande " << filtroocupacao.getStats()[3] << endl;
     cout << "Número de Cidades Destino Diferente em toda a base " << taxaocupvoo.getStats()[0] << endl;
 
     // The manager's destructor will clean up everything
@@ -261,7 +263,7 @@ void pipeline() {
 }
 
 int main() {
-    string strCsvPath1 = "./mock/data/dados_viagens_2025.csv";
+    string strCsvPath1 = "./mock/data/dados_viagens_2025.db";
     string strCsvPath2 = "./mock/data/dados_hoteis_2025.csv";
     string strCsvPath3 = "./mock/data/dados_voos_2025.csv";
 
