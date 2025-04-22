@@ -39,7 +39,7 @@ string minimun(string str1, string str2){
 }
 
 // Classe de filtro do hotel, que filtra os hotéis ocupados
-class filter_hotel : public Transformer<Dataframe> {
+class FiltroHotel : public Transformer<Dataframe> {
     public:
         using Transformer::Transformer; // Herda o construtor
         // Definição do método de cálculo das estatísticas
@@ -81,8 +81,8 @@ class PrecoMedio: public Transformer<Dataframe> {
         }
 };
 
-// Classe do bloco de join das bases de reservas e pesquisas
-class join: public Transformer<Dataframe> {
+// Classe do bloco de Join das bases de reservas e pesquisas
+class Join: public Transformer<Dataframe> {
     public:
         using Transformer::Transformer; // Herda o construtor
 
@@ -108,19 +108,19 @@ class join: public Transformer<Dataframe> {
 };
 
 // Classe do transformador que calcula a taxa de ocupação dos hotéis
-class TaxaOcupacao: public Transformer<Dataframe> {
+class TaxaOcupacaoHoteis: public Transformer<Dataframe> {
     public:
         using Transformer::Transformer; // Herda o construtor
 
         // Definição do método do processamento
         Dataframe run(std::vector<Dataframe*> input) override {
-            input[0]->bColumnOperation("count_pesquisas", "quantidade_pessoas_sum", division, "taxa_ocupacao");
+            input[0]->bColumnOperation("count_pesquisas", "quantidade_pessoas_sum", division, "taxa_ocupacao_hoteis");
             return *input[0];
         }
 };
 
 // Classe do transformador que calcula o faturamento esperado em cada cidade e dia
-class faturamento: public Transformer<Dataframe> {
+class Faturamento: public Transformer<Dataframe> {
     public:
         using Transformer::Transformer; // Herda o construtor
 
@@ -135,7 +135,7 @@ class faturamento: public Transformer<Dataframe> {
 };
 
 // Classe do transformador que calcula a taxa de ocupação dos voos
-class taxa_ocup_voo: public Transformer<Dataframe> {
+class TaxaOcupacaoVoos: public Transformer<Dataframe> {
     public:
         using Transformer::Transformer; // Herda o construtor
 
@@ -202,8 +202,8 @@ void pipeline() {
     manager.addExtractor(&extrator_reservas);
 
     // Inicializa o filtro dos hotéis e o adiciona ao manager
-    filter_hotel filtroocupacao(make_input_vector(extrator_reservas.get_output_buffer()));
-    manager.addTransformer(&filtroocupacao);
+    FiltroHotel filtro_hotel(make_input_vector(extrator_reservas.get_output_buffer()));
+    manager.addTransformer(&filtro_hotel);
 
     // Setando os parâmetros do agrupador de reservas
     std::vector<std::string> vstrColumnsToAggregate = {"quantidade_pessoas", "preco"};
@@ -211,7 +211,7 @@ void pipeline() {
     std::vector<string> ops = {"sum"};
 
     // Inicializa o agrupador das reservas e o adiciona ao manager
-    GroupByTransformer<Dataframe> groupby_reservas(make_input_vector(filtroocupacao.get_output_buffer()),
+    GroupByTransformer<Dataframe> groupby_reservas(make_input_vector(filtro_hotel.get_output_buffer()),
                                                    group,
                                                    vstrColumnsToAggregate,
                                                    ops, "count_reservas");
@@ -227,34 +227,34 @@ void pipeline() {
     ops = {"count"};
 
     // Inicializa o agrupador das pesquisas e o adiciona ao manager
-    GroupByTransformer<Dataframe> groupby_pesquisa(make_input_vector(extrator_pesquisa.get_output_buffer()),
+    GroupByTransformer<Dataframe> groupby_pesquisas(make_input_vector(extrator_pesquisa.get_output_buffer()),
                                                     group,
                                                     vstrColumnsToAggregate,
                                                     ops, "count_pesquisas");
-    manager.addTransformer(&groupby_pesquisa);
+    manager.addTransformer(&groupby_pesquisas);
 
-    std::vector<Buffer<Dataframe>*> inputs_buffers;
-    inputs_buffers.push_back(&preco_medio.get_output_buffer());
-    inputs_buffers.push_back(&groupby_pesquisa.get_output_buffer());
+    std::vector<Buffer<Dataframe>*> inputBuffers;
+    inputBuffers.push_back(&preco_medio.get_output_buffer());
+    inputBuffers.push_back(&groupby_pesquisas.get_output_buffer());
 
-    // Inicializa o bloco de join e o adiciona ao manager
-    join join_transformer(inputs_buffers, 2);
-    manager.addTransformer(&join_transformer);
+    // Inicializa o bloco de Join e o adiciona ao manager
+    Join join(inputBuffers, 2);
+    manager.addTransformer(&join);
 
     // Inicializa o calculador da taxa de ocupação dos hotéis e o adiciona ao manager
-    TaxaOcupacao taxa_ocupacao(make_input_vector(join_transformer.get_output_buffer()));
-    manager.addTransformer(&taxa_ocupacao);
+    TaxaOcupacaoHoteis taxa_ocupacao_hoteis(make_input_vector(join.get_output_buffer()));
+    manager.addTransformer(&taxa_ocupacao_hoteis);
 
     // Inicializa o calculador do faturamento esperado das cidades e o adiciona ao manager
-    faturamento fatur(make_input_vector(join_transformer.get_output_buffer()));
-    manager.addTransformer(&fatur);
+    Faturamento faturamento(make_input_vector(join.get_output_buffer()));
+    manager.addTransformer(&faturamento);
 
     // Inicializa os loaders e os adiciona ao manager
-    DataPrinter loader1(taxa_ocupacao.get_output_buffer());
-    manager.addLoader(&loader1);
+    DataPrinter loader_ocupacao_hoteis(taxa_ocupacao_hoteis.get_output_buffer());
+    manager.addLoader(&loader_ocupacao_hoteis);
 
-    DataPrinter loader2(fatur.get_output_buffer());
-    manager.addLoader(&loader2);
+    DataPrinter loader_faturamento(faturamento.get_output_buffer());
+    manager.addLoader(&loader_faturamento);
 
     // Pipeline Voos ------------------------------------------------------------------------
 
@@ -268,22 +268,22 @@ void pipeline() {
     ops = {"sum"};
 
     // Inicializa o agrupador dos voos e o adiciona ao manager
-    GroupByTransformer<Dataframe> groupbyvoo(
+    GroupByTransformer<Dataframe> groupby_voo(
         make_input_vector(extrator_voos.get_output_buffer()),
         group,
         vstrColumnsToAggregate,
         ops,
         "count_voos"
     );
-    manager.addTransformer(&groupbyvoo);
+    manager.addTransformer(&groupby_voo);
 
     // Inicializa o calculador da taxa de ocupação dos voos e o adiciona ao manager
-    taxa_ocup_voo taxaocupvoo(make_input_vector(groupbyvoo.get_output_buffer()));
-    manager.addTransformer(&taxaocupvoo);
+    TaxaOcupacaoVoos taxa_ocupacao_voos(make_input_vector(groupby_voo.get_output_buffer()));
+    manager.addTransformer(&taxa_ocupacao_voos);
 
     // Inicializa o loader e o adiciona ao manager
-    DataPrinter loader3(taxaocupvoo.get_output_buffer());
-    manager.addLoader(&loader3);
+    DataPrinter loader_ocupacao_voos(taxa_ocupacao_voos.get_output_buffer());
+    manager.addLoader(&loader_ocupacao_voos);
 
     auto start_time = std::chrono::high_resolution_clock::now();
 
@@ -294,11 +294,11 @@ void pipeline() {
 
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
     // Printando as estatísticas
-    cout << "Número de quartos ocupados em toda a base: " << filtroocupacao.getStats()[0] << endl;
-    cout << "Número de quartos não ocupados em toda a base: " << filtroocupacao.getStats()[1] << endl;
-    cout << "Número de quartos no Rio de Janeiro: " << filtroocupacao.getStats()[2] << endl;
-    cout << "Número de quartos em Campo Grande: " << filtroocupacao.getStats()[3] << endl;
-    cout << "Número de cidades destino diferentes em toda a base: " << taxaocupvoo.getStats()[0] << endl;
+    cout << "Número de quartos ocupados em toda a base: " << filtro_hotel.getStats()[0] << endl;
+    cout << "Número de quartos não ocupados em toda a base: " << filtro_hotel.getStats()[1] << endl;
+    cout << "Número de quartos no Rio de Janeiro: " << filtro_hotel.getStats()[2] << endl;
+    cout << "Número de quartos em Campo Grande: " << filtro_hotel.getStats()[3] << endl;
+    cout << "Número de cidades destino diferentes em toda a base: " << taxa_ocupacao_voos.getStats()[0] << endl;
     cout << "==============================================================================" << endl;
     std::cout << "Tempo de execução: " << duration << " ms" << std::endl;
     
