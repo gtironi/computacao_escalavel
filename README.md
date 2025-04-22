@@ -72,16 +72,23 @@ python mock/*.py
 g++ -o programa main.cpp -std=c++20 -lsqlite3
 ```
 
-Caso deseje que os DataFrames sejam exibidos pelo Loader, ative a flag global PRINT_OUTPUT_DFS:
+Caso deseje que os DataFrames sejam exibidos pelo Loader, ative a flag global `PRINT_OUTPUT_DFS`:
 ```sh
 bool PRINT_OUTPUT_DFS = true;
 ```
 Essa flag está definida como false por padrão, mas pode ser facilmente alterada para visualizar os resultados durante a execução.
-Caso deseje que o TRIGGER seja ativado, ative a flag global TRIGGER:
+
+Caso deseje que o TRIGGER seja ativado, ative a flag global `TRIGGER`:
 ```sh
 bool TRIGGER = true;
 ```
 Essa flag está definida como false por padrão, mas pode ser facilmente alterada para ativar o funcionamento dos triggers na pipeline.
+
+Caso deseje alterar o número de threads utilizadas, altere o valor global `N_THREADS`:
+```sh
+int N_THREADS = 7;
+```
+
 #### 5. Execute o programa:
 ```sh
 ./programa

@@ -11,6 +11,7 @@
 
 bool PRINT_OUTPUT_DFS = false;
 bool TRIGGERS = false;
+int N_THREADS = 7;
 
 // Função auxiliar para fazer a divisão entre dois valores
 string division(string str1, string str2){
@@ -192,7 +193,7 @@ class DataPrinter : public Loader<Dataframe> {
 // Função para executar o pipeline
 void pipeline() {
     // Inicializa o Manager
-    Manager<Dataframe> manager(7);
+    Manager<Dataframe> manager(N_THREADS);
 
     // Pipeline Hoteis e Pesquisas ------------------------------------------------------------------------
     
