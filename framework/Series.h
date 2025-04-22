@@ -134,7 +134,7 @@ public:
 
     /**
      * @brief Altera o nome da coluna.
-     * @param strNovoNome Novo nome da coluna.
+     * @param strNovoNome Novo nome a ser definido.
      */
     void setName(const string &strNovoNome)
     {
@@ -160,7 +160,7 @@ public:
     }
 
     /**
-     * @brief Retorna o número de elementos da coluna.
+     * @brief Retorna o número de elementos na coluna.
      * @return Tamanho do vetor de dados.
      */
     size_t iGetSize() const
@@ -169,8 +169,8 @@ public:
     }
 
     /**
-     * @brief Pré-aloca espaço para n elementos
-     * @param n Número de elementos a reservar
+     * @brief Pré-aloca espaço para um número n de elementos.
+     * @param n Número de elementos a reservar.
      */
     void reserve(size_t n)
     {
@@ -178,8 +178,8 @@ public:
     }
 
     /**
-     * @brief Retorna o vetor de dados da coluna.
-     * @return Vetor contendo os dados.
+     * @brief Retorna uma referência constante ao vetor de dados.
+     * @return Constante referência ao vetor de dados.
      */
     const vector<T> &getData() const
     {
@@ -187,8 +187,8 @@ public:
     }
 
     /**
-     * @brief Obtém referência não-const ao vetor de dados
-     * @return Referência ao vetor de dados
+     * @brief Retorna uma referência não constante ao vetor de dados.
+     * @return Referência ao vetor de dados.
      */
     vector<T> &getDataRef()
     {
@@ -336,12 +336,29 @@ public:
     }
 
     /**
-     * @brief Método que permite adicionar um elemento por movimento
-     * @param value Valor a ser movido para a série
+     * @brief Adiciona um elemento à Series utilizando movimentação.
+     * @param value O valor a ser movido para a Series.
      */
     void addData(T &&value)
     {
         vecColumnData.push_back(std::move(value));
+    }
+
+    /**
+     * @brief Adiciona múltiplos elementos à Series.
+     * @param elements Vetor de elementos a serem adicionados.
+     */
+    void addDataBatch(const vector<T> &elements)
+    {
+        vecColumnData.insert(vecColumnData.end(), elements.begin(), elements.end());
+    }
+
+    /**
+     * @brief Limpa todos os dados da Series.
+     */
+    void clear()
+    {
+        this->vecColumnData.clear();
     }
 
     /**
@@ -361,11 +378,19 @@ public:
         this->vecColumnData.clear();
     }
 
+    /**
+     * @brief Obtém uma cópia da Series.
+     * @return Uma nova Series com os mesmos dados e propriedades.
+     */
     Series<T> getCopy() const
     {
         return Series<T>(strColumnName, strColumnType, vecColumnData);
     }
 
+    /**
+     * @brief Converte a Series<any> para Series<int>.
+     * @return Uma nova Series com os valores convertidos para int.
+     */
     Series<int> toInt() const
     {
         static_assert(std::is_same_v<T, std::any>, "toInt() can only be called on Series<any>");
@@ -389,6 +414,10 @@ public:
         return intSeries;
     }
 
+    /**
+     * @brief Converte a Series<any> para Series<double>.
+     * @return Uma nova Series com os valores convertidos para double.
+     */
     Series<double> toDouble() const
     {
         static_assert(std::is_same_v<T, std::any>, "toDouble() can only be called on Series<any>");
@@ -412,6 +441,10 @@ public:
         return doubleSeries;
     }
 
+    /**
+     * @brief Converte a Series<any> para Series<string>.
+     * @return Uma nova Series com os valores convertidos para string.
+     */
     Series<string> toString() const
     {
         static_assert(std::is_same_v<T, std::any>, "toString() can only be called on Series<any>");
@@ -424,6 +457,10 @@ public:
         return stringSeries;
     }
 
+    /**
+     * @brief Converte a Series<any> para Series<bool>.
+     * @return Uma nova Series com os valores convertidos para bool.
+     */
     Series<bool> toBool() const
     {
         static_assert(std::is_same_v<T, std::any>, "toBool() can only be called on Series<any>");
@@ -447,6 +484,10 @@ public:
         return boolSeries;
     }
 
+    /**
+     * @brief Converte a Series<any> para Series<any> (mantendo os mesmos valores).
+     * @return Uma nova Series<any> idêntica à atual.
+     */
     Series<any> toAny() const
     {
         static_assert(std::is_same_v<T, std::any>, "toAny() can only be called on Series<any>");
@@ -459,6 +500,12 @@ public:
         return anySeries;
     }
 
+    /**
+     * @brief Converte a Series<any> para uma Series de outro tipo.
+     * @tparam U Tipo para conversão.
+     * @return Uma nova Series com os valores convertidos para o tipo U.
+     * @throw std::invalid_argument Se o tipo de conversão for inválido.
+     */
     template <typename U>
     Series<U> toType() const
     {
