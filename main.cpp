@@ -9,11 +9,6 @@
 #include <iostream>
 #include <numeric>
 
-template<typename... Buffers>
-std::vector<Buffer<Dataframe>*> make_input_vector(Buffers&... buffers) {
-    return { &buffers... };
-}
-
 // Função auxiliar para fazer a divisão entre dois valores
 string division(string str1, string str2){
     double num1 = stod(str1);
@@ -202,7 +197,8 @@ void pipeline() {
     manager.addExtractor(&extrator_reservas);
 
     // Inicializa o filtro dos hotéis e o adiciona ao manager
-    FiltroHotel filtro_hotel(make_input_vector(extrator_reservas.get_output_buffer()));
+    FiltroHotel filtro_hotel;
+    filtro_hotel.addInputBuffer(&extrator_reservas.get_output_buffer());
     manager.addTransformer(&filtro_hotel);
 
     // Setando os parâmetros do agrupador de reservas
@@ -211,14 +207,15 @@ void pipeline() {
     std::vector<string> ops = {"sum"};
 
     // Inicializa o agrupador das reservas e o adiciona ao manager
-    GroupByTransformer<Dataframe> groupby_reservas(make_input_vector(filtro_hotel.get_output_buffer()),
+    GroupByTransformer<Dataframe> groupby_reservas(&filtro_hotel.get_output_buffer(),
                                                    group,
                                                    vstrColumnsToAggregate,
                                                    ops, "count_reservas");
     manager.addTransformer(&groupby_reservas);
 
     // Inicializa o calculador do preço médio das reservas e o adiciona ao manager
-    PrecoMedio preco_medio(make_input_vector(groupby_reservas.get_output_buffer()));
+    PrecoMedio preco_medio;
+    preco_medio.addInputBuffer(&groupby_reservas.get_output_buffer());
     manager.addTransformer(&preco_medio);
 
     // Setando os parâmetros do agrupador de pesquisas
@@ -227,26 +224,26 @@ void pipeline() {
     ops = {"count"};
 
     // Inicializa o agrupador das pesquisas e o adiciona ao manager
-    GroupByTransformer<Dataframe> groupby_pesquisas(make_input_vector(extrator_pesquisa.get_output_buffer()),
+    GroupByTransformer<Dataframe> groupby_pesquisas(&extrator_pesquisa.get_output_buffer(),
                                                     group,
                                                     vstrColumnsToAggregate,
                                                     ops, "count_pesquisas");
     manager.addTransformer(&groupby_pesquisas);
-
-    std::vector<Buffer<Dataframe>*> inputBuffers;
-    inputBuffers.push_back(&preco_medio.get_output_buffer());
-    inputBuffers.push_back(&groupby_pesquisas.get_output_buffer());
-
+    
     // Inicializa o bloco de Join e o adiciona ao manager
-    Join join(inputBuffers, 2);
+    Join join(2);
+    join.addInputBuffer(&preco_medio.get_output_buffer());
+    join.addInputBuffer(&groupby_pesquisas.get_output_buffer());
     manager.addTransformer(&join);
 
     // Inicializa o calculador da taxa de ocupação dos hotéis e o adiciona ao manager
-    TaxaOcupacaoHoteis taxa_ocupacao_hoteis(make_input_vector(join.get_output_buffer()));
+    TaxaOcupacaoHoteis taxa_ocupacao_hoteis;
+    taxa_ocupacao_hoteis.addInputBuffer(&join.get_output_buffer());
     manager.addTransformer(&taxa_ocupacao_hoteis);
 
     // Inicializa o calculador do faturamento esperado das cidades e o adiciona ao manager
-    Faturamento faturamento(make_input_vector(join.get_output_buffer()));
+    Faturamento faturamento;
+    faturamento.addInputBuffer(&join.get_output_buffer());
     manager.addTransformer(&faturamento);
 
     // Inicializa os loaders e os adiciona ao manager
@@ -269,7 +266,7 @@ void pipeline() {
 
     // Inicializa o agrupador dos voos e o adiciona ao manager
     GroupByTransformer<Dataframe> groupby_voo(
-        make_input_vector(extrator_voos.get_output_buffer()),
+        &extrator_voos.get_output_buffer(),
         group,
         vstrColumnsToAggregate,
         ops,
@@ -278,7 +275,8 @@ void pipeline() {
     manager.addTransformer(&groupby_voo);
 
     // Inicializa o calculador da taxa de ocupação dos voos e o adiciona ao manager
-    TaxaOcupacaoVoos taxa_ocupacao_voos(make_input_vector(groupby_voo.get_output_buffer()));
+    TaxaOcupacaoVoos taxa_ocupacao_voos;
+    taxa_ocupacao_voos.addInputBuffer(&groupby_voo.get_output_buffer());
     manager.addTransformer(&taxa_ocupacao_voos);
 
     // Inicializa o loader e o adiciona ao manager

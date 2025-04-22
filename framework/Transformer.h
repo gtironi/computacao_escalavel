@@ -42,7 +42,7 @@ protected:
     int nextOutputBuffer = -1;
 
     // Número de buffers de entrada
-    int numInputBuffers;
+    int numInputBuffers = 0;
 
     // Histórico de dataframes usados nas transformações, útil quando há múltiplas entradas
     std::vector<T> historyDataframes;
@@ -78,14 +78,8 @@ public:
      * @param in - Buffers de entrada
      * @param num_outputs - Número de buffers de saída a serem criados
      */
-    Transformer(std::vector<Buffer<T>*> in, int num_outputs = 1)
-        : input_buffers(in), output_buffers(num_outputs), 
-          numOutputBuffers(num_outputs), numInputBuffers(input_buffers.size()) {
-        
-        // Inicializa o histórico de entradas se houver mais de um buffer de entrada
-        if (numInputBuffers > 1) {
-            historyDataframes.resize(numInputBuffers);
-        }
+    Transformer(int num_outputs = 1)
+        : output_buffers(num_outputs), numOutputBuffers(num_outputs) {
     }
 
     /**
@@ -116,6 +110,11 @@ public:
      * Realiza o controle de semáforos, histórico e empacotamento das entradas para processar.
      */
     virtual void enqueue_tasks() {
+        // Inicializa o histórico de entradas se houver mais de um buffer de entrada
+        if (numInputBuffers > 1) {
+            historyDataframes.resize(numInputBuffers);
+        }
+
         while (true) {
             // Verifica se ainda existem dados nos buffers de entrada
             bool canContinue = false;
@@ -274,6 +273,13 @@ public:
             get_output_buffer_by_index(i).finalizeInput();
         }
     }
+
+    // Método para adicionar um buffer de entrada
+    void addInputBuffer(Buffer<T>* buffer)
+    {
+        input_buffers.push_back(buffer);
+        numInputBuffers++;
+    }
 };
 
 // Classe específica do transformador de agrupamento
@@ -294,24 +300,23 @@ private:
     // Nome da coluna de count (deve ser passado pelo usuário)
     std::string nameCountColumn;
 public:
-    using Transformer<T>::input_buffers;
     using Transformer<T>::output_buffers;
     using Transformer<T>::taskqueue;
     using Transformer<T>::numOutputBuffers;
 
     GroupByTransformer(
-        std::vector<Buffer<T>*> input_buffers,
+        Buffer<T>* input_buffer,
         const std::vector<std::string>& group_keys,
         const std::vector<std::string>& agg_columns,
         const std::vector<std::string>& agg_ops,
         std::string nameCountColumn,
         // Número de buffers de saída
         int num_outputs = 1
-    ) : Transformer<T>(input_buffers, num_outputs),
+    ) : Transformer<T>(num_outputs),
         keys(group_keys),
         columns(agg_columns),
         operations(agg_ops),
-        input_buffer(input_buffers[0]),
+        input_buffer(input_buffer),
         nameCountColumn(nameCountColumn) {}
 
     // Método do processamento da agregação
