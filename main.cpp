@@ -3,6 +3,7 @@
 #include "framework/Transformer.h"
 #include "framework/Dataframe.h"
 #include "framework/Manager.h"
+#include "framework/Triggers.h"
 #include <thread>
 #include <chrono>
 #include <iostream>
@@ -31,6 +32,24 @@ string multiplication(string str1, string str2){
 class filter_hotel : public Transformer<Dataframe> {
     public:
         using Transformer::Transformer; // Herda o construtor
+        vector<float> calculateStats(std::vector<Dataframe*> input) override {
+            vector<float> calculateStats;
+            Dataframe df_filtred = (*input[0]).filtroByValue("ocupado", 0);
+            float n_vagos = df_filtred.getShape().first;
+            float n_reservados = (*input[0]).getShape().first - n_vagos;
+            calculateStats.push_back(n_vagos);
+            calculateStats.push_back(n_reservados);
+
+            Dataframe df_filtred_2 = (*input[0]).filtroByValue("cidade_destino", "Rio de Janeiro");
+            Dataframe df_filtred_3 = (*input[0]).filtroByValue("cidade_destino", "Campo Grande");
+            float n_rio_janeiro = df_filtred_2.getShape().first;
+            float n_sp = df_filtred_3.getShape().first;
+            calculateStats.push_back(n_rio_janeiro);
+            calculateStats.push_back(n_sp);
+
+
+            return calculateStats;
+        }
 
         Dataframe run(std::vector<Dataframe*> input) override {
             Dataframe df_filtred = (*input[0]).filtroByValue("ocupado", 0);
@@ -95,6 +114,18 @@ class taxa_ocup_voo: public Transformer<Dataframe> {
     public:
         using Transformer::Transformer; // Herda o construtor
 
+        vector<float> calculateStats(std::vector<Dataframe*> input) override {
+            vector<float> calculateStats;
+            float n_cidades_diferente = (*input[0]).getShape().first;
+            calculateStats.push_back(n_cidades_diferente);
+            // Dataframe novo = (*input[0]).filtroByValue("");
+            // cout << "O número de assentos ocupados " << novo.columns[0] << endl;
+            // calculateStats.push_back(n_assentos_ocup);
+
+            return calculateStats;
+        }
+        
+
         Dataframe run(std::vector<Dataframe*> input) override {
             Dataframe df = *input[0];
 
@@ -132,15 +163,15 @@ class DataPrinter : public Loader<Dataframe> {
 
 
 
-int main() {
+void pipeline() {
     // Inicializa o Manager
     Manager<Dataframe> manager(7);
 
     // Pipeline Hoteis e Pesquisas ------------------------------------------------------------------------
-    Extrator<Dataframe> extrator_pesquisa("./mock/data/dados_viagens_2025.csv", "csv", 100);
+    Extrator<Dataframe> extrator_pesquisa("./mock/data/dados_viagens_2025.csv", "csv", 1000);
     manager.addExtractor(&extrator_pesquisa);
 
-    Extrator<Dataframe> extrator_hoteis("./mock/data/dados_hoteis_2025.csv", "csv", 1000);
+    Extrator<Dataframe> extrator_hoteis("./mock/data/dados_hoteis_2025.csv", "csv", 25000);
     manager.addExtractor(&extrator_hoteis);
 
     filter_hotel filtroocupacao(make_input_vector(extrator_hoteis.get_output_buffer()));
@@ -186,7 +217,7 @@ int main() {
     manager.addLoader(&loader2);
 
     //Pipeline Voos ------------------------------------------------------------------------
-    Extrator<Dataframe> extrator_voos("./mock/data/dados_voos_2025.csv", "csv", 1000);
+    Extrator<Dataframe> extrator_voos("./mock/data/dados_voos_2025.csv", "csv", 15000);
     manager.addExtractor(&extrator_voos);
 
     vstrColumnsToAggregate = {"assentos_ocupados", "assentos_totais"};
@@ -217,7 +248,43 @@ int main() {
 
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
     std::cout << "Tempo de execução: " << duration << " ms" << std::endl;
+    cout << "Número de quartos ocupados em toda a base " << filtroocupacao.getStats()[0] << endl;
+    cout << "Número de quartos não ocupados em toda a base " << filtroocupacao.getStats()[1] << endl;
+    cout << "Número de quartos no Rio de Janeiro " << filtroocupacao.getStats()[2] << endl;
+    cout << "Número de quartos em São Paulo " << filtroocupacao.getStats()[3] << endl;
+    cout << "Número de Cidades Destino Diferente em toda a base " << taxaocupvoo.getStats()[0] << endl;
 
     // The manager's destructor will clean up everything
-    return 0;
+    
+    return;
+
+}
+
+int main() {
+    string strCsvPath1 = "./mock/data/dados_viagens_2025.csv";
+    string strCsvPath2 = "./mock/data/dados_hoteis_2025.csv";
+    string strCsvPath3 = "./mock/data/dados_voos_2025.csv";
+
+    // Execução programada a cada 10 minutos
+    TimeTrigger timeTrigger(pipeline, 600);
+    
+    // Verificação dos arquivos a cada 1 minuto
+    EventTrigger trigger(strCsvPath1, pipeline, 60);
+    EventTrigger trigger2(strCsvPath2, pipeline, 60);
+    EventTrigger trigger3(strCsvPath3, pipeline, 60);
+
+    // Inicializando a execução dos triggers
+    timeTrigger.start();
+    trigger.start();
+    trigger2.start();
+    trigger3.start();
+
+    // Rodando o teste por 1 hora
+    this_thread::sleep_for(std::chrono::minutes(60));
+
+    // Parando os triggers
+    timeTrigger.stop();
+    trigger.stop();
+    trigger2.stop();
+    trigger3.stop();
 }
