@@ -69,7 +69,7 @@ python mock/*.py
 ```
 #### 4. Compile os arquivos do framework e a `main.cpp`:
 ```sh
-g++ -o programa main.cpp framework/*.h -std=c++20 -lsqlite3
+g++ -o programa main.cpp -std=c++20 -lsqlite3
 ```
 
 Caso deseje que os DataFrames sejam exibidos pelo Loader, ative a flag global PRINT_OUTPUT_DFS:
