@@ -49,6 +49,8 @@ protected:
     std::mutex statsMtx;
     std::mutex dfsMtx;
 
+    Semaphore tasksInTaskQueue;
+
 private:
     // Método para fazer a atualização das estatísticas
     void aggStats(std::vector<float> newStats)
@@ -187,6 +189,8 @@ public:
                             }
                             this->create_task(std::move(raw_args));
                         });
+
+                        tasksInTaskQueue.notify();
                     }
                 }
             } else {
@@ -194,6 +198,8 @@ public:
                 break;
             }
         }
+
+        while (tasksInTaskQueue.get_count() > 0) {}
 
         // Finaliza os buffers de saída após o fim do processamento
         finishBuffer();
@@ -241,6 +247,8 @@ public:
                 get_output_buffer_by_index(i).push(data);
             }
         }
+
+        tasksInTaskQueue.wait();
        
     }
 
