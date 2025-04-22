@@ -171,12 +171,17 @@ class DataPrinter : public Loader<Dataframe> {
         // Definição do método do processamento
         // Para mostrar os prints, descomentar as duas linhas comentadas abaixo
         void run(Dataframe df) override {
-            if (!headerPrinted) {
-                // df.printHeader(std::cout, df); // Print the dataframe head
-                headerPrinted = true;
+            if (PRINT_OUTPUT_DFS)
+            {
+                if (!headerPrinted) {
+                    df.printHeader(std::cout, df); // Print the dataframe head
+                    headerPrinted = true;
+                }
+    
+                // Print the dataframe contents
+                std::cout << df;
             }
-
-            // std::cout << df;
+           
         }
     };
 

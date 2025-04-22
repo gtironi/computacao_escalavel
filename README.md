@@ -71,6 +71,12 @@ python mock/*.py
 ```sh
 g++ -o programa main.cpp framework/*.h -std=c++20 -lsqlite3
 ```
+
+Caso deseje que os DataFrames sejam exibidos pelo Loader, ative a flag global PRINT_OUTPUT_DFS:
+```sh
+bool PRINT_OUTPUT_DFS = false;
+```
+Essa flag está definida como false por padrão, mas pode ser facilmente alterada para visualizar os resultados durante a execução.
 #### 5. Execute o programa:
 ```sh
 ./programa
