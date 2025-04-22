@@ -1,5 +1,6 @@
 #ifndef BASE_CLASSES_H
 #define BASE_CLASSES_H
+
 #include "Buffer.h"
 #include "Dataframe.h"
 #include "TaskQueue.h"
@@ -231,7 +232,7 @@ public:
                 while (sqlite3_step(stmt) == SQLITE_ROW)
                 {
                     string line;
-
+                    iContador++;
                     // Constrói uma linha de dados separada por vírgula
                     for (size_t i = 0; i < this->strColumnsName.size(); ++i)
                     {
@@ -246,11 +247,12 @@ public:
                     strBlocoDeTexto += line + "\n"; // Adiciona a linha ao bloco
 
                     // Quando atinge o tamanho do batch, processa o bloco
-                    if (iContador++ % this->iTamanhoBatch == 0)
+                    if (iContador % this->iTamanhoBatch == 0)
                     {
                         string value = strBlocoDeTexto;
                         taskqueue->push_task([this, val = value]() mutable
                                              { this->create_task(val); });
+                        this->outputBuffer.get_semaphore().wait();
                         strBlocoDeTexto.clear();
                     }
                 }
@@ -271,7 +273,6 @@ public:
                 throw runtime_error("Erro ao preparar consulta SQL.");
             }
         }
-
         // Avisa ao buffer de saída que os dados acabaram
         finishBuffer();
     }
@@ -367,7 +368,6 @@ public:
     {
         outputBuffer.finalizeInput();
     }
-
 };
 
 // Classe base genérica para carregadores (última etapa do pipeline)
@@ -419,7 +419,6 @@ public:
             // Tenta extrair um dado do buffer
             std::optional<T> maybe_value = input_buffer.pop(false, true);
 
-
             // Se não conseguir pegar nenhum dado (buffer vazio no momento), encerra o loop
             if (!maybe_value.has_value())
             {
@@ -429,7 +428,6 @@ public:
             // Move o valor extraído
             T value = std::move(*maybe_value);
 
-
             // Enfileira a tarefa na fila de execução, chamando o método `create_task`
             taskqueue->push_task([this, val = std::move(value)]() mutable
                                  { this->create_task(std::move(val)); });
@@ -437,7 +435,6 @@ public:
 
         // Quando termina de consumir todos os dados:
         // Decrementa o número de loaders ativos
-        
 
         taskqueue->getNumberOfLoaders().wait();
 
