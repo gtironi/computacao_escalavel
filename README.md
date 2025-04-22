@@ -90,14 +90,14 @@ Essa flag está definida como false por padrão, mas pode ser facilmente alterad
 Pipeline apenas de voos:
 
 ```sh
-g++ -o voos pipe_voos.cpp framework/*.h -std=c++20 -lsqlite3
+g++ -o voos pipe_voos.cpp -std=c++20 -lsqlite3
 ./voos
 ```
 
 Pipeline apenas de hotéis:
 
 ```sh
-g++ -o hoteis pipe_hoteis.cpp framework/*.h -std=c++20 -lsqlite3
+g++ -o hoteis pipe_hoteis.cpp -std=c++20 -lsqlite3
 ./hoteis
 ```
 </details>
