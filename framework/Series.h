@@ -361,11 +361,19 @@ public:
         this->vecColumnData.clear();
     }
 
+    /**
+     * @brief Obtém uma cópia da Series.
+     * @return Uma cópia da Series atual.
+     */
     Series<T> getCopy() const
     {
         return Series<T>(strColumnName, strColumnType, vecColumnData);
     }
 
+    /**
+     * @brief Converte a Series<any> para Series<int>.
+     * @return Uma nova Series com os valores convertidos para int.
+     */
     Series<int> toInt() const
     {
         static_assert(std::is_same_v<T, std::any>, "toInt() can only be called on Series<any>");
@@ -389,6 +397,10 @@ public:
         return intSeries;
     }
 
+    /**
+     * @brief Converte a Series<any> para Series<double>.
+     * @return Uma nova Series com os valores convertidos para double.
+     */
     Series<double> toDouble() const
     {
         static_assert(std::is_same_v<T, std::any>, "toDouble() can only be called on Series<any>");
@@ -412,6 +424,10 @@ public:
         return doubleSeries;
     }
 
+    /**
+     * @brief Converte a Series<any> para Series<string>.
+     * @return Uma nova Series com os valores convertidos para string.
+     */
     Series<string> toString() const
     {
         static_assert(std::is_same_v<T, std::any>, "toString() can only be called on Series<any>");
@@ -424,6 +440,10 @@ public:
         return stringSeries;
     }
 
+    /**
+     * @brief Converte a Series<any> para Series<bool>.
+     * @return Uma nova Series com os valores convertidos para bool.
+     */
     Series<bool> toBool() const
     {
         static_assert(std::is_same_v<T, std::any>, "toBool() can only be called on Series<any>");
@@ -447,6 +467,10 @@ public:
         return boolSeries;
     }
 
+    /**
+     * @brief Converte a Series<any> para Series<any> (mantendo os mesmos valores).
+     * @return Uma nova Series<any> idêntica à atual.
+     */
     Series<any> toAny() const
     {
         static_assert(std::is_same_v<T, std::any>, "toAny() can only be called on Series<any>");
@@ -459,6 +483,12 @@ public:
         return anySeries;
     }
 
+    /**
+     * @brief Converte a Series<any> para uma Series de outro tipo.
+     * @tparam U Tipo para conversão.
+     * @return Uma nova Series com os valores convertidos para o tipo U.
+     * @throw std::invalid_argument Se o tipo de conversão for inválido.
+     */
     template <typename U>
     Series<U> toType() const
     {

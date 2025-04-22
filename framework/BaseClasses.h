@@ -124,7 +124,7 @@ public:
 
      void enqueue_tasks(){
         string strBlocoDeTexto;
-        int iContador = 1;
+        int iContador = 0;
 
         if (this->strFilesFlag == "csv")
         {

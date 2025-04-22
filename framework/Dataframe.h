@@ -150,6 +150,9 @@ public:
         }
     }
 
+    /**
+     * @brief Imprime os nomes das colunas do DataFrame.
+     */
     void printColsName()
     {
         cout << "Colunas: ";
@@ -772,7 +775,11 @@ public:
     }
 
     /**
-     * @brief Método auxiliar para impressão do cabeçalho do DataFrame.
+     * @brief Imprime o cabeçalho do DataFrame.
+     * @param os Fluxo de saída.
+     * @param df DataFrame a ser impresso.
+     * @param col_width Largura das colunas.
+     * @param index_width Largura do índice.
      */
     void printHeader(ostream &os, const Dataframe &df, int col_width = 15, int index_width = 5)
     {
@@ -890,6 +897,10 @@ public:
         return os;
     }
 
+    /**
+     * @brief Remove uma coluna do DataFrame pelo nome.
+     * @param strNomeColuna Nome da coluna a ser removida.
+     */
     void dropCol(const string &strNomeColuna)
     {
         auto it = find(vstrColumnsName.begin(), vstrColumnsName.end(), strNomeColuna);
@@ -904,6 +915,11 @@ public:
             cout << "Coluna não encontrada: " << strNomeColuna << endl;
         }
     }
+
+    /**
+     * @brief Remove uma coluna do DataFrame pelo índice.
+     * @param iIndex Índice da coluna a ser removida.
+     */
     void dropCol(int iIndex)
     {
         if (iIndex >= 0 && iIndex < vstrColumnsName.size())
@@ -916,6 +932,11 @@ public:
             cout << "Índice inválido: " << iIndex << endl;
         }
     }
+
+    /**
+     * @brief Remove múltiplas colunas do DataFrame, especificadas pelos nomes.
+     * @param vstrColunas Vetor com os nomes das colunas a serem removidas.
+     */
     void dropCol(const vector<string> &vstrColunas)
     {
         for (const auto &col : vstrColunas)
@@ -923,6 +944,11 @@ public:
             dropCol(col);
         }
     }
+
+    /**
+     * @brief Remove múltiplas colunas do DataFrame, especificadas pelos índices.
+     * @param viIndices Vetor com os índices das colunas a serem removidas.
+     */
     void dropCol(const vector<int> &viIndices)
     {
         for (const auto &index : viIndices)
@@ -931,6 +957,11 @@ public:
         }
     }
 
+    /**
+     * @brief Define o tipo de uma coluna e realiza a conversão dos valores.
+     * @param strNomeColuna Nome da coluna.
+     * @param strTipo Novo tipo da coluna.
+     */
     void setColType(const string &strNomeColuna, const string &strTipo)
     {
         auto it = find(vstrColumnsName.begin(), vstrColumnsName.end(), strNomeColuna);
