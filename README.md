@@ -29,15 +29,23 @@ O sistema utiliza um modelo baseado em filas e threads para maximizar a eficiên
    git clone https://github.com/gtironi/computacao_escalavel.git
    cd computacao_escalavel
    ```
-2. Instale as dependencias:
+2. Crie uma venv:
+ ```sh
+   python -m venv venv
+   source venv/bin/activate  # No Windows: venv\Scripts\activate
+   ```
+
+3. Instale as dependencias:
+
    ```sh
    ./requirements.sh
+   pip install -r requirements.txt
    ```
-3. Compile os arquivos do framework e a `main.cpp`:
+4. Compile os arquivos do framework e a `main.cpp`:
    ```sh
-   g++ -o programa main.cpp framework/*.h -std=c++20 -lsqlite3 -pthread
+   g++ -o programa main.cpp framework/*.h -std=c++20 -lsqlite3
    ```
-4. Execute o programa:
+5. Execute o programa:
    ```sh
    ./programa
    ```
