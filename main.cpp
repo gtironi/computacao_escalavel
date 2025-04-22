@@ -169,13 +169,13 @@ void pipeline() {
     Manager<Dataframe> manager(7);
 
     // Pipeline Hoteis e Pesquisas ------------------------------------------------------------------------
-    Extrator<Dataframe> extrator_pesquisa("./mock/data/dados_viagens_2025.db", "sql", 1000, "Viagens");
+    Extrator<Dataframe> extrator_pesquisa("./mock/data/dados_pesquisas_2025.db", "sql", 1000, "Viagens");
     manager.addExtractor(&extrator_pesquisa);
 
-    Extrator<Dataframe> extrator_hoteis("./mock/data/dados_hoteis_2025.csv", "csv", 25000);
-    manager.addExtractor(&extrator_hoteis);
+    Extrator<Dataframe> extrator_reservas("./mock/data/dados_reservas_2025.csv", "csv", 25000);
+    manager.addExtractor(&extrator_reservas);
 
-    filter_hotel filtroocupacao(make_input_vector(extrator_hoteis.get_output_buffer()));
+    filter_hotel filtroocupacao(make_input_vector(extrator_reservas.get_output_buffer()));
     manager.addTransformer(&filtroocupacao);
 
     std::vector<std::string> vstrColumnsToAggregate = {"quantidade_pessoas", "preco"};
@@ -262,8 +262,8 @@ void pipeline() {
 }
 
 int main() {
-    string strCsvPath1 = "./mock/data/dados_viagens_2025.db";
-    string strCsvPath2 = "./mock/data/dados_hoteis_2025.csv";
+    string strCsvPath1 = "./mock/data/dados_pesquisas_2025.db";
+    string strCsvPath2 = "./mock/data/dados_reservas_2025.csv";
     string strCsvPath3 = "./mock/data/dados_voos_2025.csv";
 
     // Execução programada a cada 10 minutos
