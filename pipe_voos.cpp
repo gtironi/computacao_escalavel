@@ -45,7 +45,7 @@ class filter_hotel : public Transformer<Dataframe> {
             float n_reservados = (*input[0]).getShape().first - n_vagos;
             calculateStats.push_back(n_vagos);
             calculateStats.push_back(n_reservados);
-            
+
             Dataframe df_filtred_2 = (*input[0]).filtroByValue("cidade_destino", std::string("Rio de Janeiro"));
             Dataframe df_filtred_3 = (*input[0]).filtroByValue("cidade_destino", std::string("Campo Grande"));
             float n_rio_janeiro = df_filtred_2.getShape().first;
@@ -69,7 +69,7 @@ class join: public Transformer<Dataframe> {
 
         Dataframe run(std::vector<Dataframe*> input) override {
             Dataframe df_merged ;
-            
+
             // input[0] -> printColsName();
 
             if ((input[0] -> columns.empty()))
@@ -81,7 +81,7 @@ class join: public Transformer<Dataframe> {
                 df_merged = *input[1];
             }
             else{
-                
+
                 df_merged = input[0]->merge(*input[1], {"cidade_destino", "data_ida_dia", "data_ida_mes"});
             }
 
@@ -139,7 +139,7 @@ class taxa_ocup_voo: public Transformer<Dataframe> {
 
             return calculateStats;
         }
-        
+
 
         Dataframe run(std::vector<Dataframe*> input) override {
             Dataframe df = *input[0];
@@ -167,60 +167,65 @@ class DataPrinter : public Loader<Dataframe> {
 
         void run(Dataframe df) override {
             if (!headerPrinted) {
-                df.printHeader(std::cout, df); // Print the dataframe head
+                //df.printHeader(std::cout, df); // Print the dataframe head
                 headerPrinted = true;
             }
 
             // Print the dataframe contents
-            std::cout << df;
+            //std::cout << df;
         }
     };
 
 
 
-void main() {
-    // Inicializa o Manager
-    Manager<Dataframe> manager(7);
+int main() {
+    std::vector<int> paralelismos = {1, 3, 5, 7, 9, 11};
 
-    //Pipeline Voos ------------------------------------------------------------------------
-    Extrator<Dataframe> extrator_voos("./mock/data/dados_voos_2025.csv", "csv", 15000);
-    manager.addExtractor(&extrator_voos);
-    
-    std::vector<std::string> vstrColumnsToAggregate = {"assentos_ocupados", "assentos_totais"};
-    std::vector<string> group = {"cidade_destino"};
-    std::vector<string> ops = {"sum"};
+    for (int p : paralelismos) {
+        std::vector<long long> tempos_execucao;
 
-    GroupByTransformer<Dataframe> groupbyvoo(
-        make_input_vector(extrator_voos.get_output_buffer()),
-        group,
-        vstrColumnsToAggregate,
-        ops,
-        "count_voos"
-    );
+        for (int i = 0; i < 10; ++i) {
+            Manager<Dataframe> manager(p);
+        //Pipeline Voos ------------------------------------------------------------------------
+        Extrator<Dataframe> extrator_voos("./mock/data/dados_voos_2025.csv", "csv", 15000);
+        manager.addExtractor(&extrator_voos);
 
-    manager.addTransformer(&groupbyvoo);
+        std::vector<std::string> vstrColumnsToAggregate = {"assentos_ocupados", "assentos_totais"};
+        std::vector<string> group = {"cidade_destino"};
+        std::vector<string> ops = {"sum"};
 
-    taxa_ocup_voo taxaocupvoo(make_input_vector(groupbyvoo.get_output_buffer()));
-    manager.addTransformer(&taxaocupvoo);
+        GroupByTransformer<Dataframe> groupbyvoo(
+            make_input_vector(extrator_voos.get_output_buffer()),
+            group,
+            vstrColumnsToAggregate,
+            ops,
+            "count_voos"
+        );
 
-    DataPrinter loader3(taxaocupvoo.get_output_buffer());
-    manager.addLoader(&loader3);
+        manager.addTransformer(&groupbyvoo);
 
-    auto start_time = std::chrono::high_resolution_clock::now();
+        taxa_ocup_voo taxaocupvoo(make_input_vector(groupbyvoo.get_output_buffer()));
+        manager.addTransformer(&taxaocupvoo);
 
-    // Start the pipeline
-    manager.run();
+        DataPrinter loader3(taxaocupvoo.get_output_buffer());
+        manager.addLoader(&loader3);
 
-    auto end_time = std::chrono::high_resolution_clock::now();
+        auto start_time = std::chrono::high_resolution_clock::now();
 
-    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
-    std::cout << "Tempo de execução: " << duration << " ms" << std::endl;
-    cout << "Número de Cidades Destino Diferente em toda a base " << taxaocupvoo.getStats()[0] << endl;
+        // Start the pipeline
+        manager.run();
 
-    // The manager's destructor will clean up everything
-    
-    return;
+        auto end_time = std::chrono::high_resolution_clock::now();
 
+        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
+        //std::cout << "Tempo de execução: " << duration << " ms" << std::endl;
+        //cout << "Número de Cidades Destino Diferente em toda a base " << taxaocupvoo.getStats()[0] << endl;
+        tempos_execucao.push_back(duration);
+        }
+
+        double media = std::accumulate(tempos_execucao.begin(), tempos_execucao.end(), 0.0) / tempos_execucao.size();
+        std::cout << "Paralelismo: " << p << " -> Tempo médio: " << media << " ms" << std::endl;
+        }
+
+    return 0;
 }
-
-

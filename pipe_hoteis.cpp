@@ -45,7 +45,7 @@ class filter_hotel : public Transformer<Dataframe> {
             float n_reservados = (*input[0]).getShape().first - n_vagos;
             calculateStats.push_back(n_vagos);
             calculateStats.push_back(n_reservados);
-            
+
             Dataframe df_filtred_2 = (*input[0]).filtroByValue("cidade_destino", std::string("Rio de Janeiro"));
             Dataframe df_filtred_3 = (*input[0]).filtroByValue("cidade_destino", std::string("Campo Grande"));
             float n_rio_janeiro = df_filtred_2.getShape().first;
@@ -69,7 +69,7 @@ class join: public Transformer<Dataframe> {
 
         Dataframe run(std::vector<Dataframe*> input) override {
             Dataframe df_merged ;
-            
+
             // input[0] -> printColsName();
 
             if ((input[0] -> columns.empty()))
@@ -81,7 +81,7 @@ class join: public Transformer<Dataframe> {
                 df_merged = *input[1];
             }
             else{
-                
+
                 df_merged = input[0]->merge(*input[1], {"cidade_destino", "data_ida_dia", "data_ida_mes"});
             }
 
@@ -137,90 +137,101 @@ class DataPrinter : public Loader<Dataframe> {
 
         void run(Dataframe df) override {
             if (!headerPrinted) {
-                df.printHeader(std::cout, df); // Print the dataframe head
+                //df.printHeader(std::cout, df); // Print the dataframe head
                 headerPrinted = true;
             }
 
             // Print the dataframe contents
-            std::cout << df;
+            //std::cout << df;
         }
     };
 
 
 
-void main() {
-    // Inicializa o Manager
-    Manager<Dataframe> manager(7);
+int main() {
+    std::vector<int> paralelismos = {1, 3, 5, 7, 9, 11};
 
-    // Pipeline Hoteis e Pesquisas ------------------------------------------------------------------------
-    // Extrator<Dataframe> extrator_pesquisa("./mock/data/dados_pesquisas_2025.db", "sql", 1000, "Viagens");
-    Extrator<Dataframe> extrator_pesquisa("./mock/data/dados_pesquisas_2025.csv", "csv", 1000);
-    manager.addExtractor(&extrator_pesquisa);
+    for (int p : paralelismos) {
+        std::vector<long long> tempos_execucao;
 
-    Extrator<Dataframe> extrator_reservas("./mock/data/dados_reservas_2025.csv", "csv", 25000);
-    manager.addExtractor(&extrator_reservas);
+        for (int i = 0; i < 10; ++i) {
+            Manager<Dataframe> manager(p);
 
-    filter_hotel filtroocupacao(make_input_vector(extrator_reservas.get_output_buffer()));
-    manager.addTransformer(&filtroocupacao);
 
-    std::vector<std::string> vstrColumnsToAggregate = {"quantidade_pessoas", "preco"};
-    std::vector<string> group = {"cidade_destino", "data_ida_dia", "data_ida_mes"};
-    std::vector<string> ops = {"sum"};
+        // Pipeline Hoteis e Pesquisas ------------------------------------------------------------------------
+        // Extrator<Dataframe> extrator_pesquisa("./mock/data/dados_pesquisas_2025.db", "sql", 1000, "Viagens");
+        Extrator<Dataframe> extrator_pesquisa("./mock/data/dados_pesquisas_2025.csv", "csv", 1000);
+        manager.addExtractor(&extrator_pesquisa);
 
-    GroupByTransformer<Dataframe> groupby_reservas(make_input_vector(filtroocupacao.get_output_buffer()),
-                                                   group,
-                                                   vstrColumnsToAggregate,
-                                                   ops, "count_reservas");
-    manager.addTransformer(&groupby_reservas);
+        Extrator<Dataframe> extrator_reservas("./mock/data/dados_reservas_2025.csv", "csv", 25000);
+        manager.addExtractor(&extrator_reservas);
 
-    PrecoMedio preco_medio(make_input_vector(groupby_reservas.get_output_buffer()));
-    manager.addTransformer(&preco_medio);
+        filter_hotel filtroocupacao(make_input_vector(extrator_reservas.get_output_buffer()));
+        manager.addTransformer(&filtroocupacao);
 
-    vstrColumnsToAggregate = {};
-    group = {"cidade_destino", "data_ida_dia", "data_ida_mes"};
-    ops = {"count"};
+        std::vector<std::string> vstrColumnsToAggregate = {"quantidade_pessoas", "preco"};
+        std::vector<string> group = {"cidade_destino", "data_ida_dia", "data_ida_mes"};
+        std::vector<string> ops = {"sum"};
 
-    GroupByTransformer<Dataframe> groupby_pesquisa(make_input_vector(extrator_pesquisa.get_output_buffer()),
+        GroupByTransformer<Dataframe> groupby_reservas(make_input_vector(filtroocupacao.get_output_buffer()),
                                                     group,
                                                     vstrColumnsToAggregate,
-                                                    ops, "count_pesquisas");
-    manager.addTransformer(&groupby_pesquisa);
+                                                    ops, "count_reservas");
+        manager.addTransformer(&groupby_reservas);
+
+        PrecoMedio preco_medio(make_input_vector(groupby_reservas.get_output_buffer()));
+        manager.addTransformer(&preco_medio);
+
+        vstrColumnsToAggregate = {};
+        group = {"cidade_destino", "data_ida_dia", "data_ida_mes"};
+        ops = {"count"};
+
+        GroupByTransformer<Dataframe> groupby_pesquisa(make_input_vector(extrator_pesquisa.get_output_buffer()),
+                                                        group,
+                                                        vstrColumnsToAggregate,
+                                                        ops, "count_pesquisas");
+        manager.addTransformer(&groupby_pesquisa);
 
 
-    std::vector<Buffer<Dataframe>*> inputs_buffers;
-    inputs_buffers.push_back(&preco_medio.get_output_buffer());
-    inputs_buffers.push_back(&groupby_pesquisa.get_output_buffer());
+        std::vector<Buffer<Dataframe>*> inputs_buffers;
+        inputs_buffers.push_back(&preco_medio.get_output_buffer());
+        inputs_buffers.push_back(&groupby_pesquisa.get_output_buffer());
 
-    join join_transformer(inputs_buffers, 2);
-    manager.addTransformer(&join_transformer);
+        join join_transformer(inputs_buffers, 2);
+        manager.addTransformer(&join_transformer);
 
-    TaxaOcupacao taxa_ocupacao(make_input_vector(join_transformer.get_output_buffer()));
-    manager.addTransformer(&taxa_ocupacao);
+        TaxaOcupacao taxa_ocupacao(make_input_vector(join_transformer.get_output_buffer()));
+        manager.addTransformer(&taxa_ocupacao);
 
-    faturamento fatur(make_input_vector(join_transformer.get_output_buffer()));
-    manager.addTransformer(&fatur);
+        faturamento fatur(make_input_vector(join_transformer.get_output_buffer()));
+        manager.addTransformer(&fatur);
 
-    DataPrinter loader1(taxa_ocupacao.get_output_buffer());
-    manager.addLoader(&loader1);
+        DataPrinter loader1(taxa_ocupacao.get_output_buffer());
+        manager.addLoader(&loader1);
 
-    DataPrinter loader2(fatur.get_output_buffer());
-    manager.addLoader(&loader2);
+        DataPrinter loader2(fatur.get_output_buffer());
+        manager.addLoader(&loader2);
 
 
-    auto start_time = std::chrono::high_resolution_clock::now();
+        auto start_time = std::chrono::high_resolution_clock::now();
 
-    // Start the pipeline
-    manager.run();
+        // Start the pipeline
+        manager.run();
 
-    auto end_time = std::chrono::high_resolution_clock::now();
+        auto end_time = std::chrono::high_resolution_clock::now();
 
-    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
-    std::cout << "Tempo de execução: " << duration << " ms" << std::endl;
-    cout << "Número de quartos ocupados em toda a base " << filtroocupacao.getStats()[0] << endl;
-    cout << "Número de quartos não ocupados em toda a base " << filtroocupacao.getStats()[1] << endl;
-    cout << "Número de quartos no Rio de Janeiro " << filtroocupacao.getStats()[2] << endl;
-    cout << "Número de quartos em Campo Grande " << filtroocupacao.getStats()[3] << endl;
-    
-    return;
+        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
+        // std::cout << "Tempo de execução: " << duration << " ms" << std::endl;
+        // cout << "Número de quartos ocupados em toda a base " << filtroocupacao.getStats()[0] << endl;
+        // cout << "Número de quartos não ocupados em toda a base " << filtroocupacao.getStats()[1] << endl;
+        // cout << "Número de quartos no Rio de Janeiro " << filtroocupacao.getStats()[2] << endl;
+        // cout << "Número de quartos em Campo Grande " << filtroocupacao.getStats()[3] << endl;
+        tempos_execucao.push_back(duration);
+        }
 
+        double media = std::accumulate(tempos_execucao.begin(), tempos_execucao.end(), 0.0) / tempos_execucao.size();
+        std::cout << "Paralelismo: " << p << " -> Tempo médio: " << media << " ms" << std::endl;
+        }
+
+    return 0;
 }
