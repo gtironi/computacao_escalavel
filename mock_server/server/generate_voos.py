@@ -25,7 +25,7 @@ def gerar_voos():
         dia, mes, ano = data.day, data.month, data.year
         for origem in cidades:
             destinos_possiveis = [c for c in cidades if c != origem]
-            num_voos = random.randint(5, 15)
+            num_voos = random.randint(7, 18)
             destinos = random.sample(destinos_possiveis, min(num_voos, len(destinos_possiveis)))
             for destino in destinos:
                 assentos_totais = random.choice([100, 200])

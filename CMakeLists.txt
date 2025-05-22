@@ -19,7 +19,7 @@ set(PROTO_SRC
   mock_server/proto/extractor.grpc.pb.cc
 )
 
-# Main client source
+# Main client sourcesudo
 add_executable(grpc_client grpc_client.cpp ${PROTO_SRC})
 
 # Include directories
