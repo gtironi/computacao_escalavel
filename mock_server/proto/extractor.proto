@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package extractor;
+
+// ---------- VOOS ----------
+message FlightRow {
+  string cidade_origem = 1;
+  string cidade_destino = 2;
+  int32 assentos_ocupados = 3;
+  int32 assentos_totais = 4;
+  int32 assentos_disponiveis = 5;
+  int32 dia = 6;
+  int32 mes = 7;
+  int32 ano = 8;
+}
+
+message FlightDataResponse {
+  repeated FlightRow voos = 1;
+}
+
+// ---------- RESERVAS ----------
+message ReservaRow {
+  string tipo_quarto = 1;
+  string nome_hotel = 2;
+  string cidade_destino = 3;
+  int32 numero_quarto = 4;
+  int32 quantidade_pessoas = 5;
+  float preco = 6;
+  bool ocupado = 7;
+  int32 data_ida_dia = 8;
+  int32 data_ida_mes = 9;
+  int32 data_ida_ano = 10;
+}
+
+message ReservaDataResponse {
+  repeated ReservaRow reservas = 1;
+}
+
+// ---------- PESQUISAS ----------
+message PesquisaRow {
+  string cidade_origem = 1;
+  string cidade_destino = 2;
+  string nome_hotel = 3;
+  int32 data_ida_dia = 4;
+  int32 data_ida_mes = 5;
+  int32 data_ida_ano = 6;
+  int32 data_volta_dia = 7;
+  int32 data_volta_mes = 8;
+  int32 data_volta_ano = 9;
+}
+
+message PesquisaDataResponse {
+  repeated PesquisaRow pesquisas = 1;
+}
+message Empty {}
+
+
+// ---------- SERVICE ----------
+service ExtractorService {
+  rpc GetFlightData(Empty) returns (FlightDataResponse);
+  rpc GetReservaData(Empty) returns (ReservaDataResponse);
+  rpc GetPesquisaData(Empty) returns (PesquisaDataResponse);
+}
