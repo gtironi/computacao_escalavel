@@ -14,9 +14,7 @@ message FlightRow {
   int32 ano = 8;
 }
 
-message FlightDataResponse {
-  repeated FlightRow voos = 1;
-}
+
 
 // ---------- RESERVAS ----------
 message ReservaRow {
@@ -32,9 +30,6 @@ message ReservaRow {
   int32 data_ida_ano = 10;
 }
 
-message ReservaDataResponse {
-  repeated ReservaRow reservas = 1;
-}
 
 // ---------- PESQUISAS ----------
 message PesquisaRow {
@@ -49,9 +44,6 @@ message PesquisaRow {
   int32 data_volta_ano = 9;
 }
 
-message PesquisaDataResponse {
-  repeated PesquisaRow pesquisas = 1;
-}
 message Empty {}
 
 message AllDataResponse {
@@ -61,11 +53,7 @@ message AllDataResponse {
 }
 
 
-
 // ---------- SERVICE ----------
 service ExtractorService {
-  rpc GetFlightData(Empty) returns (FlightDataResponse);
-  rpc GetReservaData(Empty) returns (ReservaDataResponse);
-  rpc GetPesquisaData(Empty) returns (PesquisaDataResponse);
   rpc GetAllData(Empty) returns (AllDataResponse);
 }

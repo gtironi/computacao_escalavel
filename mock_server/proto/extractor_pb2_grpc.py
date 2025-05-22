@@ -3,7 +3,7 @@
 import grpc
 import warnings
 
-import mock_server.proto.extractor_pb2 as server__pb2
+from mock_server.proto import extractor_pb2 as mock__server_dot_proto_dot_extractor__pb2
 
 GRPC_GENERATED_VERSION = '1.71.0'
 GRPC_VERSION = grpc.__version__
@@ -18,7 +18,7 @@ except ImportError:
 if _version_not_supported:
     raise RuntimeError(
         f'The grpc package installed is at version {GRPC_VERSION},'
-        + f' but the generated code in server_pb2_grpc.py depends on'
+        + f' but the generated code in mock_server/proto/extractor_pb2_grpc.py depends on'
         + f' grpcio>={GRPC_GENERATED_VERSION}.'
         + f' Please upgrade your grpc module to grpcio>={GRPC_GENERATED_VERSION}'
         + f' or downgrade your generated code using grpcio-tools<={GRPC_VERSION}.'
@@ -35,20 +35,10 @@ class ExtractorServiceStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.GetFlightData = channel.unary_unary(
-                '/extractor.ExtractorService/GetFlightData',
-                request_serializer=server__pb2.Empty.SerializeToString,
-                response_deserializer=server__pb2.FlightDataResponse.FromString,
-                _registered_method=True)
-        self.GetReservaData = channel.unary_unary(
-                '/extractor.ExtractorService/GetReservaData',
-                request_serializer=server__pb2.Empty.SerializeToString,
-                response_deserializer=server__pb2.ReservaDataResponse.FromString,
-                _registered_method=True)
-        self.GetPesquisaData = channel.unary_unary(
-                '/extractor.ExtractorService/GetPesquisaData',
-                request_serializer=server__pb2.Empty.SerializeToString,
-                response_deserializer=server__pb2.PesquisaDataResponse.FromString,
+        self.GetAllData = channel.unary_unary(
+                '/extractor.ExtractorService/GetAllData',
+                request_serializer=mock__server_dot_proto_dot_extractor__pb2.Empty.SerializeToString,
+                response_deserializer=mock__server_dot_proto_dot_extractor__pb2.AllDataResponse.FromString,
                 _registered_method=True)
 
 
@@ -56,19 +46,7 @@ class ExtractorServiceServicer(object):
     """---------- SERVICE ----------
     """
 
-    def GetFlightData(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def GetReservaData(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def GetPesquisaData(self, request, context):
+    def GetAllData(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -77,20 +55,10 @@ class ExtractorServiceServicer(object):
 
 def add_ExtractorServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'GetFlightData': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetFlightData,
-                    request_deserializer=server__pb2.Empty.FromString,
-                    response_serializer=server__pb2.FlightDataResponse.SerializeToString,
-            ),
-            'GetReservaData': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetReservaData,
-                    request_deserializer=server__pb2.Empty.FromString,
-                    response_serializer=server__pb2.ReservaDataResponse.SerializeToString,
-            ),
-            'GetPesquisaData': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetPesquisaData,
-                    request_deserializer=server__pb2.Empty.FromString,
-                    response_serializer=server__pb2.PesquisaDataResponse.SerializeToString,
+            'GetAllData': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetAllData,
+                    request_deserializer=mock__server_dot_proto_dot_extractor__pb2.Empty.FromString,
+                    response_serializer=mock__server_dot_proto_dot_extractor__pb2.AllDataResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -105,7 +73,7 @@ class ExtractorService(object):
     """
 
     @staticmethod
-    def GetFlightData(request,
+    def GetAllData(request,
             target,
             options=(),
             channel_credentials=None,
@@ -118,63 +86,9 @@ class ExtractorService(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/extractor.ExtractorService/GetFlightData',
-            server__pb2.Empty.SerializeToString,
-            server__pb2.FlightDataResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
-    def GetReservaData(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/extractor.ExtractorService/GetReservaData',
-            server__pb2.Empty.SerializeToString,
-            server__pb2.ReservaDataResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
-    def GetPesquisaData(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/extractor.ExtractorService/GetPesquisaData',
-            server__pb2.Empty.SerializeToString,
-            server__pb2.PesquisaDataResponse.FromString,
+            '/extractor.ExtractorService/GetAllData',
+            mock__server_dot_proto_dot_extractor__pb2.Empty.SerializeToString,
+            mock__server_dot_proto_dot_extractor__pb2.AllDataResponse.FromString,
             options,
             channel_credentials,
             insecure,

@@ -3,22 +3,20 @@ import grpc
 from concurrent import futures
 from mock_server.proto import extractor_pb2
 from mock_server.proto import extractor_pb2_grpc
-from mock_server.server import generate_voos, generate_reservas, generate_pesquisas
 from mock_server.server import generate_all
 
-class ExtractorServicer(extractor_pb2_grpc.ExtractorServiceServicer):
-    def GetFlightData(self, request, context):
-        return extractor_pb2.FlightDataResponse(voos=generate_voos.gerar_voos())
-
-    def GetReservaData(self, request, context):
-        return extractor_pb2.ReservaDataResponse(reservas=generate_reservas.gerar_reservas())
-
-    def GetPesquisaData(self, request, context):
-        return extractor_pb2.PesquisaDataResponse(pesquisas=generate_pesquisas.gerar_pesquisas())
-    
+class ExtractorServicer(extractor_pb2_grpc.ExtractorServiceServicer):   
     def GetAllData(self, request, context):
+        all_reservas, all_pesquisas, all_voos = generate_all.gerar_dados()
+        response = extractor_pb2.AllDataResponse() # Create an empty response object
 
-        return extractor_pb2.AllDataResponse(pesquisas=generate_all.gerar_dados())
+        # Use extend() to add the lists of protobuf objects to the repeated fields
+        response.reservas.extend(all_reservas)
+        response.pesquisas.extend(all_pesquisas)
+        response.voos.extend(all_voos)
+
+        return response # Return the populated response object
+
 
 
 def serve():
