@@ -54,10 +54,18 @@ message PesquisaDataResponse {
 }
 message Empty {}
 
+message AllDataResponse {
+  repeated FlightRow voos = 1;
+  repeated ReservaRow reservas = 2;
+  repeated PesquisaRow pesquisas = 3;
+}
+
+
 
 // ---------- SERVICE ----------
 service ExtractorService {
   rpc GetFlightData(Empty) returns (FlightDataResponse);
   rpc GetReservaData(Empty) returns (ReservaDataResponse);
   rpc GetPesquisaData(Empty) returns (PesquisaDataResponse);
+  rpc GetAllData(Empty) returns (AllDataResponse);
 }

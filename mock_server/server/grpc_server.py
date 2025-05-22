@@ -4,6 +4,7 @@ from concurrent import futures
 from mock_server.proto import extractor_pb2
 from mock_server.proto import extractor_pb2_grpc
 from mock_server.server import generate_voos, generate_reservas, generate_pesquisas
+from mock_server.server import generate_all
 
 class ExtractorServicer(extractor_pb2_grpc.ExtractorServiceServicer):
     def GetFlightData(self, request, context):
@@ -14,6 +15,11 @@ class ExtractorServicer(extractor_pb2_grpc.ExtractorServiceServicer):
 
     def GetPesquisaData(self, request, context):
         return extractor_pb2.PesquisaDataResponse(pesquisas=generate_pesquisas.gerar_pesquisas())
+    
+    def GetAllData(self, request, context):
+
+        return extractor_pb2.AllDataResponse(pesquisas=generate_all.gerar_dados())
+
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
