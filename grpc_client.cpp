@@ -3,16 +3,14 @@
 #include <string>
 
 #include <grpcpp/grpcpp.h>
-// Include the base protobuf messages header for AllDataResponse
 #include "mock_server/proto/extractor.pb.h"
-// Include the gRPC service stub header
 #include "mock_server/proto/extractor.grpc.pb.h"
 
 using grpc::Channel;
 using grpc::ClientContext;
 using grpc::Status;
 using extractor::ExtractorService;
-using extractor::Empty;
+using google::protobuf::Empty;
 using extractor::AllDataResponse; // Now directly using AllDataResponse
 
 class ExtractorClient {
@@ -44,7 +42,7 @@ public:
             // }
             // if (response.pesquisas_size() > 0) {
             //     std::cout << "Primeira pesquisa: " << response.pesquisas(0).cidade_origem() << " -> " << response.pesquisas(0).cidade_destino() << std::endl;
-            // }
+            // }   
 
         } else {
             std::cerr << "Erro na chamada gRPC: " << status.error_message() << std::endl;

@@ -3,6 +3,7 @@
 import grpc
 import warnings
 
+from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 from mock_server.proto import extractor_pb2 as mock__server_dot_proto_dot_extractor__pb2
 
 GRPC_GENERATED_VERSION = '1.71.0'
@@ -37,7 +38,7 @@ class ExtractorServiceStub(object):
         """
         self.GetAllData = channel.unary_unary(
                 '/extractor.ExtractorService/GetAllData',
-                request_serializer=mock__server_dot_proto_dot_extractor__pb2.Empty.SerializeToString,
+                request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
                 response_deserializer=mock__server_dot_proto_dot_extractor__pb2.AllDataResponse.FromString,
                 _registered_method=True)
 
@@ -57,7 +58,7 @@ def add_ExtractorServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'GetAllData': grpc.unary_unary_rpc_method_handler(
                     servicer.GetAllData,
-                    request_deserializer=mock__server_dot_proto_dot_extractor__pb2.Empty.FromString,
+                    request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                     response_serializer=mock__server_dot_proto_dot_extractor__pb2.AllDataResponse.SerializeToString,
             ),
     }
@@ -87,7 +88,7 @@ class ExtractorService(object):
             request,
             target,
             '/extractor.ExtractorService/GetAllData',
-            mock__server_dot_proto_dot_extractor__pb2.Empty.SerializeToString,
+            google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             mock__server_dot_proto_dot_extractor__pb2.AllDataResponse.FromString,
             options,
             channel_credentials,

@@ -22,25 +22,24 @@ _runtime_version.ValidateProtobufRuntimeVersion(
 _sym_db = _symbol_database.Default()
 
 
+from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n!mock_server/proto/extractor.proto\x12\textractor\"\xb3\x01\n\tFlightRow\x12\x15\n\rcidade_origem\x18\x01 \x01(\t\x12\x16\n\x0e\x63idade_destino\x18\x02 \x01(\t\x12\x19\n\x11\x61ssentos_ocupados\x18\x03 \x01(\x05\x12\x17\n\x0f\x61ssentos_totais\x18\x04 \x01(\x05\x12\x1c\n\x14\x61ssentos_disponiveis\x18\x05 \x01(\x05\x12\x0b\n\x03\x64ia\x18\x06 \x01(\x05\x12\x0b\n\x03mes\x18\x07 \x01(\x05\x12\x0b\n\x03\x61no\x18\x08 \x01(\x05\"\xe2\x01\n\nReservaRow\x12\x13\n\x0btipo_quarto\x18\x01 \x01(\t\x12\x12\n\nnome_hotel\x18\x02 \x01(\t\x12\x16\n\x0e\x63idade_destino\x18\x03 \x01(\t\x12\x15\n\rnumero_quarto\x18\x04 \x01(\x05\x12\x1a\n\x12quantidade_pessoas\x18\x05 \x01(\x05\x12\r\n\x05preco\x18\x06 \x01(\x02\x12\x0f\n\x07ocupado\x18\x07 \x01(\x08\x12\x14\n\x0c\x64\x61ta_ida_dia\x18\x08 \x01(\x05\x12\x14\n\x0c\x64\x61ta_ida_mes\x18\t \x01(\x05\x12\x14\n\x0c\x64\x61ta_ida_ano\x18\n \x01(\x05\"\xda\x01\n\x0bPesquisaRow\x12\x15\n\rcidade_origem\x18\x01 \x01(\t\x12\x16\n\x0e\x63idade_destino\x18\x02 \x01(\t\x12\x12\n\nnome_hotel\x18\x03 \x01(\t\x12\x14\n\x0c\x64\x61ta_ida_dia\x18\x04 \x01(\x05\x12\x14\n\x0c\x64\x61ta_ida_mes\x18\x05 \x01(\x05\x12\x14\n\x0c\x64\x61ta_ida_ano\x18\x06 \x01(\x05\x12\x16\n\x0e\x64\x61ta_volta_dia\x18\x07 \x01(\x05\x12\x16\n\x0e\x64\x61ta_volta_mes\x18\x08 \x01(\x05\x12\x16\n\x0e\x64\x61ta_volta_ano\x18\t \x01(\x05\"\x07\n\x05\x45mpty\"\x89\x01\n\x0f\x41llDataResponse\x12\"\n\x04voos\x18\x01 \x03(\x0b\x32\x14.extractor.FlightRow\x12\'\n\x08reservas\x18\x02 \x03(\x0b\x32\x15.extractor.ReservaRow\x12)\n\tpesquisas\x18\x03 \x03(\x0b\x32\x16.extractor.PesquisaRow2N\n\x10\x45xtractorService\x12:\n\nGetAllData\x12\x10.extractor.Empty\x1a\x1a.extractor.AllDataResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n!mock_server/proto/extractor.proto\x12\textractor\x1a\x1bgoogle/protobuf/empty.proto\"\xb3\x01\n\tFlightRow\x12\x15\n\rcidade_origem\x18\x01 \x01(\t\x12\x16\n\x0e\x63idade_destino\x18\x02 \x01(\t\x12\x19\n\x11\x61ssentos_ocupados\x18\x03 \x01(\x05\x12\x17\n\x0f\x61ssentos_totais\x18\x04 \x01(\x05\x12\x1c\n\x14\x61ssentos_disponiveis\x18\x05 \x01(\x05\x12\x0b\n\x03\x64ia\x18\x06 \x01(\x05\x12\x0b\n\x03mes\x18\x07 \x01(\x05\x12\x0b\n\x03\x61no\x18\x08 \x01(\x05\"\xe2\x01\n\nReservaRow\x12\x13\n\x0btipo_quarto\x18\x01 \x01(\t\x12\x12\n\nnome_hotel\x18\x02 \x01(\t\x12\x16\n\x0e\x63idade_destino\x18\x03 \x01(\t\x12\x15\n\rnumero_quarto\x18\x04 \x01(\x05\x12\x1a\n\x12quantidade_pessoas\x18\x05 \x01(\x05\x12\r\n\x05preco\x18\x06 \x01(\x02\x12\x0f\n\x07ocupado\x18\x07 \x01(\x08\x12\x14\n\x0c\x64\x61ta_ida_dia\x18\x08 \x01(\x05\x12\x14\n\x0c\x64\x61ta_ida_mes\x18\t \x01(\x05\x12\x14\n\x0c\x64\x61ta_ida_ano\x18\n \x01(\x05\"\xda\x01\n\x0bPesquisaRow\x12\x15\n\rcidade_origem\x18\x01 \x01(\t\x12\x16\n\x0e\x63idade_destino\x18\x02 \x01(\t\x12\x12\n\nnome_hotel\x18\x03 \x01(\t\x12\x14\n\x0c\x64\x61ta_ida_dia\x18\x04 \x01(\x05\x12\x14\n\x0c\x64\x61ta_ida_mes\x18\x05 \x01(\x05\x12\x14\n\x0c\x64\x61ta_ida_ano\x18\x06 \x01(\x05\x12\x16\n\x0e\x64\x61ta_volta_dia\x18\x07 \x01(\x05\x12\x16\n\x0e\x64\x61ta_volta_mes\x18\x08 \x01(\x05\x12\x16\n\x0e\x64\x61ta_volta_ano\x18\t \x01(\x05\"\x89\x01\n\x0f\x41llDataResponse\x12\"\n\x04voos\x18\x01 \x03(\x0b\x32\x14.extractor.FlightRow\x12\'\n\x08reservas\x18\x02 \x03(\x0b\x32\x15.extractor.ReservaRow\x12)\n\tpesquisas\x18\x03 \x03(\x0b\x32\x16.extractor.PesquisaRow2T\n\x10\x45xtractorService\x12@\n\nGetAllData\x12\x16.google.protobuf.Empty\x1a\x1a.extractor.AllDataResponseb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'mock_server.proto.extractor_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
-  _globals['_FLIGHTROW']._serialized_start=49
-  _globals['_FLIGHTROW']._serialized_end=228
-  _globals['_RESERVAROW']._serialized_start=231
-  _globals['_RESERVAROW']._serialized_end=457
-  _globals['_PESQUISAROW']._serialized_start=460
-  _globals['_PESQUISAROW']._serialized_end=678
-  _globals['_EMPTY']._serialized_start=680
-  _globals['_EMPTY']._serialized_end=687
-  _globals['_ALLDATARESPONSE']._serialized_start=690
-  _globals['_ALLDATARESPONSE']._serialized_end=827
-  _globals['_EXTRACTORSERVICE']._serialized_start=829
-  _globals['_EXTRACTORSERVICE']._serialized_end=907
+  _globals['_FLIGHTROW']._serialized_start=78
+  _globals['_FLIGHTROW']._serialized_end=257
+  _globals['_RESERVAROW']._serialized_start=260
+  _globals['_RESERVAROW']._serialized_end=486
+  _globals['_PESQUISAROW']._serialized_start=489
+  _globals['_PESQUISAROW']._serialized_end=707
+  _globals['_ALLDATARESPONSE']._serialized_start=710
+  _globals['_ALLDATARESPONSE']._serialized_end=847
+  _globals['_EXTRACTORSERVICE']._serialized_start=849
+  _globals['_EXTRACTORSERVICE']._serialized_end=933
 # @@protoc_insertion_point(module_scope)

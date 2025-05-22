@@ -140,24 +140,6 @@ struct FlightRowDefaultTypeInternal {
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 FlightRowDefaultTypeInternal _FlightRow_default_instance_;
-template <typename>
-PROTOBUF_CONSTEXPR Empty::Empty(::_pbi::ConstantInitialized)
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::internal::ZeroFieldsBase(Empty_class_data_.base()){}
-#else   // PROTOBUF_CUSTOM_VTABLE
-    : ::google::protobuf::internal::ZeroFieldsBase() {
-}
-#endif  // PROTOBUF_CUSTOM_VTABLE
-struct EmptyDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR EmptyDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
-  ~EmptyDefaultTypeInternal() {}
-  union {
-    Empty _instance;
-  };
-};
-
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
-    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 EmptyDefaultTypeInternal _Empty_default_instance_;
 
 inline constexpr AllDataResponse::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
@@ -272,14 +254,6 @@ const ::uint32_t
         7,
         8,
         ~0u,  // no _has_bits_
-        PROTOBUF_FIELD_OFFSET(::extractor::Empty, _internal_metadata_),
-        ~0u,  // no _extensions_
-        ~0u,  // no _oneof_case_
-        ~0u,  // no _weak_field_map_
-        ~0u,  // no _inlined_string_donated_
-        ~0u,  // no _split_
-        ~0u,  // no sizeof(Split)
-        ~0u,  // no _has_bits_
         PROTOBUF_FIELD_OFFSET(::extractor::AllDataResponse, _internal_metadata_),
         ~0u,  // no _extensions_
         ~0u,  // no _oneof_case_
@@ -297,53 +271,56 @@ static const ::_pbi::MigrationSchema
         {0, 16, -1, sizeof(::extractor::FlightRow)},
         {24, 42, -1, sizeof(::extractor::ReservaRow)},
         {52, 69, -1, sizeof(::extractor::PesquisaRow)},
-        {78, -1, -1, sizeof(::extractor::Empty)},
-        {86, -1, -1, sizeof(::extractor::AllDataResponse)},
+        {78, -1, -1, sizeof(::extractor::AllDataResponse)},
 };
 static const ::_pb::Message* PROTOBUF_NONNULL const file_default_instances[] = {
     &::extractor::_FlightRow_default_instance_._instance,
     &::extractor::_ReservaRow_default_instance_._instance,
     &::extractor::_PesquisaRow_default_instance_._instance,
-    &::extractor::_Empty_default_instance_._instance,
     &::extractor::_AllDataResponse_default_instance_._instance,
 };
 const char descriptor_table_protodef_extractor_2eproto[] ABSL_ATTRIBUTE_SECTION_VARIABLE(
     protodesc_cold) = {
-    "\n\017extractor.proto\022\textractor\"\263\001\n\tFlightR"
-    "ow\022\025\n\rcidade_origem\030\001 \001(\t\022\026\n\016cidade_dest"
-    "ino\030\002 \001(\t\022\031\n\021assentos_ocupados\030\003 \001(\005\022\027\n\017"
-    "assentos_totais\030\004 \001(\005\022\034\n\024assentos_dispon"
-    "iveis\030\005 \001(\005\022\013\n\003dia\030\006 \001(\005\022\013\n\003mes\030\007 \001(\005\022\013\n"
-    "\003ano\030\010 \001(\005\"\342\001\n\nReservaRow\022\023\n\013tipo_quarto"
-    "\030\001 \001(\t\022\022\n\nnome_hotel\030\002 \001(\t\022\026\n\016cidade_des"
-    "tino\030\003 \001(\t\022\025\n\rnumero_quarto\030\004 \001(\005\022\032\n\022qua"
-    "ntidade_pessoas\030\005 \001(\005\022\r\n\005preco\030\006 \001(\002\022\017\n\007"
-    "ocupado\030\007 \001(\010\022\024\n\014data_ida_dia\030\010 \001(\005\022\024\n\014d"
-    "ata_ida_mes\030\t \001(\005\022\024\n\014data_ida_ano\030\n \001(\005\""
-    "\332\001\n\013PesquisaRow\022\025\n\rcidade_origem\030\001 \001(\t\022\026"
-    "\n\016cidade_destino\030\002 \001(\t\022\022\n\nnome_hotel\030\003 \001"
-    "(\t\022\024\n\014data_ida_dia\030\004 \001(\005\022\024\n\014data_ida_mes"
-    "\030\005 \001(\005\022\024\n\014data_ida_ano\030\006 \001(\005\022\026\n\016data_vol"
-    "ta_dia\030\007 \001(\005\022\026\n\016data_volta_mes\030\010 \001(\005\022\026\n\016"
-    "data_volta_ano\030\t \001(\005\"\007\n\005Empty\"\211\001\n\017AllDat"
-    "aResponse\022\"\n\004voos\030\001 \003(\0132\024.extractor.Flig"
-    "htRow\022\'\n\010reservas\030\002 \003(\0132\025.extractor.Rese"
-    "rvaRow\022)\n\tpesquisas\030\003 \003(\0132\026.extractor.Pe"
-    "squisaRow2N\n\020ExtractorService\022:\n\nGetAllD"
-    "ata\022\020.extractor.Empty\032\032.extractor.AllDat"
-    "aResponseb\006proto3"
+    "\n\017extractor.proto\022\textractor\032\033google/pro"
+    "tobuf/empty.proto\"\263\001\n\tFlightRow\022\025\n\rcidad"
+    "e_origem\030\001 \001(\t\022\026\n\016cidade_destino\030\002 \001(\t\022\031"
+    "\n\021assentos_ocupados\030\003 \001(\005\022\027\n\017assentos_to"
+    "tais\030\004 \001(\005\022\034\n\024assentos_disponiveis\030\005 \001(\005"
+    "\022\013\n\003dia\030\006 \001(\005\022\013\n\003mes\030\007 \001(\005\022\013\n\003ano\030\010 \001(\005\""
+    "\342\001\n\nReservaRow\022\023\n\013tipo_quarto\030\001 \001(\t\022\022\n\nn"
+    "ome_hotel\030\002 \001(\t\022\026\n\016cidade_destino\030\003 \001(\t\022"
+    "\025\n\rnumero_quarto\030\004 \001(\005\022\032\n\022quantidade_pes"
+    "soas\030\005 \001(\005\022\r\n\005preco\030\006 \001(\002\022\017\n\007ocupado\030\007 \001"
+    "(\010\022\024\n\014data_ida_dia\030\010 \001(\005\022\024\n\014data_ida_mes"
+    "\030\t \001(\005\022\024\n\014data_ida_ano\030\n \001(\005\"\332\001\n\013Pesquis"
+    "aRow\022\025\n\rcidade_origem\030\001 \001(\t\022\026\n\016cidade_de"
+    "stino\030\002 \001(\t\022\022\n\nnome_hotel\030\003 \001(\t\022\024\n\014data_"
+    "ida_dia\030\004 \001(\005\022\024\n\014data_ida_mes\030\005 \001(\005\022\024\n\014d"
+    "ata_ida_ano\030\006 \001(\005\022\026\n\016data_volta_dia\030\007 \001("
+    "\005\022\026\n\016data_volta_mes\030\010 \001(\005\022\026\n\016data_volta_"
+    "ano\030\t \001(\005\"\211\001\n\017AllDataResponse\022\"\n\004voos\030\001 "
+    "\003(\0132\024.extractor.FlightRow\022\'\n\010reservas\030\002 "
+    "\003(\0132\025.extractor.ReservaRow\022)\n\tpesquisas\030"
+    "\003 \003(\0132\026.extractor.PesquisaRow2T\n\020Extract"
+    "orService\022@\n\nGetAllData\022\026.google.protobu"
+    "f.Empty\032\032.extractor.AllDataResponseb\006pro"
+    "to3"
+};
+static const ::_pbi::DescriptorTable* PROTOBUF_NONNULL const
+    descriptor_table_extractor_2eproto_deps[1] = {
+        &::descriptor_table_google_2fprotobuf_2fempty_2eproto,
 };
 static ::absl::once_flag descriptor_table_extractor_2eproto_once;
 PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_extractor_2eproto = {
     false,
     false,
-    897,
+    923,
     descriptor_table_protodef_extractor_2eproto,
     "extractor.proto",
     &descriptor_table_extractor_2eproto_once,
-    nullptr,
-    0,
-    5,
+    descriptor_table_extractor_2eproto_deps,
+    1,
+    4,
     schemas,
     file_default_instances,
     TableStruct_extractor_2eproto::offsets,
@@ -1959,115 +1936,6 @@ void PesquisaRow::InternalSwap(PesquisaRow* PROTOBUF_RESTRICT PROTOBUF_NONNULL o
 
 ::google::protobuf::Metadata PesquisaRow::GetMetadata() const {
   return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
-}
-// ===================================================================
-
-class Empty::_Internal {
- public:
-};
-
-Empty::Empty(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::internal::ZeroFieldsBase(arena, Empty_class_data_.base()) {
-#else   // PROTOBUF_CUSTOM_VTABLE
-    : ::google::protobuf::internal::ZeroFieldsBase(arena) {
-#endif  // PROTOBUF_CUSTOM_VTABLE
-  // @@protoc_insertion_point(arena_constructor:extractor.Empty)
-}
-Empty::Empty(
-    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
-    const Empty& from)
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::internal::ZeroFieldsBase(arena, Empty_class_data_.base()) {
-#else   // PROTOBUF_CUSTOM_VTABLE
-    : ::google::protobuf::internal::ZeroFieldsBase(arena) {
-#endif  // PROTOBUF_CUSTOM_VTABLE
-  Empty* const _this = this;
-  (void)_this;
-  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
-      from._internal_metadata_);
-
-  // @@protoc_insertion_point(copy_constructor:extractor.Empty)
-}
-
-inline void* PROTOBUF_NONNULL Empty::PlacementNew_(
-    const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
-    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
-  return ::new (mem) Empty(arena);
-}
-constexpr auto Empty::InternalNewImpl_() {
-  return ::google::protobuf::internal::MessageCreator::ZeroInit(sizeof(Empty),
-                                            alignof(Empty));
-}
-constexpr auto Empty::InternalGenerateClassData_() {
-  return ::google::protobuf::internal::ClassDataFull{
-      ::google::protobuf::internal::ClassData{
-          &_Empty_default_instance_._instance,
-          &_table_.header,
-          nullptr,  // OnDemandRegisterArenaDtor
-          nullptr,  // IsInitialized
-          &Empty::MergeImpl,
-          ::google::protobuf::internal::ZeroFieldsBase::GetNewImpl<Empty>(),
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-          &Empty::SharedDtor,
-          ::google::protobuf::internal::ZeroFieldsBase::GetClearImpl<Empty>(), &Empty::ByteSizeLong,
-              &Empty::_InternalSerialize,
-#endif  // PROTOBUF_CUSTOM_VTABLE
-          PROTOBUF_FIELD_OFFSET(Empty, _impl_._cached_size_),
-          false,
-      },
-      &Empty::kDescriptorMethods,
-      &descriptor_table_extractor_2eproto,
-      nullptr,  // tracker
-  };
-}
-
-PROTOBUF_CONSTINIT
-    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const ::google::protobuf::internal::ClassDataFull
-        Empty_class_data_ =
-            Empty::InternalGenerateClassData_();
-
-const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL Empty::GetClassData() const {
-  ::google::protobuf::internal::PrefetchToLocalCache(&Empty_class_data_);
-  ::google::protobuf::internal::PrefetchToLocalCache(Empty_class_data_.tc_table);
-  return Empty_class_data_.base();
-}
-PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<0, 0, 0, 0, 2>
-Empty::_table_ = {
-  {
-    0,  // no _has_bits_
-    0, // no _extensions_
-    0, 0,  // max_field_number, fast_idx_mask
-    offsetof(decltype(_table_), field_lookup_table),
-    4294967295,  // skipmap
-    offsetof(decltype(_table_), field_names),  // no field_entries
-    0,  // num_field_entries
-    0,  // num_aux_entries
-    offsetof(decltype(_table_), field_names),  // no aux_entries
-    Empty_class_data_.base(),
-    nullptr,  // post_loop_handler
-    ::_pbi::TcParser::GenericFallback,  // fallback
-    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::extractor::Empty>(),  // to_prefetch
-    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
-  }, {{
-    {::_pbi::TcParser::MiniParse, {}},
-  }}, {{
-    65535, 65535
-  }}, // no field_entries, or aux_entries
-  {{
-  }},
-};
-
-
-
-
-
-
-
-::google::protobuf::Metadata Empty::GetMetadata() const {
-  return ::google::protobuf::internal::ZeroFieldsBase::GetMetadataImpl(GetClassData()->full());
 }
 // ===================================================================
 
