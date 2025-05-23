@@ -3,7 +3,7 @@
 import grpc
 import warnings
 
-from mock_client.proto import extractor_pb2 as mock__server_dot_proto_dot_extractor__pb2
+from mock_client.proto import extractor_pb2 as mock__client_dot_proto_dot_extractor__pb2
 
 GRPC_GENERATED_VERSION = '1.71.0'
 GRPC_VERSION = grpc.__version__
@@ -18,7 +18,7 @@ except ImportError:
 if _version_not_supported:
     raise RuntimeError(
         f'The grpc package installed is at version {GRPC_VERSION},'
-        + f' but the generated code in mock_server/proto/extractor_pb2_grpc.py depends on'
+        + f' but the generated code in mock_client/proto/extractor_pb2_grpc.py depends on'
         + f' grpcio>={GRPC_GENERATED_VERSION}.'
         + f' Please upgrade your grpc module to grpcio>={GRPC_GENERATED_VERSION}'
         + f' or downgrade your generated code using grpcio-tools<={GRPC_VERSION}.'
@@ -37,8 +37,8 @@ class ExtractorServiceStub(object):
         """
         self.GetAllData = channel.unary_unary(
                 '/extractor.ExtractorService/GetAllData',
-                request_serializer=mock__server_dot_proto_dot_extractor__pb2.AllDataSend.SerializeToString,
-                response_deserializer=mock__server_dot_proto_dot_extractor__pb2.AllDataResponse.FromString,
+                request_serializer=mock__client_dot_proto_dot_extractor__pb2.AllDataSend.SerializeToString,
+                response_deserializer=mock__client_dot_proto_dot_extractor__pb2.AllDataResponse.FromString,
                 _registered_method=True)
 
 
@@ -57,8 +57,8 @@ def add_ExtractorServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'GetAllData': grpc.unary_unary_rpc_method_handler(
                     servicer.GetAllData,
-                    request_deserializer=mock__server_dot_proto_dot_extractor__pb2.AllDataSend.FromString,
-                    response_serializer=mock__server_dot_proto_dot_extractor__pb2.AllDataResponse.SerializeToString,
+                    request_deserializer=mock__client_dot_proto_dot_extractor__pb2.AllDataSend.FromString,
+                    response_serializer=mock__client_dot_proto_dot_extractor__pb2.AllDataResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -87,8 +87,8 @@ class ExtractorService(object):
             request,
             target,
             '/extractor.ExtractorService/GetAllData',
-            mock__server_dot_proto_dot_extractor__pb2.AllDataSend.SerializeToString,
-            mock__server_dot_proto_dot_extractor__pb2.AllDataResponse.FromString,
+            mock__client_dot_proto_dot_extractor__pb2.AllDataSend.SerializeToString,
+            mock__client_dot_proto_dot_extractor__pb2.AllDataResponse.FromString,
             options,
             channel_credentials,
             insecure,
