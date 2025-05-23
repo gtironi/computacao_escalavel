@@ -5,6 +5,7 @@
 #include <grpcpp/grpcpp.h>
 #include "mock_server/proto/extractor.pb.h"
 #include "mock_server/proto/extractor.grpc.pb.h"
+#include "pipeline.h"
 
 using grpc::Channel;
 using grpc::ClientContext;
@@ -32,6 +33,13 @@ public:
             std::cout << "Número de voos recebidos: " << response.voos_size() << std::endl;
             std::cout << "Número de reservas recebidas: " << response.reservas_size() << std::endl;
             std::cout << "Número de pesquisas recebidas: " << response.pesquisas_size() << std::endl;
+
+            std::string dados_voos = response.voos();
+            std::string dados_reservas = response.reservas();
+            std::string dados_pesquisas = response.pesquisas();
+
+            // Chama o pipeline com os dados recebidos
+            pipeline(dados_reservas, dados_voos, dados_pesquisas);
 
             // Optional: Print first few items to verify content (can be removed for simplest output)
             // if (response.voos_size() > 0) {
