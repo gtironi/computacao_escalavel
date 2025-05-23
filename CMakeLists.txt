@@ -20,16 +20,16 @@ set(PROTO_SRC
 )
 
 # Main client sourcesudo
-add_executable(grpc_client grpc_client.cpp ${PROTO_SRC})
+add_executable(grpc_server grpc_server.cpp ${PROTO_SRC})
 
 # Include directories
-target_include_directories(grpc_client PRIVATE
+target_include_directories(grpc_server PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}/mock_server/proto
 )
 
 # Link gRPC, Protobuf
-target_link_libraries(grpc_client
+target_link_libraries(grpc_server
   gRPC::grpc++
   protobuf::libprotobuf
 )

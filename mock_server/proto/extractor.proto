@@ -1,7 +1,6 @@
 syntax = "proto3";
 
 package extractor;
-import "google/protobuf/empty.proto";
 
 // ---------- VOOS ----------
 message FlightRow {
@@ -45,14 +44,21 @@ message PesquisaRow {
   int32 data_volta_ano = 9;
 }
 
-message AllDataResponse {
+message AllDataSend {
   repeated FlightRow voos = 1;
   repeated ReservaRow reservas = 2;
   repeated PesquisaRow pesquisas = 3;
 }
 
+message AllDataResponse{
+  int32 stats1 = 1;
+  int32 stats2 = 2;
+  int32 stats3 = 3;
+  int32 stats4 = 4;
+  int32 stats5 = 5;
+}
 
 // ---------- SERVICE ----------
 service ExtractorService {
-  rpc GetAllData(google.protobuf.Empty) returns (AllDataResponse);
+  rpc GetAllData(AllDataSend) returns (AllDataResponse);
 }

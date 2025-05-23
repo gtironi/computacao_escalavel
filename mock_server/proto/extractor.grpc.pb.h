@@ -37,41 +37,41 @@ class ExtractorService final {
   class StubInterface {
    public:
     virtual ~StubInterface() {}
-    virtual ::grpc::Status GetAllData(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::extractor::AllDataResponse* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::extractor::AllDataResponse>> AsyncGetAllData(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq) {
+    virtual ::grpc::Status GetAllData(::grpc::ClientContext* context, const ::extractor::AllDataSend& request, ::extractor::AllDataResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::extractor::AllDataResponse>> AsyncGetAllData(::grpc::ClientContext* context, const ::extractor::AllDataSend& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::extractor::AllDataResponse>>(AsyncGetAllDataRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::extractor::AllDataResponse>> PrepareAsyncGetAllData(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq) {
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::extractor::AllDataResponse>> PrepareAsyncGetAllData(::grpc::ClientContext* context, const ::extractor::AllDataSend& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::extractor::AllDataResponse>>(PrepareAsyncGetAllDataRaw(context, request, cq));
     }
     class async_interface {
      public:
       virtual ~async_interface() {}
-      virtual void GetAllData(::grpc::ClientContext* context, const ::google::protobuf::Empty* request, ::extractor::AllDataResponse* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void GetAllData(::grpc::ClientContext* context, const ::google::protobuf::Empty* request, ::extractor::AllDataResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void GetAllData(::grpc::ClientContext* context, const ::extractor::AllDataSend* request, ::extractor::AllDataResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void GetAllData(::grpc::ClientContext* context, const ::extractor::AllDataSend* request, ::extractor::AllDataResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
     };
     typedef class async_interface experimental_async_interface;
     virtual class async_interface* async() { return nullptr; }
     class async_interface* experimental_async() { return async(); }
    private:
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::extractor::AllDataResponse>* AsyncGetAllDataRaw(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::extractor::AllDataResponse>* PrepareAsyncGetAllDataRaw(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::extractor::AllDataResponse>* AsyncGetAllDataRaw(::grpc::ClientContext* context, const ::extractor::AllDataSend& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::extractor::AllDataResponse>* PrepareAsyncGetAllDataRaw(::grpc::ClientContext* context, const ::extractor::AllDataSend& request, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
     Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
-    ::grpc::Status GetAllData(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::extractor::AllDataResponse* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::extractor::AllDataResponse>> AsyncGetAllData(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq) {
+    ::grpc::Status GetAllData(::grpc::ClientContext* context, const ::extractor::AllDataSend& request, ::extractor::AllDataResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::extractor::AllDataResponse>> AsyncGetAllData(::grpc::ClientContext* context, const ::extractor::AllDataSend& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::extractor::AllDataResponse>>(AsyncGetAllDataRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::extractor::AllDataResponse>> PrepareAsyncGetAllData(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq) {
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::extractor::AllDataResponse>> PrepareAsyncGetAllData(::grpc::ClientContext* context, const ::extractor::AllDataSend& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::extractor::AllDataResponse>>(PrepareAsyncGetAllDataRaw(context, request, cq));
     }
     class async final :
       public StubInterface::async_interface {
      public:
-      void GetAllData(::grpc::ClientContext* context, const ::google::protobuf::Empty* request, ::extractor::AllDataResponse* response, std::function<void(::grpc::Status)>) override;
-      void GetAllData(::grpc::ClientContext* context, const ::google::protobuf::Empty* request, ::extractor::AllDataResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void GetAllData(::grpc::ClientContext* context, const ::extractor::AllDataSend* request, ::extractor::AllDataResponse* response, std::function<void(::grpc::Status)>) override;
+      void GetAllData(::grpc::ClientContext* context, const ::extractor::AllDataSend* request, ::extractor::AllDataResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
      private:
       friend class Stub;
       explicit async(Stub* stub): stub_(stub) { }
@@ -83,8 +83,8 @@ class ExtractorService final {
    private:
     std::shared_ptr< ::grpc::ChannelInterface> channel_;
     class async async_stub_{this};
-    ::grpc::ClientAsyncResponseReader< ::extractor::AllDataResponse>* AsyncGetAllDataRaw(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::extractor::AllDataResponse>* PrepareAsyncGetAllDataRaw(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::extractor::AllDataResponse>* AsyncGetAllDataRaw(::grpc::ClientContext* context, const ::extractor::AllDataSend& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::extractor::AllDataResponse>* PrepareAsyncGetAllDataRaw(::grpc::ClientContext* context, const ::extractor::AllDataSend& request, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_GetAllData_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
@@ -93,7 +93,7 @@ class ExtractorService final {
    public:
     Service();
     virtual ~Service();
-    virtual ::grpc::Status GetAllData(::grpc::ServerContext* context, const ::google::protobuf::Empty* request, ::extractor::AllDataResponse* response);
+    virtual ::grpc::Status GetAllData(::grpc::ServerContext* context, const ::extractor::AllDataSend* request, ::extractor::AllDataResponse* response);
   };
   template <class BaseClass>
   class WithAsyncMethod_GetAllData : public BaseClass {
@@ -107,11 +107,11 @@ class ExtractorService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status GetAllData(::grpc::ServerContext* /*context*/, const ::google::protobuf::Empty* /*request*/, ::extractor::AllDataResponse* /*response*/) override {
+    ::grpc::Status GetAllData(::grpc::ServerContext* /*context*/, const ::extractor::AllDataSend* /*request*/, ::extractor::AllDataResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestGetAllData(::grpc::ServerContext* context, ::google::protobuf::Empty* request, ::grpc::ServerAsyncResponseWriter< ::extractor::AllDataResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestGetAllData(::grpc::ServerContext* context, ::extractor::AllDataSend* request, ::grpc::ServerAsyncResponseWriter< ::extractor::AllDataResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(0, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
@@ -123,25 +123,25 @@ class ExtractorService final {
    public:
     WithCallbackMethod_GetAllData() {
       ::grpc::Service::MarkMethodCallback(0,
-          new ::grpc::internal::CallbackUnaryHandler< ::google::protobuf::Empty, ::extractor::AllDataResponse>(
+          new ::grpc::internal::CallbackUnaryHandler< ::extractor::AllDataSend, ::extractor::AllDataResponse>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::google::protobuf::Empty* request, ::extractor::AllDataResponse* response) { return this->GetAllData(context, request, response); }));}
+                   ::grpc::CallbackServerContext* context, const ::extractor::AllDataSend* request, ::extractor::AllDataResponse* response) { return this->GetAllData(context, request, response); }));}
     void SetMessageAllocatorFor_GetAllData(
-        ::grpc::MessageAllocator< ::google::protobuf::Empty, ::extractor::AllDataResponse>* allocator) {
+        ::grpc::MessageAllocator< ::extractor::AllDataSend, ::extractor::AllDataResponse>* allocator) {
       ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(0);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::google::protobuf::Empty, ::extractor::AllDataResponse>*>(handler)
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::extractor::AllDataSend, ::extractor::AllDataResponse>*>(handler)
               ->SetMessageAllocator(allocator);
     }
     ~WithCallbackMethod_GetAllData() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status GetAllData(::grpc::ServerContext* /*context*/, const ::google::protobuf::Empty* /*request*/, ::extractor::AllDataResponse* /*response*/) override {
+    ::grpc::Status GetAllData(::grpc::ServerContext* /*context*/, const ::extractor::AllDataSend* /*request*/, ::extractor::AllDataResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     virtual ::grpc::ServerUnaryReactor* GetAllData(
-      ::grpc::CallbackServerContext* /*context*/, const ::google::protobuf::Empty* /*request*/, ::extractor::AllDataResponse* /*response*/)  { return nullptr; }
+      ::grpc::CallbackServerContext* /*context*/, const ::extractor::AllDataSend* /*request*/, ::extractor::AllDataResponse* /*response*/)  { return nullptr; }
   };
   typedef WithCallbackMethod_GetAllData<Service > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
@@ -157,7 +157,7 @@ class ExtractorService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status GetAllData(::grpc::ServerContext* /*context*/, const ::google::protobuf::Empty* /*request*/, ::extractor::AllDataResponse* /*response*/) override {
+    ::grpc::Status GetAllData(::grpc::ServerContext* /*context*/, const ::extractor::AllDataSend* /*request*/, ::extractor::AllDataResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -174,7 +174,7 @@ class ExtractorService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status GetAllData(::grpc::ServerContext* /*context*/, const ::google::protobuf::Empty* /*request*/, ::extractor::AllDataResponse* /*response*/) override {
+    ::grpc::Status GetAllData(::grpc::ServerContext* /*context*/, const ::extractor::AllDataSend* /*request*/, ::extractor::AllDataResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -197,7 +197,7 @@ class ExtractorService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status GetAllData(::grpc::ServerContext* /*context*/, const ::google::protobuf::Empty* /*request*/, ::extractor::AllDataResponse* /*response*/) override {
+    ::grpc::Status GetAllData(::grpc::ServerContext* /*context*/, const ::extractor::AllDataSend* /*request*/, ::extractor::AllDataResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -212,10 +212,10 @@ class ExtractorService final {
     WithStreamedUnaryMethod_GetAllData() {
       ::grpc::Service::MarkMethodStreamed(0,
         new ::grpc::internal::StreamedUnaryHandler<
-          ::google::protobuf::Empty, ::extractor::AllDataResponse>(
+          ::extractor::AllDataSend, ::extractor::AllDataResponse>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerUnaryStreamer<
-                     ::google::protobuf::Empty, ::extractor::AllDataResponse>* streamer) {
+                     ::extractor::AllDataSend, ::extractor::AllDataResponse>* streamer) {
                        return this->StreamedGetAllData(context,
                          streamer);
                   }));
@@ -224,12 +224,12 @@ class ExtractorService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status GetAllData(::grpc::ServerContext* /*context*/, const ::google::protobuf::Empty* /*request*/, ::extractor::AllDataResponse* /*response*/) override {
+    ::grpc::Status GetAllData(::grpc::ServerContext* /*context*/, const ::extractor::AllDataSend* /*request*/, ::extractor::AllDataResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedGetAllData(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::google::protobuf::Empty,::extractor::AllDataResponse>* server_unary_streamer) = 0;
+    virtual ::grpc::Status StreamedGetAllData(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::extractor::AllDataSend,::extractor::AllDataResponse>* server_unary_streamer) = 0;
   };
   typedef WithStreamedUnaryMethod_GetAllData<Service > StreamedUnaryService;
   typedef Service SplitStreamedService;

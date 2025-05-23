@@ -191,7 +191,7 @@ class DataPrinter : public Loader<Dataframe> {
 
 
 // Função para executar o pipeline
-void pipeline() {
+std::vector<int> pipeline() {
     // Inicializa o Manager
     Manager<Dataframe> manager(N_THREADS);
 
@@ -309,7 +309,13 @@ void pipeline() {
     cout << "==============================================================================" << endl;
     std::cout << "Tempo de execução: " << duration << " ms" << std::endl;
     
-    return;
+    std::vector<int> stats;
+    stats.push_back(filtro_hotel.getStats()[0]);
+    stats.push_back(filtro_hotel.getStats()[1]);
+    stats.push_back(filtro_hotel.getStats()[2]);
+    stats.push_back(filtro_hotel.getStats()[3]);
+    stats.push_back(taxa_ocupacao_voos.getStats()[0]);
+    return stats;
 }
 
 int main() {
@@ -343,7 +349,10 @@ int main() {
 
     }
     else {
-        pipeline();
+        std::vector<int> stats = pipeline();
+        for (int i = 0; i< stats.size(); i++){
+            cout << stats[i] << endl;
+        }
     }
 
 }

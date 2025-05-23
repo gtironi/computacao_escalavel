@@ -143,10 +143,12 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
 
 inline constexpr AllDataResponse::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
-      : voos_{},
-        reservas_{},
-        pesquisas_{},
-        _cached_size_{0} {}
+      : _cached_size_{0},
+        stats1_{0},
+        stats2_{0},
+        stats3_{0},
+        stats4_{0},
+        stats5_{0} {}
 
 template <typename>
 PROTOBUF_CONSTEXPR AllDataResponse::AllDataResponse(::_pbi::ConstantInitialized)
@@ -167,6 +169,33 @@ struct AllDataResponseDefaultTypeInternal {
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 AllDataResponseDefaultTypeInternal _AllDataResponse_default_instance_;
+
+inline constexpr AllDataSend::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : voos_{},
+        reservas_{},
+        pesquisas_{},
+        _cached_size_{0} {}
+
+template <typename>
+PROTOBUF_CONSTEXPR AllDataSend::AllDataSend(::_pbi::ConstantInitialized)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(AllDataSend_class_data_.base()),
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(),
+#endif  // PROTOBUF_CUSTOM_VTABLE
+      _impl_(::_pbi::ConstantInitialized()) {
+}
+struct AllDataSendDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR AllDataSendDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~AllDataSendDefaultTypeInternal() {}
+  union {
+    AllDataSend _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 AllDataSendDefaultTypeInternal _AllDataSend_default_instance_;
 }  // namespace extractor
 static constexpr const ::_pb::EnumDescriptor *PROTOBUF_NONNULL *PROTOBUF_NULLABLE
     file_level_enum_descriptors_extractor_2eproto = nullptr;
@@ -254,6 +283,17 @@ const ::uint32_t
         7,
         8,
         ~0u,  // no _has_bits_
+        PROTOBUF_FIELD_OFFSET(::extractor::AllDataSend, _internal_metadata_),
+        ~0u,  // no _extensions_
+        ~0u,  // no _oneof_case_
+        ~0u,  // no _weak_field_map_
+        ~0u,  // no _inlined_string_donated_
+        ~0u,  // no _split_
+        ~0u,  // no sizeof(Split)
+        PROTOBUF_FIELD_OFFSET(::extractor::AllDataSend, _impl_.voos_),
+        PROTOBUF_FIELD_OFFSET(::extractor::AllDataSend, _impl_.reservas_),
+        PROTOBUF_FIELD_OFFSET(::extractor::AllDataSend, _impl_.pesquisas_),
+        PROTOBUF_FIELD_OFFSET(::extractor::AllDataResponse, _impl_._has_bits_),
         PROTOBUF_FIELD_OFFSET(::extractor::AllDataResponse, _internal_metadata_),
         ~0u,  // no _extensions_
         ~0u,  // no _oneof_case_
@@ -261,9 +301,16 @@ const ::uint32_t
         ~0u,  // no _inlined_string_donated_
         ~0u,  // no _split_
         ~0u,  // no sizeof(Split)
-        PROTOBUF_FIELD_OFFSET(::extractor::AllDataResponse, _impl_.voos_),
-        PROTOBUF_FIELD_OFFSET(::extractor::AllDataResponse, _impl_.reservas_),
-        PROTOBUF_FIELD_OFFSET(::extractor::AllDataResponse, _impl_.pesquisas_),
+        PROTOBUF_FIELD_OFFSET(::extractor::AllDataResponse, _impl_.stats1_),
+        PROTOBUF_FIELD_OFFSET(::extractor::AllDataResponse, _impl_.stats2_),
+        PROTOBUF_FIELD_OFFSET(::extractor::AllDataResponse, _impl_.stats3_),
+        PROTOBUF_FIELD_OFFSET(::extractor::AllDataResponse, _impl_.stats4_),
+        PROTOBUF_FIELD_OFFSET(::extractor::AllDataResponse, _impl_.stats5_),
+        0,
+        1,
+        2,
+        3,
+        4,
 };
 
 static const ::_pbi::MigrationSchema
@@ -271,56 +318,55 @@ static const ::_pbi::MigrationSchema
         {0, 16, -1, sizeof(::extractor::FlightRow)},
         {24, 42, -1, sizeof(::extractor::ReservaRow)},
         {52, 69, -1, sizeof(::extractor::PesquisaRow)},
-        {78, -1, -1, sizeof(::extractor::AllDataResponse)},
+        {78, -1, -1, sizeof(::extractor::AllDataSend)},
+        {89, 102, -1, sizeof(::extractor::AllDataResponse)},
 };
 static const ::_pb::Message* PROTOBUF_NONNULL const file_default_instances[] = {
     &::extractor::_FlightRow_default_instance_._instance,
     &::extractor::_ReservaRow_default_instance_._instance,
     &::extractor::_PesquisaRow_default_instance_._instance,
+    &::extractor::_AllDataSend_default_instance_._instance,
     &::extractor::_AllDataResponse_default_instance_._instance,
 };
 const char descriptor_table_protodef_extractor_2eproto[] ABSL_ATTRIBUTE_SECTION_VARIABLE(
     protodesc_cold) = {
-    "\n\017extractor.proto\022\textractor\032\033google/pro"
-    "tobuf/empty.proto\"\263\001\n\tFlightRow\022\025\n\rcidad"
-    "e_origem\030\001 \001(\t\022\026\n\016cidade_destino\030\002 \001(\t\022\031"
-    "\n\021assentos_ocupados\030\003 \001(\005\022\027\n\017assentos_to"
-    "tais\030\004 \001(\005\022\034\n\024assentos_disponiveis\030\005 \001(\005"
-    "\022\013\n\003dia\030\006 \001(\005\022\013\n\003mes\030\007 \001(\005\022\013\n\003ano\030\010 \001(\005\""
-    "\342\001\n\nReservaRow\022\023\n\013tipo_quarto\030\001 \001(\t\022\022\n\nn"
-    "ome_hotel\030\002 \001(\t\022\026\n\016cidade_destino\030\003 \001(\t\022"
-    "\025\n\rnumero_quarto\030\004 \001(\005\022\032\n\022quantidade_pes"
-    "soas\030\005 \001(\005\022\r\n\005preco\030\006 \001(\002\022\017\n\007ocupado\030\007 \001"
-    "(\010\022\024\n\014data_ida_dia\030\010 \001(\005\022\024\n\014data_ida_mes"
-    "\030\t \001(\005\022\024\n\014data_ida_ano\030\n \001(\005\"\332\001\n\013Pesquis"
-    "aRow\022\025\n\rcidade_origem\030\001 \001(\t\022\026\n\016cidade_de"
-    "stino\030\002 \001(\t\022\022\n\nnome_hotel\030\003 \001(\t\022\024\n\014data_"
-    "ida_dia\030\004 \001(\005\022\024\n\014data_ida_mes\030\005 \001(\005\022\024\n\014d"
-    "ata_ida_ano\030\006 \001(\005\022\026\n\016data_volta_dia\030\007 \001("
-    "\005\022\026\n\016data_volta_mes\030\010 \001(\005\022\026\n\016data_volta_"
-    "ano\030\t \001(\005\"\211\001\n\017AllDataResponse\022\"\n\004voos\030\001 "
-    "\003(\0132\024.extractor.FlightRow\022\'\n\010reservas\030\002 "
-    "\003(\0132\025.extractor.ReservaRow\022)\n\tpesquisas\030"
-    "\003 \003(\0132\026.extractor.PesquisaRow2T\n\020Extract"
-    "orService\022@\n\nGetAllData\022\026.google.protobu"
-    "f.Empty\032\032.extractor.AllDataResponseb\006pro"
-    "to3"
-};
-static const ::_pbi::DescriptorTable* PROTOBUF_NONNULL const
-    descriptor_table_extractor_2eproto_deps[1] = {
-        &::descriptor_table_google_2fprotobuf_2fempty_2eproto,
+    "\n\017extractor.proto\022\textractor\"\263\001\n\tFlightR"
+    "ow\022\025\n\rcidade_origem\030\001 \001(\t\022\026\n\016cidade_dest"
+    "ino\030\002 \001(\t\022\031\n\021assentos_ocupados\030\003 \001(\005\022\027\n\017"
+    "assentos_totais\030\004 \001(\005\022\034\n\024assentos_dispon"
+    "iveis\030\005 \001(\005\022\013\n\003dia\030\006 \001(\005\022\013\n\003mes\030\007 \001(\005\022\013\n"
+    "\003ano\030\010 \001(\005\"\342\001\n\nReservaRow\022\023\n\013tipo_quarto"
+    "\030\001 \001(\t\022\022\n\nnome_hotel\030\002 \001(\t\022\026\n\016cidade_des"
+    "tino\030\003 \001(\t\022\025\n\rnumero_quarto\030\004 \001(\005\022\032\n\022qua"
+    "ntidade_pessoas\030\005 \001(\005\022\r\n\005preco\030\006 \001(\002\022\017\n\007"
+    "ocupado\030\007 \001(\010\022\024\n\014data_ida_dia\030\010 \001(\005\022\024\n\014d"
+    "ata_ida_mes\030\t \001(\005\022\024\n\014data_ida_ano\030\n \001(\005\""
+    "\332\001\n\013PesquisaRow\022\025\n\rcidade_origem\030\001 \001(\t\022\026"
+    "\n\016cidade_destino\030\002 \001(\t\022\022\n\nnome_hotel\030\003 \001"
+    "(\t\022\024\n\014data_ida_dia\030\004 \001(\005\022\024\n\014data_ida_mes"
+    "\030\005 \001(\005\022\024\n\014data_ida_ano\030\006 \001(\005\022\026\n\016data_vol"
+    "ta_dia\030\007 \001(\005\022\026\n\016data_volta_mes\030\010 \001(\005\022\026\n\016"
+    "data_volta_ano\030\t \001(\005\"\205\001\n\013AllDataSend\022\"\n\004"
+    "voos\030\001 \003(\0132\024.extractor.FlightRow\022\'\n\010rese"
+    "rvas\030\002 \003(\0132\025.extractor.ReservaRow\022)\n\tpes"
+    "quisas\030\003 \003(\0132\026.extractor.PesquisaRow\"a\n\017"
+    "AllDataResponse\022\016\n\006stats1\030\001 \001(\005\022\016\n\006stats"
+    "2\030\002 \001(\005\022\016\n\006stats3\030\003 \001(\005\022\016\n\006stats4\030\004 \001(\005\022"
+    "\016\n\006stats5\030\005 \001(\0052T\n\020ExtractorService\022@\n\nG"
+    "etAllData\022\026.extractor.AllDataSend\032\032.extr"
+    "actor.AllDataResponseb\006proto3"
 };
 static ::absl::once_flag descriptor_table_extractor_2eproto_once;
 PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_extractor_2eproto = {
     false,
     false,
-    923,
+    989,
     descriptor_table_protodef_extractor_2eproto,
     "extractor.proto",
     &descriptor_table_extractor_2eproto_once,
-    descriptor_table_extractor_2eproto_deps,
-    1,
-    4,
+    nullptr,
+    0,
+    5,
     schemas,
     file_default_instances,
     TableStruct_extractor_2eproto::offsets,
@@ -1939,45 +1985,45 @@ void PesquisaRow::InternalSwap(PesquisaRow* PROTOBUF_RESTRICT PROTOBUF_NONNULL o
 }
 // ===================================================================
 
-class AllDataResponse::_Internal {
+class AllDataSend::_Internal {
  public:
 };
 
-AllDataResponse::AllDataResponse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+AllDataSend::AllDataSend(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(arena, AllDataResponse_class_data_.base()) {
+    : ::google::protobuf::Message(arena, AllDataSend_class_data_.base()) {
 #else   // PROTOBUF_CUSTOM_VTABLE
     : ::google::protobuf::Message(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
   SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:extractor.AllDataResponse)
+  // @@protoc_insertion_point(arena_constructor:extractor.AllDataSend)
 }
-PROTOBUF_NDEBUG_INLINE AllDataResponse::Impl_::Impl_(
+PROTOBUF_NDEBUG_INLINE AllDataSend::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility,
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-    const ::extractor::AllDataResponse& from_msg)
+    const ::extractor::AllDataSend& from_msg)
       : voos_{visibility, arena, from.voos_},
         reservas_{visibility, arena, from.reservas_},
         pesquisas_{visibility, arena, from.pesquisas_},
         _cached_size_{0} {}
 
-AllDataResponse::AllDataResponse(
+AllDataSend::AllDataSend(
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
-    const AllDataResponse& from)
+    const AllDataSend& from)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(arena, AllDataResponse_class_data_.base()) {
+    : ::google::protobuf::Message(arena, AllDataSend_class_data_.base()) {
 #else   // PROTOBUF_CUSTOM_VTABLE
     : ::google::protobuf::Message(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
-  AllDataResponse* const _this = this;
+  AllDataSend* const _this = this;
   (void)_this;
   _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
       from._internal_metadata_);
   new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
 
-  // @@protoc_insertion_point(copy_constructor:extractor.AllDataResponse)
+  // @@protoc_insertion_point(copy_constructor:extractor.AllDataSend)
 }
-PROTOBUF_NDEBUG_INLINE AllDataResponse::Impl_::Impl_(
+PROTOBUF_NDEBUG_INLINE AllDataSend::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility,
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
       : voos_{visibility, arena},
@@ -1985,67 +2031,67 @@ PROTOBUF_NDEBUG_INLINE AllDataResponse::Impl_::Impl_(
         pesquisas_{visibility, arena},
         _cached_size_{0} {}
 
-inline void AllDataResponse::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
+inline void AllDataSend::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
   new (&_impl_) Impl_(internal_visibility(), arena);
 }
-AllDataResponse::~AllDataResponse() {
-  // @@protoc_insertion_point(destructor:extractor.AllDataResponse)
+AllDataSend::~AllDataSend() {
+  // @@protoc_insertion_point(destructor:extractor.AllDataSend)
   SharedDtor(*this);
 }
-inline void AllDataResponse::SharedDtor(MessageLite& self) {
-  AllDataResponse& this_ = static_cast<AllDataResponse&>(self);
+inline void AllDataSend::SharedDtor(MessageLite& self) {
+  AllDataSend& this_ = static_cast<AllDataSend&>(self);
   this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   ABSL_DCHECK(this_.GetArena() == nullptr);
   this_._impl_.~Impl_();
 }
 
-inline void* PROTOBUF_NONNULL AllDataResponse::PlacementNew_(
+inline void* PROTOBUF_NONNULL AllDataSend::PlacementNew_(
     const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
-  return ::new (mem) AllDataResponse(arena);
+  return ::new (mem) AllDataSend(arena);
 }
-constexpr auto AllDataResponse::InternalNewImpl_() {
+constexpr auto AllDataSend::InternalNewImpl_() {
   constexpr auto arena_bits = ::google::protobuf::internal::EncodePlacementArenaOffsets({
-      PROTOBUF_FIELD_OFFSET(AllDataResponse, _impl_.voos_) +
-          decltype(AllDataResponse::_impl_.voos_)::
+      PROTOBUF_FIELD_OFFSET(AllDataSend, _impl_.voos_) +
+          decltype(AllDataSend::_impl_.voos_)::
               InternalGetArenaOffset(
                   ::google::protobuf::Message::internal_visibility()),
-      PROTOBUF_FIELD_OFFSET(AllDataResponse, _impl_.reservas_) +
-          decltype(AllDataResponse::_impl_.reservas_)::
+      PROTOBUF_FIELD_OFFSET(AllDataSend, _impl_.reservas_) +
+          decltype(AllDataSend::_impl_.reservas_)::
               InternalGetArenaOffset(
                   ::google::protobuf::Message::internal_visibility()),
-      PROTOBUF_FIELD_OFFSET(AllDataResponse, _impl_.pesquisas_) +
-          decltype(AllDataResponse::_impl_.pesquisas_)::
+      PROTOBUF_FIELD_OFFSET(AllDataSend, _impl_.pesquisas_) +
+          decltype(AllDataSend::_impl_.pesquisas_)::
               InternalGetArenaOffset(
                   ::google::protobuf::Message::internal_visibility()),
   });
   if (arena_bits.has_value()) {
     return ::google::protobuf::internal::MessageCreator::ZeroInit(
-        sizeof(AllDataResponse), alignof(AllDataResponse), *arena_bits);
+        sizeof(AllDataSend), alignof(AllDataSend), *arena_bits);
   } else {
-    return ::google::protobuf::internal::MessageCreator(&AllDataResponse::PlacementNew_,
-                                 sizeof(AllDataResponse),
-                                 alignof(AllDataResponse));
+    return ::google::protobuf::internal::MessageCreator(&AllDataSend::PlacementNew_,
+                                 sizeof(AllDataSend),
+                                 alignof(AllDataSend));
   }
 }
-constexpr auto AllDataResponse::InternalGenerateClassData_() {
+constexpr auto AllDataSend::InternalGenerateClassData_() {
   return ::google::protobuf::internal::ClassDataFull{
       ::google::protobuf::internal::ClassData{
-          &_AllDataResponse_default_instance_._instance,
+          &_AllDataSend_default_instance_._instance,
           &_table_.header,
           nullptr,  // OnDemandRegisterArenaDtor
           nullptr,  // IsInitialized
-          &AllDataResponse::MergeImpl,
-          ::google::protobuf::Message::GetNewImpl<AllDataResponse>(),
+          &AllDataSend::MergeImpl,
+          ::google::protobuf::Message::GetNewImpl<AllDataSend>(),
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-          &AllDataResponse::SharedDtor,
-          ::google::protobuf::Message::GetClearImpl<AllDataResponse>(), &AllDataResponse::ByteSizeLong,
-              &AllDataResponse::_InternalSerialize,
+          &AllDataSend::SharedDtor,
+          ::google::protobuf::Message::GetClearImpl<AllDataSend>(), &AllDataSend::ByteSizeLong,
+              &AllDataSend::_InternalSerialize,
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          PROTOBUF_FIELD_OFFSET(AllDataResponse, _impl_._cached_size_),
+          PROTOBUF_FIELD_OFFSET(AllDataSend, _impl_._cached_size_),
           false,
       },
-      &AllDataResponse::kDescriptorMethods,
+      &AllDataSend::kDescriptorMethods,
       &descriptor_table_extractor_2eproto,
       nullptr,  // tracker
   };
@@ -2053,17 +2099,17 @@ constexpr auto AllDataResponse::InternalGenerateClassData_() {
 
 PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const ::google::protobuf::internal::ClassDataFull
-        AllDataResponse_class_data_ =
-            AllDataResponse::InternalGenerateClassData_();
+        AllDataSend_class_data_ =
+            AllDataSend::InternalGenerateClassData_();
 
-const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL AllDataResponse::GetClassData() const {
-  ::google::protobuf::internal::PrefetchToLocalCache(&AllDataResponse_class_data_);
-  ::google::protobuf::internal::PrefetchToLocalCache(AllDataResponse_class_data_.tc_table);
-  return AllDataResponse_class_data_.base();
+const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL AllDataSend::GetClassData() const {
+  ::google::protobuf::internal::PrefetchToLocalCache(&AllDataSend_class_data_);
+  ::google::protobuf::internal::PrefetchToLocalCache(AllDataSend_class_data_.tc_table);
+  return AllDataSend_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
 const ::_pbi::TcParseTable<2, 3, 3, 0, 2>
-AllDataResponse::_table_ = {
+AllDataSend::_table_ = {
   {
     0,  // no _has_bits_
     0, // no _extensions_
@@ -2074,34 +2120,34 @@ AllDataResponse::_table_ = {
     3,  // num_field_entries
     3,  // num_aux_entries
     offsetof(decltype(_table_), aux_entries),
-    AllDataResponse_class_data_.base(),
+    AllDataSend_class_data_.base(),
     nullptr,  // post_loop_handler
     ::_pbi::TcParser::GenericFallback,  // fallback
     #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::extractor::AllDataResponse>(),  // to_prefetch
+    ::_pbi::TcParser::GetTable<::extractor::AllDataSend>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
     {::_pbi::TcParser::MiniParse, {}},
     // repeated .extractor.FlightRow voos = 1;
     {::_pbi::TcParser::FastMtR1,
-     {10, 63, 0, PROTOBUF_FIELD_OFFSET(AllDataResponse, _impl_.voos_)}},
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(AllDataSend, _impl_.voos_)}},
     // repeated .extractor.ReservaRow reservas = 2;
     {::_pbi::TcParser::FastMtR1,
-     {18, 63, 1, PROTOBUF_FIELD_OFFSET(AllDataResponse, _impl_.reservas_)}},
+     {18, 63, 1, PROTOBUF_FIELD_OFFSET(AllDataSend, _impl_.reservas_)}},
     // repeated .extractor.PesquisaRow pesquisas = 3;
     {::_pbi::TcParser::FastMtR1,
-     {26, 63, 2, PROTOBUF_FIELD_OFFSET(AllDataResponse, _impl_.pesquisas_)}},
+     {26, 63, 2, PROTOBUF_FIELD_OFFSET(AllDataSend, _impl_.pesquisas_)}},
   }}, {{
     65535, 65535
   }}, {{
     // repeated .extractor.FlightRow voos = 1;
-    {PROTOBUF_FIELD_OFFSET(AllDataResponse, _impl_.voos_), 0, 0,
+    {PROTOBUF_FIELD_OFFSET(AllDataSend, _impl_.voos_), 0, 0,
     (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
     // repeated .extractor.ReservaRow reservas = 2;
-    {PROTOBUF_FIELD_OFFSET(AllDataResponse, _impl_.reservas_), 0, 1,
+    {PROTOBUF_FIELD_OFFSET(AllDataSend, _impl_.reservas_), 0, 1,
     (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
     // repeated .extractor.PesquisaRow pesquisas = 3;
-    {PROTOBUF_FIELD_OFFSET(AllDataResponse, _impl_.pesquisas_), 0, 2,
+    {PROTOBUF_FIELD_OFFSET(AllDataSend, _impl_.pesquisas_), 0, 2,
     (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
   }},
   {{
@@ -2112,8 +2158,8 @@ AllDataResponse::_table_ = {
   {{
   }},
 };
-PROTOBUF_NOINLINE void AllDataResponse::Clear() {
-// @@protoc_insertion_point(message_clear_start:extractor.AllDataResponse)
+PROTOBUF_NOINLINE void AllDataSend::Clear() {
+// @@protoc_insertion_point(message_clear_start:extractor.AllDataSend)
   ::google::protobuf::internal::TSanWrite(&_impl_);
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
@@ -2126,17 +2172,17 @@ PROTOBUF_NOINLINE void AllDataResponse::Clear() {
 }
 
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-::uint8_t* PROTOBUF_NONNULL AllDataResponse::_InternalSerialize(
+::uint8_t* PROTOBUF_NONNULL AllDataSend::_InternalSerialize(
     const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
     ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
-  const AllDataResponse& this_ = static_cast<const AllDataResponse&>(base);
+  const AllDataSend& this_ = static_cast<const AllDataSend&>(base);
 #else   // PROTOBUF_CUSTOM_VTABLE
-::uint8_t* PROTOBUF_NONNULL AllDataResponse::_InternalSerialize(
+::uint8_t* PROTOBUF_NONNULL AllDataSend::_InternalSerialize(
     ::uint8_t* PROTOBUF_NONNULL target,
     ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
-  const AllDataResponse& this_ = *this;
+  const AllDataSend& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-  // @@protoc_insertion_point(serialize_to_array_start:extractor.AllDataResponse)
+  // @@protoc_insertion_point(serialize_to_array_start:extractor.AllDataSend)
   ::uint32_t cached_has_bits = 0;
   (void)cached_has_bits;
 
@@ -2178,18 +2224,18 @@ PROTOBUF_NOINLINE void AllDataResponse::Clear() {
         ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
             this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:extractor.AllDataResponse)
+  // @@protoc_insertion_point(serialize_to_array_end:extractor.AllDataSend)
   return target;
 }
 
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-::size_t AllDataResponse::ByteSizeLong(const MessageLite& base) {
-  const AllDataResponse& this_ = static_cast<const AllDataResponse&>(base);
+::size_t AllDataSend::ByteSizeLong(const MessageLite& base) {
+  const AllDataSend& this_ = static_cast<const AllDataSend&>(base);
 #else   // PROTOBUF_CUSTOM_VTABLE
-::size_t AllDataResponse::ByteSizeLong() const {
-  const AllDataResponse& this_ = *this;
+::size_t AllDataSend::ByteSizeLong() const {
+  const AllDataSend& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-  // @@protoc_insertion_point(message_byte_size_start:extractor.AllDataResponse)
+  // @@protoc_insertion_point(message_byte_size_start:extractor.AllDataSend)
   ::size_t total_size = 0;
 
   ::uint32_t cached_has_bits = 0;
@@ -2224,10 +2270,10 @@ PROTOBUF_NOINLINE void AllDataResponse::Clear() {
                                              &this_._impl_._cached_size_);
 }
 
-void AllDataResponse::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::protobuf::MessageLite& from_msg) {
-  auto* const _this = static_cast<AllDataResponse*>(&to_msg);
-  auto& from = static_cast<const AllDataResponse&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:extractor.AllDataResponse)
+void AllDataSend::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::protobuf::MessageLite& from_msg) {
+  auto* const _this = static_cast<AllDataSend*>(&to_msg);
+  auto& from = static_cast<const AllDataSend&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:extractor.AllDataSend)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
@@ -2238,6 +2284,366 @@ void AllDataResponse::MergeImpl(::google::protobuf::MessageLite& to_msg, const :
       from._internal_reservas());
   _this->_internal_mutable_pesquisas()->MergeFrom(
       from._internal_pesquisas());
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void AllDataSend::CopyFrom(const AllDataSend& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:extractor.AllDataSend)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+
+void AllDataSend::InternalSwap(AllDataSend* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  _impl_.voos_.InternalSwap(&other->_impl_.voos_);
+  _impl_.reservas_.InternalSwap(&other->_impl_.reservas_);
+  _impl_.pesquisas_.InternalSwap(&other->_impl_.pesquisas_);
+}
+
+::google::protobuf::Metadata AllDataSend::GetMetadata() const {
+  return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
+}
+// ===================================================================
+
+class AllDataResponse::_Internal {
+ public:
+  using HasBits =
+      decltype(std::declval<AllDataResponse>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+      8 * PROTOBUF_FIELD_OFFSET(AllDataResponse, _impl_._has_bits_);
+};
+
+AllDataResponse::AllDataResponse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, AllDataResponse_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:extractor.AllDataResponse)
+}
+AllDataResponse::AllDataResponse(
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const AllDataResponse& from)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, AllDataResponse_class_data_.base()),
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena),
+#endif  // PROTOBUF_CUSTOM_VTABLE
+      _impl_(from._impl_) {
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+}
+PROTOBUF_NDEBUG_INLINE AllDataResponse::Impl_::Impl_(
+    ::google::protobuf::internal::InternalVisibility visibility,
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+      : _cached_size_{0} {}
+
+inline void AllDataResponse::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
+  new (&_impl_) Impl_(internal_visibility(), arena);
+  ::memset(reinterpret_cast<char *>(&_impl_) +
+               offsetof(Impl_, stats1_),
+           0,
+           offsetof(Impl_, stats5_) -
+               offsetof(Impl_, stats1_) +
+               sizeof(Impl_::stats5_));
+}
+AllDataResponse::~AllDataResponse() {
+  // @@protoc_insertion_point(destructor:extractor.AllDataResponse)
+  SharedDtor(*this);
+}
+inline void AllDataResponse::SharedDtor(MessageLite& self) {
+  AllDataResponse& this_ = static_cast<AllDataResponse&>(self);
+  this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  ABSL_DCHECK(this_.GetArena() == nullptr);
+  this_._impl_.~Impl_();
+}
+
+inline void* PROTOBUF_NONNULL AllDataResponse::PlacementNew_(
+    const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
+  return ::new (mem) AllDataResponse(arena);
+}
+constexpr auto AllDataResponse::InternalNewImpl_() {
+  return ::google::protobuf::internal::MessageCreator::ZeroInit(sizeof(AllDataResponse),
+                                            alignof(AllDataResponse));
+}
+constexpr auto AllDataResponse::InternalGenerateClassData_() {
+  return ::google::protobuf::internal::ClassDataFull{
+      ::google::protobuf::internal::ClassData{
+          &_AllDataResponse_default_instance_._instance,
+          &_table_.header,
+          nullptr,  // OnDemandRegisterArenaDtor
+          nullptr,  // IsInitialized
+          &AllDataResponse::MergeImpl,
+          ::google::protobuf::Message::GetNewImpl<AllDataResponse>(),
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+          &AllDataResponse::SharedDtor,
+          ::google::protobuf::Message::GetClearImpl<AllDataResponse>(), &AllDataResponse::ByteSizeLong,
+              &AllDataResponse::_InternalSerialize,
+#endif  // PROTOBUF_CUSTOM_VTABLE
+          PROTOBUF_FIELD_OFFSET(AllDataResponse, _impl_._cached_size_),
+          false,
+      },
+      &AllDataResponse::kDescriptorMethods,
+      &descriptor_table_extractor_2eproto,
+      nullptr,  // tracker
+  };
+}
+
+PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const ::google::protobuf::internal::ClassDataFull
+        AllDataResponse_class_data_ =
+            AllDataResponse::InternalGenerateClassData_();
+
+const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL AllDataResponse::GetClassData() const {
+  ::google::protobuf::internal::PrefetchToLocalCache(&AllDataResponse_class_data_);
+  ::google::protobuf::internal::PrefetchToLocalCache(AllDataResponse_class_data_.tc_table);
+  return AllDataResponse_class_data_.base();
+}
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<3, 5, 0, 0, 2>
+AllDataResponse::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(AllDataResponse, _impl_._has_bits_),
+    0, // no _extensions_
+    5, 56,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967264,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    5,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    AllDataResponse_class_data_.base(),
+    nullptr,  // post_loop_handler
+    ::_pbi::TcParser::GenericFallback,  // fallback
+    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
+    ::_pbi::TcParser::GetTable<::extractor::AllDataResponse>(),  // to_prefetch
+    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
+  }, {{
+    {::_pbi::TcParser::MiniParse, {}},
+    // int32 stats1 = 1;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(AllDataResponse, _impl_.stats1_), 0>(),
+     {8, 0, 0, PROTOBUF_FIELD_OFFSET(AllDataResponse, _impl_.stats1_)}},
+    // int32 stats2 = 2;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(AllDataResponse, _impl_.stats2_), 1>(),
+     {16, 1, 0, PROTOBUF_FIELD_OFFSET(AllDataResponse, _impl_.stats2_)}},
+    // int32 stats3 = 3;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(AllDataResponse, _impl_.stats3_), 2>(),
+     {24, 2, 0, PROTOBUF_FIELD_OFFSET(AllDataResponse, _impl_.stats3_)}},
+    // int32 stats4 = 4;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(AllDataResponse, _impl_.stats4_), 3>(),
+     {32, 3, 0, PROTOBUF_FIELD_OFFSET(AllDataResponse, _impl_.stats4_)}},
+    // int32 stats5 = 5;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(AllDataResponse, _impl_.stats5_), 4>(),
+     {40, 4, 0, PROTOBUF_FIELD_OFFSET(AllDataResponse, _impl_.stats5_)}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // int32 stats1 = 1;
+    {PROTOBUF_FIELD_OFFSET(AllDataResponse, _impl_.stats1_), _Internal::kHasBitsOffset + 0, 0,
+    (0 | ::_fl::kFcOptional | ::_fl::kInt32)},
+    // int32 stats2 = 2;
+    {PROTOBUF_FIELD_OFFSET(AllDataResponse, _impl_.stats2_), _Internal::kHasBitsOffset + 1, 0,
+    (0 | ::_fl::kFcOptional | ::_fl::kInt32)},
+    // int32 stats3 = 3;
+    {PROTOBUF_FIELD_OFFSET(AllDataResponse, _impl_.stats3_), _Internal::kHasBitsOffset + 2, 0,
+    (0 | ::_fl::kFcOptional | ::_fl::kInt32)},
+    // int32 stats4 = 4;
+    {PROTOBUF_FIELD_OFFSET(AllDataResponse, _impl_.stats4_), _Internal::kHasBitsOffset + 3, 0,
+    (0 | ::_fl::kFcOptional | ::_fl::kInt32)},
+    // int32 stats5 = 5;
+    {PROTOBUF_FIELD_OFFSET(AllDataResponse, _impl_.stats5_), _Internal::kHasBitsOffset + 4, 0,
+    (0 | ::_fl::kFcOptional | ::_fl::kInt32)},
+  }},
+  // no aux_entries
+  {{
+  }},
+};
+PROTOBUF_NOINLINE void AllDataResponse::Clear() {
+// @@protoc_insertion_point(message_clear_start:extractor.AllDataResponse)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _impl_._has_bits_[0];
+  if ((cached_has_bits & 0x0000001fu) != 0) {
+    ::memset(&_impl_.stats1_, 0, static_cast<::size_t>(
+        reinterpret_cast<char*>(&_impl_.stats5_) -
+        reinterpret_cast<char*>(&_impl_.stats1_)) + sizeof(_impl_.stats5_));
+  }
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::uint8_t* PROTOBUF_NONNULL AllDataResponse::_InternalSerialize(
+    const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
+  const AllDataResponse& this_ = static_cast<const AllDataResponse&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::uint8_t* PROTOBUF_NONNULL AllDataResponse::_InternalSerialize(
+    ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+  const AllDataResponse& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  // @@protoc_insertion_point(serialize_to_array_start:extractor.AllDataResponse)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  // int32 stats1 = 1;
+  if ((this_._impl_._has_bits_[0] & 0x00000001u) != 0) {
+    if (this_._internal_stats1() != 0) {
+      target =
+          ::google::protobuf::internal::WireFormatLite::WriteInt32ToArrayWithField<1>(
+              stream, this_._internal_stats1(), target);
+    }
+  }
+
+  // int32 stats2 = 2;
+  if ((this_._impl_._has_bits_[0] & 0x00000002u) != 0) {
+    if (this_._internal_stats2() != 0) {
+      target =
+          ::google::protobuf::internal::WireFormatLite::WriteInt32ToArrayWithField<2>(
+              stream, this_._internal_stats2(), target);
+    }
+  }
+
+  // int32 stats3 = 3;
+  if ((this_._impl_._has_bits_[0] & 0x00000004u) != 0) {
+    if (this_._internal_stats3() != 0) {
+      target =
+          ::google::protobuf::internal::WireFormatLite::WriteInt32ToArrayWithField<3>(
+              stream, this_._internal_stats3(), target);
+    }
+  }
+
+  // int32 stats4 = 4;
+  if ((this_._impl_._has_bits_[0] & 0x00000008u) != 0) {
+    if (this_._internal_stats4() != 0) {
+      target =
+          ::google::protobuf::internal::WireFormatLite::WriteInt32ToArrayWithField<4>(
+              stream, this_._internal_stats4(), target);
+    }
+  }
+
+  // int32 stats5 = 5;
+  if ((this_._impl_._has_bits_[0] & 0x00000010u) != 0) {
+    if (this_._internal_stats5() != 0) {
+      target =
+          ::google::protobuf::internal::WireFormatLite::WriteInt32ToArrayWithField<5>(
+              stream, this_._internal_stats5(), target);
+    }
+  }
+
+  if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:extractor.AllDataResponse)
+  return target;
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::size_t AllDataResponse::ByteSizeLong(const MessageLite& base) {
+  const AllDataResponse& this_ = static_cast<const AllDataResponse&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::size_t AllDataResponse::ByteSizeLong() const {
+  const AllDataResponse& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  // @@protoc_insertion_point(message_byte_size_start:extractor.AllDataResponse)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void)cached_has_bits;
+
+  ::_pbi::Prefetch5LinesFrom7Lines(&this_);
+  cached_has_bits = this_._impl_._has_bits_[0];
+  if ((cached_has_bits & 0x0000001fu) != 0) {
+    // int32 stats1 = 1;
+    if ((cached_has_bits & 0x00000001u) != 0) {
+      if (this_._internal_stats1() != 0) {
+        total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(
+            this_._internal_stats1());
+      }
+    }
+    // int32 stats2 = 2;
+    if ((cached_has_bits & 0x00000002u) != 0) {
+      if (this_._internal_stats2() != 0) {
+        total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(
+            this_._internal_stats2());
+      }
+    }
+    // int32 stats3 = 3;
+    if ((cached_has_bits & 0x00000004u) != 0) {
+      if (this_._internal_stats3() != 0) {
+        total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(
+            this_._internal_stats3());
+      }
+    }
+    // int32 stats4 = 4;
+    if ((cached_has_bits & 0x00000008u) != 0) {
+      if (this_._internal_stats4() != 0) {
+        total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(
+            this_._internal_stats4());
+      }
+    }
+    // int32 stats5 = 5;
+    if ((cached_has_bits & 0x00000010u) != 0) {
+      if (this_._internal_stats5() != 0) {
+        total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(
+            this_._internal_stats5());
+      }
+    }
+  }
+  return this_.MaybeComputeUnknownFieldsSize(total_size,
+                                             &this_._impl_._cached_size_);
+}
+
+void AllDataResponse::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::protobuf::MessageLite& from_msg) {
+  auto* const _this = static_cast<AllDataResponse*>(&to_msg);
+  auto& from = static_cast<const AllDataResponse&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:extractor.AllDataResponse)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = from._impl_._has_bits_[0];
+  if ((cached_has_bits & 0x0000001fu) != 0) {
+    if ((cached_has_bits & 0x00000001u) != 0) {
+      if (from._internal_stats1() != 0) {
+        _this->_impl_.stats1_ = from._impl_.stats1_;
+      }
+    }
+    if ((cached_has_bits & 0x00000002u) != 0) {
+      if (from._internal_stats2() != 0) {
+        _this->_impl_.stats2_ = from._impl_.stats2_;
+      }
+    }
+    if ((cached_has_bits & 0x00000004u) != 0) {
+      if (from._internal_stats3() != 0) {
+        _this->_impl_.stats3_ = from._impl_.stats3_;
+      }
+    }
+    if ((cached_has_bits & 0x00000008u) != 0) {
+      if (from._internal_stats4() != 0) {
+        _this->_impl_.stats4_ = from._impl_.stats4_;
+      }
+    }
+    if ((cached_has_bits & 0x00000010u) != 0) {
+      if (from._internal_stats5() != 0) {
+        _this->_impl_.stats5_ = from._impl_.stats5_;
+      }
+    }
+  }
+  _this->_impl_._has_bits_[0] |= cached_has_bits;
   _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
@@ -2252,9 +2658,13 @@ void AllDataResponse::CopyFrom(const AllDataResponse& from) {
 void AllDataResponse::InternalSwap(AllDataResponse* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  _impl_.voos_.InternalSwap(&other->_impl_.voos_);
-  _impl_.reservas_.InternalSwap(&other->_impl_.reservas_);
-  _impl_.pesquisas_.InternalSwap(&other->_impl_.pesquisas_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(AllDataResponse, _impl_.stats5_)
+      + sizeof(AllDataResponse::_impl_.stats5_)
+      - PROTOBUF_FIELD_OFFSET(AllDataResponse, _impl_.stats1_)>(
+          reinterpret_cast<char*>(&_impl_.stats1_),
+          reinterpret_cast<char*>(&other->_impl_.stats1_));
 }
 
 ::google::protobuf::Metadata AllDataResponse::GetMetadata() const {
