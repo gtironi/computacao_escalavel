@@ -1,9 +1,9 @@
 # server/grpc_server.py
 import grpc
 from concurrent import futures
-from mock_server.proto import extractor_pb2
-from mock_server.proto import extractor_pb2_grpc
-from mock_server.client import generate_all
+from mock_client.proto import extractor_pb2
+from mock_client.proto import extractor_pb2_grpc
+from mock_client.client import generate_all
 
 class ExtractorClient(extractor_pb2_grpc.ExtractorServiceServicer):   
     def GetAllData(self, request, context):

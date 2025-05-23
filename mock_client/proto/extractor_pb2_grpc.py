@@ -3,7 +3,7 @@
 import grpc
 import warnings
 
-from mock_server.proto import extractor_pb2 as mock__server_dot_proto_dot_extractor__pb2
+from mock_client.proto import extractor_pb2 as mock__server_dot_proto_dot_extractor__pb2
 
 GRPC_GENERATED_VERSION = '1.71.0'
 GRPC_VERSION = grpc.__version__

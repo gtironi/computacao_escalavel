@@ -5,7 +5,7 @@ from faker import Faker
 from datetime import datetime, timedelta
 from concurrent.futures import ThreadPoolExecutor
 from collections import defaultdict
-from mock_server.proto import extractor_pb2
+from mock_client.proto import extractor_pb2
 
 fake = Faker('pt_BR')
 random.seed(42)
