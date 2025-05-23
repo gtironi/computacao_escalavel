@@ -92,7 +92,7 @@ public:
             }
             else
             {
-                cerr << "Erro ao ler o cabeçalho do memo CSV." << endl;
+                cerr << "Erro ao ler o cabeçalho do CSV em memória." << endl;
             }
         }
     };
@@ -420,6 +420,11 @@ public:
     {
         outputBuffer.finalizeInput();
     }
+
+    /**
+     * @brief Retorna o cabeçalho do extrator (nomes das colunas).
+     */
+    std::vector<std::string> getHeader() const { return strColumnsName; }
 };
 
 // Classe base genérica para carregadores (última etapa do pipeline)
