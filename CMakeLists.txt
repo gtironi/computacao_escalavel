@@ -16,7 +16,7 @@ set(PROTO_SRC
 )
 
 # Main client source
-add_executable(grpc_server grpc_server.cpp ${PROTO_SRC})
+add_executable(grpc_server grpc_server.cpp pipeline.cpp ${PROTO_SRC})
 
 # Include directories
 target_include_directories(grpc_server PRIVATE
