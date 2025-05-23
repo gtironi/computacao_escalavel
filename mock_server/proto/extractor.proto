@@ -2,7 +2,6 @@ syntax = "proto3";
 
 package extractor;
 
-// ---------- VOOS ----------
 message FlightRow {
   string cidade_origem = 1;
   string cidade_destino = 2;
@@ -13,8 +12,6 @@ message FlightRow {
   int32 mes = 7;
   int32 ano = 8;
 }
-
-
 
 // ---------- RESERVAS ----------
 message ReservaRow {
@@ -30,7 +27,6 @@ message ReservaRow {
   int32 data_ida_ano = 10;
 }
 
-
 // ---------- PESQUISAS ----------
 message PesquisaRow {
   string cidade_origem = 1;
@@ -45,9 +41,9 @@ message PesquisaRow {
 }
 
 message AllDataSend {
-  repeated FlightRow voos = 1;
-  repeated ReservaRow reservas = 2;
-  repeated PesquisaRow pesquisas = 3;
+  string voos = 1;
+  string reservas = 2;
+  string pesquisas = 3;
 }
 
 message AllDataResponse{
@@ -57,6 +53,8 @@ message AllDataResponse{
   int32 stats4 = 4;
   int32 stats5 = 5;
 }
+
+
 
 // ---------- SERVICE ----------
 service ExtractorService {

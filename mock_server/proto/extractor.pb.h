@@ -987,6 +987,236 @@ class FlightRow final : public ::google::protobuf::Message
 extern const ::google::protobuf::internal::ClassDataFull FlightRow_class_data_;
 // -------------------------------------------------------------------
 
+class AllDataSend final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:extractor.AllDataSend) */ {
+ public:
+  inline AllDataSend() : AllDataSend(nullptr) {}
+  ~AllDataSend() PROTOBUF_FINAL;
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+  void operator delete(AllDataSend* PROTOBUF_NONNULL msg, std::destroying_delete_t) {
+    SharedDtor(*msg);
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(AllDataSend));
+  }
+#endif
+
+  template <typename = void>
+  explicit PROTOBUF_CONSTEXPR AllDataSend(::google::protobuf::internal::ConstantInitialized);
+
+  inline AllDataSend(const AllDataSend& from) : AllDataSend(nullptr, from) {}
+  inline AllDataSend(AllDataSend&& from) noexcept
+      : AllDataSend(nullptr, std::move(from)) {}
+  inline AllDataSend& operator=(const AllDataSend& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline AllDataSend& operator=(AllDataSend&& from) noexcept {
+    if (this == &from) return *this;
+    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const AllDataSend& default_instance() {
+    return *reinterpret_cast<const AllDataSend*>(
+        &_AllDataSend_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages = 3;
+  friend void swap(AllDataSend& a, AllDataSend& b) { a.Swap(&b); }
+  inline void Swap(AllDataSend* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(AllDataSend* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  AllDataSend* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<AllDataSend>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const AllDataSend& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom(const AllDataSend& from) { AllDataSend::MergeImpl(*this, from); }
+
+  private:
+  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
+                        const ::google::protobuf::MessageLite& from_msg);
+
+  public:
+  bool IsInitialized() const {
+    return true;
+  }
+  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
+  #if defined(PROTOBUF_CUSTOM_VTABLE)
+  private:
+  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
+  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
+
+  public:
+  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+    return _InternalSerialize(*this, target, stream);
+  }
+  #else   // PROTOBUF_CUSTOM_VTABLE
+  ::size_t ByteSizeLong() const final;
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
+  #endif  // PROTOBUF_CUSTOM_VTABLE
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static void SharedDtor(MessageLite& self);
+  void InternalSwap(AllDataSend* PROTOBUF_NONNULL other);
+ private:
+  template <typename T>
+  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
+  static ::absl::string_view FullMessageName() { return "extractor.AllDataSend"; }
+
+ protected:
+  explicit AllDataSend(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  AllDataSend(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const AllDataSend& from);
+  AllDataSend(
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, AllDataSend&& from) noexcept
+      : AllDataSend(arena) {
+    *this = ::std::move(from);
+  }
+  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
+  static void* PROTOBUF_NONNULL PlacementNew_(
+      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static constexpr auto InternalNewImpl_();
+
+ public:
+  static constexpr auto InternalGenerateClassData_();
+
+  ::google::protobuf::Metadata GetMetadata() const;
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+  enum : int {
+    kVoosFieldNumber = 1,
+    kReservasFieldNumber = 2,
+    kPesquisasFieldNumber = 3,
+  };
+  // string voos = 1;
+  void clear_voos() ;
+  const std::string& voos() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_voos(Arg_&& arg, Args_... args);
+  std::string* PROTOBUF_NONNULL mutable_voos();
+  [[nodiscard]] std::string* PROTOBUF_NULLABLE release_voos();
+  void set_allocated_voos(std::string* PROTOBUF_NULLABLE value);
+
+  private:
+  const std::string& _internal_voos() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_voos(const std::string& value);
+  std::string* PROTOBUF_NONNULL _internal_mutable_voos();
+
+  public:
+  // string reservas = 2;
+  void clear_reservas() ;
+  const std::string& reservas() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_reservas(Arg_&& arg, Args_... args);
+  std::string* PROTOBUF_NONNULL mutable_reservas();
+  [[nodiscard]] std::string* PROTOBUF_NULLABLE release_reservas();
+  void set_allocated_reservas(std::string* PROTOBUF_NULLABLE value);
+
+  private:
+  const std::string& _internal_reservas() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_reservas(const std::string& value);
+  std::string* PROTOBUF_NONNULL _internal_mutable_reservas();
+
+  public:
+  // string pesquisas = 3;
+  void clear_pesquisas() ;
+  const std::string& pesquisas() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_pesquisas(Arg_&& arg, Args_... args);
+  std::string* PROTOBUF_NONNULL mutable_pesquisas();
+  [[nodiscard]] std::string* PROTOBUF_NULLABLE release_pesquisas();
+  void set_allocated_pesquisas(std::string* PROTOBUF_NULLABLE value);
+
+  private:
+  const std::string& _internal_pesquisas() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_pesquisas(const std::string& value);
+  std::string* PROTOBUF_NONNULL _internal_mutable_pesquisas();
+
+  public:
+  // @@protoc_insertion_point(class_scope:extractor.AllDataSend)
+ private:
+  class _Internal;
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<2, 3,
+                                   0, 51,
+                                   2>
+      _table_;
+
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+        const AllDataSend& from_msg);
+    ::google::protobuf::internal::HasBits<1> _has_bits_;
+    ::google::protobuf::internal::CachedSize _cached_size_;
+    ::google::protobuf::internal::ArenaStringPtr voos_;
+    ::google::protobuf::internal::ArenaStringPtr reservas_;
+    ::google::protobuf::internal::ArenaStringPtr pesquisas_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_extractor_2eproto;
+};
+
+extern const ::google::protobuf::internal::ClassDataFull AllDataSend_class_data_;
+// -------------------------------------------------------------------
+
 class AllDataResponse final : public ::google::protobuf::Message
 /* @@protoc_insertion_point(class_definition:extractor.AllDataResponse) */ {
  public:
@@ -1224,241 +1454,6 @@ class AllDataResponse final : public ::google::protobuf::Message
 };
 
 extern const ::google::protobuf::internal::ClassDataFull AllDataResponse_class_data_;
-// -------------------------------------------------------------------
-
-class AllDataSend final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:extractor.AllDataSend) */ {
- public:
-  inline AllDataSend() : AllDataSend(nullptr) {}
-  ~AllDataSend() PROTOBUF_FINAL;
-
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-  void operator delete(AllDataSend* PROTOBUF_NONNULL msg, std::destroying_delete_t) {
-    SharedDtor(*msg);
-    ::google::protobuf::internal::SizedDelete(msg, sizeof(AllDataSend));
-  }
-#endif
-
-  template <typename = void>
-  explicit PROTOBUF_CONSTEXPR AllDataSend(::google::protobuf::internal::ConstantInitialized);
-
-  inline AllDataSend(const AllDataSend& from) : AllDataSend(nullptr, from) {}
-  inline AllDataSend(AllDataSend&& from) noexcept
-      : AllDataSend(nullptr, std::move(from)) {}
-  inline AllDataSend& operator=(const AllDataSend& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline AllDataSend& operator=(AllDataSend&& from) noexcept {
-    if (this == &from) return *this;
-    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
-      ABSL_ATTRIBUTE_LIFETIME_BOUND {
-    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
-  }
-  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
-      ABSL_ATTRIBUTE_LIFETIME_BOUND {
-    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
-  }
-
-  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
-    return GetDescriptor();
-  }
-  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const AllDataSend& default_instance() {
-    return *reinterpret_cast<const AllDataSend*>(
-        &_AllDataSend_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages = 3;
-  friend void swap(AllDataSend& a, AllDataSend& b) { a.Swap(&b); }
-  inline void Swap(AllDataSend* PROTOBUF_NONNULL other) {
-    if (other == this) return;
-    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
-      InternalSwap(other);
-    } else {
-      ::google::protobuf::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(AllDataSend* PROTOBUF_NONNULL other) {
-    if (other == this) return;
-    ABSL_DCHECK(GetArena() == other->GetArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  AllDataSend* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
-    return ::google::protobuf::Message::DefaultConstruct<AllDataSend>(arena);
-  }
-  using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const AllDataSend& from);
-  using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const AllDataSend& from) { AllDataSend::MergeImpl(*this, from); }
-
-  private:
-  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
-                        const ::google::protobuf::MessageLite& from_msg);
-
-  public:
-  bool IsInitialized() const {
-    return true;
-  }
-  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
-  #if defined(PROTOBUF_CUSTOM_VTABLE)
-  private:
-  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
-  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
-
-  public:
-  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
-  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
-    return _InternalSerialize(*this, target, stream);
-  }
-  #else   // PROTOBUF_CUSTOM_VTABLE
-  ::size_t ByteSizeLong() const final;
-  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
-  #endif  // PROTOBUF_CUSTOM_VTABLE
-  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
-
-  private:
-  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  static void SharedDtor(MessageLite& self);
-  void InternalSwap(AllDataSend* PROTOBUF_NONNULL other);
- private:
-  template <typename T>
-  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
-  static ::absl::string_view FullMessageName() { return "extractor.AllDataSend"; }
-
- protected:
-  explicit AllDataSend(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  AllDataSend(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const AllDataSend& from);
-  AllDataSend(
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, AllDataSend&& from) noexcept
-      : AllDataSend(arena) {
-    *this = ::std::move(from);
-  }
-  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
-  static void* PROTOBUF_NONNULL PlacementNew_(
-      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  static constexpr auto InternalNewImpl_();
-
- public:
-  static constexpr auto InternalGenerateClassData_();
-
-  ::google::protobuf::Metadata GetMetadata() const;
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-  enum : int {
-    kVoosFieldNumber = 1,
-    kReservasFieldNumber = 2,
-    kPesquisasFieldNumber = 3,
-  };
-  // repeated .extractor.FlightRow voos = 1;
-  int voos_size() const;
-  private:
-  int _internal_voos_size() const;
-
-  public:
-  void clear_voos() ;
-  ::extractor::FlightRow* PROTOBUF_NONNULL mutable_voos(int index);
-  ::google::protobuf::RepeatedPtrField<::extractor::FlightRow>* PROTOBUF_NONNULL mutable_voos();
-
-  private:
-  const ::google::protobuf::RepeatedPtrField<::extractor::FlightRow>& _internal_voos() const;
-  ::google::protobuf::RepeatedPtrField<::extractor::FlightRow>* PROTOBUF_NONNULL _internal_mutable_voos();
-  public:
-  const ::extractor::FlightRow& voos(int index) const;
-  ::extractor::FlightRow* PROTOBUF_NONNULL add_voos();
-  const ::google::protobuf::RepeatedPtrField<::extractor::FlightRow>& voos() const;
-  // repeated .extractor.ReservaRow reservas = 2;
-  int reservas_size() const;
-  private:
-  int _internal_reservas_size() const;
-
-  public:
-  void clear_reservas() ;
-  ::extractor::ReservaRow* PROTOBUF_NONNULL mutable_reservas(int index);
-  ::google::protobuf::RepeatedPtrField<::extractor::ReservaRow>* PROTOBUF_NONNULL mutable_reservas();
-
-  private:
-  const ::google::protobuf::RepeatedPtrField<::extractor::ReservaRow>& _internal_reservas() const;
-  ::google::protobuf::RepeatedPtrField<::extractor::ReservaRow>* PROTOBUF_NONNULL _internal_mutable_reservas();
-  public:
-  const ::extractor::ReservaRow& reservas(int index) const;
-  ::extractor::ReservaRow* PROTOBUF_NONNULL add_reservas();
-  const ::google::protobuf::RepeatedPtrField<::extractor::ReservaRow>& reservas() const;
-  // repeated .extractor.PesquisaRow pesquisas = 3;
-  int pesquisas_size() const;
-  private:
-  int _internal_pesquisas_size() const;
-
-  public:
-  void clear_pesquisas() ;
-  ::extractor::PesquisaRow* PROTOBUF_NONNULL mutable_pesquisas(int index);
-  ::google::protobuf::RepeatedPtrField<::extractor::PesquisaRow>* PROTOBUF_NONNULL mutable_pesquisas();
-
-  private:
-  const ::google::protobuf::RepeatedPtrField<::extractor::PesquisaRow>& _internal_pesquisas() const;
-  ::google::protobuf::RepeatedPtrField<::extractor::PesquisaRow>* PROTOBUF_NONNULL _internal_mutable_pesquisas();
-  public:
-  const ::extractor::PesquisaRow& pesquisas(int index) const;
-  ::extractor::PesquisaRow* PROTOBUF_NONNULL add_pesquisas();
-  const ::google::protobuf::RepeatedPtrField<::extractor::PesquisaRow>& pesquisas() const;
-  // @@protoc_insertion_point(class_scope:extractor.AllDataSend)
- private:
-  class _Internal;
-  friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<2, 3,
-                                   3, 0,
-                                   2>
-      _table_;
-
-  friend class ::google::protobuf::MessageLite;
-  friend class ::google::protobuf::Arena;
-  template <typename T>
-  friend class ::google::protobuf::Arena::InternalHelper;
-  using InternalArenaConstructable_ = void;
-  using DestructorSkippable_ = void;
-  struct Impl_ {
-    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
-    inline explicit Impl_(
-        ::google::protobuf::internal::InternalVisibility visibility,
-        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-    inline explicit Impl_(
-        ::google::protobuf::internal::InternalVisibility visibility,
-        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-        const AllDataSend& from_msg);
-    ::google::protobuf::RepeatedPtrField< ::extractor::FlightRow > voos_;
-    ::google::protobuf::RepeatedPtrField< ::extractor::ReservaRow > reservas_;
-    ::google::protobuf::RepeatedPtrField< ::extractor::PesquisaRow > pesquisas_;
-    ::google::protobuf::internal::CachedSize _cached_size_;
-    PROTOBUF_TSAN_DECLARE_MEMBER
-  };
-  union { Impl_ _impl_; };
-  friend struct ::TableStruct_extractor_2eproto;
-};
-
-extern const ::google::protobuf::internal::ClassDataFull AllDataSend_class_data_;
 
 // ===================================================================
 
@@ -2464,154 +2459,199 @@ inline void PesquisaRow::_internal_set_data_volta_ano(::int32_t value) {
 
 // AllDataSend
 
-// repeated .extractor.FlightRow voos = 1;
-inline int AllDataSend::_internal_voos_size() const {
-  return _internal_voos().size();
-}
-inline int AllDataSend::voos_size() const {
-  return _internal_voos_size();
-}
+// string voos = 1;
 inline void AllDataSend::clear_voos() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.voos_.Clear();
+  _impl_.voos_.ClearToEmpty();
+  _impl_._has_bits_[0] &= ~0x00000001u;
 }
-inline ::extractor::FlightRow* PROTOBUF_NONNULL AllDataSend::mutable_voos(int index)
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_mutable:extractor.AllDataSend.voos)
-  return _internal_mutable_voos()->Mutable(index);
-}
-inline ::google::protobuf::RepeatedPtrField<::extractor::FlightRow>* PROTOBUF_NONNULL AllDataSend::mutable_voos()
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_mutable_list:extractor.AllDataSend.voos)
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  return _internal_mutable_voos();
-}
-inline const ::extractor::FlightRow& AllDataSend::voos(int index) const
+inline const std::string& AllDataSend::voos() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
   // @@protoc_insertion_point(field_get:extractor.AllDataSend.voos)
-  return _internal_voos().Get(index);
-}
-inline ::extractor::FlightRow* PROTOBUF_NONNULL AllDataSend::add_voos()
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  ::extractor::FlightRow* _add = _internal_mutable_voos()->Add();
-  // @@protoc_insertion_point(field_add:extractor.AllDataSend.voos)
-  return _add;
-}
-inline const ::google::protobuf::RepeatedPtrField<::extractor::FlightRow>& AllDataSend::voos() const
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_list:extractor.AllDataSend.voos)
   return _internal_voos();
 }
-inline const ::google::protobuf::RepeatedPtrField<::extractor::FlightRow>&
-AllDataSend::_internal_voos() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.voos_;
+template <typename Arg_, typename... Args_>
+PROTOBUF_ALWAYS_INLINE void AllDataSend::set_voos(Arg_&& arg, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000001u;
+  _impl_.voos_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:extractor.AllDataSend.voos)
 }
-inline ::google::protobuf::RepeatedPtrField<::extractor::FlightRow>* PROTOBUF_NONNULL
-AllDataSend::_internal_mutable_voos() {
+inline std::string* PROTOBUF_NONNULL AllDataSend::mutable_voos()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  std::string* _s = _internal_mutable_voos();
+  // @@protoc_insertion_point(field_mutable:extractor.AllDataSend.voos)
+  return _s;
+}
+inline const std::string& AllDataSend::_internal_voos() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
-  return &_impl_.voos_;
+  return _impl_.voos_.Get();
+}
+inline void AllDataSend::_internal_set_voos(const std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000001u;
+  _impl_.voos_.Set(value, GetArena());
+}
+inline std::string* PROTOBUF_NONNULL AllDataSend::_internal_mutable_voos() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000001u;
+  return _impl_.voos_.Mutable( GetArena());
+}
+inline std::string* PROTOBUF_NULLABLE AllDataSend::release_voos() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:extractor.AllDataSend.voos)
+  if ((_impl_._has_bits_[0] & 0x00000001u) == 0) {
+    return nullptr;
+  }
+  _impl_._has_bits_[0] &= ~0x00000001u;
+  auto* released = _impl_.voos_.Release();
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
+    _impl_.voos_.Set("", GetArena());
+  }
+  return released;
+}
+inline void AllDataSend::set_allocated_voos(std::string* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000001u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001u;
+  }
+  _impl_.voos_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.voos_.IsDefault()) {
+    _impl_.voos_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:extractor.AllDataSend.voos)
 }
 
-// repeated .extractor.ReservaRow reservas = 2;
-inline int AllDataSend::_internal_reservas_size() const {
-  return _internal_reservas().size();
-}
-inline int AllDataSend::reservas_size() const {
-  return _internal_reservas_size();
-}
+// string reservas = 2;
 inline void AllDataSend::clear_reservas() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.reservas_.Clear();
+  _impl_.reservas_.ClearToEmpty();
+  _impl_._has_bits_[0] &= ~0x00000002u;
 }
-inline ::extractor::ReservaRow* PROTOBUF_NONNULL AllDataSend::mutable_reservas(int index)
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_mutable:extractor.AllDataSend.reservas)
-  return _internal_mutable_reservas()->Mutable(index);
-}
-inline ::google::protobuf::RepeatedPtrField<::extractor::ReservaRow>* PROTOBUF_NONNULL AllDataSend::mutable_reservas()
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_mutable_list:extractor.AllDataSend.reservas)
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  return _internal_mutable_reservas();
-}
-inline const ::extractor::ReservaRow& AllDataSend::reservas(int index) const
+inline const std::string& AllDataSend::reservas() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
   // @@protoc_insertion_point(field_get:extractor.AllDataSend.reservas)
-  return _internal_reservas().Get(index);
-}
-inline ::extractor::ReservaRow* PROTOBUF_NONNULL AllDataSend::add_reservas()
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  ::extractor::ReservaRow* _add = _internal_mutable_reservas()->Add();
-  // @@protoc_insertion_point(field_add:extractor.AllDataSend.reservas)
-  return _add;
-}
-inline const ::google::protobuf::RepeatedPtrField<::extractor::ReservaRow>& AllDataSend::reservas() const
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_list:extractor.AllDataSend.reservas)
   return _internal_reservas();
 }
-inline const ::google::protobuf::RepeatedPtrField<::extractor::ReservaRow>&
-AllDataSend::_internal_reservas() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.reservas_;
+template <typename Arg_, typename... Args_>
+PROTOBUF_ALWAYS_INLINE void AllDataSend::set_reservas(Arg_&& arg, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000002u;
+  _impl_.reservas_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:extractor.AllDataSend.reservas)
 }
-inline ::google::protobuf::RepeatedPtrField<::extractor::ReservaRow>* PROTOBUF_NONNULL
-AllDataSend::_internal_mutable_reservas() {
+inline std::string* PROTOBUF_NONNULL AllDataSend::mutable_reservas()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  std::string* _s = _internal_mutable_reservas();
+  // @@protoc_insertion_point(field_mutable:extractor.AllDataSend.reservas)
+  return _s;
+}
+inline const std::string& AllDataSend::_internal_reservas() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
-  return &_impl_.reservas_;
+  return _impl_.reservas_.Get();
+}
+inline void AllDataSend::_internal_set_reservas(const std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000002u;
+  _impl_.reservas_.Set(value, GetArena());
+}
+inline std::string* PROTOBUF_NONNULL AllDataSend::_internal_mutable_reservas() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000002u;
+  return _impl_.reservas_.Mutable( GetArena());
+}
+inline std::string* PROTOBUF_NULLABLE AllDataSend::release_reservas() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:extractor.AllDataSend.reservas)
+  if ((_impl_._has_bits_[0] & 0x00000002u) == 0) {
+    return nullptr;
+  }
+  _impl_._has_bits_[0] &= ~0x00000002u;
+  auto* released = _impl_.reservas_.Release();
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
+    _impl_.reservas_.Set("", GetArena());
+  }
+  return released;
+}
+inline void AllDataSend::set_allocated_reservas(std::string* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000002u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000002u;
+  }
+  _impl_.reservas_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.reservas_.IsDefault()) {
+    _impl_.reservas_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:extractor.AllDataSend.reservas)
 }
 
-// repeated .extractor.PesquisaRow pesquisas = 3;
-inline int AllDataSend::_internal_pesquisas_size() const {
-  return _internal_pesquisas().size();
-}
-inline int AllDataSend::pesquisas_size() const {
-  return _internal_pesquisas_size();
-}
+// string pesquisas = 3;
 inline void AllDataSend::clear_pesquisas() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.pesquisas_.Clear();
+  _impl_.pesquisas_.ClearToEmpty();
+  _impl_._has_bits_[0] &= ~0x00000004u;
 }
-inline ::extractor::PesquisaRow* PROTOBUF_NONNULL AllDataSend::mutable_pesquisas(int index)
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_mutable:extractor.AllDataSend.pesquisas)
-  return _internal_mutable_pesquisas()->Mutable(index);
-}
-inline ::google::protobuf::RepeatedPtrField<::extractor::PesquisaRow>* PROTOBUF_NONNULL AllDataSend::mutable_pesquisas()
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_mutable_list:extractor.AllDataSend.pesquisas)
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  return _internal_mutable_pesquisas();
-}
-inline const ::extractor::PesquisaRow& AllDataSend::pesquisas(int index) const
+inline const std::string& AllDataSend::pesquisas() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
   // @@protoc_insertion_point(field_get:extractor.AllDataSend.pesquisas)
-  return _internal_pesquisas().Get(index);
-}
-inline ::extractor::PesquisaRow* PROTOBUF_NONNULL AllDataSend::add_pesquisas()
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  ::extractor::PesquisaRow* _add = _internal_mutable_pesquisas()->Add();
-  // @@protoc_insertion_point(field_add:extractor.AllDataSend.pesquisas)
-  return _add;
-}
-inline const ::google::protobuf::RepeatedPtrField<::extractor::PesquisaRow>& AllDataSend::pesquisas() const
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_list:extractor.AllDataSend.pesquisas)
   return _internal_pesquisas();
 }
-inline const ::google::protobuf::RepeatedPtrField<::extractor::PesquisaRow>&
-AllDataSend::_internal_pesquisas() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.pesquisas_;
+template <typename Arg_, typename... Args_>
+PROTOBUF_ALWAYS_INLINE void AllDataSend::set_pesquisas(Arg_&& arg, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000004u;
+  _impl_.pesquisas_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:extractor.AllDataSend.pesquisas)
 }
-inline ::google::protobuf::RepeatedPtrField<::extractor::PesquisaRow>* PROTOBUF_NONNULL
-AllDataSend::_internal_mutable_pesquisas() {
+inline std::string* PROTOBUF_NONNULL AllDataSend::mutable_pesquisas()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  std::string* _s = _internal_mutable_pesquisas();
+  // @@protoc_insertion_point(field_mutable:extractor.AllDataSend.pesquisas)
+  return _s;
+}
+inline const std::string& AllDataSend::_internal_pesquisas() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
-  return &_impl_.pesquisas_;
+  return _impl_.pesquisas_.Get();
+}
+inline void AllDataSend::_internal_set_pesquisas(const std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000004u;
+  _impl_.pesquisas_.Set(value, GetArena());
+}
+inline std::string* PROTOBUF_NONNULL AllDataSend::_internal_mutable_pesquisas() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_._has_bits_[0] |= 0x00000004u;
+  return _impl_.pesquisas_.Mutable( GetArena());
+}
+inline std::string* PROTOBUF_NULLABLE AllDataSend::release_pesquisas() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:extractor.AllDataSend.pesquisas)
+  if ((_impl_._has_bits_[0] & 0x00000004u) == 0) {
+    return nullptr;
+  }
+  _impl_._has_bits_[0] &= ~0x00000004u;
+  auto* released = _impl_.pesquisas_.Release();
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
+    _impl_.pesquisas_.Set("", GetArena());
+  }
+  return released;
+}
+inline void AllDataSend::set_allocated_pesquisas(std::string* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000004u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000004u;
+  }
+  _impl_.pesquisas_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.pesquisas_.IsDefault()) {
+    _impl_.pesquisas_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:extractor.AllDataSend.pesquisas)
 }
 
 // -------------------------------------------------------------------

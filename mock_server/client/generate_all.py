@@ -1,4 +1,6 @@
 import random
+import csv
+import io
 from faker import Faker
 from datetime import datetime, timedelta
 from concurrent.futures import ThreadPoolExecutor
@@ -188,11 +190,11 @@ def gerar_voos_em_thread(partes_combinadas_thread, thread_id):
 
 # main_function
 def gerar_dados():
-    total_hoteis_para_gerar = 80
-    num_threads_reservas = 4
-    num_threads_pesquisas = 4
-    total_pesquisas_para_gerar = 10000
-    num_threads_voos = 4 # Número de threads para geração de voos
+    total_hoteis_para_gerar = 5
+    num_threads_reservas = 1
+    num_threads_pesquisas = 1
+    total_pesquisas_para_gerar = 1000
+    num_threads_voos = 1 # Número de threads para geração de voos
 
     print(f"Iniciando a geração de dados de reservas, pesquisas e voos...\n")
 
@@ -250,7 +252,51 @@ def gerar_dados():
     print(f"\nTotal de {len(todos_voos)} objetos FlightRow gerados.")
 
 
-    return todas_reservas, todas_pesquisas, todos_voos
+    # 1. Generate Reserva CSV String
+    reserva_output = io.StringIO()
+    reserva_writer = csv.writer(reserva_output)
+    reserva_headers = ["tipo_quarto", "nome_hotel", "cidade_destino", "numero_quarto",
+                       "quantidade_pessoas", "preco", "ocupado", "data_ida_dia", "data_ida_mes", "data_ida_ano"]
+    reserva_writer.writerow(reserva_headers)
+    for reserva in todas_reservas:
+        reserva_writer.writerow([
+            reserva.tipo_quarto, reserva.nome_hotel, reserva.cidade_destino,
+            reserva.numero_quarto, reserva.quantidade_pessoas, reserva.preco,
+            reserva.ocupado, reserva.data_ida_dia, reserva.data_ida_mes, reserva.data_ida_ano
+        ])
+    reservas_csv = reserva_output.getvalue()
+
+    # 2. Generate Pesquisa CSV String
+    pesquisa_output = io.StringIO()
+    pesquisa_writer = csv.writer(pesquisa_output)
+    pesquisa_headers = ["cidade_origem", "cidade_destino", "nome_hotel",
+                        "data_ida_dia", "data_ida_mes", "data_ida_ano",
+                        "data_volta_dia", "data_volta_mes", "data_volta_ano"]
+    pesquisa_writer.writerow(pesquisa_headers)
+    for pesquisa in todas_pesquisas:
+        pesquisa_writer.writerow([
+            pesquisa.cidade_origem, pesquisa.cidade_destino, pesquisa.nome_hotel,
+            pesquisa.data_ida_dia, pesquisa.data_ida_mes, pesquisa.data_ida_ano,
+            pesquisa.data_volta_dia, pesquisa.data_volta_mes, pesquisa.data_volta_ano
+        ])
+    pesquisas_csv = pesquisa_output.getvalue()
+
+    # 3. Generate Voo CSV String
+    voo_output = io.StringIO()
+    voo_writer = csv.writer(voo_output)
+    voo_headers = ["cidade_origem", "cidade_destino", "assentos_ocupados",
+                   "assentos_totais", "assentos_disponiveis", "dia", "mes", "ano"]
+    voo_writer.writerow(voo_headers)
+    for voo in todos_voos:
+        voo_writer.writerow([
+            voo.cidade_origem, voo.cidade_destino, voo.assentos_ocupados,
+            voo.assentos_totais, voo.assentos_disponiveis, voo.dia, voo.mes, voo.ano
+        ])
+    voos_csv = voo_output.getvalue()
+
+    # Return the three CSV strings
+    return reservas_csv, pesquisas_csv, voos_csv
+    
 
 if __name__ == "__main__":
     reservas_geradas, pesquisas_geradas, voos_gerados = gerar_dados()
