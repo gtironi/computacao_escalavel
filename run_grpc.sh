@@ -4,17 +4,26 @@
 # Função para exibir menu
 show_menu() {
     echo "==== MENU GRPC ====="
-    echo "1. Gerar stubs Python e C++"
-    echo "2. Compilar servidor C++"
-    echo "3. Executar servidor C++"
-    echo "4. Executar cliente Python"
-    echo "5. Instalar dependências (gRPC, Protobuf)"
+    echo "1. Instalar dependências (gRPC, Protobuf)"
+    echo "2. Gerar stubs Python e C++"
+    echo "3. Compilar servidor C++"
+    echo "4. Executar servidor C++"
+    echo "5. Executar cliente Python"
     echo "0. Sair"
     echo "===================="
 }
 
 # Gerar stubs Python e C++
 generate_stubs() {
+    # Verifica versão do protoc
+    PROTOC_VERSION=$(protoc --version | awk '{print $2}')
+    echo "Versão do protoc: $PROTOC_VERSION"
+    # Requer protoc >= 3
+    MAJOR=${PROTOC_VERSION%%.*}
+    if [[ "$MAJOR" -lt 3 ]]; then
+        echo "Erro: protoc >= 3 é necessário."
+        exit 1
+    fi
     echo "Gerando stubs Python..."
     python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. mock_client/proto/extractor.proto
     
@@ -62,11 +71,11 @@ while true; do
     read -p "Escolha uma opção: " choice
     
     case $choice in
-        1) generate_stubs ;;
-        2) compile_cpp_server ;;
-        3) run_cpp_server ;;
-        4) run_python_client ;;
-        5) install_dependencies ;;
+        1) install_dependencies ;;
+        2) generate_stubs ;;
+        3) compile_cpp_server ;;
+        4) run_cpp_server ;;
+        5) run_python_client ;;
         0) echo "Saindo..."; exit 0 ;;
         *) echo "Opção inválida! Tente novamente." ;;
     esac

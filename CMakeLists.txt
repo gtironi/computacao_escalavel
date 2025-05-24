@@ -16,7 +16,11 @@ set(PROTO_SRC
 )
 
 # Main client source
-add_executable(grpc_server grpc_server.cpp pipeline.cpp ${PROTO_SRC})
+add_executable(grpc_server
+  grpc_server.cpp
+  pipeline.cpp    # implementa pipeline()
+  ${PROTO_SRC}
+)
 
 # Include directories
 target_include_directories(grpc_server PRIVATE
@@ -30,5 +34,5 @@ target_include_directories(grpc_server PRIVATE
 target_link_libraries(grpc_server
   ${GRPC_LIBRARIES}
   ${PROTOBUF_LIBRARIES}
-  sqlite3
+  sqlite3  # link sqlite3 para funções pipeline
 )
