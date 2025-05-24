@@ -34,5 +34,6 @@ target_include_directories(grpc_server PRIVATE
 target_link_libraries(grpc_server
   ${GRPC_LIBRARIES}
   ${PROTOBUF_LIBRARIES}
-  sqlite3  # link sqlite3 para funções pipeline
+  sqlite3
+  pthread
 )
