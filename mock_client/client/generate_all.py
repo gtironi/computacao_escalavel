@@ -9,7 +9,6 @@ from collections import defaultdict
 from mock_client.proto import extractor_pb2
 
 fake = Faker('pt_BR')
-random.seed(42)
 
 cidades = [
     "São Paulo", "Rio de Janeiro", "Brasília", "Belo Horizonte", "Salvador",
@@ -191,11 +190,11 @@ def gerar_voos_em_thread(partes_combinadas_thread, thread_id):
 
 # main_function
 def gerar_dados():
-    total_hoteis_para_gerar = 5
-    num_threads_reservas = 1
-    num_threads_pesquisas = 1
-    total_pesquisas_para_gerar = 1000
-    num_threads_voos = 1 # Número de threads para geração de voos
+    total_hoteis_para_gerar = 80
+    num_threads_reservas = 2
+    num_threads_pesquisas = 3
+    total_pesquisas_para_gerar = 10000
+    num_threads_voos = 2 # Número de threads para geração de voos
 
     print(f"Iniciando a geração de dados de reservas, pesquisas e voos...\n")
 
@@ -294,27 +293,6 @@ def gerar_dados():
             voo.assentos_totais, voo.assentos_disponiveis, voo.dia, voo.mes, voo.ano
         ])
     voos_csv = voo_output.getvalue()
-
-    # output_directory = "csv_files"
-    # os.makedirs(output_directory, exist_ok=True) # Cria o diretório se ele não existir
-
-    # # Salvar reservas.csv
-    # file_path_reservas = os.path.join(output_directory, "reservas.csv")
-    # with open(file_path_reservas, 'w', newline='', encoding='utf-8') as f:
-    #     f.write(reservas_csv)
-    # print(f"Conteúdo de reservas salvo em: {file_path_reservas}")
-
-    # # Salvar pesquisas.csv
-    # file_path_pesquisas = os.path.join(output_directory, "pesquisas.csv")
-    # with open(file_path_pesquisas, 'w', newline='', encoding='utf-8') as f:
-    #     f.write(pesquisas_csv)
-    # print(f"Conteúdo de pesquisas salvo em: {file_path_pesquisas}")
-
-    # # Salvar voos.csv
-    # file_path_voos = os.path.join(output_directory, "voos.csv")
-    # with open(file_path_voos, 'w', newline='', encoding='utf-8') as f:
-    #     f.write(voos_csv)
-    # print(f"Conteúdo de voos salvo em: {file_path_voos}")
 
     
     # Return the three CSV strings
