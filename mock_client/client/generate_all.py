@@ -148,7 +148,7 @@ def gerar_pesquisa_individual(hoteis_por_cidade_disponiveis):
 
 def gerar_pesquisas_em_thread(numero_pesquisas, thread_id, hoteis_por_cidade_disponiveis):
     pesquisas_thread = [gerar_pesquisa_individual(hoteis_por_cidade_disponiveis) for _ in range(numero_pesquisas)]
-    print(f"Thread {thread_id} de Pesquisas concluiu a geração de {numero_pesquisas} registros.")
+    # print(f"Thread {thread_id} de Pesquisas concluiu a geração de {numero_pesquisas} registros.")
     return pesquisas_thread
 
 # Gera Voos
@@ -184,7 +184,7 @@ def gerar_voos_em_thread(partes_combinadas_thread, thread_id):
     voos_thread = []
     for data, origem in partes_combinadas_thread:
         voos_thread.extend(gerar_voos_para_data_e_origem(data, origem))
-    print(f"Thread {thread_id} de Voos concluiu a geração de {len(voos_thread)} registros.")
+    # print(f"Thread {thread_id} de Voos concluiu a geração de {len(voos_thread)} registros.")
     return voos_thread
 
 
@@ -196,7 +196,7 @@ def gerar_dados():
     total_pesquisas_para_gerar = 10000
     num_threads_voos = 2 # Número de threads para geração de voos
 
-    print(f"Iniciando a geração de dados de reservas, pesquisas e voos...\n")
+    # print(f"Iniciando a geração de dados de reservas, pesquisas e voos...\n")
 
     # Geração de dados de Reservas
     hoteis_por_cidade_distribuidos = distribuir_hoteis_por_cidade(total_hoteis_para_gerar, cidades)
@@ -214,7 +214,7 @@ def gerar_dados():
             for cidade, hoteis_set in hoteis_gerados_thread.items():
                 hoteis_disponiveis_para_pesquisa[cidade].update(hoteis_set)
 
-    print(f"\nTotal de {len(todas_reservas)} objetos ReservaRow gerados.")
+    # print(f"\nTotal de {len(todas_reservas)} objetos ReservaRow gerados.")
 
     # Converte os sets de hotéis para listas para random.choice
     hoteis_disponiveis_para_pesquisa = {cidade: list(hoteis) for cidade, hoteis in hoteis_disponiveis_para_pesquisa.items()}
@@ -229,7 +229,7 @@ def gerar_dados():
             pesquisas_geradas_thread = future.result()
             todas_pesquisas.extend(pesquisas_geradas_thread)
 
-    print(f"\nTotal de {len(todas_pesquisas)} objetos PesquisaRow gerados.")
+    # print(f"\nTotal de {len(todas_pesquisas)} objetos PesquisaRow gerados.")
 
     # Geração de dados de Voos
     todas_combinacoes_data_origem = []
@@ -249,7 +249,7 @@ def gerar_dados():
             voos_gerados_thread = future.result()
             todos_voos.extend(voos_gerados_thread)
 
-    print(f"\nTotal de {len(todos_voos)} objetos FlightRow gerados.")
+    # print(f"\nTotal de {len(todos_voos)} objetos FlightRow gerados.")
 
 
     # 1. Generate Reserva CSV String
