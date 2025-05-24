@@ -24,7 +24,6 @@ def run():
     print(f"Attempting to connect to gRPC server at {server_address}...")
     with grpc.insecure_channel(server_address) as channel:
         all_reservas, all_pesquisas, all_voos = generate_all.gerar_dados()
-        print(type(all_reservas))
         stub = extractor_pb2_grpc.ExtractorServiceStub(channel)
         request_data = extractor_pb2.AllDataSend(
             reservas=all_reservas,

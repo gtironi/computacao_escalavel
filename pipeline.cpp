@@ -64,11 +64,8 @@ class FiltroHotel : public Transformer<Dataframe> {
 
         // Definição do método do processamento
         Dataframe run(std::vector<Dataframe*> input) override {
-            cout << "Fiiltro Hotel:" << endl;
-            // cout << *input[0];
 
             Dataframe df_filtred = (*input[0]).filtroByValue("ocupado", 0);
-            cout << "Fiiltro Hotel:" << endl;
             return df_filtred;
         }
 };
@@ -80,8 +77,6 @@ class PrecoMedio: public Transformer<Dataframe> {
 
         // Definição do método do processamento
         Dataframe run(std::vector<Dataframe*> input) override {
-            cout << "Filtro PrecoMedio:" << endl;
-            // cout << *input[0];
             input[0]->bColumnOperation("preco_sum", "count_reservas", division, "preco_medio");
             return *input[0];
         }
@@ -94,8 +89,6 @@ class Join: public Transformer<Dataframe> {
 
         // Definição do método do processamento
         Dataframe run(std::vector<Dataframe*> input) override {
-            cout << "Filtro Join:" << endl;
-            // cout << *input[0];
             Dataframe df_merged ;
 
             if ((input[0] -> columns.empty()))
@@ -122,7 +115,6 @@ class TaxaOcupacaoHoteis: public Transformer<Dataframe> {
 
         // Definição do método do processamento
         Dataframe run(std::vector<Dataframe*> input) override {
-            cout << "Filtro Taxa:" << endl;
             input[0]->bColumnOperation("count_pesquisas", "quantidade_pessoas_sum", division, "taxa_ocupacao_hoteis");
             return *input[0];
         }
