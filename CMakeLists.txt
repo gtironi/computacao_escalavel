@@ -30,4 +30,5 @@ target_include_directories(grpc_server PRIVATE
 target_link_libraries(grpc_server
   ${GRPC_LIBRARIES}
   ${PROTOBUF_LIBRARIES}
+  sqlite3
 )

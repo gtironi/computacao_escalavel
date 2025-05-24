@@ -64,7 +64,11 @@ class FiltroHotel : public Transformer<Dataframe> {
 
         // Definição do método do processamento
         Dataframe run(std::vector<Dataframe*> input) override {
+            cout << "Fiiltro Hotel:" << endl;
+            // cout << *input[0];
+
             Dataframe df_filtred = (*input[0]).filtroByValue("ocupado", 0);
+            cout << "Fiiltro Hotel:" << endl;
             return df_filtred;
         }
 };
@@ -76,6 +80,8 @@ class PrecoMedio: public Transformer<Dataframe> {
 
         // Definição do método do processamento
         Dataframe run(std::vector<Dataframe*> input) override {
+            cout << "Filtro PrecoMedio:" << endl;
+            // cout << *input[0];
             input[0]->bColumnOperation("preco_sum", "count_reservas", division, "preco_medio");
             return *input[0];
         }
@@ -88,6 +94,8 @@ class Join: public Transformer<Dataframe> {
 
         // Definição do método do processamento
         Dataframe run(std::vector<Dataframe*> input) override {
+            cout << "Filtro Join:" << endl;
+            // cout << *input[0];
             Dataframe df_merged ;
 
             if ((input[0] -> columns.empty()))
@@ -114,6 +122,7 @@ class TaxaOcupacaoHoteis: public Transformer<Dataframe> {
 
         // Definição do método do processamento
         Dataframe run(std::vector<Dataframe*> input) override {
+            cout << "Filtro Taxa:" << endl;
             input[0]->bColumnOperation("count_pesquisas", "quantidade_pessoas_sum", division, "taxa_ocupacao_hoteis");
             return *input[0];
         }
@@ -200,12 +209,13 @@ vector<int> pipeline(const std::string& dados_reservas,
     // Pipeline Hoteis e Pesquisas ------------------------------------------------------------------------
     
     // Inicializa o extrator dos dados de pesquisa e o adiciona ao manager
-    Extrator<Dataframe> extrator_pesquisa(dados_pesquisas, "string", 1000, "Viagens");
+    Extrator<Dataframe> extrator_pesquisa("./csv_files/pesquisas.csv", "csv", 1000);
     manager.addExtractor(&extrator_pesquisa);
 
     // Inicializa o extrator dos dados de reserva e o adiciona ao manager
-    Extrator<Dataframe> extrator_reservas(dados_reservas, "string", 25000);
+    Extrator<Dataframe> extrator_reservas("./csv_files/reservas.csv", "csv", 25000);
     manager.addExtractor(&extrator_reservas);
+
 
     // Inicializa o filtro dos hotéis e o adiciona ao manager
     FiltroHotel filtro_hotel;
@@ -267,7 +277,7 @@ vector<int> pipeline(const std::string& dados_reservas,
     // Pipeline Voos ------------------------------------------------------------------------
 
     // Inicializa o extrator dos dados de voo e o adiciona ao manager
-    Extrator<Dataframe> extrator_voos(dados_voos, "string", 15000);
+    Extrator<Dataframe> extrator_voos("./csv_files/voos.csv", "csv", 15000);
     manager.addExtractor(&extrator_voos);
 
     // Setando os parâmetros do agrupador de voos
@@ -323,3 +333,9 @@ vector<int> pipeline(const std::string& dados_reservas,
     
     return int_results;
 }
+
+// int main()
+// {
+//     vector<int> a = pipeline(string("a"), string("a"), string("a")); 
+//     return 0;
+// }
