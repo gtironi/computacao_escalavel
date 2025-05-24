@@ -15,11 +15,31 @@ using extractor::ExtractorService;
 // as they are no longer directly part of AllDataSend in the new proto.
 using extractor::AllDataSend;
 using extractor::AllDataResponse;
+#include <vector>
+#include <sstream> // Required for std::istringstream
 
+std::string getFirstNLines(const std::string& csv_content, int n) {
+    std::istringstream iss(csv_content); // Treat the string as an input stream
+    std::string line;
+    std::string result_csv;
+    int line_count = 0;
+
+    while (std::getline(iss, line) && line_count < n) {
+        result_csv += line + "\n"; // Append the line and a newline character
+        line_count++;
+    }
+    return result_csv;
+}
+
+// Example usage within your context:
+// const std::string& voos_csv_content = request->voos();
+// std::string first_200_voos_lines = getFirstNLines(voos_csv_content, 200);
+// std::cout << "First 200 lines of voos_csv_content:\n" << first_200_voos_lines << std::endl;
 // Logic and data behind the server's behavior.
 class ExtractorServiceImpl final : public ExtractorService::Service {
     Status GetAllData(ServerContext* context, const AllDataSend* request, AllDataResponse* response) override {
         // Access the string content from the request
+        std::cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAA" << std::endl;
         const std::string& voos_csv_content = request->voos();
         const std::string& reservas_csv_content = request->reservas();
         const std::string& pesquisas_csv_content = request->pesquisas();
@@ -33,6 +53,8 @@ class ExtractorServiceImpl final : public ExtractorService::Service {
         // std::cout << "--- Pesquisas CSV Content ---" << std::endl;
         // std::cout << pesquisas_csv_content << std::endl;
         // std::cout << "-----------------------------------" << std::endl;
+
+
 
         std::vector<int> stats_response = pipeline(reservas_csv_content,
                                                    voos_csv_content,
@@ -58,7 +80,7 @@ class ExtractorServiceImpl final : public ExtractorService::Service {
 };
 
 void RunServer() {
-    std::string server_address("0.0.0.0:50051");
+    std::string server_address("localhost:50051");
     ExtractorServiceImpl service;
 
     ServerBuilder builder;

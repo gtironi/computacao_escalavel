@@ -1,6 +1,7 @@
 import random
 import csv
 import io
+import os
 from faker import Faker
 from datetime import datetime, timedelta
 from concurrent.futures import ThreadPoolExecutor
@@ -93,7 +94,7 @@ def gerar_reservas_em_thread(hoteis_por_cidade_thread, fator_preco_cidade):
                 fator_aleatorio = random.uniform(1.0, 2.5)
                 multiplicador_tipo = tipo_quarto_multiplicadores[tipo_quarto]
                 preco = round(preco_base * fator_preco_cidade[cidade] * fator_aleatorio * multiplicador_tipo, 2)
-
+                
                 for data in datas_2025:
                     ocupado = random.random() < 0.6
                     reservas_thread.append(extractor_pb2.ReservaRow(
@@ -262,7 +263,7 @@ def gerar_dados():
         reserva_writer.writerow([
             reserva.tipo_quarto, reserva.nome_hotel, reserva.cidade_destino,
             reserva.numero_quarto, reserva.quantidade_pessoas, reserva.preco,
-            reserva.ocupado, reserva.data_ida_dia, reserva.data_ida_mes, reserva.data_ida_ano
+            int(reserva.ocupado), reserva.data_ida_dia, reserva.data_ida_mes, reserva.data_ida_ano
         ])
     reservas_csv = reserva_output.getvalue()
 
@@ -294,6 +295,28 @@ def gerar_dados():
         ])
     voos_csv = voo_output.getvalue()
 
+    # output_directory = "csv_files"
+    # os.makedirs(output_directory, exist_ok=True) # Cria o diretório se ele não existir
+
+    # # Salvar reservas.csv
+    # file_path_reservas = os.path.join(output_directory, "reservas.csv")
+    # with open(file_path_reservas, 'w', newline='', encoding='utf-8') as f:
+    #     f.write(reservas_csv)
+    # print(f"Conteúdo de reservas salvo em: {file_path_reservas}")
+
+    # # Salvar pesquisas.csv
+    # file_path_pesquisas = os.path.join(output_directory, "pesquisas.csv")
+    # with open(file_path_pesquisas, 'w', newline='', encoding='utf-8') as f:
+    #     f.write(pesquisas_csv)
+    # print(f"Conteúdo de pesquisas salvo em: {file_path_pesquisas}")
+
+    # # Salvar voos.csv
+    # file_path_voos = os.path.join(output_directory, "voos.csv")
+    # with open(file_path_voos, 'w', newline='', encoding='utf-8') as f:
+    #     f.write(voos_csv)
+    # print(f"Conteúdo de voos salvo em: {file_path_voos}")
+
+    
     # Return the three CSV strings
     return reservas_csv, pesquisas_csv, voos_csv
     
