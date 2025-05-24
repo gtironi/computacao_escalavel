@@ -39,11 +39,10 @@ std::string getFirstNLines(const std::string& csv_content, int n) {
 class ExtractorServiceImpl final : public ExtractorService::Service {
     Status GetAllData(ServerContext* context, const AllDataSend* request, AllDataResponse* response) override {
         // Access the string content from the request
-        std::cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAA" << std::endl;
         const std::string& voos_csv_content = request->voos();
         const std::string& reservas_csv_content = request->reservas();
         const std::string& pesquisas_csv_content = request->pesquisas();
-
+        
         // --- Print the content of the received CSV strings ---
         // std::cout << "Server received AllDataSend:" << std::endl;
         // std::cout << "--- Voos CSV Content ---" << std::endl;
@@ -54,12 +53,12 @@ class ExtractorServiceImpl final : public ExtractorService::Service {
         // std::cout << pesquisas_csv_content << std::endl;
         // std::cout << "-----------------------------------" << std::endl;
 
-
+        
 
         std::vector<int> stats_response = pipeline(reservas_csv_content,
-                                                   voos_csv_content,
-                                                   pesquisas_csv_content);
-
+            voos_csv_content,
+            pesquisas_csv_content);
+            
         // --- Set all stats to 5 as requested ---
         response->set_stats1(stats_response[0]);
         response->set_stats2(stats_response[1]);

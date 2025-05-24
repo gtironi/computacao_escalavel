@@ -209,11 +209,11 @@ vector<int> pipeline(const std::string& dados_reservas,
     // Pipeline Hoteis e Pesquisas ------------------------------------------------------------------------
     
     // Inicializa o extrator dos dados de pesquisa e o adiciona ao manager
-    Extrator<Dataframe> extrator_pesquisa("./csv_files/pesquisas.csv", "csv", 1000);
+    Extrator<Dataframe> extrator_pesquisa(dados_pesquisas, "memo", 1000);
     manager.addExtractor(&extrator_pesquisa);
 
     // Inicializa o extrator dos dados de reserva e o adiciona ao manager
-    Extrator<Dataframe> extrator_reservas("./csv_files/reservas.csv", "csv", 25000);
+    Extrator<Dataframe> extrator_reservas(dados_reservas, "memo", 25000);
     manager.addExtractor(&extrator_reservas);
 
 
@@ -277,7 +277,7 @@ vector<int> pipeline(const std::string& dados_reservas,
     // Pipeline Voos ------------------------------------------------------------------------
 
     // Inicializa o extrator dos dados de voo e o adiciona ao manager
-    Extrator<Dataframe> extrator_voos("./csv_files/voos.csv", "csv", 15000);
+    Extrator<Dataframe> extrator_voos(dados_voos, "memo", 15000);
     manager.addExtractor(&extrator_voos);
 
     // Setando os parâmetros do agrupador de voos
