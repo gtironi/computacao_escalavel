@@ -5,516 +5,627 @@
 
 #include <algorithm>
 
+#include <google/protobuf/stubs/common.h>
+#include <google/protobuf/stubs/port.h>
 #include <google/protobuf/io/coded_stream.h>
-#include <google/protobuf/extension_set.h>
-#include <google/protobuf/wire_format_lite.h>
+#include <google/protobuf/wire_format_lite_inl.h>
 #include <google/protobuf/descriptor.h>
 #include <google/protobuf/generated_message_reflection.h>
 #include <google/protobuf/reflection_ops.h>
 #include <google/protobuf/wire_format.h>
+// This is a temporary google only hack
+#ifdef GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+#include "third_party/protobuf/version.h"
+#endif
 // @@protoc_insertion_point(includes)
-#include <google/protobuf/port_def.inc>
-
-PROTOBUF_PRAGMA_INIT_SEG
-
-namespace _pb = ::PROTOBUF_NAMESPACE_ID;
-namespace _pbi = _pb::internal;
 
 namespace extractor {
-PROTOBUF_CONSTEXPR FlightRow::FlightRow(
-    ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.cidade_origem_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_.cidade_destino_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_.assentos_ocupados_)*/0
-  , /*decltype(_impl_.assentos_totais_)*/0
-  , /*decltype(_impl_.assentos_disponiveis_)*/0
-  , /*decltype(_impl_.dia_)*/0
-  , /*decltype(_impl_.mes_)*/0
-  , /*decltype(_impl_.ano_)*/0
-  , /*decltype(_impl_._cached_size_)*/{}} {}
-struct FlightRowDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR FlightRowDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
-  ~FlightRowDefaultTypeInternal() {}
-  union {
-    FlightRow _instance;
-  };
-};
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 FlightRowDefaultTypeInternal _FlightRow_default_instance_;
-PROTOBUF_CONSTEXPR ReservaRow::ReservaRow(
-    ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.tipo_quarto_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_.nome_hotel_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_.cidade_destino_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_.numero_quarto_)*/0
-  , /*decltype(_impl_.quantidade_pessoas_)*/0
-  , /*decltype(_impl_.preco_)*/0
-  , /*decltype(_impl_.ocupado_)*/false
-  , /*decltype(_impl_.data_ida_dia_)*/0
-  , /*decltype(_impl_.data_ida_mes_)*/0
-  , /*decltype(_impl_.data_ida_ano_)*/0
-  , /*decltype(_impl_._cached_size_)*/{}} {}
-struct ReservaRowDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR ReservaRowDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
-  ~ReservaRowDefaultTypeInternal() {}
-  union {
-    ReservaRow _instance;
-  };
-};
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ReservaRowDefaultTypeInternal _ReservaRow_default_instance_;
-PROTOBUF_CONSTEXPR PesquisaRow::PesquisaRow(
-    ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.cidade_origem_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_.cidade_destino_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_.nome_hotel_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_.data_ida_dia_)*/0
-  , /*decltype(_impl_.data_ida_mes_)*/0
-  , /*decltype(_impl_.data_ida_ano_)*/0
-  , /*decltype(_impl_.data_volta_dia_)*/0
-  , /*decltype(_impl_.data_volta_mes_)*/0
-  , /*decltype(_impl_.data_volta_ano_)*/0
-  , /*decltype(_impl_._cached_size_)*/{}} {}
-struct PesquisaRowDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR PesquisaRowDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
-  ~PesquisaRowDefaultTypeInternal() {}
-  union {
-    PesquisaRow _instance;
-  };
-};
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PesquisaRowDefaultTypeInternal _PesquisaRow_default_instance_;
-PROTOBUF_CONSTEXPR AllDataSend::AllDataSend(
-    ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.voos_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_.reservas_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_.pesquisas_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_._cached_size_)*/{}} {}
-struct AllDataSendDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR AllDataSendDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
-  ~AllDataSendDefaultTypeInternal() {}
-  union {
-    AllDataSend _instance;
-  };
-};
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 AllDataSendDefaultTypeInternal _AllDataSend_default_instance_;
-PROTOBUF_CONSTEXPR AllDataResponse::AllDataResponse(
-    ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.stats1_)*/0
-  , /*decltype(_impl_.stats2_)*/0
-  , /*decltype(_impl_.stats3_)*/0
-  , /*decltype(_impl_.stats4_)*/0
-  , /*decltype(_impl_.stats5_)*/0
-  , /*decltype(_impl_._cached_size_)*/{}} {}
-struct AllDataResponseDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR AllDataResponseDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
-  ~AllDataResponseDefaultTypeInternal() {}
-  union {
-    AllDataResponse _instance;
-  };
-};
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 AllDataResponseDefaultTypeInternal _AllDataResponse_default_instance_;
+class FlightRowDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<FlightRow>
+      _instance;
+} _FlightRow_default_instance_;
+class ReservaRowDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<ReservaRow>
+      _instance;
+} _ReservaRow_default_instance_;
+class PesquisaRowDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<PesquisaRow>
+      _instance;
+} _PesquisaRow_default_instance_;
+class AllDataSendDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<AllDataSend>
+      _instance;
+} _AllDataSend_default_instance_;
+class AllDataResponseDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<AllDataResponse>
+      _instance;
+} _AllDataResponse_default_instance_;
 }  // namespace extractor
-static ::_pb::Metadata file_level_metadata_extractor_2eproto[5];
-static constexpr ::_pb::EnumDescriptor const** file_level_enum_descriptors_extractor_2eproto = nullptr;
-static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_extractor_2eproto = nullptr;
+namespace protobuf_extractor_2eproto {
+static void InitDefaultsFlightRow() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
 
-const uint32_t TableStruct_extractor_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::extractor::FlightRow, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::extractor::FlightRow, _impl_.cidade_origem_),
-  PROTOBUF_FIELD_OFFSET(::extractor::FlightRow, _impl_.cidade_destino_),
-  PROTOBUF_FIELD_OFFSET(::extractor::FlightRow, _impl_.assentos_ocupados_),
-  PROTOBUF_FIELD_OFFSET(::extractor::FlightRow, _impl_.assentos_totais_),
-  PROTOBUF_FIELD_OFFSET(::extractor::FlightRow, _impl_.assentos_disponiveis_),
-  PROTOBUF_FIELD_OFFSET(::extractor::FlightRow, _impl_.dia_),
-  PROTOBUF_FIELD_OFFSET(::extractor::FlightRow, _impl_.mes_),
-  PROTOBUF_FIELD_OFFSET(::extractor::FlightRow, _impl_.ano_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::extractor::ReservaRow, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::extractor::ReservaRow, _impl_.tipo_quarto_),
-  PROTOBUF_FIELD_OFFSET(::extractor::ReservaRow, _impl_.nome_hotel_),
-  PROTOBUF_FIELD_OFFSET(::extractor::ReservaRow, _impl_.cidade_destino_),
-  PROTOBUF_FIELD_OFFSET(::extractor::ReservaRow, _impl_.numero_quarto_),
-  PROTOBUF_FIELD_OFFSET(::extractor::ReservaRow, _impl_.quantidade_pessoas_),
-  PROTOBUF_FIELD_OFFSET(::extractor::ReservaRow, _impl_.preco_),
-  PROTOBUF_FIELD_OFFSET(::extractor::ReservaRow, _impl_.ocupado_),
-  PROTOBUF_FIELD_OFFSET(::extractor::ReservaRow, _impl_.data_ida_dia_),
-  PROTOBUF_FIELD_OFFSET(::extractor::ReservaRow, _impl_.data_ida_mes_),
-  PROTOBUF_FIELD_OFFSET(::extractor::ReservaRow, _impl_.data_ida_ano_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::extractor::PesquisaRow, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::extractor::PesquisaRow, _impl_.cidade_origem_),
-  PROTOBUF_FIELD_OFFSET(::extractor::PesquisaRow, _impl_.cidade_destino_),
-  PROTOBUF_FIELD_OFFSET(::extractor::PesquisaRow, _impl_.nome_hotel_),
-  PROTOBUF_FIELD_OFFSET(::extractor::PesquisaRow, _impl_.data_ida_dia_),
-  PROTOBUF_FIELD_OFFSET(::extractor::PesquisaRow, _impl_.data_ida_mes_),
-  PROTOBUF_FIELD_OFFSET(::extractor::PesquisaRow, _impl_.data_ida_ano_),
-  PROTOBUF_FIELD_OFFSET(::extractor::PesquisaRow, _impl_.data_volta_dia_),
-  PROTOBUF_FIELD_OFFSET(::extractor::PesquisaRow, _impl_.data_volta_mes_),
-  PROTOBUF_FIELD_OFFSET(::extractor::PesquisaRow, _impl_.data_volta_ano_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::extractor::AllDataSend, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::extractor::AllDataSend, _impl_.voos_),
-  PROTOBUF_FIELD_OFFSET(::extractor::AllDataSend, _impl_.reservas_),
-  PROTOBUF_FIELD_OFFSET(::extractor::AllDataSend, _impl_.pesquisas_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::extractor::AllDataResponse, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::extractor::AllDataResponse, _impl_.stats1_),
-  PROTOBUF_FIELD_OFFSET(::extractor::AllDataResponse, _impl_.stats2_),
-  PROTOBUF_FIELD_OFFSET(::extractor::AllDataResponse, _impl_.stats3_),
-  PROTOBUF_FIELD_OFFSET(::extractor::AllDataResponse, _impl_.stats4_),
-  PROTOBUF_FIELD_OFFSET(::extractor::AllDataResponse, _impl_.stats5_),
-};
-static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-  { 0, -1, -1, sizeof(::extractor::FlightRow)},
-  { 14, -1, -1, sizeof(::extractor::ReservaRow)},
-  { 30, -1, -1, sizeof(::extractor::PesquisaRow)},
-  { 45, -1, -1, sizeof(::extractor::AllDataSend)},
-  { 54, -1, -1, sizeof(::extractor::AllDataResponse)},
-};
-
-static const ::_pb::Message* const file_default_instances[] = {
-  &::extractor::_FlightRow_default_instance_._instance,
-  &::extractor::_ReservaRow_default_instance_._instance,
-  &::extractor::_PesquisaRow_default_instance_._instance,
-  &::extractor::_AllDataSend_default_instance_._instance,
-  &::extractor::_AllDataResponse_default_instance_._instance,
-};
-
-const char descriptor_table_protodef_extractor_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\017extractor.proto\022\textractor\"\263\001\n\tFlightR"
-  "ow\022\025\n\rcidade_origem\030\001 \001(\t\022\026\n\016cidade_dest"
-  "ino\030\002 \001(\t\022\031\n\021assentos_ocupados\030\003 \001(\005\022\027\n\017"
-  "assentos_totais\030\004 \001(\005\022\034\n\024assentos_dispon"
-  "iveis\030\005 \001(\005\022\013\n\003dia\030\006 \001(\005\022\013\n\003mes\030\007 \001(\005\022\013\n"
-  "\003ano\030\010 \001(\005\"\342\001\n\nReservaRow\022\023\n\013tipo_quarto"
-  "\030\001 \001(\t\022\022\n\nnome_hotel\030\002 \001(\t\022\026\n\016cidade_des"
-  "tino\030\003 \001(\t\022\025\n\rnumero_quarto\030\004 \001(\005\022\032\n\022qua"
-  "ntidade_pessoas\030\005 \001(\005\022\r\n\005preco\030\006 \001(\002\022\017\n\007"
-  "ocupado\030\007 \001(\010\022\024\n\014data_ida_dia\030\010 \001(\005\022\024\n\014d"
-  "ata_ida_mes\030\t \001(\005\022\024\n\014data_ida_ano\030\n \001(\005\""
-  "\332\001\n\013PesquisaRow\022\025\n\rcidade_origem\030\001 \001(\t\022\026"
-  "\n\016cidade_destino\030\002 \001(\t\022\022\n\nnome_hotel\030\003 \001"
-  "(\t\022\024\n\014data_ida_dia\030\004 \001(\005\022\024\n\014data_ida_mes"
-  "\030\005 \001(\005\022\024\n\014data_ida_ano\030\006 \001(\005\022\026\n\016data_vol"
-  "ta_dia\030\007 \001(\005\022\026\n\016data_volta_mes\030\010 \001(\005\022\026\n\016"
-  "data_volta_ano\030\t \001(\005\"@\n\013AllDataSend\022\014\n\004v"
-  "oos\030\001 \001(\t\022\020\n\010reservas\030\002 \001(\t\022\021\n\tpesquisas"
-  "\030\003 \001(\t\"a\n\017AllDataResponse\022\016\n\006stats1\030\001 \001("
-  "\005\022\016\n\006stats2\030\002 \001(\005\022\016\n\006stats3\030\003 \001(\005\022\016\n\006sta"
-  "ts4\030\004 \001(\005\022\016\n\006stats5\030\005 \001(\0052T\n\020ExtractorSe"
-  "rvice\022@\n\nGetAllData\022\026.extractor.AllDataS"
-  "end\032\032.extractor.AllDataResponseb\006proto3"
-  ;
-static ::_pbi::once_flag descriptor_table_extractor_2eproto_once;
-const ::_pbi::DescriptorTable descriptor_table_extractor_2eproto = {
-    false, false, 919, descriptor_table_protodef_extractor_2eproto,
-    "extractor.proto",
-    &descriptor_table_extractor_2eproto_once, nullptr, 0, 5,
-    schemas, file_default_instances, TableStruct_extractor_2eproto::offsets,
-    file_level_metadata_extractor_2eproto, file_level_enum_descriptors_extractor_2eproto,
-    file_level_service_descriptors_extractor_2eproto,
-};
-PROTOBUF_ATTRIBUTE_WEAK const ::_pbi::DescriptorTable* descriptor_table_extractor_2eproto_getter() {
-  return &descriptor_table_extractor_2eproto;
+  {
+    void* ptr = &::extractor::_FlightRow_default_instance_;
+    new (ptr) ::extractor::FlightRow();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::extractor::FlightRow::InitAsDefaultInstance();
 }
 
-// Force running AddDescriptors() at dynamic initialization time.
-PROTOBUF_ATTRIBUTE_INIT_PRIORITY2 static ::_pbi::AddDescriptorsRunner dynamic_init_dummy_extractor_2eproto(&descriptor_table_extractor_2eproto);
+::google::protobuf::internal::SCCInfo<0> scc_info_FlightRow =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsFlightRow}, {}};
+
+static void InitDefaultsReservaRow() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::extractor::_ReservaRow_default_instance_;
+    new (ptr) ::extractor::ReservaRow();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::extractor::ReservaRow::InitAsDefaultInstance();
+}
+
+::google::protobuf::internal::SCCInfo<0> scc_info_ReservaRow =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsReservaRow}, {}};
+
+static void InitDefaultsPesquisaRow() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::extractor::_PesquisaRow_default_instance_;
+    new (ptr) ::extractor::PesquisaRow();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::extractor::PesquisaRow::InitAsDefaultInstance();
+}
+
+::google::protobuf::internal::SCCInfo<0> scc_info_PesquisaRow =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsPesquisaRow}, {}};
+
+static void InitDefaultsAllDataSend() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::extractor::_AllDataSend_default_instance_;
+    new (ptr) ::extractor::AllDataSend();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::extractor::AllDataSend::InitAsDefaultInstance();
+}
+
+::google::protobuf::internal::SCCInfo<0> scc_info_AllDataSend =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsAllDataSend}, {}};
+
+static void InitDefaultsAllDataResponse() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::extractor::_AllDataResponse_default_instance_;
+    new (ptr) ::extractor::AllDataResponse();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::extractor::AllDataResponse::InitAsDefaultInstance();
+}
+
+::google::protobuf::internal::SCCInfo<0> scc_info_AllDataResponse =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsAllDataResponse}, {}};
+
+void InitDefaults() {
+  ::google::protobuf::internal::InitSCC(&scc_info_FlightRow.base);
+  ::google::protobuf::internal::InitSCC(&scc_info_ReservaRow.base);
+  ::google::protobuf::internal::InitSCC(&scc_info_PesquisaRow.base);
+  ::google::protobuf::internal::InitSCC(&scc_info_AllDataSend.base);
+  ::google::protobuf::internal::InitSCC(&scc_info_AllDataResponse.base);
+}
+
+::google::protobuf::Metadata file_level_metadata[5];
+
+const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
+  ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::extractor::FlightRow, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::extractor::FlightRow, cidade_origem_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::extractor::FlightRow, cidade_destino_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::extractor::FlightRow, assentos_ocupados_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::extractor::FlightRow, assentos_totais_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::extractor::FlightRow, assentos_disponiveis_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::extractor::FlightRow, dia_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::extractor::FlightRow, mes_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::extractor::FlightRow, ano_),
+  ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::extractor::ReservaRow, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::extractor::ReservaRow, tipo_quarto_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::extractor::ReservaRow, nome_hotel_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::extractor::ReservaRow, cidade_destino_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::extractor::ReservaRow, numero_quarto_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::extractor::ReservaRow, quantidade_pessoas_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::extractor::ReservaRow, preco_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::extractor::ReservaRow, ocupado_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::extractor::ReservaRow, data_ida_dia_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::extractor::ReservaRow, data_ida_mes_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::extractor::ReservaRow, data_ida_ano_),
+  ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::extractor::PesquisaRow, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::extractor::PesquisaRow, cidade_origem_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::extractor::PesquisaRow, cidade_destino_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::extractor::PesquisaRow, nome_hotel_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::extractor::PesquisaRow, data_ida_dia_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::extractor::PesquisaRow, data_ida_mes_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::extractor::PesquisaRow, data_ida_ano_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::extractor::PesquisaRow, data_volta_dia_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::extractor::PesquisaRow, data_volta_mes_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::extractor::PesquisaRow, data_volta_ano_),
+  ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::extractor::AllDataSend, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::extractor::AllDataSend, voos_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::extractor::AllDataSend, reservas_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::extractor::AllDataSend, pesquisas_),
+  ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::extractor::AllDataResponse, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::extractor::AllDataResponse, stats1_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::extractor::AllDataResponse, stats2_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::extractor::AllDataResponse, stats3_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::extractor::AllDataResponse, stats4_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::extractor::AllDataResponse, stats5_),
+};
+static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
+  { 0, -1, sizeof(::extractor::FlightRow)},
+  { 13, -1, sizeof(::extractor::ReservaRow)},
+  { 28, -1, sizeof(::extractor::PesquisaRow)},
+  { 42, -1, sizeof(::extractor::AllDataSend)},
+  { 50, -1, sizeof(::extractor::AllDataResponse)},
+};
+
+static ::google::protobuf::Message const * const file_default_instances[] = {
+  reinterpret_cast<const ::google::protobuf::Message*>(&::extractor::_FlightRow_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::extractor::_ReservaRow_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::extractor::_PesquisaRow_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::extractor::_AllDataSend_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::extractor::_AllDataResponse_default_instance_),
+};
+
+void protobuf_AssignDescriptors() {
+  AddDescriptors();
+  AssignDescriptors(
+      "extractor.proto", schemas, file_default_instances, TableStruct::offsets,
+      file_level_metadata, NULL, NULL);
+}
+
+void protobuf_AssignDescriptorsOnce() {
+  static ::google::protobuf::internal::once_flag once;
+  ::google::protobuf::internal::call_once(once, protobuf_AssignDescriptors);
+}
+
+void protobuf_RegisterTypes(const ::std::string&) GOOGLE_PROTOBUF_ATTRIBUTE_COLD;
+void protobuf_RegisterTypes(const ::std::string&) {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 5);
+}
+
+void AddDescriptorsImpl() {
+  InitDefaults();
+  static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
+      "\n\017extractor.proto\022\textractor\"\263\001\n\tFlightR"
+      "ow\022\025\n\rcidade_origem\030\001 \001(\t\022\026\n\016cidade_dest"
+      "ino\030\002 \001(\t\022\031\n\021assentos_ocupados\030\003 \001(\005\022\027\n\017"
+      "assentos_totais\030\004 \001(\005\022\034\n\024assentos_dispon"
+      "iveis\030\005 \001(\005\022\013\n\003dia\030\006 \001(\005\022\013\n\003mes\030\007 \001(\005\022\013\n"
+      "\003ano\030\010 \001(\005\"\342\001\n\nReservaRow\022\023\n\013tipo_quarto"
+      "\030\001 \001(\t\022\022\n\nnome_hotel\030\002 \001(\t\022\026\n\016cidade_des"
+      "tino\030\003 \001(\t\022\025\n\rnumero_quarto\030\004 \001(\005\022\032\n\022qua"
+      "ntidade_pessoas\030\005 \001(\005\022\r\n\005preco\030\006 \001(\002\022\017\n\007"
+      "ocupado\030\007 \001(\010\022\024\n\014data_ida_dia\030\010 \001(\005\022\024\n\014d"
+      "ata_ida_mes\030\t \001(\005\022\024\n\014data_ida_ano\030\n \001(\005\""
+      "\332\001\n\013PesquisaRow\022\025\n\rcidade_origem\030\001 \001(\t\022\026"
+      "\n\016cidade_destino\030\002 \001(\t\022\022\n\nnome_hotel\030\003 \001"
+      "(\t\022\024\n\014data_ida_dia\030\004 \001(\005\022\024\n\014data_ida_mes"
+      "\030\005 \001(\005\022\024\n\014data_ida_ano\030\006 \001(\005\022\026\n\016data_vol"
+      "ta_dia\030\007 \001(\005\022\026\n\016data_volta_mes\030\010 \001(\005\022\026\n\016"
+      "data_volta_ano\030\t \001(\005\"@\n\013AllDataSend\022\014\n\004v"
+      "oos\030\001 \001(\t\022\020\n\010reservas\030\002 \001(\t\022\021\n\tpesquisas"
+      "\030\003 \001(\t\"a\n\017AllDataResponse\022\016\n\006stats1\030\001 \001("
+      "\005\022\016\n\006stats2\030\002 \001(\005\022\016\n\006stats3\030\003 \001(\005\022\016\n\006sta"
+      "ts4\030\004 \001(\005\022\016\n\006stats5\030\005 \001(\0052T\n\020ExtractorSe"
+      "rvice\022@\n\nGetAllData\022\026.extractor.AllDataS"
+      "end\032\032.extractor.AllDataResponseb\006proto3"
+  };
+  ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
+      descriptor, 919);
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
+    "extractor.proto", &protobuf_RegisterTypes);
+}
+
+void AddDescriptors() {
+  static ::google::protobuf::internal::once_flag once;
+  ::google::protobuf::internal::call_once(once, AddDescriptorsImpl);
+}
+// Force AddDescriptors() to be called at dynamic initialization time.
+struct StaticDescriptorInitializer {
+  StaticDescriptorInitializer() {
+    AddDescriptors();
+  }
+} static_descriptor_initializer;
+}  // namespace protobuf_extractor_2eproto
 namespace extractor {
 
 // ===================================================================
 
-class FlightRow::_Internal {
- public:
-};
+void FlightRow::InitAsDefaultInstance() {
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int FlightRow::kCidadeOrigemFieldNumber;
+const int FlightRow::kCidadeDestinoFieldNumber;
+const int FlightRow::kAssentosOcupadosFieldNumber;
+const int FlightRow::kAssentosTotaisFieldNumber;
+const int FlightRow::kAssentosDisponiveisFieldNumber;
+const int FlightRow::kDiaFieldNumber;
+const int FlightRow::kMesFieldNumber;
+const int FlightRow::kAnoFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
-FlightRow::FlightRow(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor(arena, is_message_owned);
-  // @@protoc_insertion_point(arena_constructor:extractor.FlightRow)
+FlightRow::FlightRow()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  ::google::protobuf::internal::InitSCC(
+      &protobuf_extractor_2eproto::scc_info_FlightRow.base);
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:extractor.FlightRow)
 }
 FlightRow::FlightRow(const FlightRow& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  FlightRow* const _this = this; (void)_this;
-  new (&_impl_) Impl_{
-      decltype(_impl_.cidade_origem_){}
-    , decltype(_impl_.cidade_destino_){}
-    , decltype(_impl_.assentos_ocupados_){}
-    , decltype(_impl_.assentos_totais_){}
-    , decltype(_impl_.assentos_disponiveis_){}
-    , decltype(_impl_.dia_){}
-    , decltype(_impl_.mes_){}
-    , decltype(_impl_.ano_){}
-    , /*decltype(_impl_._cached_size_)*/{}};
-
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  _impl_.cidade_origem_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.cidade_origem_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_cidade_origem().empty()) {
-    _this->_impl_.cidade_origem_.Set(from._internal_cidade_origem(), 
-      _this->GetArenaForAllocation());
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  cidade_origem_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.cidade_origem().size() > 0) {
+    cidade_origem_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.cidade_origem_);
   }
-  _impl_.cidade_destino_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.cidade_destino_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_cidade_destino().empty()) {
-    _this->_impl_.cidade_destino_.Set(from._internal_cidade_destino(), 
-      _this->GetArenaForAllocation());
+  cidade_destino_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.cidade_destino().size() > 0) {
+    cidade_destino_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.cidade_destino_);
   }
-  ::memcpy(&_impl_.assentos_ocupados_, &from._impl_.assentos_ocupados_,
-    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.ano_) -
-    reinterpret_cast<char*>(&_impl_.assentos_ocupados_)) + sizeof(_impl_.ano_));
+  ::memcpy(&assentos_ocupados_, &from.assentos_ocupados_,
+    static_cast<size_t>(reinterpret_cast<char*>(&ano_) -
+    reinterpret_cast<char*>(&assentos_ocupados_)) + sizeof(ano_));
   // @@protoc_insertion_point(copy_constructor:extractor.FlightRow)
 }
 
-inline void FlightRow::SharedCtor(
-    ::_pb::Arena* arena, bool is_message_owned) {
-  (void)arena;
-  (void)is_message_owned;
-  new (&_impl_) Impl_{
-      decltype(_impl_.cidade_origem_){}
-    , decltype(_impl_.cidade_destino_){}
-    , decltype(_impl_.assentos_ocupados_){0}
-    , decltype(_impl_.assentos_totais_){0}
-    , decltype(_impl_.assentos_disponiveis_){0}
-    , decltype(_impl_.dia_){0}
-    , decltype(_impl_.mes_){0}
-    , decltype(_impl_.ano_){0}
-    , /*decltype(_impl_._cached_size_)*/{}
-  };
-  _impl_.cidade_origem_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.cidade_origem_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  _impl_.cidade_destino_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.cidade_destino_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+void FlightRow::SharedCtor() {
+  cidade_origem_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  cidade_destino_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ::memset(&assentos_ocupados_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&ano_) -
+      reinterpret_cast<char*>(&assentos_ocupados_)) + sizeof(ano_));
 }
 
 FlightRow::~FlightRow() {
   // @@protoc_insertion_point(destructor:extractor.FlightRow)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
   SharedDtor();
 }
 
-inline void FlightRow::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  _impl_.cidade_origem_.Destroy();
-  _impl_.cidade_destino_.Destroy();
+void FlightRow::SharedDtor() {
+  cidade_origem_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  cidade_destino_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 void FlightRow::SetCachedSize(int size) const {
-  _impl_._cached_size_.Set(size);
+  _cached_size_.Set(size);
 }
+const ::google::protobuf::Descriptor* FlightRow::descriptor() {
+  ::protobuf_extractor_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_extractor_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const FlightRow& FlightRow::default_instance() {
+  ::google::protobuf::internal::InitSCC(&protobuf_extractor_2eproto::scc_info_FlightRow.base);
+  return *internal_default_instance();
+}
+
 
 void FlightRow::Clear() {
 // @@protoc_insertion_point(message_clear_start:extractor.FlightRow)
-  uint32_t cached_has_bits = 0;
+  ::google::protobuf::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  _impl_.cidade_origem_.ClearToEmpty();
-  _impl_.cidade_destino_.ClearToEmpty();
-  ::memset(&_impl_.assentos_ocupados_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&_impl_.ano_) -
-      reinterpret_cast<char*>(&_impl_.assentos_ocupados_)) + sizeof(_impl_.ano_));
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  cidade_origem_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  cidade_destino_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ::memset(&assentos_ocupados_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&ano_) -
+      reinterpret_cast<char*>(&assentos_ocupados_)) + sizeof(ano_));
+  _internal_metadata_.Clear();
 }
 
-const char* FlightRow::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
+bool FlightRow::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:extractor.FlightRow)
+  for (;;) {
+    ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // string cidade_origem = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          auto str = _internal_mutable_cidade_origem();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "extractor.FlightRow.cidade_origem"));
-        } else
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_cidade_origem()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->cidade_origem().data(), static_cast<int>(this->cidade_origem().length()),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "extractor.FlightRow.cidade_origem"));
+        } else {
           goto handle_unusual;
-        continue;
+        }
+        break;
+      }
+
       // string cidade_destino = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
-          auto str = _internal_mutable_cidade_destino();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "extractor.FlightRow.cidade_destino"));
-        } else
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_cidade_destino()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->cidade_destino().data(), static_cast<int>(this->cidade_destino().length()),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "extractor.FlightRow.cidade_destino"));
+        } else {
           goto handle_unusual;
-        continue;
+        }
+        break;
+      }
+
       // int32 assentos_ocupados = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
-          _impl_.assentos_ocupados_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else
+      case 3: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(24u /* 24 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &assentos_ocupados_)));
+        } else {
           goto handle_unusual;
-        continue;
+        }
+        break;
+      }
+
       // int32 assentos_totais = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
-          _impl_.assentos_totais_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else
+      case 4: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(32u /* 32 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &assentos_totais_)));
+        } else {
           goto handle_unusual;
-        continue;
+        }
+        break;
+      }
+
       // int32 assentos_disponiveis = 5;
-      case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 40)) {
-          _impl_.assentos_disponiveis_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else
+      case 5: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(40u /* 40 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &assentos_disponiveis_)));
+        } else {
           goto handle_unusual;
-        continue;
+        }
+        break;
+      }
+
       // int32 dia = 6;
-      case 6:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 48)) {
-          _impl_.dia_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else
+      case 6: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(48u /* 48 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &dia_)));
+        } else {
           goto handle_unusual;
-        continue;
+        }
+        break;
+      }
+
       // int32 mes = 7;
-      case 7:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 56)) {
-          _impl_.mes_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else
+      case 7: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(56u /* 56 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &mes_)));
+        } else {
           goto handle_unusual;
-        continue;
+        }
+        break;
+      }
+
       // int32 ano = 8;
-      case 8:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 64)) {
-          _impl_.ano_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else
+      case 8: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(64u /* 64 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &ano_)));
+        } else {
           goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
     }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
-  return ptr;
+  }
+success:
+  // @@protoc_insertion_point(parse_success:extractor.FlightRow)
+  return true;
 failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
+  // @@protoc_insertion_point(parse_failure:extractor.FlightRow)
+  return false;
+#undef DO_
 }
 
-uint8_t* FlightRow::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:extractor.FlightRow)
-  uint32_t cached_has_bits = 0;
+void FlightRow::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:extractor.FlightRow)
+  ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
   // string cidade_origem = 1;
-  if (!this->_internal_cidade_origem().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_cidade_origem().data(), static_cast<int>(this->_internal_cidade_origem().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+  if (this->cidade_origem().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->cidade_origem().data(), static_cast<int>(this->cidade_origem().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
       "extractor.FlightRow.cidade_origem");
-    target = stream->WriteStringMaybeAliased(
-        1, this->_internal_cidade_origem(), target);
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      1, this->cidade_origem(), output);
   }
 
   // string cidade_destino = 2;
-  if (!this->_internal_cidade_destino().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_cidade_destino().data(), static_cast<int>(this->_internal_cidade_destino().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+  if (this->cidade_destino().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->cidade_destino().data(), static_cast<int>(this->cidade_destino().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
       "extractor.FlightRow.cidade_destino");
-    target = stream->WriteStringMaybeAliased(
-        2, this->_internal_cidade_destino(), target);
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      2, this->cidade_destino(), output);
   }
 
   // int32 assentos_ocupados = 3;
-  if (this->_internal_assentos_ocupados() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(3, this->_internal_assentos_ocupados(), target);
+  if (this->assentos_ocupados() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->assentos_ocupados(), output);
   }
 
   // int32 assentos_totais = 4;
-  if (this->_internal_assentos_totais() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(4, this->_internal_assentos_totais(), target);
+  if (this->assentos_totais() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->assentos_totais(), output);
   }
 
   // int32 assentos_disponiveis = 5;
-  if (this->_internal_assentos_disponiveis() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(5, this->_internal_assentos_disponiveis(), target);
+  if (this->assentos_disponiveis() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->assentos_disponiveis(), output);
   }
 
   // int32 dia = 6;
-  if (this->_internal_dia() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(6, this->_internal_dia(), target);
+  if (this->dia() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->dia(), output);
   }
 
   // int32 mes = 7;
-  if (this->_internal_mes() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(7, this->_internal_mes(), target);
+  if (this->mes() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(7, this->mes(), output);
   }
 
   // int32 ano = 8;
-  if (this->_internal_ano() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(8, this->_internal_ano(), target);
+  if (this->ano() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(8, this->ano(), output);
   }
 
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
+  // @@protoc_insertion_point(serialize_end:extractor.FlightRow)
+}
+
+::google::protobuf::uint8* FlightRow::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:extractor.FlightRow)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // string cidade_origem = 1;
+  if (this->cidade_origem().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->cidade_origem().data(), static_cast<int>(this->cidade_origem().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "extractor.FlightRow.cidade_origem");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        1, this->cidade_origem(), target);
+  }
+
+  // string cidade_destino = 2;
+  if (this->cidade_destino().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->cidade_destino().data(), static_cast<int>(this->cidade_destino().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "extractor.FlightRow.cidade_destino");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        2, this->cidade_destino(), target);
+  }
+
+  // int32 assentos_ocupados = 3;
+  if (this->assentos_ocupados() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->assentos_ocupados(), target);
+  }
+
+  // int32 assentos_totais = 4;
+  if (this->assentos_totais() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->assentos_totais(), target);
+  }
+
+  // int32 assentos_disponiveis = 5;
+  if (this->assentos_disponiveis() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->assentos_disponiveis(), target);
+  }
+
+  // int32 dia = 6;
+  if (this->dia() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->dia(), target);
+  }
+
+  // int32 mes = 7;
+  if (this->mes() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(7, this->mes(), target);
+  }
+
+  // int32 ano = 8;
+  if (this->ano() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(8, this->ano(), target);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
   }
   // @@protoc_insertion_point(serialize_to_array_end:extractor.FlightRow)
   return target;
@@ -524,97 +635,127 @@ size_t FlightRow::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:extractor.FlightRow)
   size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
   // string cidade_origem = 1;
-  if (!this->_internal_cidade_origem().empty()) {
+  if (this->cidade_origem().size() > 0) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_cidade_origem());
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->cidade_origem());
   }
 
   // string cidade_destino = 2;
-  if (!this->_internal_cidade_destino().empty()) {
+  if (this->cidade_destino().size() > 0) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_cidade_destino());
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->cidade_destino());
   }
 
   // int32 assentos_ocupados = 3;
-  if (this->_internal_assentos_ocupados() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_assentos_ocupados());
+  if (this->assentos_ocupados() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->assentos_ocupados());
   }
 
   // int32 assentos_totais = 4;
-  if (this->_internal_assentos_totais() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_assentos_totais());
+  if (this->assentos_totais() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->assentos_totais());
   }
 
   // int32 assentos_disponiveis = 5;
-  if (this->_internal_assentos_disponiveis() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_assentos_disponiveis());
+  if (this->assentos_disponiveis() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->assentos_disponiveis());
   }
 
   // int32 dia = 6;
-  if (this->_internal_dia() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_dia());
+  if (this->dia() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->dia());
   }
 
   // int32 mes = 7;
-  if (this->_internal_mes() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_mes());
+  if (this->mes() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->mes());
   }
 
   // int32 ano = 8;
-  if (this->_internal_ano() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_ano());
+  if (this->ano() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->ano());
   }
 
-  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData FlightRow::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
-    FlightRow::MergeImpl
-};
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*FlightRow::GetClassData() const { return &_class_data_; }
+void FlightRow::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:extractor.FlightRow)
+  GOOGLE_DCHECK_NE(&from, this);
+  const FlightRow* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const FlightRow>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:extractor.FlightRow)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:extractor.FlightRow)
+    MergeFrom(*source);
+  }
+}
 
-
-void FlightRow::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
-  auto* const _this = static_cast<FlightRow*>(&to_msg);
-  auto& from = static_cast<const FlightRow&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:extractor.FlightRow)
-  GOOGLE_DCHECK_NE(&from, _this);
-  uint32_t cached_has_bits = 0;
+void FlightRow::MergeFrom(const FlightRow& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:extractor.FlightRow)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (!from._internal_cidade_origem().empty()) {
-    _this->_internal_set_cidade_origem(from._internal_cidade_origem());
+  if (from.cidade_origem().size() > 0) {
+
+    cidade_origem_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.cidade_origem_);
   }
-  if (!from._internal_cidade_destino().empty()) {
-    _this->_internal_set_cidade_destino(from._internal_cidade_destino());
+  if (from.cidade_destino().size() > 0) {
+
+    cidade_destino_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.cidade_destino_);
   }
-  if (from._internal_assentos_ocupados() != 0) {
-    _this->_internal_set_assentos_ocupados(from._internal_assentos_ocupados());
+  if (from.assentos_ocupados() != 0) {
+    set_assentos_ocupados(from.assentos_ocupados());
   }
-  if (from._internal_assentos_totais() != 0) {
-    _this->_internal_set_assentos_totais(from._internal_assentos_totais());
+  if (from.assentos_totais() != 0) {
+    set_assentos_totais(from.assentos_totais());
   }
-  if (from._internal_assentos_disponiveis() != 0) {
-    _this->_internal_set_assentos_disponiveis(from._internal_assentos_disponiveis());
+  if (from.assentos_disponiveis() != 0) {
+    set_assentos_disponiveis(from.assentos_disponiveis());
   }
-  if (from._internal_dia() != 0) {
-    _this->_internal_set_dia(from._internal_dia());
+  if (from.dia() != 0) {
+    set_dia(from.dia());
   }
-  if (from._internal_mes() != 0) {
-    _this->_internal_set_mes(from._internal_mes());
+  if (from.mes() != 0) {
+    set_mes(from.mes());
   }
-  if (from._internal_ano() != 0) {
-    _this->_internal_set_ano(from._internal_ano());
+  if (from.ano() != 0) {
+    set_ano(from.ano());
   }
-  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void FlightRow::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:extractor.FlightRow)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
 }
 
 void FlightRow::CopyFrom(const FlightRow& from) {
@@ -628,358 +769,458 @@ bool FlightRow::IsInitialized() const {
   return true;
 }
 
+void FlightRow::Swap(FlightRow* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
 void FlightRow::InternalSwap(FlightRow* other) {
   using std::swap;
-  auto* lhs_arena = GetArenaForAllocation();
-  auto* rhs_arena = other->GetArenaForAllocation();
-  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &_impl_.cidade_origem_, lhs_arena,
-      &other->_impl_.cidade_origem_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &_impl_.cidade_destino_, lhs_arena,
-      &other->_impl_.cidade_destino_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(FlightRow, _impl_.ano_)
-      + sizeof(FlightRow::_impl_.ano_)
-      - PROTOBUF_FIELD_OFFSET(FlightRow, _impl_.assentos_ocupados_)>(
-          reinterpret_cast<char*>(&_impl_.assentos_ocupados_),
-          reinterpret_cast<char*>(&other->_impl_.assentos_ocupados_));
+  cidade_origem_.Swap(&other->cidade_origem_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  cidade_destino_.Swap(&other->cidade_destino_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  swap(assentos_ocupados_, other->assentos_ocupados_);
+  swap(assentos_totais_, other->assentos_totais_);
+  swap(assentos_disponiveis_, other->assentos_disponiveis_);
+  swap(dia_, other->dia_);
+  swap(mes_, other->mes_);
+  swap(ano_, other->ano_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata FlightRow::GetMetadata() const {
-  return ::_pbi::AssignDescriptors(
-      &descriptor_table_extractor_2eproto_getter, &descriptor_table_extractor_2eproto_once,
-      file_level_metadata_extractor_2eproto[0]);
+::google::protobuf::Metadata FlightRow::GetMetadata() const {
+  protobuf_extractor_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_extractor_2eproto::file_level_metadata[kIndexInFileMessages];
 }
+
 
 // ===================================================================
 
-class ReservaRow::_Internal {
- public:
-};
+void ReservaRow::InitAsDefaultInstance() {
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int ReservaRow::kTipoQuartoFieldNumber;
+const int ReservaRow::kNomeHotelFieldNumber;
+const int ReservaRow::kCidadeDestinoFieldNumber;
+const int ReservaRow::kNumeroQuartoFieldNumber;
+const int ReservaRow::kQuantidadePessoasFieldNumber;
+const int ReservaRow::kPrecoFieldNumber;
+const int ReservaRow::kOcupadoFieldNumber;
+const int ReservaRow::kDataIdaDiaFieldNumber;
+const int ReservaRow::kDataIdaMesFieldNumber;
+const int ReservaRow::kDataIdaAnoFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
-ReservaRow::ReservaRow(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor(arena, is_message_owned);
-  // @@protoc_insertion_point(arena_constructor:extractor.ReservaRow)
+ReservaRow::ReservaRow()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  ::google::protobuf::internal::InitSCC(
+      &protobuf_extractor_2eproto::scc_info_ReservaRow.base);
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:extractor.ReservaRow)
 }
 ReservaRow::ReservaRow(const ReservaRow& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  ReservaRow* const _this = this; (void)_this;
-  new (&_impl_) Impl_{
-      decltype(_impl_.tipo_quarto_){}
-    , decltype(_impl_.nome_hotel_){}
-    , decltype(_impl_.cidade_destino_){}
-    , decltype(_impl_.numero_quarto_){}
-    , decltype(_impl_.quantidade_pessoas_){}
-    , decltype(_impl_.preco_){}
-    , decltype(_impl_.ocupado_){}
-    , decltype(_impl_.data_ida_dia_){}
-    , decltype(_impl_.data_ida_mes_){}
-    , decltype(_impl_.data_ida_ano_){}
-    , /*decltype(_impl_._cached_size_)*/{}};
-
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  _impl_.tipo_quarto_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.tipo_quarto_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_tipo_quarto().empty()) {
-    _this->_impl_.tipo_quarto_.Set(from._internal_tipo_quarto(), 
-      _this->GetArenaForAllocation());
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  tipo_quarto_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.tipo_quarto().size() > 0) {
+    tipo_quarto_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.tipo_quarto_);
   }
-  _impl_.nome_hotel_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.nome_hotel_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_nome_hotel().empty()) {
-    _this->_impl_.nome_hotel_.Set(from._internal_nome_hotel(), 
-      _this->GetArenaForAllocation());
+  nome_hotel_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.nome_hotel().size() > 0) {
+    nome_hotel_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.nome_hotel_);
   }
-  _impl_.cidade_destino_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.cidade_destino_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_cidade_destino().empty()) {
-    _this->_impl_.cidade_destino_.Set(from._internal_cidade_destino(), 
-      _this->GetArenaForAllocation());
+  cidade_destino_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.cidade_destino().size() > 0) {
+    cidade_destino_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.cidade_destino_);
   }
-  ::memcpy(&_impl_.numero_quarto_, &from._impl_.numero_quarto_,
-    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.data_ida_ano_) -
-    reinterpret_cast<char*>(&_impl_.numero_quarto_)) + sizeof(_impl_.data_ida_ano_));
+  ::memcpy(&numero_quarto_, &from.numero_quarto_,
+    static_cast<size_t>(reinterpret_cast<char*>(&data_ida_ano_) -
+    reinterpret_cast<char*>(&numero_quarto_)) + sizeof(data_ida_ano_));
   // @@protoc_insertion_point(copy_constructor:extractor.ReservaRow)
 }
 
-inline void ReservaRow::SharedCtor(
-    ::_pb::Arena* arena, bool is_message_owned) {
-  (void)arena;
-  (void)is_message_owned;
-  new (&_impl_) Impl_{
-      decltype(_impl_.tipo_quarto_){}
-    , decltype(_impl_.nome_hotel_){}
-    , decltype(_impl_.cidade_destino_){}
-    , decltype(_impl_.numero_quarto_){0}
-    , decltype(_impl_.quantidade_pessoas_){0}
-    , decltype(_impl_.preco_){0}
-    , decltype(_impl_.ocupado_){false}
-    , decltype(_impl_.data_ida_dia_){0}
-    , decltype(_impl_.data_ida_mes_){0}
-    , decltype(_impl_.data_ida_ano_){0}
-    , /*decltype(_impl_._cached_size_)*/{}
-  };
-  _impl_.tipo_quarto_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.tipo_quarto_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  _impl_.nome_hotel_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.nome_hotel_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  _impl_.cidade_destino_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.cidade_destino_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+void ReservaRow::SharedCtor() {
+  tipo_quarto_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  nome_hotel_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  cidade_destino_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ::memset(&numero_quarto_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&data_ida_ano_) -
+      reinterpret_cast<char*>(&numero_quarto_)) + sizeof(data_ida_ano_));
 }
 
 ReservaRow::~ReservaRow() {
   // @@protoc_insertion_point(destructor:extractor.ReservaRow)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
   SharedDtor();
 }
 
-inline void ReservaRow::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  _impl_.tipo_quarto_.Destroy();
-  _impl_.nome_hotel_.Destroy();
-  _impl_.cidade_destino_.Destroy();
+void ReservaRow::SharedDtor() {
+  tipo_quarto_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  nome_hotel_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  cidade_destino_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 void ReservaRow::SetCachedSize(int size) const {
-  _impl_._cached_size_.Set(size);
+  _cached_size_.Set(size);
 }
+const ::google::protobuf::Descriptor* ReservaRow::descriptor() {
+  ::protobuf_extractor_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_extractor_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const ReservaRow& ReservaRow::default_instance() {
+  ::google::protobuf::internal::InitSCC(&protobuf_extractor_2eproto::scc_info_ReservaRow.base);
+  return *internal_default_instance();
+}
+
 
 void ReservaRow::Clear() {
 // @@protoc_insertion_point(message_clear_start:extractor.ReservaRow)
-  uint32_t cached_has_bits = 0;
+  ::google::protobuf::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  _impl_.tipo_quarto_.ClearToEmpty();
-  _impl_.nome_hotel_.ClearToEmpty();
-  _impl_.cidade_destino_.ClearToEmpty();
-  ::memset(&_impl_.numero_quarto_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&_impl_.data_ida_ano_) -
-      reinterpret_cast<char*>(&_impl_.numero_quarto_)) + sizeof(_impl_.data_ida_ano_));
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  tipo_quarto_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  nome_hotel_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  cidade_destino_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ::memset(&numero_quarto_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&data_ida_ano_) -
+      reinterpret_cast<char*>(&numero_quarto_)) + sizeof(data_ida_ano_));
+  _internal_metadata_.Clear();
 }
 
-const char* ReservaRow::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
+bool ReservaRow::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:extractor.ReservaRow)
+  for (;;) {
+    ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // string tipo_quarto = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          auto str = _internal_mutable_tipo_quarto();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "extractor.ReservaRow.tipo_quarto"));
-        } else
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_tipo_quarto()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->tipo_quarto().data(), static_cast<int>(this->tipo_quarto().length()),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "extractor.ReservaRow.tipo_quarto"));
+        } else {
           goto handle_unusual;
-        continue;
+        }
+        break;
+      }
+
       // string nome_hotel = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
-          auto str = _internal_mutable_nome_hotel();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "extractor.ReservaRow.nome_hotel"));
-        } else
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_nome_hotel()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->nome_hotel().data(), static_cast<int>(this->nome_hotel().length()),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "extractor.ReservaRow.nome_hotel"));
+        } else {
           goto handle_unusual;
-        continue;
+        }
+        break;
+      }
+
       // string cidade_destino = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
-          auto str = _internal_mutable_cidade_destino();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "extractor.ReservaRow.cidade_destino"));
-        } else
+      case 3: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(26u /* 26 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_cidade_destino()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->cidade_destino().data(), static_cast<int>(this->cidade_destino().length()),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "extractor.ReservaRow.cidade_destino"));
+        } else {
           goto handle_unusual;
-        continue;
+        }
+        break;
+      }
+
       // int32 numero_quarto = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
-          _impl_.numero_quarto_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else
+      case 4: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(32u /* 32 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &numero_quarto_)));
+        } else {
           goto handle_unusual;
-        continue;
+        }
+        break;
+      }
+
       // int32 quantidade_pessoas = 5;
-      case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 40)) {
-          _impl_.quantidade_pessoas_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else
+      case 5: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(40u /* 40 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &quantidade_pessoas_)));
+        } else {
           goto handle_unusual;
-        continue;
+        }
+        break;
+      }
+
       // float preco = 6;
-      case 6:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 53)) {
-          _impl_.preco_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
-          ptr += sizeof(float);
-        } else
+      case 6: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(53u /* 53 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
+                 input, &preco_)));
+        } else {
           goto handle_unusual;
-        continue;
+        }
+        break;
+      }
+
       // bool ocupado = 7;
-      case 7:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 56)) {
-          _impl_.ocupado_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
-          CHK_(ptr);
-        } else
+      case 7: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(56u /* 56 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+                 input, &ocupado_)));
+        } else {
           goto handle_unusual;
-        continue;
+        }
+        break;
+      }
+
       // int32 data_ida_dia = 8;
-      case 8:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 64)) {
-          _impl_.data_ida_dia_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else
+      case 8: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(64u /* 64 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &data_ida_dia_)));
+        } else {
           goto handle_unusual;
-        continue;
+        }
+        break;
+      }
+
       // int32 data_ida_mes = 9;
-      case 9:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 72)) {
-          _impl_.data_ida_mes_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else
+      case 9: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(72u /* 72 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &data_ida_mes_)));
+        } else {
           goto handle_unusual;
-        continue;
+        }
+        break;
+      }
+
       // int32 data_ida_ano = 10;
-      case 10:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 80)) {
-          _impl_.data_ida_ano_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else
+      case 10: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(80u /* 80 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &data_ida_ano_)));
+        } else {
           goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
     }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
-  return ptr;
+  }
+success:
+  // @@protoc_insertion_point(parse_success:extractor.ReservaRow)
+  return true;
 failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
+  // @@protoc_insertion_point(parse_failure:extractor.ReservaRow)
+  return false;
+#undef DO_
 }
 
-uint8_t* ReservaRow::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:extractor.ReservaRow)
-  uint32_t cached_has_bits = 0;
+void ReservaRow::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:extractor.ReservaRow)
+  ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
   // string tipo_quarto = 1;
-  if (!this->_internal_tipo_quarto().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_tipo_quarto().data(), static_cast<int>(this->_internal_tipo_quarto().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+  if (this->tipo_quarto().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->tipo_quarto().data(), static_cast<int>(this->tipo_quarto().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
       "extractor.ReservaRow.tipo_quarto");
-    target = stream->WriteStringMaybeAliased(
-        1, this->_internal_tipo_quarto(), target);
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      1, this->tipo_quarto(), output);
   }
 
   // string nome_hotel = 2;
-  if (!this->_internal_nome_hotel().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_nome_hotel().data(), static_cast<int>(this->_internal_nome_hotel().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+  if (this->nome_hotel().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->nome_hotel().data(), static_cast<int>(this->nome_hotel().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
       "extractor.ReservaRow.nome_hotel");
-    target = stream->WriteStringMaybeAliased(
-        2, this->_internal_nome_hotel(), target);
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      2, this->nome_hotel(), output);
   }
 
   // string cidade_destino = 3;
-  if (!this->_internal_cidade_destino().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_cidade_destino().data(), static_cast<int>(this->_internal_cidade_destino().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+  if (this->cidade_destino().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->cidade_destino().data(), static_cast<int>(this->cidade_destino().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
       "extractor.ReservaRow.cidade_destino");
-    target = stream->WriteStringMaybeAliased(
-        3, this->_internal_cidade_destino(), target);
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      3, this->cidade_destino(), output);
   }
 
   // int32 numero_quarto = 4;
-  if (this->_internal_numero_quarto() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(4, this->_internal_numero_quarto(), target);
+  if (this->numero_quarto() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->numero_quarto(), output);
   }
 
   // int32 quantidade_pessoas = 5;
-  if (this->_internal_quantidade_pessoas() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(5, this->_internal_quantidade_pessoas(), target);
+  if (this->quantidade_pessoas() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->quantidade_pessoas(), output);
   }
 
   // float preco = 6;
-  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
-  float tmp_preco = this->_internal_preco();
-  uint32_t raw_preco;
-  memcpy(&raw_preco, &tmp_preco, sizeof(tmp_preco));
-  if (raw_preco != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteFloatToArray(6, this->_internal_preco(), target);
+  if (this->preco() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(6, this->preco(), output);
   }
 
   // bool ocupado = 7;
-  if (this->_internal_ocupado() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteBoolToArray(7, this->_internal_ocupado(), target);
+  if (this->ocupado() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(7, this->ocupado(), output);
   }
 
   // int32 data_ida_dia = 8;
-  if (this->_internal_data_ida_dia() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(8, this->_internal_data_ida_dia(), target);
+  if (this->data_ida_dia() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(8, this->data_ida_dia(), output);
   }
 
   // int32 data_ida_mes = 9;
-  if (this->_internal_data_ida_mes() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(9, this->_internal_data_ida_mes(), target);
+  if (this->data_ida_mes() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(9, this->data_ida_mes(), output);
   }
 
   // int32 data_ida_ano = 10;
-  if (this->_internal_data_ida_ano() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(10, this->_internal_data_ida_ano(), target);
+  if (this->data_ida_ano() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(10, this->data_ida_ano(), output);
   }
 
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
+  // @@protoc_insertion_point(serialize_end:extractor.ReservaRow)
+}
+
+::google::protobuf::uint8* ReservaRow::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:extractor.ReservaRow)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // string tipo_quarto = 1;
+  if (this->tipo_quarto().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->tipo_quarto().data(), static_cast<int>(this->tipo_quarto().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "extractor.ReservaRow.tipo_quarto");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        1, this->tipo_quarto(), target);
+  }
+
+  // string nome_hotel = 2;
+  if (this->nome_hotel().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->nome_hotel().data(), static_cast<int>(this->nome_hotel().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "extractor.ReservaRow.nome_hotel");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        2, this->nome_hotel(), target);
+  }
+
+  // string cidade_destino = 3;
+  if (this->cidade_destino().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->cidade_destino().data(), static_cast<int>(this->cidade_destino().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "extractor.ReservaRow.cidade_destino");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        3, this->cidade_destino(), target);
+  }
+
+  // int32 numero_quarto = 4;
+  if (this->numero_quarto() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->numero_quarto(), target);
+  }
+
+  // int32 quantidade_pessoas = 5;
+  if (this->quantidade_pessoas() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->quantidade_pessoas(), target);
+  }
+
+  // float preco = 6;
+  if (this->preco() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(6, this->preco(), target);
+  }
+
+  // bool ocupado = 7;
+  if (this->ocupado() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(7, this->ocupado(), target);
+  }
+
+  // int32 data_ida_dia = 8;
+  if (this->data_ida_dia() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(8, this->data_ida_dia(), target);
+  }
+
+  // int32 data_ida_mes = 9;
+  if (this->data_ida_mes() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(9, this->data_ida_mes(), target);
+  }
+
+  // int32 data_ida_ano = 10;
+  if (this->data_ida_ano() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(10, this->data_ida_ano(), target);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
   }
   // @@protoc_insertion_point(serialize_to_array_end:extractor.ReservaRow)
   return target;
@@ -989,123 +1230,144 @@ size_t ReservaRow::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:extractor.ReservaRow)
   size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
   // string tipo_quarto = 1;
-  if (!this->_internal_tipo_quarto().empty()) {
+  if (this->tipo_quarto().size() > 0) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_tipo_quarto());
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->tipo_quarto());
   }
 
   // string nome_hotel = 2;
-  if (!this->_internal_nome_hotel().empty()) {
+  if (this->nome_hotel().size() > 0) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_nome_hotel());
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->nome_hotel());
   }
 
   // string cidade_destino = 3;
-  if (!this->_internal_cidade_destino().empty()) {
+  if (this->cidade_destino().size() > 0) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_cidade_destino());
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->cidade_destino());
   }
 
   // int32 numero_quarto = 4;
-  if (this->_internal_numero_quarto() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_numero_quarto());
+  if (this->numero_quarto() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->numero_quarto());
   }
 
   // int32 quantidade_pessoas = 5;
-  if (this->_internal_quantidade_pessoas() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_quantidade_pessoas());
+  if (this->quantidade_pessoas() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->quantidade_pessoas());
   }
 
   // float preco = 6;
-  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
-  float tmp_preco = this->_internal_preco();
-  uint32_t raw_preco;
-  memcpy(&raw_preco, &tmp_preco, sizeof(tmp_preco));
-  if (raw_preco != 0) {
+  if (this->preco() != 0) {
     total_size += 1 + 4;
   }
 
   // bool ocupado = 7;
-  if (this->_internal_ocupado() != 0) {
+  if (this->ocupado() != 0) {
     total_size += 1 + 1;
   }
 
   // int32 data_ida_dia = 8;
-  if (this->_internal_data_ida_dia() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_data_ida_dia());
+  if (this->data_ida_dia() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->data_ida_dia());
   }
 
   // int32 data_ida_mes = 9;
-  if (this->_internal_data_ida_mes() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_data_ida_mes());
+  if (this->data_ida_mes() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->data_ida_mes());
   }
 
   // int32 data_ida_ano = 10;
-  if (this->_internal_data_ida_ano() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_data_ida_ano());
+  if (this->data_ida_ano() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->data_ida_ano());
   }
 
-  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData ReservaRow::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
-    ReservaRow::MergeImpl
-};
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*ReservaRow::GetClassData() const { return &_class_data_; }
+void ReservaRow::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:extractor.ReservaRow)
+  GOOGLE_DCHECK_NE(&from, this);
+  const ReservaRow* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const ReservaRow>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:extractor.ReservaRow)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:extractor.ReservaRow)
+    MergeFrom(*source);
+  }
+}
 
-
-void ReservaRow::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
-  auto* const _this = static_cast<ReservaRow*>(&to_msg);
-  auto& from = static_cast<const ReservaRow&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:extractor.ReservaRow)
-  GOOGLE_DCHECK_NE(&from, _this);
-  uint32_t cached_has_bits = 0;
+void ReservaRow::MergeFrom(const ReservaRow& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:extractor.ReservaRow)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (!from._internal_tipo_quarto().empty()) {
-    _this->_internal_set_tipo_quarto(from._internal_tipo_quarto());
+  if (from.tipo_quarto().size() > 0) {
+
+    tipo_quarto_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.tipo_quarto_);
   }
-  if (!from._internal_nome_hotel().empty()) {
-    _this->_internal_set_nome_hotel(from._internal_nome_hotel());
+  if (from.nome_hotel().size() > 0) {
+
+    nome_hotel_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.nome_hotel_);
   }
-  if (!from._internal_cidade_destino().empty()) {
-    _this->_internal_set_cidade_destino(from._internal_cidade_destino());
+  if (from.cidade_destino().size() > 0) {
+
+    cidade_destino_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.cidade_destino_);
   }
-  if (from._internal_numero_quarto() != 0) {
-    _this->_internal_set_numero_quarto(from._internal_numero_quarto());
+  if (from.numero_quarto() != 0) {
+    set_numero_quarto(from.numero_quarto());
   }
-  if (from._internal_quantidade_pessoas() != 0) {
-    _this->_internal_set_quantidade_pessoas(from._internal_quantidade_pessoas());
+  if (from.quantidade_pessoas() != 0) {
+    set_quantidade_pessoas(from.quantidade_pessoas());
   }
-  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
-  float tmp_preco = from._internal_preco();
-  uint32_t raw_preco;
-  memcpy(&raw_preco, &tmp_preco, sizeof(tmp_preco));
-  if (raw_preco != 0) {
-    _this->_internal_set_preco(from._internal_preco());
+  if (from.preco() != 0) {
+    set_preco(from.preco());
   }
-  if (from._internal_ocupado() != 0) {
-    _this->_internal_set_ocupado(from._internal_ocupado());
+  if (from.ocupado() != 0) {
+    set_ocupado(from.ocupado());
   }
-  if (from._internal_data_ida_dia() != 0) {
-    _this->_internal_set_data_ida_dia(from._internal_data_ida_dia());
+  if (from.data_ida_dia() != 0) {
+    set_data_ida_dia(from.data_ida_dia());
   }
-  if (from._internal_data_ida_mes() != 0) {
-    _this->_internal_set_data_ida_mes(from._internal_data_ida_mes());
+  if (from.data_ida_mes() != 0) {
+    set_data_ida_mes(from.data_ida_mes());
   }
-  if (from._internal_data_ida_ano() != 0) {
-    _this->_internal_set_data_ida_ano(from._internal_data_ida_ano());
+  if (from.data_ida_ano() != 0) {
+    set_data_ida_ano(from.data_ida_ano());
   }
-  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void ReservaRow::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:extractor.ReservaRow)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
 }
 
 void ReservaRow::CopyFrom(const ReservaRow& from) {
@@ -1119,342 +1381,436 @@ bool ReservaRow::IsInitialized() const {
   return true;
 }
 
+void ReservaRow::Swap(ReservaRow* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
 void ReservaRow::InternalSwap(ReservaRow* other) {
   using std::swap;
-  auto* lhs_arena = GetArenaForAllocation();
-  auto* rhs_arena = other->GetArenaForAllocation();
-  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &_impl_.tipo_quarto_, lhs_arena,
-      &other->_impl_.tipo_quarto_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &_impl_.nome_hotel_, lhs_arena,
-      &other->_impl_.nome_hotel_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &_impl_.cidade_destino_, lhs_arena,
-      &other->_impl_.cidade_destino_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(ReservaRow, _impl_.data_ida_ano_)
-      + sizeof(ReservaRow::_impl_.data_ida_ano_)
-      - PROTOBUF_FIELD_OFFSET(ReservaRow, _impl_.numero_quarto_)>(
-          reinterpret_cast<char*>(&_impl_.numero_quarto_),
-          reinterpret_cast<char*>(&other->_impl_.numero_quarto_));
+  tipo_quarto_.Swap(&other->tipo_quarto_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  nome_hotel_.Swap(&other->nome_hotel_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  cidade_destino_.Swap(&other->cidade_destino_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  swap(numero_quarto_, other->numero_quarto_);
+  swap(quantidade_pessoas_, other->quantidade_pessoas_);
+  swap(preco_, other->preco_);
+  swap(ocupado_, other->ocupado_);
+  swap(data_ida_dia_, other->data_ida_dia_);
+  swap(data_ida_mes_, other->data_ida_mes_);
+  swap(data_ida_ano_, other->data_ida_ano_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata ReservaRow::GetMetadata() const {
-  return ::_pbi::AssignDescriptors(
-      &descriptor_table_extractor_2eproto_getter, &descriptor_table_extractor_2eproto_once,
-      file_level_metadata_extractor_2eproto[1]);
+::google::protobuf::Metadata ReservaRow::GetMetadata() const {
+  protobuf_extractor_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_extractor_2eproto::file_level_metadata[kIndexInFileMessages];
 }
+
 
 // ===================================================================
 
-class PesquisaRow::_Internal {
- public:
-};
+void PesquisaRow::InitAsDefaultInstance() {
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int PesquisaRow::kCidadeOrigemFieldNumber;
+const int PesquisaRow::kCidadeDestinoFieldNumber;
+const int PesquisaRow::kNomeHotelFieldNumber;
+const int PesquisaRow::kDataIdaDiaFieldNumber;
+const int PesquisaRow::kDataIdaMesFieldNumber;
+const int PesquisaRow::kDataIdaAnoFieldNumber;
+const int PesquisaRow::kDataVoltaDiaFieldNumber;
+const int PesquisaRow::kDataVoltaMesFieldNumber;
+const int PesquisaRow::kDataVoltaAnoFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
-PesquisaRow::PesquisaRow(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor(arena, is_message_owned);
-  // @@protoc_insertion_point(arena_constructor:extractor.PesquisaRow)
+PesquisaRow::PesquisaRow()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  ::google::protobuf::internal::InitSCC(
+      &protobuf_extractor_2eproto::scc_info_PesquisaRow.base);
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:extractor.PesquisaRow)
 }
 PesquisaRow::PesquisaRow(const PesquisaRow& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  PesquisaRow* const _this = this; (void)_this;
-  new (&_impl_) Impl_{
-      decltype(_impl_.cidade_origem_){}
-    , decltype(_impl_.cidade_destino_){}
-    , decltype(_impl_.nome_hotel_){}
-    , decltype(_impl_.data_ida_dia_){}
-    , decltype(_impl_.data_ida_mes_){}
-    , decltype(_impl_.data_ida_ano_){}
-    , decltype(_impl_.data_volta_dia_){}
-    , decltype(_impl_.data_volta_mes_){}
-    , decltype(_impl_.data_volta_ano_){}
-    , /*decltype(_impl_._cached_size_)*/{}};
-
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  _impl_.cidade_origem_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.cidade_origem_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_cidade_origem().empty()) {
-    _this->_impl_.cidade_origem_.Set(from._internal_cidade_origem(), 
-      _this->GetArenaForAllocation());
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  cidade_origem_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.cidade_origem().size() > 0) {
+    cidade_origem_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.cidade_origem_);
   }
-  _impl_.cidade_destino_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.cidade_destino_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_cidade_destino().empty()) {
-    _this->_impl_.cidade_destino_.Set(from._internal_cidade_destino(), 
-      _this->GetArenaForAllocation());
+  cidade_destino_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.cidade_destino().size() > 0) {
+    cidade_destino_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.cidade_destino_);
   }
-  _impl_.nome_hotel_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.nome_hotel_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_nome_hotel().empty()) {
-    _this->_impl_.nome_hotel_.Set(from._internal_nome_hotel(), 
-      _this->GetArenaForAllocation());
+  nome_hotel_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.nome_hotel().size() > 0) {
+    nome_hotel_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.nome_hotel_);
   }
-  ::memcpy(&_impl_.data_ida_dia_, &from._impl_.data_ida_dia_,
-    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.data_volta_ano_) -
-    reinterpret_cast<char*>(&_impl_.data_ida_dia_)) + sizeof(_impl_.data_volta_ano_));
+  ::memcpy(&data_ida_dia_, &from.data_ida_dia_,
+    static_cast<size_t>(reinterpret_cast<char*>(&data_volta_ano_) -
+    reinterpret_cast<char*>(&data_ida_dia_)) + sizeof(data_volta_ano_));
   // @@protoc_insertion_point(copy_constructor:extractor.PesquisaRow)
 }
 
-inline void PesquisaRow::SharedCtor(
-    ::_pb::Arena* arena, bool is_message_owned) {
-  (void)arena;
-  (void)is_message_owned;
-  new (&_impl_) Impl_{
-      decltype(_impl_.cidade_origem_){}
-    , decltype(_impl_.cidade_destino_){}
-    , decltype(_impl_.nome_hotel_){}
-    , decltype(_impl_.data_ida_dia_){0}
-    , decltype(_impl_.data_ida_mes_){0}
-    , decltype(_impl_.data_ida_ano_){0}
-    , decltype(_impl_.data_volta_dia_){0}
-    , decltype(_impl_.data_volta_mes_){0}
-    , decltype(_impl_.data_volta_ano_){0}
-    , /*decltype(_impl_._cached_size_)*/{}
-  };
-  _impl_.cidade_origem_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.cidade_origem_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  _impl_.cidade_destino_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.cidade_destino_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  _impl_.nome_hotel_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.nome_hotel_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+void PesquisaRow::SharedCtor() {
+  cidade_origem_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  cidade_destino_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  nome_hotel_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ::memset(&data_ida_dia_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&data_volta_ano_) -
+      reinterpret_cast<char*>(&data_ida_dia_)) + sizeof(data_volta_ano_));
 }
 
 PesquisaRow::~PesquisaRow() {
   // @@protoc_insertion_point(destructor:extractor.PesquisaRow)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
   SharedDtor();
 }
 
-inline void PesquisaRow::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  _impl_.cidade_origem_.Destroy();
-  _impl_.cidade_destino_.Destroy();
-  _impl_.nome_hotel_.Destroy();
+void PesquisaRow::SharedDtor() {
+  cidade_origem_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  cidade_destino_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  nome_hotel_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 void PesquisaRow::SetCachedSize(int size) const {
-  _impl_._cached_size_.Set(size);
+  _cached_size_.Set(size);
 }
+const ::google::protobuf::Descriptor* PesquisaRow::descriptor() {
+  ::protobuf_extractor_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_extractor_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const PesquisaRow& PesquisaRow::default_instance() {
+  ::google::protobuf::internal::InitSCC(&protobuf_extractor_2eproto::scc_info_PesquisaRow.base);
+  return *internal_default_instance();
+}
+
 
 void PesquisaRow::Clear() {
 // @@protoc_insertion_point(message_clear_start:extractor.PesquisaRow)
-  uint32_t cached_has_bits = 0;
+  ::google::protobuf::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  _impl_.cidade_origem_.ClearToEmpty();
-  _impl_.cidade_destino_.ClearToEmpty();
-  _impl_.nome_hotel_.ClearToEmpty();
-  ::memset(&_impl_.data_ida_dia_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&_impl_.data_volta_ano_) -
-      reinterpret_cast<char*>(&_impl_.data_ida_dia_)) + sizeof(_impl_.data_volta_ano_));
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  cidade_origem_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  cidade_destino_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  nome_hotel_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ::memset(&data_ida_dia_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&data_volta_ano_) -
+      reinterpret_cast<char*>(&data_ida_dia_)) + sizeof(data_volta_ano_));
+  _internal_metadata_.Clear();
 }
 
-const char* PesquisaRow::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
+bool PesquisaRow::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:extractor.PesquisaRow)
+  for (;;) {
+    ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // string cidade_origem = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          auto str = _internal_mutable_cidade_origem();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "extractor.PesquisaRow.cidade_origem"));
-        } else
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_cidade_origem()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->cidade_origem().data(), static_cast<int>(this->cidade_origem().length()),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "extractor.PesquisaRow.cidade_origem"));
+        } else {
           goto handle_unusual;
-        continue;
+        }
+        break;
+      }
+
       // string cidade_destino = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
-          auto str = _internal_mutable_cidade_destino();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "extractor.PesquisaRow.cidade_destino"));
-        } else
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_cidade_destino()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->cidade_destino().data(), static_cast<int>(this->cidade_destino().length()),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "extractor.PesquisaRow.cidade_destino"));
+        } else {
           goto handle_unusual;
-        continue;
+        }
+        break;
+      }
+
       // string nome_hotel = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
-          auto str = _internal_mutable_nome_hotel();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "extractor.PesquisaRow.nome_hotel"));
-        } else
+      case 3: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(26u /* 26 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_nome_hotel()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->nome_hotel().data(), static_cast<int>(this->nome_hotel().length()),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "extractor.PesquisaRow.nome_hotel"));
+        } else {
           goto handle_unusual;
-        continue;
+        }
+        break;
+      }
+
       // int32 data_ida_dia = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
-          _impl_.data_ida_dia_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else
+      case 4: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(32u /* 32 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &data_ida_dia_)));
+        } else {
           goto handle_unusual;
-        continue;
+        }
+        break;
+      }
+
       // int32 data_ida_mes = 5;
-      case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 40)) {
-          _impl_.data_ida_mes_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else
+      case 5: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(40u /* 40 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &data_ida_mes_)));
+        } else {
           goto handle_unusual;
-        continue;
+        }
+        break;
+      }
+
       // int32 data_ida_ano = 6;
-      case 6:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 48)) {
-          _impl_.data_ida_ano_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else
+      case 6: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(48u /* 48 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &data_ida_ano_)));
+        } else {
           goto handle_unusual;
-        continue;
+        }
+        break;
+      }
+
       // int32 data_volta_dia = 7;
-      case 7:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 56)) {
-          _impl_.data_volta_dia_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else
+      case 7: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(56u /* 56 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &data_volta_dia_)));
+        } else {
           goto handle_unusual;
-        continue;
+        }
+        break;
+      }
+
       // int32 data_volta_mes = 8;
-      case 8:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 64)) {
-          _impl_.data_volta_mes_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else
+      case 8: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(64u /* 64 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &data_volta_mes_)));
+        } else {
           goto handle_unusual;
-        continue;
+        }
+        break;
+      }
+
       // int32 data_volta_ano = 9;
-      case 9:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 72)) {
-          _impl_.data_volta_ano_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else
+      case 9: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(72u /* 72 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &data_volta_ano_)));
+        } else {
           goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
     }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
-  return ptr;
+  }
+success:
+  // @@protoc_insertion_point(parse_success:extractor.PesquisaRow)
+  return true;
 failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
+  // @@protoc_insertion_point(parse_failure:extractor.PesquisaRow)
+  return false;
+#undef DO_
 }
 
-uint8_t* PesquisaRow::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:extractor.PesquisaRow)
-  uint32_t cached_has_bits = 0;
+void PesquisaRow::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:extractor.PesquisaRow)
+  ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
   // string cidade_origem = 1;
-  if (!this->_internal_cidade_origem().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_cidade_origem().data(), static_cast<int>(this->_internal_cidade_origem().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+  if (this->cidade_origem().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->cidade_origem().data(), static_cast<int>(this->cidade_origem().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
       "extractor.PesquisaRow.cidade_origem");
-    target = stream->WriteStringMaybeAliased(
-        1, this->_internal_cidade_origem(), target);
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      1, this->cidade_origem(), output);
   }
 
   // string cidade_destino = 2;
-  if (!this->_internal_cidade_destino().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_cidade_destino().data(), static_cast<int>(this->_internal_cidade_destino().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+  if (this->cidade_destino().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->cidade_destino().data(), static_cast<int>(this->cidade_destino().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
       "extractor.PesquisaRow.cidade_destino");
-    target = stream->WriteStringMaybeAliased(
-        2, this->_internal_cidade_destino(), target);
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      2, this->cidade_destino(), output);
   }
 
   // string nome_hotel = 3;
-  if (!this->_internal_nome_hotel().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_nome_hotel().data(), static_cast<int>(this->_internal_nome_hotel().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+  if (this->nome_hotel().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->nome_hotel().data(), static_cast<int>(this->nome_hotel().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
       "extractor.PesquisaRow.nome_hotel");
-    target = stream->WriteStringMaybeAliased(
-        3, this->_internal_nome_hotel(), target);
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      3, this->nome_hotel(), output);
   }
 
   // int32 data_ida_dia = 4;
-  if (this->_internal_data_ida_dia() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(4, this->_internal_data_ida_dia(), target);
+  if (this->data_ida_dia() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->data_ida_dia(), output);
   }
 
   // int32 data_ida_mes = 5;
-  if (this->_internal_data_ida_mes() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(5, this->_internal_data_ida_mes(), target);
+  if (this->data_ida_mes() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->data_ida_mes(), output);
   }
 
   // int32 data_ida_ano = 6;
-  if (this->_internal_data_ida_ano() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(6, this->_internal_data_ida_ano(), target);
+  if (this->data_ida_ano() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->data_ida_ano(), output);
   }
 
   // int32 data_volta_dia = 7;
-  if (this->_internal_data_volta_dia() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(7, this->_internal_data_volta_dia(), target);
+  if (this->data_volta_dia() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(7, this->data_volta_dia(), output);
   }
 
   // int32 data_volta_mes = 8;
-  if (this->_internal_data_volta_mes() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(8, this->_internal_data_volta_mes(), target);
+  if (this->data_volta_mes() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(8, this->data_volta_mes(), output);
   }
 
   // int32 data_volta_ano = 9;
-  if (this->_internal_data_volta_ano() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(9, this->_internal_data_volta_ano(), target);
+  if (this->data_volta_ano() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(9, this->data_volta_ano(), output);
   }
 
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
+  // @@protoc_insertion_point(serialize_end:extractor.PesquisaRow)
+}
+
+::google::protobuf::uint8* PesquisaRow::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:extractor.PesquisaRow)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // string cidade_origem = 1;
+  if (this->cidade_origem().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->cidade_origem().data(), static_cast<int>(this->cidade_origem().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "extractor.PesquisaRow.cidade_origem");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        1, this->cidade_origem(), target);
+  }
+
+  // string cidade_destino = 2;
+  if (this->cidade_destino().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->cidade_destino().data(), static_cast<int>(this->cidade_destino().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "extractor.PesquisaRow.cidade_destino");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        2, this->cidade_destino(), target);
+  }
+
+  // string nome_hotel = 3;
+  if (this->nome_hotel().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->nome_hotel().data(), static_cast<int>(this->nome_hotel().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "extractor.PesquisaRow.nome_hotel");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        3, this->nome_hotel(), target);
+  }
+
+  // int32 data_ida_dia = 4;
+  if (this->data_ida_dia() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->data_ida_dia(), target);
+  }
+
+  // int32 data_ida_mes = 5;
+  if (this->data_ida_mes() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->data_ida_mes(), target);
+  }
+
+  // int32 data_ida_ano = 6;
+  if (this->data_ida_ano() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->data_ida_ano(), target);
+  }
+
+  // int32 data_volta_dia = 7;
+  if (this->data_volta_dia() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(7, this->data_volta_dia(), target);
+  }
+
+  // int32 data_volta_mes = 8;
+  if (this->data_volta_mes() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(8, this->data_volta_mes(), target);
+  }
+
+  // int32 data_volta_ano = 9;
+  if (this->data_volta_ano() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(9, this->data_volta_ano(), target);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
   }
   // @@protoc_insertion_point(serialize_to_array_end:extractor.PesquisaRow)
   return target;
@@ -1464,107 +1820,138 @@ size_t PesquisaRow::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:extractor.PesquisaRow)
   size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
   // string cidade_origem = 1;
-  if (!this->_internal_cidade_origem().empty()) {
+  if (this->cidade_origem().size() > 0) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_cidade_origem());
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->cidade_origem());
   }
 
   // string cidade_destino = 2;
-  if (!this->_internal_cidade_destino().empty()) {
+  if (this->cidade_destino().size() > 0) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_cidade_destino());
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->cidade_destino());
   }
 
   // string nome_hotel = 3;
-  if (!this->_internal_nome_hotel().empty()) {
+  if (this->nome_hotel().size() > 0) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_nome_hotel());
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->nome_hotel());
   }
 
   // int32 data_ida_dia = 4;
-  if (this->_internal_data_ida_dia() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_data_ida_dia());
+  if (this->data_ida_dia() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->data_ida_dia());
   }
 
   // int32 data_ida_mes = 5;
-  if (this->_internal_data_ida_mes() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_data_ida_mes());
+  if (this->data_ida_mes() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->data_ida_mes());
   }
 
   // int32 data_ida_ano = 6;
-  if (this->_internal_data_ida_ano() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_data_ida_ano());
+  if (this->data_ida_ano() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->data_ida_ano());
   }
 
   // int32 data_volta_dia = 7;
-  if (this->_internal_data_volta_dia() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_data_volta_dia());
+  if (this->data_volta_dia() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->data_volta_dia());
   }
 
   // int32 data_volta_mes = 8;
-  if (this->_internal_data_volta_mes() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_data_volta_mes());
+  if (this->data_volta_mes() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->data_volta_mes());
   }
 
   // int32 data_volta_ano = 9;
-  if (this->_internal_data_volta_ano() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_data_volta_ano());
+  if (this->data_volta_ano() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->data_volta_ano());
   }
 
-  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData PesquisaRow::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
-    PesquisaRow::MergeImpl
-};
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*PesquisaRow::GetClassData() const { return &_class_data_; }
+void PesquisaRow::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:extractor.PesquisaRow)
+  GOOGLE_DCHECK_NE(&from, this);
+  const PesquisaRow* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const PesquisaRow>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:extractor.PesquisaRow)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:extractor.PesquisaRow)
+    MergeFrom(*source);
+  }
+}
 
-
-void PesquisaRow::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
-  auto* const _this = static_cast<PesquisaRow*>(&to_msg);
-  auto& from = static_cast<const PesquisaRow&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:extractor.PesquisaRow)
-  GOOGLE_DCHECK_NE(&from, _this);
-  uint32_t cached_has_bits = 0;
+void PesquisaRow::MergeFrom(const PesquisaRow& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:extractor.PesquisaRow)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (!from._internal_cidade_origem().empty()) {
-    _this->_internal_set_cidade_origem(from._internal_cidade_origem());
+  if (from.cidade_origem().size() > 0) {
+
+    cidade_origem_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.cidade_origem_);
   }
-  if (!from._internal_cidade_destino().empty()) {
-    _this->_internal_set_cidade_destino(from._internal_cidade_destino());
+  if (from.cidade_destino().size() > 0) {
+
+    cidade_destino_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.cidade_destino_);
   }
-  if (!from._internal_nome_hotel().empty()) {
-    _this->_internal_set_nome_hotel(from._internal_nome_hotel());
+  if (from.nome_hotel().size() > 0) {
+
+    nome_hotel_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.nome_hotel_);
   }
-  if (from._internal_data_ida_dia() != 0) {
-    _this->_internal_set_data_ida_dia(from._internal_data_ida_dia());
+  if (from.data_ida_dia() != 0) {
+    set_data_ida_dia(from.data_ida_dia());
   }
-  if (from._internal_data_ida_mes() != 0) {
-    _this->_internal_set_data_ida_mes(from._internal_data_ida_mes());
+  if (from.data_ida_mes() != 0) {
+    set_data_ida_mes(from.data_ida_mes());
   }
-  if (from._internal_data_ida_ano() != 0) {
-    _this->_internal_set_data_ida_ano(from._internal_data_ida_ano());
+  if (from.data_ida_ano() != 0) {
+    set_data_ida_ano(from.data_ida_ano());
   }
-  if (from._internal_data_volta_dia() != 0) {
-    _this->_internal_set_data_volta_dia(from._internal_data_volta_dia());
+  if (from.data_volta_dia() != 0) {
+    set_data_volta_dia(from.data_volta_dia());
   }
-  if (from._internal_data_volta_mes() != 0) {
-    _this->_internal_set_data_volta_mes(from._internal_data_volta_mes());
+  if (from.data_volta_mes() != 0) {
+    set_data_volta_mes(from.data_volta_mes());
   }
-  if (from._internal_data_volta_ano() != 0) {
-    _this->_internal_set_data_volta_ano(from._internal_data_volta_ano());
+  if (from.data_volta_ano() != 0) {
+    set_data_volta_ano(from.data_volta_ano());
   }
-  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void PesquisaRow::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:extractor.PesquisaRow)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
 }
 
 void PesquisaRow::CopyFrom(const PesquisaRow& from) {
@@ -1578,240 +1965,276 @@ bool PesquisaRow::IsInitialized() const {
   return true;
 }
 
+void PesquisaRow::Swap(PesquisaRow* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
 void PesquisaRow::InternalSwap(PesquisaRow* other) {
   using std::swap;
-  auto* lhs_arena = GetArenaForAllocation();
-  auto* rhs_arena = other->GetArenaForAllocation();
-  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &_impl_.cidade_origem_, lhs_arena,
-      &other->_impl_.cidade_origem_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &_impl_.cidade_destino_, lhs_arena,
-      &other->_impl_.cidade_destino_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &_impl_.nome_hotel_, lhs_arena,
-      &other->_impl_.nome_hotel_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(PesquisaRow, _impl_.data_volta_ano_)
-      + sizeof(PesquisaRow::_impl_.data_volta_ano_)
-      - PROTOBUF_FIELD_OFFSET(PesquisaRow, _impl_.data_ida_dia_)>(
-          reinterpret_cast<char*>(&_impl_.data_ida_dia_),
-          reinterpret_cast<char*>(&other->_impl_.data_ida_dia_));
+  cidade_origem_.Swap(&other->cidade_origem_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  cidade_destino_.Swap(&other->cidade_destino_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  nome_hotel_.Swap(&other->nome_hotel_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  swap(data_ida_dia_, other->data_ida_dia_);
+  swap(data_ida_mes_, other->data_ida_mes_);
+  swap(data_ida_ano_, other->data_ida_ano_);
+  swap(data_volta_dia_, other->data_volta_dia_);
+  swap(data_volta_mes_, other->data_volta_mes_);
+  swap(data_volta_ano_, other->data_volta_ano_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata PesquisaRow::GetMetadata() const {
-  return ::_pbi::AssignDescriptors(
-      &descriptor_table_extractor_2eproto_getter, &descriptor_table_extractor_2eproto_once,
-      file_level_metadata_extractor_2eproto[2]);
+::google::protobuf::Metadata PesquisaRow::GetMetadata() const {
+  protobuf_extractor_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_extractor_2eproto::file_level_metadata[kIndexInFileMessages];
 }
+
 
 // ===================================================================
 
-class AllDataSend::_Internal {
- public:
-};
+void AllDataSend::InitAsDefaultInstance() {
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int AllDataSend::kVoosFieldNumber;
+const int AllDataSend::kReservasFieldNumber;
+const int AllDataSend::kPesquisasFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
-AllDataSend::AllDataSend(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor(arena, is_message_owned);
-  // @@protoc_insertion_point(arena_constructor:extractor.AllDataSend)
+AllDataSend::AllDataSend()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  ::google::protobuf::internal::InitSCC(
+      &protobuf_extractor_2eproto::scc_info_AllDataSend.base);
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:extractor.AllDataSend)
 }
 AllDataSend::AllDataSend(const AllDataSend& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  AllDataSend* const _this = this; (void)_this;
-  new (&_impl_) Impl_{
-      decltype(_impl_.voos_){}
-    , decltype(_impl_.reservas_){}
-    , decltype(_impl_.pesquisas_){}
-    , /*decltype(_impl_._cached_size_)*/{}};
-
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  _impl_.voos_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.voos_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_voos().empty()) {
-    _this->_impl_.voos_.Set(from._internal_voos(), 
-      _this->GetArenaForAllocation());
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  voos_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.voos().size() > 0) {
+    voos_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.voos_);
   }
-  _impl_.reservas_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.reservas_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_reservas().empty()) {
-    _this->_impl_.reservas_.Set(from._internal_reservas(), 
-      _this->GetArenaForAllocation());
+  reservas_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.reservas().size() > 0) {
+    reservas_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.reservas_);
   }
-  _impl_.pesquisas_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.pesquisas_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_pesquisas().empty()) {
-    _this->_impl_.pesquisas_.Set(from._internal_pesquisas(), 
-      _this->GetArenaForAllocation());
+  pesquisas_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.pesquisas().size() > 0) {
+    pesquisas_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.pesquisas_);
   }
   // @@protoc_insertion_point(copy_constructor:extractor.AllDataSend)
 }
 
-inline void AllDataSend::SharedCtor(
-    ::_pb::Arena* arena, bool is_message_owned) {
-  (void)arena;
-  (void)is_message_owned;
-  new (&_impl_) Impl_{
-      decltype(_impl_.voos_){}
-    , decltype(_impl_.reservas_){}
-    , decltype(_impl_.pesquisas_){}
-    , /*decltype(_impl_._cached_size_)*/{}
-  };
-  _impl_.voos_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.voos_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  _impl_.reservas_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.reservas_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  _impl_.pesquisas_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.pesquisas_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+void AllDataSend::SharedCtor() {
+  voos_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  reservas_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  pesquisas_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 AllDataSend::~AllDataSend() {
   // @@protoc_insertion_point(destructor:extractor.AllDataSend)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
   SharedDtor();
 }
 
-inline void AllDataSend::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  _impl_.voos_.Destroy();
-  _impl_.reservas_.Destroy();
-  _impl_.pesquisas_.Destroy();
+void AllDataSend::SharedDtor() {
+  voos_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  reservas_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  pesquisas_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 void AllDataSend::SetCachedSize(int size) const {
-  _impl_._cached_size_.Set(size);
+  _cached_size_.Set(size);
 }
+const ::google::protobuf::Descriptor* AllDataSend::descriptor() {
+  ::protobuf_extractor_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_extractor_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const AllDataSend& AllDataSend::default_instance() {
+  ::google::protobuf::internal::InitSCC(&protobuf_extractor_2eproto::scc_info_AllDataSend.base);
+  return *internal_default_instance();
+}
+
 
 void AllDataSend::Clear() {
 // @@protoc_insertion_point(message_clear_start:extractor.AllDataSend)
-  uint32_t cached_has_bits = 0;
+  ::google::protobuf::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  _impl_.voos_.ClearToEmpty();
-  _impl_.reservas_.ClearToEmpty();
-  _impl_.pesquisas_.ClearToEmpty();
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  voos_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  reservas_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  pesquisas_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  _internal_metadata_.Clear();
 }
 
-const char* AllDataSend::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
+bool AllDataSend::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:extractor.AllDataSend)
+  for (;;) {
+    ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // string voos = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          auto str = _internal_mutable_voos();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "extractor.AllDataSend.voos"));
-        } else
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_voos()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->voos().data(), static_cast<int>(this->voos().length()),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "extractor.AllDataSend.voos"));
+        } else {
           goto handle_unusual;
-        continue;
+        }
+        break;
+      }
+
       // string reservas = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
-          auto str = _internal_mutable_reservas();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "extractor.AllDataSend.reservas"));
-        } else
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_reservas()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->reservas().data(), static_cast<int>(this->reservas().length()),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "extractor.AllDataSend.reservas"));
+        } else {
           goto handle_unusual;
-        continue;
+        }
+        break;
+      }
+
       // string pesquisas = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
-          auto str = _internal_mutable_pesquisas();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "extractor.AllDataSend.pesquisas"));
-        } else
+      case 3: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(26u /* 26 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_pesquisas()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->pesquisas().data(), static_cast<int>(this->pesquisas().length()),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "extractor.AllDataSend.pesquisas"));
+        } else {
           goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
     }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
-  return ptr;
+  }
+success:
+  // @@protoc_insertion_point(parse_success:extractor.AllDataSend)
+  return true;
 failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
+  // @@protoc_insertion_point(parse_failure:extractor.AllDataSend)
+  return false;
+#undef DO_
 }
 
-uint8_t* AllDataSend::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:extractor.AllDataSend)
-  uint32_t cached_has_bits = 0;
+void AllDataSend::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:extractor.AllDataSend)
+  ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
   // string voos = 1;
-  if (!this->_internal_voos().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_voos().data(), static_cast<int>(this->_internal_voos().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+  if (this->voos().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->voos().data(), static_cast<int>(this->voos().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
       "extractor.AllDataSend.voos");
-    target = stream->WriteStringMaybeAliased(
-        1, this->_internal_voos(), target);
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      1, this->voos(), output);
   }
 
   // string reservas = 2;
-  if (!this->_internal_reservas().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_reservas().data(), static_cast<int>(this->_internal_reservas().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+  if (this->reservas().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->reservas().data(), static_cast<int>(this->reservas().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
       "extractor.AllDataSend.reservas");
-    target = stream->WriteStringMaybeAliased(
-        2, this->_internal_reservas(), target);
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      2, this->reservas(), output);
   }
 
   // string pesquisas = 3;
-  if (!this->_internal_pesquisas().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_pesquisas().data(), static_cast<int>(this->_internal_pesquisas().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+  if (this->pesquisas().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->pesquisas().data(), static_cast<int>(this->pesquisas().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
       "extractor.AllDataSend.pesquisas");
-    target = stream->WriteStringMaybeAliased(
-        3, this->_internal_pesquisas(), target);
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      3, this->pesquisas(), output);
   }
 
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
+  // @@protoc_insertion_point(serialize_end:extractor.AllDataSend)
+}
+
+::google::protobuf::uint8* AllDataSend::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:extractor.AllDataSend)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // string voos = 1;
+  if (this->voos().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->voos().data(), static_cast<int>(this->voos().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "extractor.AllDataSend.voos");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        1, this->voos(), target);
+  }
+
+  // string reservas = 2;
+  if (this->reservas().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->reservas().data(), static_cast<int>(this->reservas().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "extractor.AllDataSend.reservas");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        2, this->reservas(), target);
+  }
+
+  // string pesquisas = 3;
+  if (this->pesquisas().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->pesquisas().data(), static_cast<int>(this->pesquisas().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "extractor.AllDataSend.pesquisas");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        3, this->pesquisas(), target);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
   }
   // @@protoc_insertion_point(serialize_to_array_end:extractor.AllDataSend)
   return target;
@@ -1821,59 +2244,78 @@ size_t AllDataSend::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:extractor.AllDataSend)
   size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
   // string voos = 1;
-  if (!this->_internal_voos().empty()) {
+  if (this->voos().size() > 0) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_voos());
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->voos());
   }
 
   // string reservas = 2;
-  if (!this->_internal_reservas().empty()) {
+  if (this->reservas().size() > 0) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_reservas());
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->reservas());
   }
 
   // string pesquisas = 3;
-  if (!this->_internal_pesquisas().empty()) {
+  if (this->pesquisas().size() > 0) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_pesquisas());
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->pesquisas());
   }
 
-  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData AllDataSend::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
-    AllDataSend::MergeImpl
-};
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*AllDataSend::GetClassData() const { return &_class_data_; }
+void AllDataSend::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:extractor.AllDataSend)
+  GOOGLE_DCHECK_NE(&from, this);
+  const AllDataSend* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const AllDataSend>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:extractor.AllDataSend)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:extractor.AllDataSend)
+    MergeFrom(*source);
+  }
+}
 
-
-void AllDataSend::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
-  auto* const _this = static_cast<AllDataSend*>(&to_msg);
-  auto& from = static_cast<const AllDataSend&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:extractor.AllDataSend)
-  GOOGLE_DCHECK_NE(&from, _this);
-  uint32_t cached_has_bits = 0;
+void AllDataSend::MergeFrom(const AllDataSend& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:extractor.AllDataSend)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (!from._internal_voos().empty()) {
-    _this->_internal_set_voos(from._internal_voos());
+  if (from.voos().size() > 0) {
+
+    voos_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.voos_);
   }
-  if (!from._internal_reservas().empty()) {
-    _this->_internal_set_reservas(from._internal_reservas());
+  if (from.reservas().size() > 0) {
+
+    reservas_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.reservas_);
   }
-  if (!from._internal_pesquisas().empty()) {
-    _this->_internal_set_pesquisas(from._internal_pesquisas());
+  if (from.pesquisas().size() > 0) {
+
+    pesquisas_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.pesquisas_);
   }
-  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void AllDataSend::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:extractor.AllDataSend)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
 }
 
 void AllDataSend::CopyFrom(const AllDataSend& from) {
@@ -1887,212 +2329,269 @@ bool AllDataSend::IsInitialized() const {
   return true;
 }
 
+void AllDataSend::Swap(AllDataSend* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
 void AllDataSend::InternalSwap(AllDataSend* other) {
   using std::swap;
-  auto* lhs_arena = GetArenaForAllocation();
-  auto* rhs_arena = other->GetArenaForAllocation();
-  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &_impl_.voos_, lhs_arena,
-      &other->_impl_.voos_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &_impl_.reservas_, lhs_arena,
-      &other->_impl_.reservas_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &_impl_.pesquisas_, lhs_arena,
-      &other->_impl_.pesquisas_, rhs_arena
-  );
+  voos_.Swap(&other->voos_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  reservas_.Swap(&other->reservas_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  pesquisas_.Swap(&other->pesquisas_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  _internal_metadata_.Swap(&other->_internal_metadata_);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata AllDataSend::GetMetadata() const {
-  return ::_pbi::AssignDescriptors(
-      &descriptor_table_extractor_2eproto_getter, &descriptor_table_extractor_2eproto_once,
-      file_level_metadata_extractor_2eproto[3]);
+::google::protobuf::Metadata AllDataSend::GetMetadata() const {
+  protobuf_extractor_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_extractor_2eproto::file_level_metadata[kIndexInFileMessages];
 }
+
 
 // ===================================================================
 
-class AllDataResponse::_Internal {
- public:
-};
+void AllDataResponse::InitAsDefaultInstance() {
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int AllDataResponse::kStats1FieldNumber;
+const int AllDataResponse::kStats2FieldNumber;
+const int AllDataResponse::kStats3FieldNumber;
+const int AllDataResponse::kStats4FieldNumber;
+const int AllDataResponse::kStats5FieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
-AllDataResponse::AllDataResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor(arena, is_message_owned);
-  // @@protoc_insertion_point(arena_constructor:extractor.AllDataResponse)
+AllDataResponse::AllDataResponse()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  ::google::protobuf::internal::InitSCC(
+      &protobuf_extractor_2eproto::scc_info_AllDataResponse.base);
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:extractor.AllDataResponse)
 }
 AllDataResponse::AllDataResponse(const AllDataResponse& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  AllDataResponse* const _this = this; (void)_this;
-  new (&_impl_) Impl_{
-      decltype(_impl_.stats1_){}
-    , decltype(_impl_.stats2_){}
-    , decltype(_impl_.stats3_){}
-    , decltype(_impl_.stats4_){}
-    , decltype(_impl_.stats5_){}
-    , /*decltype(_impl_._cached_size_)*/{}};
-
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  ::memcpy(&_impl_.stats1_, &from._impl_.stats1_,
-    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.stats5_) -
-    reinterpret_cast<char*>(&_impl_.stats1_)) + sizeof(_impl_.stats5_));
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::memcpy(&stats1_, &from.stats1_,
+    static_cast<size_t>(reinterpret_cast<char*>(&stats5_) -
+    reinterpret_cast<char*>(&stats1_)) + sizeof(stats5_));
   // @@protoc_insertion_point(copy_constructor:extractor.AllDataResponse)
 }
 
-inline void AllDataResponse::SharedCtor(
-    ::_pb::Arena* arena, bool is_message_owned) {
-  (void)arena;
-  (void)is_message_owned;
-  new (&_impl_) Impl_{
-      decltype(_impl_.stats1_){0}
-    , decltype(_impl_.stats2_){0}
-    , decltype(_impl_.stats3_){0}
-    , decltype(_impl_.stats4_){0}
-    , decltype(_impl_.stats5_){0}
-    , /*decltype(_impl_._cached_size_)*/{}
-  };
+void AllDataResponse::SharedCtor() {
+  ::memset(&stats1_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&stats5_) -
+      reinterpret_cast<char*>(&stats1_)) + sizeof(stats5_));
 }
 
 AllDataResponse::~AllDataResponse() {
   // @@protoc_insertion_point(destructor:extractor.AllDataResponse)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
   SharedDtor();
 }
 
-inline void AllDataResponse::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+void AllDataResponse::SharedDtor() {
 }
 
 void AllDataResponse::SetCachedSize(int size) const {
-  _impl_._cached_size_.Set(size);
+  _cached_size_.Set(size);
 }
+const ::google::protobuf::Descriptor* AllDataResponse::descriptor() {
+  ::protobuf_extractor_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_extractor_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const AllDataResponse& AllDataResponse::default_instance() {
+  ::google::protobuf::internal::InitSCC(&protobuf_extractor_2eproto::scc_info_AllDataResponse.base);
+  return *internal_default_instance();
+}
+
 
 void AllDataResponse::Clear() {
 // @@protoc_insertion_point(message_clear_start:extractor.AllDataResponse)
-  uint32_t cached_has_bits = 0;
+  ::google::protobuf::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  ::memset(&_impl_.stats1_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&_impl_.stats5_) -
-      reinterpret_cast<char*>(&_impl_.stats1_)) + sizeof(_impl_.stats5_));
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  ::memset(&stats1_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&stats5_) -
+      reinterpret_cast<char*>(&stats1_)) + sizeof(stats5_));
+  _internal_metadata_.Clear();
 }
 
-const char* AllDataResponse::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
+bool AllDataResponse::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:extractor.AllDataResponse)
+  for (;;) {
+    ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // int32 stats1 = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
-          _impl_.stats1_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &stats1_)));
+        } else {
           goto handle_unusual;
-        continue;
+        }
+        break;
+      }
+
       // int32 stats2 = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
-          _impl_.stats2_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &stats2_)));
+        } else {
           goto handle_unusual;
-        continue;
+        }
+        break;
+      }
+
       // int32 stats3 = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
-          _impl_.stats3_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else
+      case 3: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(24u /* 24 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &stats3_)));
+        } else {
           goto handle_unusual;
-        continue;
+        }
+        break;
+      }
+
       // int32 stats4 = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
-          _impl_.stats4_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else
+      case 4: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(32u /* 32 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &stats4_)));
+        } else {
           goto handle_unusual;
-        continue;
+        }
+        break;
+      }
+
       // int32 stats5 = 5;
-      case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 40)) {
-          _impl_.stats5_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else
+      case 5: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(40u /* 40 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &stats5_)));
+        } else {
           goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
     }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
-  return ptr;
+  }
+success:
+  // @@protoc_insertion_point(parse_success:extractor.AllDataResponse)
+  return true;
 failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
+  // @@protoc_insertion_point(parse_failure:extractor.AllDataResponse)
+  return false;
+#undef DO_
 }
 
-uint8_t* AllDataResponse::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:extractor.AllDataResponse)
-  uint32_t cached_has_bits = 0;
+void AllDataResponse::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:extractor.AllDataResponse)
+  ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
   // int32 stats1 = 1;
-  if (this->_internal_stats1() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(1, this->_internal_stats1(), target);
+  if (this->stats1() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->stats1(), output);
   }
 
   // int32 stats2 = 2;
-  if (this->_internal_stats2() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(2, this->_internal_stats2(), target);
+  if (this->stats2() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->stats2(), output);
   }
 
   // int32 stats3 = 3;
-  if (this->_internal_stats3() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(3, this->_internal_stats3(), target);
+  if (this->stats3() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->stats3(), output);
   }
 
   // int32 stats4 = 4;
-  if (this->_internal_stats4() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(4, this->_internal_stats4(), target);
+  if (this->stats4() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->stats4(), output);
   }
 
   // int32 stats5 = 5;
-  if (this->_internal_stats5() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(5, this->_internal_stats5(), target);
+  if (this->stats5() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->stats5(), output);
   }
 
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
+  // @@protoc_insertion_point(serialize_end:extractor.AllDataResponse)
+}
+
+::google::protobuf::uint8* AllDataResponse::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:extractor.AllDataResponse)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // int32 stats1 = 1;
+  if (this->stats1() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->stats1(), target);
+  }
+
+  // int32 stats2 = 2;
+  if (this->stats2() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->stats2(), target);
+  }
+
+  // int32 stats3 = 3;
+  if (this->stats3() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->stats3(), target);
+  }
+
+  // int32 stats4 = 4;
+  if (this->stats4() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->stats4(), target);
+  }
+
+  // int32 stats5 = 5;
+  if (this->stats5() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->stats5(), target);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
   }
   // @@protoc_insertion_point(serialize_to_array_end:extractor.AllDataResponse)
   return target;
@@ -2102,69 +2601,95 @@ size_t AllDataResponse::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:extractor.AllDataResponse)
   size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
   // int32 stats1 = 1;
-  if (this->_internal_stats1() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_stats1());
+  if (this->stats1() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->stats1());
   }
 
   // int32 stats2 = 2;
-  if (this->_internal_stats2() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_stats2());
+  if (this->stats2() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->stats2());
   }
 
   // int32 stats3 = 3;
-  if (this->_internal_stats3() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_stats3());
+  if (this->stats3() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->stats3());
   }
 
   // int32 stats4 = 4;
-  if (this->_internal_stats4() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_stats4());
+  if (this->stats4() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->stats4());
   }
 
   // int32 stats5 = 5;
-  if (this->_internal_stats5() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_stats5());
+  if (this->stats5() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->stats5());
   }
 
-  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData AllDataResponse::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
-    AllDataResponse::MergeImpl
-};
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*AllDataResponse::GetClassData() const { return &_class_data_; }
+void AllDataResponse::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:extractor.AllDataResponse)
+  GOOGLE_DCHECK_NE(&from, this);
+  const AllDataResponse* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const AllDataResponse>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:extractor.AllDataResponse)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:extractor.AllDataResponse)
+    MergeFrom(*source);
+  }
+}
 
-
-void AllDataResponse::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
-  auto* const _this = static_cast<AllDataResponse*>(&to_msg);
-  auto& from = static_cast<const AllDataResponse&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:extractor.AllDataResponse)
-  GOOGLE_DCHECK_NE(&from, _this);
-  uint32_t cached_has_bits = 0;
+void AllDataResponse::MergeFrom(const AllDataResponse& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:extractor.AllDataResponse)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from._internal_stats1() != 0) {
-    _this->_internal_set_stats1(from._internal_stats1());
+  if (from.stats1() != 0) {
+    set_stats1(from.stats1());
   }
-  if (from._internal_stats2() != 0) {
-    _this->_internal_set_stats2(from._internal_stats2());
+  if (from.stats2() != 0) {
+    set_stats2(from.stats2());
   }
-  if (from._internal_stats3() != 0) {
-    _this->_internal_set_stats3(from._internal_stats3());
+  if (from.stats3() != 0) {
+    set_stats3(from.stats3());
   }
-  if (from._internal_stats4() != 0) {
-    _this->_internal_set_stats4(from._internal_stats4());
+  if (from.stats4() != 0) {
+    set_stats4(from.stats4());
   }
-  if (from._internal_stats5() != 0) {
-    _this->_internal_set_stats5(from._internal_stats5());
+  if (from.stats5() != 0) {
+    set_stats5(from.stats5());
   }
-  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void AllDataResponse::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:extractor.AllDataResponse)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
 }
 
 void AllDataResponse::CopyFrom(const AllDataResponse& from) {
@@ -2178,47 +2703,46 @@ bool AllDataResponse::IsInitialized() const {
   return true;
 }
 
+void AllDataResponse::Swap(AllDataResponse* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
 void AllDataResponse::InternalSwap(AllDataResponse* other) {
   using std::swap;
-  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(AllDataResponse, _impl_.stats5_)
-      + sizeof(AllDataResponse::_impl_.stats5_)
-      - PROTOBUF_FIELD_OFFSET(AllDataResponse, _impl_.stats1_)>(
-          reinterpret_cast<char*>(&_impl_.stats1_),
-          reinterpret_cast<char*>(&other->_impl_.stats1_));
+  swap(stats1_, other->stats1_);
+  swap(stats2_, other->stats2_);
+  swap(stats3_, other->stats3_);
+  swap(stats4_, other->stats4_);
+  swap(stats5_, other->stats5_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata AllDataResponse::GetMetadata() const {
-  return ::_pbi::AssignDescriptors(
-      &descriptor_table_extractor_2eproto_getter, &descriptor_table_extractor_2eproto_once,
-      file_level_metadata_extractor_2eproto[4]);
+::google::protobuf::Metadata AllDataResponse::GetMetadata() const {
+  protobuf_extractor_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_extractor_2eproto::file_level_metadata[kIndexInFileMessages];
 }
+
 
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace extractor
-PROTOBUF_NAMESPACE_OPEN
-template<> PROTOBUF_NOINLINE ::extractor::FlightRow*
-Arena::CreateMaybeMessage< ::extractor::FlightRow >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::extractor::FlightRow >(arena);
+namespace google {
+namespace protobuf {
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::extractor::FlightRow* Arena::CreateMaybeMessage< ::extractor::FlightRow >(Arena* arena) {
+  return Arena::CreateInternal< ::extractor::FlightRow >(arena);
 }
-template<> PROTOBUF_NOINLINE ::extractor::ReservaRow*
-Arena::CreateMaybeMessage< ::extractor::ReservaRow >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::extractor::ReservaRow >(arena);
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::extractor::ReservaRow* Arena::CreateMaybeMessage< ::extractor::ReservaRow >(Arena* arena) {
+  return Arena::CreateInternal< ::extractor::ReservaRow >(arena);
 }
-template<> PROTOBUF_NOINLINE ::extractor::PesquisaRow*
-Arena::CreateMaybeMessage< ::extractor::PesquisaRow >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::extractor::PesquisaRow >(arena);
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::extractor::PesquisaRow* Arena::CreateMaybeMessage< ::extractor::PesquisaRow >(Arena* arena) {
+  return Arena::CreateInternal< ::extractor::PesquisaRow >(arena);
 }
-template<> PROTOBUF_NOINLINE ::extractor::AllDataSend*
-Arena::CreateMaybeMessage< ::extractor::AllDataSend >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::extractor::AllDataSend >(arena);
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::extractor::AllDataSend* Arena::CreateMaybeMessage< ::extractor::AllDataSend >(Arena* arena) {
+  return Arena::CreateInternal< ::extractor::AllDataSend >(arena);
 }
-template<> PROTOBUF_NOINLINE ::extractor::AllDataResponse*
-Arena::CreateMaybeMessage< ::extractor::AllDataResponse >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::extractor::AllDataResponse >(arena);
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::extractor::AllDataResponse* Arena::CreateMaybeMessage< ::extractor::AllDataResponse >(Arena* arena) {
+  return Arena::CreateInternal< ::extractor::AllDataResponse >(arena);
 }
-PROTOBUF_NAMESPACE_CLOSE
+}  // namespace protobuf
+}  // namespace google
 
 // @@protoc_insertion_point(global_scope)
-#include <google/protobuf/port_undef.inc>
