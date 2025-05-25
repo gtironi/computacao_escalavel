@@ -12,7 +12,7 @@ else
 fi
 
 # Ensure venv module is available
-if ! $PYTHON -c "import venv" &>/dev/null; then
+if ! command -v $PYTHON -m venv >/dev/null 2>&1; then
     echo "Módulo venv não encontrado. Instalando python3-venv..."
     sudo apt-get update && sudo apt-get install -y python3-venv
 fi
@@ -25,9 +25,15 @@ fi
 # Activate venv
 source venv/bin/activate
 
+# Ensure pip is available
+if ! command -v pip >/dev/null 2>&1; then
+    echo "pip não encontrado. Instalando python3-pip..."
+    sudo apt-get update && sudo apt-get install -y python3-pip
+fi
+
 # Upgrade pip and install Python dependencies
-pip install --upgrade pip
-pip install -r requirements.txt grpcio grpcio-tools
+$PYTHON -m pip install --upgrade pip
+$PYTHON -m pip install -r requirements.txt grpcio grpcio-tools
 
 # Install system dependencies
 sudo apt-get update

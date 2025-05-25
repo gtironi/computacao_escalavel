@@ -12,16 +12,24 @@ else
 fi
 
 # Ensure venv module is available
-if ! $PYTHON -c "import venv" &>/dev/null; then
+if ! command -v $PYTHON -m venv >/dev/null 2>&1; then
     echo "Módulo venv não encontrado. Instalando python3-venv..."
     sudo apt-get update && sudo apt-get install -y python3-venv
 fi
 
-# Create or activate virtualenv
+# Create venv if not exists
 if [ ! -d "venv" ]; then
     $PYTHON -m venv venv
 fi
+
+# Activate venv
 source venv/bin/activate
+
+# Ensure pip is available
+if ! command -v pip >/dev/null 2>&1; then
+    echo "pip não encontrado. Instalando python3-pip..."
+    sudo apt-get update && sudo apt-get install -y python3-pip
+fi
 
 # Função para exibir menu
 show_menu() {
