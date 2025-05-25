@@ -42,39 +42,34 @@ git clone https://github.com/gtironi/computacao_escalavel.git
 cd computacao_escalavel
 ```
 
-### 2. Crie e ative o ambiente virtual
-
-```bash
-python3 -m venv venv
-source venv/bin/activate  # No Windows: venv\Scripts\activate
-```
-
 <details>
 <summary><span style="font-size: 1.5em;"><strong>Rodar com o GRPC</strong></span></summary>
 
-### 3. Instale o gRPC:
+### 2. Passo a passo interativo usando o grpc Server
+
+Execute o script para gerenciar dependências, geração de stubs, compilação e execução:
 
 ```bash
 ./run_grpc.sh
 ```
 
-Durante a execução, selecione as opções, em ordem:
+No menu interativo, selecione as opções nesta ordem:
 
-- **1** – Instala as dependências
-- **2** – Gera os stubs
-- **3** – Compila o servidor
+1) Instalar dependências (gRPC, Protobuf, C++, Python)
+2) Gerar stubs Python e C++
+3) Compilar servidor C++
 
-### 4. Executando o servidor e o cliente:
+Após concluir os passos acima, execute o script novamente e selecione:
 
-Após a instalação, execute novamente o script:
+4) Executar servidor C++
+5) Executar cliente Python
 
-```bash
-./run_grpc.sh
-```
+0) Sair do menu
 
-- Pressione **4** para iniciar o **servidor**
-- Pressione **5** para iniciar o **cliente**
+**Suporte para macOS e Linux:**
 
+- macOS: usa Homebrew para instalar Python3, gRPC e Protobuf.
+- Linux: usa `apt-get` para instalação de pacotes.
 </details>
 
 <br>
