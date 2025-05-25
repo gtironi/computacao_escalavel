@@ -27,48 +27,36 @@ static const char* ExtractorService_method_names[] = {
 
 std::unique_ptr< ExtractorService::Stub> ExtractorService::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
   (void)options;
-  std::unique_ptr< ExtractorService::Stub> stub(new ExtractorService::Stub(channel, options));
+  std::unique_ptr< ExtractorService::Stub> stub(new ExtractorService::Stub(channel));
   return stub;
 }
 
-ExtractorService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options)
-  : channel_(channel), rpcmethod_GetAllData_(ExtractorService_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+ExtractorService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel)
+  : channel_(channel), rpcmethod_GetAllData_(ExtractorService_method_names[0], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status ExtractorService::Stub::GetAllData(::grpc::ClientContext* context, const ::extractor::AllDataSend& request, ::extractor::AllDataResponse* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::extractor::AllDataSend, ::extractor::AllDataResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetAllData_, context, request, response);
+  return ::grpc::internal::BlockingUnaryCall(channel_.get(), rpcmethod_GetAllData_, context, request, response);
 }
 
-void ExtractorService::Stub::async::GetAllData(::grpc::ClientContext* context, const ::extractor::AllDataSend* request, ::extractor::AllDataResponse* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::extractor::AllDataSend, ::extractor::AllDataResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetAllData_, context, request, response, std::move(f));
-}
-
-void ExtractorService::Stub::async::GetAllData(::grpc::ClientContext* context, const ::extractor::AllDataSend* request, ::extractor::AllDataResponse* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetAllData_, context, request, response, reactor);
-}
-
-::grpc::ClientAsyncResponseReader< ::extractor::AllDataResponse>* ExtractorService::Stub::PrepareAsyncGetAllDataRaw(::grpc::ClientContext* context, const ::extractor::AllDataSend& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::extractor::AllDataResponse, ::extractor::AllDataSend, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetAllData_, context, request);
+void ExtractorService::Stub::experimental_async::GetAllData(::grpc::ClientContext* context, const ::extractor::AllDataSend* request, ::extractor::AllDataResponse* response, std::function<void(::grpc::Status)> f) {
+  return ::grpc::internal::CallbackUnaryCall(stub_->channel_.get(), stub_->rpcmethod_GetAllData_, context, request, response, std::move(f));
 }
 
 ::grpc::ClientAsyncResponseReader< ::extractor::AllDataResponse>* ExtractorService::Stub::AsyncGetAllDataRaw(::grpc::ClientContext* context, const ::extractor::AllDataSend& request, ::grpc::CompletionQueue* cq) {
-  auto* result =
-    this->PrepareAsyncGetAllDataRaw(context, request, cq);
-  result->StartCall();
-  return result;
+  return ::grpc::internal::ClientAsyncResponseReaderFactory< ::extractor::AllDataResponse>::Create(channel_.get(), cq, rpcmethod_GetAllData_, context, request, true);
+}
+
+::grpc::ClientAsyncResponseReader< ::extractor::AllDataResponse>* ExtractorService::Stub::PrepareAsyncGetAllDataRaw(::grpc::ClientContext* context, const ::extractor::AllDataSend& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderFactory< ::extractor::AllDataResponse>::Create(channel_.get(), cq, rpcmethod_GetAllData_, context, request, false);
 }
 
 ExtractorService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       ExtractorService_method_names[0],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< ExtractorService::Service, ::extractor::AllDataSend, ::extractor::AllDataResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](ExtractorService::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::extractor::AllDataSend* req,
-             ::extractor::AllDataResponse* resp) {
-               return service->GetAllData(ctx, req, resp);
-             }, this)));
+      new ::grpc::internal::RpcMethodHandler< ExtractorService::Service, ::extractor::AllDataSend, ::extractor::AllDataResponse>(
+          std::mem_fn(&ExtractorService::Service::GetAllData), this)));
 }
 
 ExtractorService::Service::~Service() {

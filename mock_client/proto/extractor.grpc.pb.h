@@ -44,22 +44,19 @@ class ExtractorService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::extractor::AllDataResponse>> PrepareAsyncGetAllData(::grpc::ClientContext* context, const ::extractor::AllDataSend& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::extractor::AllDataResponse>>(PrepareAsyncGetAllDataRaw(context, request, cq));
     }
-    class async_interface {
+    class experimental_async_interface {
      public:
-      virtual ~async_interface() {}
+      virtual ~experimental_async_interface() {}
       virtual void GetAllData(::grpc::ClientContext* context, const ::extractor::AllDataSend* request, ::extractor::AllDataResponse* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void GetAllData(::grpc::ClientContext* context, const ::extractor::AllDataSend* request, ::extractor::AllDataResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
     };
-    typedef class async_interface experimental_async_interface;
-    virtual class async_interface* async() { return nullptr; }
-    class async_interface* experimental_async() { return async(); }
-   private:
+    virtual class experimental_async_interface* experimental_async() { return nullptr; }
+  private:
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::extractor::AllDataResponse>* AsyncGetAllDataRaw(::grpc::ClientContext* context, const ::extractor::AllDataSend& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::extractor::AllDataResponse>* PrepareAsyncGetAllDataRaw(::grpc::ClientContext* context, const ::extractor::AllDataSend& request, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
-    Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
+    Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel);
     ::grpc::Status GetAllData(::grpc::ClientContext* context, const ::extractor::AllDataSend& request, ::extractor::AllDataResponse* response) override;
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::extractor::AllDataResponse>> AsyncGetAllData(::grpc::ClientContext* context, const ::extractor::AllDataSend& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::extractor::AllDataResponse>>(AsyncGetAllDataRaw(context, request, cq));
@@ -67,22 +64,21 @@ class ExtractorService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::extractor::AllDataResponse>> PrepareAsyncGetAllData(::grpc::ClientContext* context, const ::extractor::AllDataSend& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::extractor::AllDataResponse>>(PrepareAsyncGetAllDataRaw(context, request, cq));
     }
-    class async final :
-      public StubInterface::async_interface {
+    class experimental_async final :
+      public StubInterface::experimental_async_interface {
      public:
       void GetAllData(::grpc::ClientContext* context, const ::extractor::AllDataSend* request, ::extractor::AllDataResponse* response, std::function<void(::grpc::Status)>) override;
-      void GetAllData(::grpc::ClientContext* context, const ::extractor::AllDataSend* request, ::extractor::AllDataResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
      private:
       friend class Stub;
-      explicit async(Stub* stub): stub_(stub) { }
+      explicit experimental_async(Stub* stub): stub_(stub) { }
       Stub* stub() { return stub_; }
       Stub* stub_;
     };
-    class async* async() override { return &async_stub_; }
+    class experimental_async_interface* experimental_async() override { return &async_stub_; }
 
    private:
     std::shared_ptr< ::grpc::ChannelInterface> channel_;
-    class async async_stub_{this};
+    class experimental_async async_stub_{this};
     ::grpc::ClientAsyncResponseReader< ::extractor::AllDataResponse>* AsyncGetAllDataRaw(::grpc::ClientContext* context, const ::extractor::AllDataSend& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::extractor::AllDataResponse>* PrepareAsyncGetAllDataRaw(::grpc::ClientContext* context, const ::extractor::AllDataSend& request, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_GetAllData_;
@@ -98,7 +94,7 @@ class ExtractorService final {
   template <class BaseClass>
   class WithAsyncMethod_GetAllData : public BaseClass {
    private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+    void BaseClassMustBeDerivedFromService(const Service *service) {}
    public:
     WithAsyncMethod_GetAllData() {
       ::grpc::Service::MarkMethodAsync(0);
@@ -107,7 +103,7 @@ class ExtractorService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status GetAllData(::grpc::ServerContext* /*context*/, const ::extractor::AllDataSend* /*request*/, ::extractor::AllDataResponse* /*response*/) override {
+    ::grpc::Status GetAllData(::grpc::ServerContext* context, const ::extractor::AllDataSend* request, ::extractor::AllDataResponse* response) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -117,38 +113,9 @@ class ExtractorService final {
   };
   typedef WithAsyncMethod_GetAllData<Service > AsyncService;
   template <class BaseClass>
-  class WithCallbackMethod_GetAllData : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithCallbackMethod_GetAllData() {
-      ::grpc::Service::MarkMethodCallback(0,
-          new ::grpc::internal::CallbackUnaryHandler< ::extractor::AllDataSend, ::extractor::AllDataResponse>(
-            [this](
-                   ::grpc::CallbackServerContext* context, const ::extractor::AllDataSend* request, ::extractor::AllDataResponse* response) { return this->GetAllData(context, request, response); }));}
-    void SetMessageAllocatorFor_GetAllData(
-        ::grpc::MessageAllocator< ::extractor::AllDataSend, ::extractor::AllDataResponse>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(0);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::extractor::AllDataSend, ::extractor::AllDataResponse>*>(handler)
-              ->SetMessageAllocator(allocator);
-    }
-    ~WithCallbackMethod_GetAllData() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status GetAllData(::grpc::ServerContext* /*context*/, const ::extractor::AllDataSend* /*request*/, ::extractor::AllDataResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    virtual ::grpc::ServerUnaryReactor* GetAllData(
-      ::grpc::CallbackServerContext* /*context*/, const ::extractor::AllDataSend* /*request*/, ::extractor::AllDataResponse* /*response*/)  { return nullptr; }
-  };
-  typedef WithCallbackMethod_GetAllData<Service > CallbackService;
-  typedef CallbackService ExperimentalCallbackService;
-  template <class BaseClass>
   class WithGenericMethod_GetAllData : public BaseClass {
    private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+    void BaseClassMustBeDerivedFromService(const Service *service) {}
    public:
     WithGenericMethod_GetAllData() {
       ::grpc::Service::MarkMethodGeneric(0);
@@ -157,7 +124,7 @@ class ExtractorService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status GetAllData(::grpc::ServerContext* /*context*/, const ::extractor::AllDataSend* /*request*/, ::extractor::AllDataResponse* /*response*/) override {
+    ::grpc::Status GetAllData(::grpc::ServerContext* context, const ::extractor::AllDataSend* request, ::extractor::AllDataResponse* response) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -165,7 +132,7 @@ class ExtractorService final {
   template <class BaseClass>
   class WithRawMethod_GetAllData : public BaseClass {
    private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+    void BaseClassMustBeDerivedFromService(const Service *service) {}
    public:
     WithRawMethod_GetAllData() {
       ::grpc::Service::MarkMethodRaw(0);
@@ -174,7 +141,7 @@ class ExtractorService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status GetAllData(::grpc::ServerContext* /*context*/, const ::extractor::AllDataSend* /*request*/, ::extractor::AllDataResponse* /*response*/) override {
+    ::grpc::Status GetAllData(::grpc::ServerContext* context, const ::extractor::AllDataSend* request, ::extractor::AllDataResponse* response) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -183,48 +150,19 @@ class ExtractorService final {
     }
   };
   template <class BaseClass>
-  class WithRawCallbackMethod_GetAllData : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithRawCallbackMethod_GetAllData() {
-      ::grpc::Service::MarkMethodRawCallback(0,
-          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
-            [this](
-                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->GetAllData(context, request, response); }));
-    }
-    ~WithRawCallbackMethod_GetAllData() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status GetAllData(::grpc::ServerContext* /*context*/, const ::extractor::AllDataSend* /*request*/, ::extractor::AllDataResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    virtual ::grpc::ServerUnaryReactor* GetAllData(
-      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
-  };
-  template <class BaseClass>
   class WithStreamedUnaryMethod_GetAllData : public BaseClass {
    private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+    void BaseClassMustBeDerivedFromService(const Service *service) {}
    public:
     WithStreamedUnaryMethod_GetAllData() {
       ::grpc::Service::MarkMethodStreamed(0,
-        new ::grpc::internal::StreamedUnaryHandler<
-          ::extractor::AllDataSend, ::extractor::AllDataResponse>(
-            [this](::grpc::ServerContext* context,
-                   ::grpc::ServerUnaryStreamer<
-                     ::extractor::AllDataSend, ::extractor::AllDataResponse>* streamer) {
-                       return this->StreamedGetAllData(context,
-                         streamer);
-                  }));
+        new ::grpc::internal::StreamedUnaryHandler< ::extractor::AllDataSend, ::extractor::AllDataResponse>(std::bind(&WithStreamedUnaryMethod_GetAllData<BaseClass>::StreamedGetAllData, this, std::placeholders::_1, std::placeholders::_2)));
     }
     ~WithStreamedUnaryMethod_GetAllData() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status GetAllData(::grpc::ServerContext* /*context*/, const ::extractor::AllDataSend* /*request*/, ::extractor::AllDataResponse* /*response*/) override {
+    ::grpc::Status GetAllData(::grpc::ServerContext* context, const ::extractor::AllDataSend* request, ::extractor::AllDataResponse* response) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
