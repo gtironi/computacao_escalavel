@@ -35,8 +35,8 @@ source .venv/bin/activate
 
 # Garante que o pip está disponível dentro do venv
 if ! $PYTHON -m pip --version >/dev/null 2>&1; then
-    echo "pip não encontrado no venv. Instalando com ensurepip..."
-    $PYTHON -m ensurepip --upgrade
+    echo "pip não encontrado no venv."
+    sudo apt-get install -y python3-pip
 fi
 
 # Atualiza pip e instala wheel, se necessário

@@ -35,8 +35,8 @@ source .venv/bin/activate
 
 # Garante que o pip está disponível dentro do venv
 if ! $PYTHON -m pip --version >/dev/null 2>&1; then
-    echo "pip não encontrado no venv. Instalando com ensurepip..."
-    $PYTHON -m ensurepip --upgrade
+    echo "pip não encontrado no venv."
+    sudo apt-get install -y python3-pip
 fi
 
 # Atualiza pip e instala wheel, se necessário
@@ -48,7 +48,7 @@ echo "Instalando dependências do sistema..."
 if [ "$OS" = "Darwin" ]; then
     # macOS via Homebrew
     brew update
-    brew install cmake git pkg-config sqlite3 autoconf libtool grpc protobuf
+    brew install build-essential autoconf libtool pkg-config cmake git libsqlite3-dev libgrpc++-dev libgrpc-dev protobuf-compiler-grpc libprotobuf-dev
 else
     sudo apt-get update
     sudo apt-get install -y build-essential autoconf libtool pkg-config cmake git libsqlite3-dev libgrpc++-dev libgrpc-dev protobuf-compiler-grpc libprotobuf-dev
