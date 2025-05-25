@@ -11,25 +11,25 @@ else
     exit 1
 fi
 
+# Ensure pip is available
+if ! command -v pip >/dev/null 2>&1; then
+    echo "pip não encontrado. Instalando python3-pip..."
+    sudo apt-get update && sudo apt-get install -y python3-pip
+fi
+
 # Ensure venv module is available
-if ! command -v $PYTHON -m venv >/dev/null 2>&1; then
+if ! command -v $PYTHON -m venv --help >/dev/null 2>&1; then
     echo "Módulo venv não encontrado. Instalando python3-venv..."
     sudo apt-get update && sudo apt-get install -y python3-venv
 fi
 
 # Create venv if not exists
 if [ ! -d "venv" ]; then
-    $PYTHON -m venv venv
+    $PYTHON -m venv .venv
 fi
 
 # Activate venv
-source venv/bin/activate
-
-# Ensure pip is available
-if ! command -v pip >/dev/null 2>&1; then
-    echo "pip não encontrado. Instalando python3-pip..."
-    sudo apt-get update && sudo apt-get install -y python3-pip
-fi
+source .venv/bin/activate
 
 # Upgrade pip and install Python dependencies
 $PYTHON -m pip install --upgrade pip
