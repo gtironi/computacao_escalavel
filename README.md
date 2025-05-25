@@ -42,6 +42,23 @@ git clone https://github.com/gtironi/computacao_escalavel.git
 cd computacao_escalavel
 ```
 
+<details><summary>Rodar com o GRPC</summary>
+#### 2. Instale o grpc:
+```sh
+./run_grpc.sh
+```
+
+Durante a execução, selecione as opções **1**, **2** e **3**, nessa ordem.
+
+#### 3. Executando o servidor e o cliente
+
+Após a instalação, execute novamente o script `./run_grpc.sh` e:
+
+* Pressione **4** para iniciar o **servidor**.
+* Pressione **5** para iniciar o **cliente**.
+</details>
+
+<details><summary>Rodar o pipeline sem o GRPC</summary>
 #### 2. Execute o simulador (opcional)
 <details>
 
@@ -107,6 +124,7 @@ Pipeline apenas de hotéis:
 g++ -o hoteis pipe_hoteis.cpp -std=c++20 -lsqlite3
 ./hoteis
 ```
+</details>
 </details>
 
 
