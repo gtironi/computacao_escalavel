@@ -11,6 +11,12 @@ else
     exit 1
 fi
 
+# Ensure venv module is available
+if ! $PYTHON -c "import venv" &>/dev/null; then
+    echo "Módulo venv não encontrado. Instalando python3-venv..."
+    sudo apt-get update && sudo apt-get install -y python3-venv
+fi
+
 # Create venv if not exists
 if [ ! -d "venv" ]; then
     $PYTHON -m venv venv
