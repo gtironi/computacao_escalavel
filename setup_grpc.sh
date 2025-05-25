@@ -32,9 +32,6 @@ fi
 
 # Atualiza pip e instala wheel, se necessário
 $PYTHON -m pip install --upgrade pip wheel
-
-# Upgrade pip and install Python dependencies
-$PYTHON -m pip install --upgrade pip
 $PYTHON -m pip install -r requirements.txt grpcio grpcio-tools
 
 # Install system dependencies

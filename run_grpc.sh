@@ -48,10 +48,10 @@ show_menu() {
 # Gerar stubs Python e C++
 generate_stubs() {
     echo "Gerando stubs Python e C++..."
-    # Python stubs
-    $PYTHON -m grpc_tools.protoc -I. --python_out=mock_client/proto --grpc_python_out=mock_client/proto extractor.proto
-    # C++ stubs
-    protoc -I./mock_client/proto --cpp_out=mock_client/proto --grpc_out=mock_client/proto --plugin=protoc-gen-grpc="$(which grpc_cpp_plugin)" mock_client/proto/extractor.proto
+    # Python stubs (caminho relativo correto)
+    $PYTHON -m grpc_tools.protoc -I./mock_client/proto --python_out=mock_client/proto --grpc_python_out=mock_client/proto mock_client/proto/extractor.proto
+    # C++ stubs (inclui raiz e diretório proto)
+    protoc -I. -I./mock_client/proto --cpp_out=mock_client/proto --grpc_out=mock_client/proto --plugin=protoc-gen-grpc="$(which grpc_cpp_plugin)" mock_client/proto/extractor.proto
     echo "Stubs gerados com sucesso!"
 }
 
@@ -75,7 +75,7 @@ run_cpp_server() {
 # Executar cliente Python
 run_python_client() {
     echo "Executando cliente Python..."
-    export PYTHONPATH="$(pwd)"
+    export PYTHONPATH="$(pwd):$(pwd)/mock_client/proto"
     $PYTHON -m mock_client.client.grpc_client
 }
 
