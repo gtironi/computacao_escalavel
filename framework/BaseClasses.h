@@ -36,6 +36,8 @@ protected:
     ifstream file;
     sqlite3 *bancoDeDados;
     string strNomeTabela;
+    // Dados CSV em memória (quando flag == "memo")
+    string memoData;
 
 public:
     /**
@@ -70,6 +72,27 @@ public:
             else
             {
                 lerCabecalhoSQL(this->strNomeTabela);
+            }
+        }
+        else if (this->strFilesFlag == "memo")
+        {
+            // Dados CSV já carregados em memória
+            this->memoData = strFilesPath;
+            // Ler cabeçalho da string CSV em memória
+            stringstream ss(memoData);
+            string line;
+            if (getline(ss, line))
+            {
+                stringstream hss(line);
+                string cell;
+                while (getline(hss, cell, ','))
+                {
+                    strColumnsName.push_back(cell);
+                }
+            }
+            else
+            {
+                cerr << "Erro ao ler o cabeçalho do CSV em memória." << endl;
             }
         }
     };
@@ -273,6 +296,35 @@ public:
                 throw runtime_error("Erro ao preparar consulta SQL.");
             }
         }
+        else if (this->strFilesFlag == "memo")
+        {
+            // Processa CSV em memória (pulando o cabeçalho)
+            stringstream ss(memoData);
+            string line;
+            // Pula cabeçalho
+            getline(ss, line);
+            while (getline(ss, line))
+            {
+                iContador++;
+                strBlocoDeTexto += line + "\n";
+                if (iContador % this->iTamanhoBatch == 0)
+                {
+                    string value = strBlocoDeTexto;
+                    taskqueue->push_task([this, val = value]() mutable
+                                         { this->create_task(val); });
+                    this->outputBuffer.get_semaphore().wait();
+                    strBlocoDeTexto.clear();
+                }
+            }
+            // Último bloco
+            if (!strBlocoDeTexto.empty())
+            {
+                string value = strBlocoDeTexto;
+                taskqueue->push_task([this, val = value]() mutable
+                                     { this->create_task(val); });
+                this->outputBuffer.get_semaphore().wait();
+            }
+        }
         // Avisa ao buffer de saída que os dados acabaram
         finishBuffer();
     }
@@ -368,6 +420,11 @@ public:
     {
         outputBuffer.finalizeInput();
     }
+
+    /**
+     * @brief Retorna o cabeçalho do extrator (nomes das colunas).
+     */
+    std::vector<std::string> getHeader() const { return strColumnsName; }
 };
 
 // Classe base genérica para carregadores (última etapa do pipeline)

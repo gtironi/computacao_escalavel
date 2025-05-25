@@ -35,39 +35,72 @@ O projeto é composto por:
 - SQLite3
 
 ---
-###  Comandos
-#### 1. Clone este repositório:
+##  Comandos
+### 1. Clone este repositório:
 ```sh
 git clone https://github.com/gtironi/computacao_escalavel.git
 cd computacao_escalavel
 ```
 
-#### 2. Execute o simulador (opcional)
 <details>
+<summary><span style="font-size: 1.5em;"><strong>Rodar com o GRPC</strong></span></summary>
 
-1. Crie e ative uma venv:
-```sh
-python -m venv venv
-source venv/bin/activate  # No Windows: venv\Scripts\activate
+### 2. Passo a passo interativo usando o grpc Server
+
+Execute o script para gerenciar dependências, geração de stubs, compilação e execução:
+
+```bash
+./run_grpc.sh
 ```
 
-2. Instale as dependências:
-```sh
+No menu interativo, selecione as opções nesta ordem:
+
+1) Instalar dependências (gRPC, Protobuf, C++, Python)
+2) Gerar stubs Python e C++
+3) Compilar servidor C++
+
+Após concluir os passos acima, execute o script novamente e selecione:
+
+4) Executar servidor C++
+5) Executar cliente Python
+
+0) Sair do menu
+
+**Suporte para macOS e Linux:**
+
+- macOS: usa Homebrew para instalar Python3, gRPC e Protobuf.
+- Linux: usa `apt-get` para instalação de pacotes.
+</details>
+
+<br>
+
+<details>
+<summary><span style="font-size: 1.5em;"><strong>Rodar o pipeline sem o GRPC</strong></span></summary>
+
+### 3. Execute o simulador (opcional)
+
+<details>
+
+1. Instale as dependências Python
+
+```bash
 pip install -r requirements.txt
 ```
 
-3. Execute todos os scripts Python dentro da pasta `mock/`:
-```sh
+2. Execute todos os scripts Python dentro da pasta `mock/`
+
+```bash
 python mock/*.py
 ```
 </details>
 
 
-####  3. Instale as dependencias:
+###  3. Instale as dependencias:
 ```sh
 ./requirements.sh
 ```
-#### 4. Compile os arquivos do framework e a `main.cpp`:
+
+### 4. Compile os arquivos do framework e a `main.cpp`:
 ```sh
 g++ -o programa main.cpp -std=c++20 -lsqlite3
 ```
@@ -89,24 +122,26 @@ Caso deseje alterar o número de threads utilizadas, altere o valor global `N_TH
 int N_THREADS = 7;
 ```
 
-#### 5. Execute o programa:
+### 5. Execute o programa:
 ```sh
 ./programa
 ```
 <details><summary>Executar as pipelines isoladas</summary>
-Pipeline apenas de voos:
+
+#### Pipeline apenas de voos:
 
 ```sh
 g++ -o voos pipe_voos.cpp -std=c++20 -lsqlite3
 ./voos
 ```
 
-Pipeline apenas de hotéis:
+#### Pipeline apenas de hotéis:
 
 ```sh
 g++ -o hoteis pipe_hoteis.cpp -std=c++20 -lsqlite3
 ./hoteis
 ```
+</details>
 </details>
 
 

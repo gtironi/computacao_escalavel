@@ -8,6 +8,7 @@
 #include <chrono>
 #include <iostream>
 #include <numeric>
+#include "pipeline.h"
 
 bool PRINT_OUTPUT_DFS = false;
 bool TRIGGERS = false;
@@ -63,6 +64,7 @@ class FiltroHotel : public Transformer<Dataframe> {
 
         // Definição do método do processamento
         Dataframe run(std::vector<Dataframe*> input) override {
+
             Dataframe df_filtred = (*input[0]).filtroByValue("ocupado", 0);
             return df_filtred;
         }
@@ -189,21 +191,23 @@ class DataPrinter : public Loader<Dataframe> {
         }
     };
 
-
 // Função para executar o pipeline
-std::vector<int> pipeline() {
+vector<int> pipeline(const std::string& dados_reservas,
+                     const std::string& dados_voos,
+                     const std::string& dados_pesquisas) {
     // Inicializa o Manager
     Manager<Dataframe> manager(N_THREADS);
 
     // Pipeline Hoteis e Pesquisas ------------------------------------------------------------------------
     
     // Inicializa o extrator dos dados de pesquisa e o adiciona ao manager
-    Extrator<Dataframe> extrator_pesquisa("./mock/data/dados_pesquisas_2025.db", "sql", 1000, "Viagens");
+    Extrator<Dataframe> extrator_pesquisa(dados_pesquisas, "memo", 1000);
     manager.addExtractor(&extrator_pesquisa);
 
     // Inicializa o extrator dos dados de reserva e o adiciona ao manager
-    Extrator<Dataframe> extrator_reservas("./mock/data/dados_reservas_2025.csv", "csv", 25000);
+    Extrator<Dataframe> extrator_reservas(dados_reservas, "memo", 25000);
     manager.addExtractor(&extrator_reservas);
+
 
     // Inicializa o filtro dos hotéis e o adiciona ao manager
     FiltroHotel filtro_hotel;
@@ -265,7 +269,7 @@ std::vector<int> pipeline() {
     // Pipeline Voos ------------------------------------------------------------------------
 
     // Inicializa o extrator dos dados de voo e o adiciona ao manager
-    Extrator<Dataframe> extrator_voos("./mock/data/dados_voos_2025.csv", "csv", 15000);
+    Extrator<Dataframe> extrator_voos(dados_voos, "memo", 15000);
     manager.addExtractor(&extrator_voos);
 
     // Setando os parâmetros do agrupador de voos
@@ -306,53 +310,24 @@ std::vector<int> pipeline() {
     cout << "Número de quartos no Rio de Janeiro: " << filtro_hotel.getStats()[2] << endl;
     cout << "Número de quartos em Campo Grande: " << filtro_hotel.getStats()[3] << endl;
     cout << "Número de cidades destino diferentes em toda a base: " << taxa_ocupacao_voos.getStats()[0] << endl;
-    cout << "==============================================================================" << endl;
-    std::cout << "Tempo de execução: " << duration << " ms" << std::endl;
+
+    vector<float> results = filtro_hotel.getStats();
+    results.push_back(taxa_ocupacao_voos.getStats()[0]);
+
+    std::vector<int> int_results;
+
+    int_results.reserve(results.size());
+    std::transform(results.begin(), results.end(), std::back_inserter(int_results),
+                [](float x) { return static_cast<int>(x); });
+
+    // cout << "==============================================================================" << endl;
+    // std::cout << "Tempo de execução: " << duration << " ms" << std::endl;
     
-    std::vector<int> stats;
-    stats.push_back(filtro_hotel.getStats()[0]);
-    stats.push_back(filtro_hotel.getStats()[1]);
-    stats.push_back(filtro_hotel.getStats()[2]);
-    stats.push_back(filtro_hotel.getStats()[3]);
-    stats.push_back(taxa_ocupacao_voos.getStats()[0]);
-    return stats;
+    return int_results;
 }
 
-int main() {
-    if (TRIGGERS){
-        string strCsvPath1 = "./mock/data/dados_pesquisas_2025.db";
-        string strCsvPath2 = "./mock/data/dados_reservas_2025.csv";
-        string strCsvPath3 = "./mock/data/dados_voos_2025.csv";
-    
-        // Execução programada a cada 1 minutos
-        TimeTrigger timeTrigger(pipeline, 60);
-        
-        // Verificação dos arquivos a cada 30 segundos
-        EventTrigger trigger(strCsvPath1, pipeline, 30);
-        EventTrigger trigger2(strCsvPath2, pipeline, 30);
-        EventTrigger trigger3(strCsvPath3, pipeline, 30);
-    
-        // Inicializando a execução dos triggers
-        timeTrigger.start();
-        trigger.start();
-        trigger2.start();
-        trigger3.start();
-    
-        // Rodando o teste por 1 hora
-        this_thread::sleep_for(std::chrono::minutes(60));
-    
-        // Parando os triggers
-        timeTrigger.stop();
-        trigger.stop();
-        trigger2.stop();
-        trigger3.stop();
-
-    }
-    else {
-        std::vector<int> stats = pipeline();
-        for (int i = 0; i< stats.size(); i++){
-            cout << stats[i] << endl;
-        }
-    }
-
-}
+// int main()
+// {
+//     vector<int> a = pipeline(string("a"), string("a"), string("a")); 
+//     return 0;
+// }
