@@ -9,6 +9,7 @@ sudo apt-get install -y libgrpc++-dev libgrpc-dev protobuf-compiler-grpc libprot
 
 # Gerar stubs de protocolo
 # Python stubs
+python -m pip install -r requirements.txt
 python -m pip install grpcio grpcio-tools protobuf
 python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. mock_client/proto/extractor.proto
 

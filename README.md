@@ -35,56 +35,77 @@ O projeto é composto por:
 - SQLite3
 
 ---
-###  Comandos
-#### 1. Clone este repositório:
+##  Comandos
+### 1. Clone este repositório:
 ```sh
 git clone https://github.com/gtironi/computacao_escalavel.git
 cd computacao_escalavel
 ```
 
-<details><summary>Rodar com o GRPC</summary>
-#### 2. Instale o grpc:
-```sh
-./run_grpc.sh
-```
+### 2. Crie e ative o ambiente virtual
 
-Durante a execução, selecione as opções **1**, **2** e **3**, nessa ordem.
-
-#### 3. Executando o servidor e o cliente
-
-Após a instalação, execute novamente o script `./run_grpc.sh` e:
-
-* Pressione **4** para iniciar o **servidor**.
-* Pressione **5** para iniciar o **cliente**.
-</details>
-
-<details><summary>Rodar o pipeline sem o GRPC</summary>
-#### 2. Execute o simulador (opcional)
-<details>
-
-1. Crie e ative uma venv:
-```sh
-python -m venv venv
+```bash
+python3 -m venv venv
 source venv/bin/activate  # No Windows: venv\Scripts\activate
 ```
 
-2. Instale as dependências:
-```sh
+<details>
+<summary><span style="font-size: 1.5em;"><strong>Rodar com o GRPC</strong></span></summary>
+
+### 3. Instale o gRPC:
+
+```bash
+./run_grpc.sh
+```
+
+Durante a execução, selecione as opções, em ordem:
+
+- **1** – Instala as dependências
+- **2** – Gera os stubs
+- **3** – Compila o servidor
+
+### 4. Executando o servidor e o cliente:
+
+Após a instalação, execute novamente o script:
+
+```bash
+./run_grpc.sh
+```
+
+- Pressione **4** para iniciar o **servidor**
+- Pressione **5** para iniciar o **cliente**
+
+</details>
+
+<br>
+
+<details>
+<summary><span style="font-size: 1.5em;"><strong>Rodar o pipeline sem o GRPC</strong></span></summary>
+
+### 3. Execute o simulador (opcional)
+
+<details>
+
+1. Instale as dependências Python
+
+```bash
 pip install -r requirements.txt
 ```
 
-3. Execute todos os scripts Python dentro da pasta `mock/`:
-```sh
+2. Execute todos os scripts Python dentro da pasta `mock/`
+
+```bash
 python mock/*.py
 ```
 </details>
 
 
-####  3. Instale as dependencias:
+###  3. Instale as dependencias:
 ```sh
 ./requirements.sh
 ```
-#### 4. Compile os arquivos do framework e a `main.cpp`:
+
+### 4. Compile os arquivos do framework e a `main.cpp`:
 ```sh
 g++ -o programa main.cpp -std=c++20 -lsqlite3
 ```
@@ -106,19 +127,20 @@ Caso deseje alterar o número de threads utilizadas, altere o valor global `N_TH
 int N_THREADS = 7;
 ```
 
-#### 5. Execute o programa:
+### 5. Execute o programa:
 ```sh
 ./programa
 ```
 <details><summary>Executar as pipelines isoladas</summary>
-Pipeline apenas de voos:
+
+#### Pipeline apenas de voos:
 
 ```sh
 g++ -o voos pipe_voos.cpp -std=c++20 -lsqlite3
 ./voos
 ```
 
-Pipeline apenas de hotéis:
+#### Pipeline apenas de hotéis:
 
 ```sh
 g++ -o hoteis pipe_hoteis.cpp -std=c++20 -lsqlite3
