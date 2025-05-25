@@ -6,6 +6,7 @@
 #ifndef extractor_2eproto_2epb_2eh
 #define extractor_2eproto_2epb_2eh
 
+#include <limits>
 #include <string>
 #include <type_traits>
 #include <utility>
@@ -53,23 +54,23 @@ extern const ::google::protobuf::internal::DescriptorTable descriptor_table_extr
 }  // extern "C"
 namespace extractor {
 class AllDataResponse;
-class AllDataResponseDefaultTypeInternal;
+struct AllDataResponseDefaultTypeInternal;
 extern AllDataResponseDefaultTypeInternal _AllDataResponse_default_instance_;
 extern const ::google::protobuf::internal::ClassDataFull AllDataResponse_class_data_;
 class AllDataSend;
-class AllDataSendDefaultTypeInternal;
+struct AllDataSendDefaultTypeInternal;
 extern AllDataSendDefaultTypeInternal _AllDataSend_default_instance_;
 extern const ::google::protobuf::internal::ClassDataFull AllDataSend_class_data_;
 class FlightRow;
-class FlightRowDefaultTypeInternal;
+struct FlightRowDefaultTypeInternal;
 extern FlightRowDefaultTypeInternal _FlightRow_default_instance_;
 extern const ::google::protobuf::internal::ClassDataFull FlightRow_class_data_;
 class PesquisaRow;
-class PesquisaRowDefaultTypeInternal;
+struct PesquisaRowDefaultTypeInternal;
 extern PesquisaRowDefaultTypeInternal _PesquisaRow_default_instance_;
 extern const ::google::protobuf::internal::ClassDataFull PesquisaRow_class_data_;
 class ReservaRow;
-class ReservaRowDefaultTypeInternal;
+struct ReservaRowDefaultTypeInternal;
 extern ReservaRowDefaultTypeInternal _ReservaRow_default_instance_;
 extern const ::google::protobuf::internal::ClassDataFull ReservaRow_class_data_;
 }  // namespace extractor
@@ -1009,12 +1010,6 @@ class AllDataSend final : public ::google::protobuf::Message
     CopyFrom(from);
     return *this;
   }
-  #if LANG_CXX11
-  AllDataSend(AllDataSend&& from) noexcept
-    : AllDataSend() {
-    *this = ::std::move(from);
-  }
-
   inline AllDataSend& operator=(AllDataSend&& from) noexcept {
     if (this == &from) return *this;
     if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
@@ -1245,12 +1240,6 @@ class AllDataResponse final : public ::google::protobuf::Message
     CopyFrom(from);
     return *this;
   }
-  #if LANG_CXX11
-  AllDataResponse(AllDataResponse&& from) noexcept
-    : AllDataResponse() {
-    *this = ::std::move(from);
-  }
-
   inline AllDataResponse& operator=(AllDataResponse&& from) noexcept {
     if (this == &from) return *this;
     if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
@@ -1491,7 +1480,7 @@ inline void FlightRow::clear_cidade_origem() {
 inline const std::string& FlightRow::cidade_origem() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
   // @@protoc_insertion_point(field_get:extractor.FlightRow.cidade_origem)
-  return cidade_origem_.GetNoArena();
+  return _internal_cidade_origem();
 }
 template <typename Arg_, typename... Args_>
 PROTOBUF_ALWAYS_INLINE void FlightRow::set_cidade_origem(Arg_&& arg, Args_... args) {
@@ -1556,7 +1545,7 @@ inline void FlightRow::clear_cidade_destino() {
 inline const std::string& FlightRow::cidade_destino() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
   // @@protoc_insertion_point(field_get:extractor.FlightRow.cidade_destino)
-  return cidade_destino_.GetNoArena();
+  return _internal_cidade_destino();
 }
 template <typename Arg_, typename... Args_>
 PROTOBUF_ALWAYS_INLINE void FlightRow::set_cidade_destino(Arg_&& arg, Args_... args) {
@@ -1620,7 +1609,7 @@ inline void FlightRow::clear_assentos_ocupados() {
 }
 inline ::int32_t FlightRow::assentos_ocupados() const {
   // @@protoc_insertion_point(field_get:extractor.FlightRow.assentos_ocupados)
-  return assentos_ocupados_;
+  return _internal_assentos_ocupados();
 }
 inline void FlightRow::set_assentos_ocupados(::int32_t value) {
   _internal_set_assentos_ocupados(value);
@@ -1644,7 +1633,7 @@ inline void FlightRow::clear_assentos_totais() {
 }
 inline ::int32_t FlightRow::assentos_totais() const {
   // @@protoc_insertion_point(field_get:extractor.FlightRow.assentos_totais)
-  return assentos_totais_;
+  return _internal_assentos_totais();
 }
 inline void FlightRow::set_assentos_totais(::int32_t value) {
   _internal_set_assentos_totais(value);
@@ -1668,7 +1657,7 @@ inline void FlightRow::clear_assentos_disponiveis() {
 }
 inline ::int32_t FlightRow::assentos_disponiveis() const {
   // @@protoc_insertion_point(field_get:extractor.FlightRow.assentos_disponiveis)
-  return assentos_disponiveis_;
+  return _internal_assentos_disponiveis();
 }
 inline void FlightRow::set_assentos_disponiveis(::int32_t value) {
   _internal_set_assentos_disponiveis(value);
@@ -1692,7 +1681,7 @@ inline void FlightRow::clear_dia() {
 }
 inline ::int32_t FlightRow::dia() const {
   // @@protoc_insertion_point(field_get:extractor.FlightRow.dia)
-  return dia_;
+  return _internal_dia();
 }
 inline void FlightRow::set_dia(::int32_t value) {
   _internal_set_dia(value);
@@ -1716,7 +1705,7 @@ inline void FlightRow::clear_mes() {
 }
 inline ::int32_t FlightRow::mes() const {
   // @@protoc_insertion_point(field_get:extractor.FlightRow.mes)
-  return mes_;
+  return _internal_mes();
 }
 inline void FlightRow::set_mes(::int32_t value) {
   _internal_set_mes(value);
@@ -1740,7 +1729,7 @@ inline void FlightRow::clear_ano() {
 }
 inline ::int32_t FlightRow::ano() const {
   // @@protoc_insertion_point(field_get:extractor.FlightRow.ano)
-  return ano_;
+  return _internal_ano();
 }
 inline void FlightRow::set_ano(::int32_t value) {
   _internal_set_ano(value);
@@ -1769,7 +1758,7 @@ inline void ReservaRow::clear_tipo_quarto() {
 inline const std::string& ReservaRow::tipo_quarto() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
   // @@protoc_insertion_point(field_get:extractor.ReservaRow.tipo_quarto)
-  return tipo_quarto_.GetNoArena();
+  return _internal_tipo_quarto();
 }
 template <typename Arg_, typename... Args_>
 PROTOBUF_ALWAYS_INLINE void ReservaRow::set_tipo_quarto(Arg_&& arg, Args_... args) {
@@ -1834,7 +1823,7 @@ inline void ReservaRow::clear_nome_hotel() {
 inline const std::string& ReservaRow::nome_hotel() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
   // @@protoc_insertion_point(field_get:extractor.ReservaRow.nome_hotel)
-  return nome_hotel_.GetNoArena();
+  return _internal_nome_hotel();
 }
 template <typename Arg_, typename... Args_>
 PROTOBUF_ALWAYS_INLINE void ReservaRow::set_nome_hotel(Arg_&& arg, Args_... args) {
@@ -1899,7 +1888,7 @@ inline void ReservaRow::clear_cidade_destino() {
 inline const std::string& ReservaRow::cidade_destino() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
   // @@protoc_insertion_point(field_get:extractor.ReservaRow.cidade_destino)
-  return cidade_destino_.GetNoArena();
+  return _internal_cidade_destino();
 }
 template <typename Arg_, typename... Args_>
 PROTOBUF_ALWAYS_INLINE void ReservaRow::set_cidade_destino(Arg_&& arg, Args_... args) {
@@ -1963,7 +1952,7 @@ inline void ReservaRow::clear_numero_quarto() {
 }
 inline ::int32_t ReservaRow::numero_quarto() const {
   // @@protoc_insertion_point(field_get:extractor.ReservaRow.numero_quarto)
-  return numero_quarto_;
+  return _internal_numero_quarto();
 }
 inline void ReservaRow::set_numero_quarto(::int32_t value) {
   _internal_set_numero_quarto(value);
@@ -1987,7 +1976,7 @@ inline void ReservaRow::clear_quantidade_pessoas() {
 }
 inline ::int32_t ReservaRow::quantidade_pessoas() const {
   // @@protoc_insertion_point(field_get:extractor.ReservaRow.quantidade_pessoas)
-  return quantidade_pessoas_;
+  return _internal_quantidade_pessoas();
 }
 inline void ReservaRow::set_quantidade_pessoas(::int32_t value) {
   _internal_set_quantidade_pessoas(value);
@@ -2059,7 +2048,7 @@ inline void ReservaRow::clear_data_ida_dia() {
 }
 inline ::int32_t ReservaRow::data_ida_dia() const {
   // @@protoc_insertion_point(field_get:extractor.ReservaRow.data_ida_dia)
-  return data_ida_dia_;
+  return _internal_data_ida_dia();
 }
 inline void ReservaRow::set_data_ida_dia(::int32_t value) {
   _internal_set_data_ida_dia(value);
@@ -2083,7 +2072,7 @@ inline void ReservaRow::clear_data_ida_mes() {
 }
 inline ::int32_t ReservaRow::data_ida_mes() const {
   // @@protoc_insertion_point(field_get:extractor.ReservaRow.data_ida_mes)
-  return data_ida_mes_;
+  return _internal_data_ida_mes();
 }
 inline void ReservaRow::set_data_ida_mes(::int32_t value) {
   _internal_set_data_ida_mes(value);
@@ -2107,7 +2096,7 @@ inline void ReservaRow::clear_data_ida_ano() {
 }
 inline ::int32_t ReservaRow::data_ida_ano() const {
   // @@protoc_insertion_point(field_get:extractor.ReservaRow.data_ida_ano)
-  return data_ida_ano_;
+  return _internal_data_ida_ano();
 }
 inline void ReservaRow::set_data_ida_ano(::int32_t value) {
   _internal_set_data_ida_ano(value);
@@ -2136,7 +2125,7 @@ inline void PesquisaRow::clear_cidade_origem() {
 inline const std::string& PesquisaRow::cidade_origem() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
   // @@protoc_insertion_point(field_get:extractor.PesquisaRow.cidade_origem)
-  return cidade_origem_.GetNoArena();
+  return _internal_cidade_origem();
 }
 template <typename Arg_, typename... Args_>
 PROTOBUF_ALWAYS_INLINE void PesquisaRow::set_cidade_origem(Arg_&& arg, Args_... args) {
@@ -2201,7 +2190,7 @@ inline void PesquisaRow::clear_cidade_destino() {
 inline const std::string& PesquisaRow::cidade_destino() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
   // @@protoc_insertion_point(field_get:extractor.PesquisaRow.cidade_destino)
-  return cidade_destino_.GetNoArena();
+  return _internal_cidade_destino();
 }
 template <typename Arg_, typename... Args_>
 PROTOBUF_ALWAYS_INLINE void PesquisaRow::set_cidade_destino(Arg_&& arg, Args_... args) {
@@ -2266,7 +2255,7 @@ inline void PesquisaRow::clear_nome_hotel() {
 inline const std::string& PesquisaRow::nome_hotel() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
   // @@protoc_insertion_point(field_get:extractor.PesquisaRow.nome_hotel)
-  return nome_hotel_.GetNoArena();
+  return _internal_nome_hotel();
 }
 template <typename Arg_, typename... Args_>
 PROTOBUF_ALWAYS_INLINE void PesquisaRow::set_nome_hotel(Arg_&& arg, Args_... args) {
@@ -2330,7 +2319,7 @@ inline void PesquisaRow::clear_data_ida_dia() {
 }
 inline ::int32_t PesquisaRow::data_ida_dia() const {
   // @@protoc_insertion_point(field_get:extractor.PesquisaRow.data_ida_dia)
-  return data_ida_dia_;
+  return _internal_data_ida_dia();
 }
 inline void PesquisaRow::set_data_ida_dia(::int32_t value) {
   _internal_set_data_ida_dia(value);
@@ -2354,7 +2343,7 @@ inline void PesquisaRow::clear_data_ida_mes() {
 }
 inline ::int32_t PesquisaRow::data_ida_mes() const {
   // @@protoc_insertion_point(field_get:extractor.PesquisaRow.data_ida_mes)
-  return data_ida_mes_;
+  return _internal_data_ida_mes();
 }
 inline void PesquisaRow::set_data_ida_mes(::int32_t value) {
   _internal_set_data_ida_mes(value);
@@ -2378,7 +2367,7 @@ inline void PesquisaRow::clear_data_ida_ano() {
 }
 inline ::int32_t PesquisaRow::data_ida_ano() const {
   // @@protoc_insertion_point(field_get:extractor.PesquisaRow.data_ida_ano)
-  return data_ida_ano_;
+  return _internal_data_ida_ano();
 }
 inline void PesquisaRow::set_data_ida_ano(::int32_t value) {
   _internal_set_data_ida_ano(value);
@@ -2402,7 +2391,7 @@ inline void PesquisaRow::clear_data_volta_dia() {
 }
 inline ::int32_t PesquisaRow::data_volta_dia() const {
   // @@protoc_insertion_point(field_get:extractor.PesquisaRow.data_volta_dia)
-  return data_volta_dia_;
+  return _internal_data_volta_dia();
 }
 inline void PesquisaRow::set_data_volta_dia(::int32_t value) {
   _internal_set_data_volta_dia(value);
@@ -2426,7 +2415,7 @@ inline void PesquisaRow::clear_data_volta_mes() {
 }
 inline ::int32_t PesquisaRow::data_volta_mes() const {
   // @@protoc_insertion_point(field_get:extractor.PesquisaRow.data_volta_mes)
-  return data_volta_mes_;
+  return _internal_data_volta_mes();
 }
 inline void PesquisaRow::set_data_volta_mes(::int32_t value) {
   _internal_set_data_volta_mes(value);
@@ -2450,7 +2439,7 @@ inline void PesquisaRow::clear_data_volta_ano() {
 }
 inline ::int32_t PesquisaRow::data_volta_ano() const {
   // @@protoc_insertion_point(field_get:extractor.PesquisaRow.data_volta_ano)
-  return data_volta_ano_;
+  return _internal_data_volta_ano();
 }
 inline void PesquisaRow::set_data_volta_ano(::int32_t value) {
   _internal_set_data_volta_ano(value);
@@ -2479,7 +2468,7 @@ inline void AllDataSend::clear_voos() {
 inline const std::string& AllDataSend::voos() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
   // @@protoc_insertion_point(field_get:extractor.AllDataSend.voos)
-  return voos_.GetNoArena();
+  return _internal_voos();
 }
 template <typename Arg_, typename... Args_>
 PROTOBUF_ALWAYS_INLINE void AllDataSend::set_voos(Arg_&& arg, Args_... args) {
@@ -2544,7 +2533,7 @@ inline void AllDataSend::clear_reservas() {
 inline const std::string& AllDataSend::reservas() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
   // @@protoc_insertion_point(field_get:extractor.AllDataSend.reservas)
-  return reservas_.GetNoArena();
+  return _internal_reservas();
 }
 template <typename Arg_, typename... Args_>
 PROTOBUF_ALWAYS_INLINE void AllDataSend::set_reservas(Arg_&& arg, Args_... args) {
@@ -2609,7 +2598,7 @@ inline void AllDataSend::clear_pesquisas() {
 inline const std::string& AllDataSend::pesquisas() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
   // @@protoc_insertion_point(field_get:extractor.AllDataSend.pesquisas)
-  return pesquisas_.GetNoArena();
+  return _internal_pesquisas();
 }
 template <typename Arg_, typename... Args_>
 PROTOBUF_ALWAYS_INLINE void AllDataSend::set_pesquisas(Arg_&& arg, Args_... args) {
@@ -2677,7 +2666,7 @@ inline void AllDataResponse::clear_stats1() {
 }
 inline ::int32_t AllDataResponse::stats1() const {
   // @@protoc_insertion_point(field_get:extractor.AllDataResponse.stats1)
-  return stats1_;
+  return _internal_stats1();
 }
 inline void AllDataResponse::set_stats1(::int32_t value) {
   _internal_set_stats1(value);
@@ -2701,7 +2690,7 @@ inline void AllDataResponse::clear_stats2() {
 }
 inline ::int32_t AllDataResponse::stats2() const {
   // @@protoc_insertion_point(field_get:extractor.AllDataResponse.stats2)
-  return stats2_;
+  return _internal_stats2();
 }
 inline void AllDataResponse::set_stats2(::int32_t value) {
   _internal_set_stats2(value);
@@ -2725,7 +2714,7 @@ inline void AllDataResponse::clear_stats3() {
 }
 inline ::int32_t AllDataResponse::stats3() const {
   // @@protoc_insertion_point(field_get:extractor.AllDataResponse.stats3)
-  return stats3_;
+  return _internal_stats3();
 }
 inline void AllDataResponse::set_stats3(::int32_t value) {
   _internal_set_stats3(value);
@@ -2749,7 +2738,7 @@ inline void AllDataResponse::clear_stats4() {
 }
 inline ::int32_t AllDataResponse::stats4() const {
   // @@protoc_insertion_point(field_get:extractor.AllDataResponse.stats4)
-  return stats4_;
+  return _internal_stats4();
 }
 inline void AllDataResponse::set_stats4(::int32_t value) {
   _internal_set_stats4(value);
@@ -2773,7 +2762,7 @@ inline void AllDataResponse::clear_stats5() {
 }
 inline ::int32_t AllDataResponse::stats5() const {
   // @@protoc_insertion_point(field_get:extractor.AllDataResponse.stats5)
-  return stats5_;
+  return _internal_stats5();
 }
 inline void AllDataResponse::set_stats5(::int32_t value) {
   _internal_set_stats5(value);
