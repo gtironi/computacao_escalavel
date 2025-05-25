@@ -5,9 +5,21 @@ project(grpc_client_example CXX)
 set(CMAKE_CXX_STANDARD 17)
 
 # Find gRPC and Protobuf
-find_package(PkgConfig REQUIRED)
-pkg_check_modules(GRPC REQUIRED grpc++)
-pkg_check_modules(PROTOBUF REQUIRED protobuf)
+if(APPLE)
+  message(STATUS "macOS detectado, usando find_package para Protobuf e gRPC")
+  find_package(Protobuf REQUIRED)
+  find_package(gRPC CONFIG REQUIRED)
+  set(GRPC_LIBS gRPC::grpc++)
+  set(PROTOBUF_LIBS ${Protobuf_LIBRARIES})
+  set(PROTO_INCLUDE_DIRS ${Protobuf_INCLUDE_DIRS})
+else()
+  find_package(PkgConfig REQUIRED)
+  pkg_check_modules(GRPC REQUIRED grpc++)
+  pkg_check_modules(PROTOBUF REQUIRED protobuf)
+  set(GRPC_LIBS ${GRPC_LIBRARIES})
+  set(PROTOBUF_LIBS ${PROTOBUF_LIBRARIES})
+  set(PROTO_INCLUDE_DIRS ${PROTOBUF_INCLUDE_DIRS})
+endif()
 
 # Proto sources
 set(PROTO_SRC
@@ -26,14 +38,13 @@ add_executable(grpc_server
 target_include_directories(grpc_server PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}/mock_client/proto
-  ${GRPC_INCLUDE_DIRS}
-  ${PROTOBUF_INCLUDE_DIRS}
+  ${PROTO_INCLUDE_DIRS}
 )
 
 # Link gRPC, Protobuf
 target_link_libraries(grpc_server
-  ${GRPC_LIBRARIES}
-  ${PROTOBUF_LIBRARIES}
+  ${GRPC_LIBS}
+  ${PROTOBUF_LIBS}
   sqlite3
   pthread
 )

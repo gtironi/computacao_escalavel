@@ -11,10 +11,19 @@ else
     exit 1
 fi
 
-# Ensure python3-venv is installed globally
-echo "Instalando python3-venv..."
-sudo apt-get update
-sudo apt-get install -y python3-venv
+# Detect OS (Linux or macOS)
+OS=$(uname)
+
+# Instalar dependências Python e venv
+echo "Instalando dependências Python..."
+if [ "$OS" = "Darwin" ]; then
+    brew update
+    brew install python3
+else
+    # Linux: instalar python3-venv
+    sudo apt-get update
+    sudo apt-get install -y python3-venv
+fi
 
 # Cria o venv se ainda não existir
 if [ ! -d ".venv" ]; then
@@ -35,8 +44,15 @@ $PYTHON -m pip install --upgrade pip wheel
 $PYTHON -m pip install -r requirements.txt grpcio grpcio-tools
 
 # Install system dependencies
-sudo apt-get update
-sudo apt-get install -y build-essential autoconf libtool pkg-config cmake git libsqlite3-dev libgrpc++-dev libgrpc-dev protobuf-compiler-grpc libprotobuf-dev
+echo "Instalando dependências do sistema..."
+if [ "$OS" = "Darwin" ]; then
+    # macOS via Homebrew
+    brew update
+    brew install cmake git pkg-config sqlite3 autoconf libtool grpc protobuf
+else
+    sudo apt-get update
+    sudo apt-get install -y build-essential autoconf libtool pkg-config cmake git libsqlite3-dev libgrpc++-dev libgrpc-dev protobuf-compiler-grpc libprotobuf-dev
+fi
 
 # Gerar stubs de protocolo
 # Python stubs

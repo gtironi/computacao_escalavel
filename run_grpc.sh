@@ -11,10 +11,19 @@ else
     exit 1
 fi
 
-# Ensure python3-venv is installed globally
-echo "Instalando python3-venv..."
-sudo apt-get update
-sudo apt-get install -y python3-venv
+# Detect OS (Linux or macOS)
+OS=$(uname)
+
+# Instalar dependências Python e venv
+echo "Instalando dependências Python..."
+if [ "$OS" = "Darwin" ]; then
+    brew update
+    brew install python3
+else
+    # Linux: instalar python3-venv
+    sudo apt-get update
+    sudo apt-get install -y python3-venv
+fi
 
 # Cria o venv se ainda não existir
 if [ ! -d ".venv" ]; then
