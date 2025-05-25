@@ -14,7 +14,7 @@ fi
 # Ensure pip is available
 if ! command -v pip >/dev/null 2>&1; then
     echo "pip não encontrado. Instalando python3-pip..."
-    sudo apt-get update && sudo apt-get install -y python3-pip
+    sudo apt-get update && sudo apt-get install -y python3-pip python3-venv
 fi
 
 # Ensure venv module is available
